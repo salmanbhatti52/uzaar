@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'CustomSplash.dart';
+import 'screens/CustomSplash.dart';
 
 void main() {
   runApp(const MyApp());

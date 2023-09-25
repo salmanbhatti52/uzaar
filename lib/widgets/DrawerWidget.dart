@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../AfterLogInScreens/ProfileScreens/SaleProfileScreens/SaleProfileMain.dart';
+import 'package:sellpad/screens/ProfileScreens/SaleProfileScreens/SaleProfileMain.dart';
 import '../Constants/Colors.dart';
-import '../LogInScreen.dart';
-
+import 'package:sellpad/screens/beforeLoginScreens/LogInScreen.dart';
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});
 
