@@ -149,7 +149,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: 57.h,
+                        height: 47.h,
                       ),
                       Stack(
                         clipBehavior: Clip.none,
@@ -159,7 +159,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             width: 100.w,
                             height: 100.h,
                             decoration: BoxDecoration(
-                              color: grey,
+                              color: Color(0xFFD9D9D9),
                               shape: BoxShape.circle,
                             ),
                             child: ClipRRect(
@@ -215,6 +215,16 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
+                          child: text('Phone Number')),
+                      SizedBox(
+                        height: 7.h,
+                      ),
+                      readOnlyContainer('assets/phone-fill.svg', '+4156565662'),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Align(
+                          alignment: Alignment.centerLeft,
                           child: text('Address')),
                       SizedBox(
                         height: 7.h,
@@ -245,10 +255,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 100.h,
+                        height: 60.h,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 20.0.h),
+                        padding: EdgeInsets.only(bottom: 25.0.h),
                         child: GestureDetector(
                           onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(

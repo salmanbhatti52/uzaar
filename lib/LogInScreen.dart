@@ -249,6 +249,10 @@ class _LogInScreenState extends State<LogInScreen> {
                       SizedBox(
                         height: 30.h,
                       ),
+                      outlinedButton(context),
+                      SizedBox(
+                        height: 30.h,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 20.0.h),
                         child: RichText(

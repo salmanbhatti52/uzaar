@@ -30,7 +30,7 @@ Widget primaryButton(context, String buttonText) {
 
 Widget googleButton(context) {
   return Container(
-    padding: EdgeInsets.symmetric(horizontal: 65.w),
+    // padding: EdgeInsets.symmetric(horizontal: 65.w),
     width: double.infinity,
     height: 55.h,
     decoration: BoxDecoration(
@@ -43,15 +43,18 @@ Widget googleButton(context) {
     ),
     child: Center(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Signup with Google',
+            'Login with Google',
             style: GoogleFonts.outfit(
               fontWeight: FontWeight.w500,
               fontSize: 18,
               color: black,
             ),
+          ),
+          SizedBox(
+            width: 10.0,
           ),
           SvgPicture.asset('assets/google-logo.svg'),
         ],
@@ -64,7 +67,7 @@ Widget googleButton(context) {
 
 Widget facebookButton(context) {
   return Container(
-    padding: EdgeInsets.symmetric(horizontal: 65.w),
+    // padding: EdgeInsets.symmetric(horizontal: 65.w),
     width: double.infinity,
     height: 55.h,
     decoration: BoxDecoration(
@@ -77,17 +80,53 @@ Widget facebookButton(context) {
     ),
     child: Center(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
+        // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Signup with Facebook',
+            'Login with Facebook',
             style: GoogleFonts.outfit(
               fontWeight: FontWeight.w500,
               fontSize: 18,
               color: black,
             ),
           ),
+          SizedBox(
+            width: 10.0,
+          ),
           SvgPicture.asset('assets/facebook-logo.svg'),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget outlinedButton(context) {
+  return Container(
+    // padding: EdgeInsets.symmetric(horizontal: 65.w),
+    width: double.infinity,
+    height: 55.h,
+    decoration: BoxDecoration(
+      color: white,
+      border: Border.all(
+        color: primaryBlue,
+        width: 2,
+      ),
+      borderRadius: BorderRadius.circular(30),
+    ),
+    child: Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'Continue as Guest',
+            style: GoogleFonts.outfit(
+              fontWeight: FontWeight.w500,
+              fontSize: 18,
+              color: black,
+            ),
+          ),
         ],
       ),
     ),

@@ -158,14 +158,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 22.0.w),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    SizedBox(
-                      height: 75.h,
-                    ),
+                    // SizedBox(
+                    //   height: 75.h,
+                    // ),
                     SvgPicture.asset('assets/onboarding-3.svg'),
-                    SizedBox(
-                      height: 60.h,
-                    ),
+                    // SizedBox(
+                    //   height: 60.h,
+                    // ),
                     Text(
                       'Seller Location Verification',
                       style: GoogleFonts.outfit(
@@ -174,9 +175,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         color: black,
                       ),
                     ),
-                    SizedBox(
-                      height: 60.h,
-                    ),
+                    // SizedBox(
+                    //   height: 60.h,
+                    // ),
                     Text(
                       'We verify the authenticity of seller to boost confidence of buyers.',
                       textAlign: TextAlign.center,
@@ -186,9 +187,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         color: grey,
                       ),
                     ),
-                    SizedBox(
-                      height: 60.h,
-                    ),
+                    // SizedBox(
+                    //   height: 60.h,
+                    // ),
                     SmoothPageIndicator(
                       onDotClicked: (index) => controller.animateToPage(
                         index,
@@ -205,9 +206,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       controller: controller,
                       count: 3,
                     ),
-                    SizedBox(
-                      height: 190.h,
-                    ),
+                    // SizedBox(
+                    //   height: 190.h,
+                    // ),
                     GestureDetector(
                       onTap: () async {
                         final prefs = await SharedPreferences.getInstance();

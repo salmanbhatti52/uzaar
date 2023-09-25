@@ -24,7 +24,7 @@ class _CustomSplashState extends State<CustomSplash> {
     // isLogin = (await secureSharedPref.getString('isLogin')) ?? 'false';
 
     Future.delayed(
-      const Duration(seconds: 4),
+      const Duration(seconds: 3),
       () async {
         Navigator.pushReplacement(
           context,

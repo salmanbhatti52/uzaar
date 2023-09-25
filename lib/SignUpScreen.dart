@@ -267,14 +267,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(
                         height: 30.h,
                       ),
-                      googleButton(context),
-                      SizedBox(
-                        height: 30.h,
-                      ),
-                      facebookButton(context),
-                      SizedBox(
-                        height: 30.h,
-                      ),
+                      // googleButton(context),
+                      // SizedBox(
+                      //   height: 30.h,
+                      // ),
+                      // facebookButton(context),
+                      // SizedBox(
+                      //   height: 30.h,
+                      // ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 22.0.h),
                         child: RichText(

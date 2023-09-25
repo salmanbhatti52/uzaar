@@ -62,17 +62,18 @@ class TextFormFieldWidget extends StatelessWidget {
       obscureText: obscureText ?? false,
       autofillHints: [autofillHints ?? ''],
       decoration: InputDecoration(
-        filled: true,
-        fillColor: white,
-        suffixIcon: suffixIcon,
-        // contentPadding: contentPadding,
-        border: border,
-        hintText: hintText,
-        hintStyle: hintStyle,
-        focusedBorder: focusedBorder,
-        enabledBorder: enableBorder,
-        prefixIcon: prefixIcon,
-      ),
+          filled: true,
+          fillColor: white,
+          suffixIcon: suffixIcon,
+          // contentPadding: contentPadding,
+          border: border,
+          hintText: hintText,
+          hintStyle: hintStyle,
+          focusedBorder: focusedBorder,
+          enabledBorder: enableBorder,
+          prefixIcon: prefixIcon,
+          contentPadding:
+              EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
     );
   }
 }
