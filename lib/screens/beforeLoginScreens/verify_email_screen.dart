@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sellpad/utils/Colors.dart';
+import 'package:sellpad/widgets/navigate_back_icon.dart';
 
 class VerifyEmail extends StatefulWidget {
   const VerifyEmail({Key? key}) : super(key: key);
@@ -14,11 +16,13 @@ class _VerifyEmailState extends State<VerifyEmail> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: Icon(Icons.arrow_back),
+        leading: NavigateBack(),
         title: Text(
           'Verify Email',
-          textAlign: TextAlign.center,
+          style: kAppBarTitleStyle,
         ),
+        elevation: 0.0,
+        centerTitle: true,
       ),
       body: SafeArea(
           child: Column(

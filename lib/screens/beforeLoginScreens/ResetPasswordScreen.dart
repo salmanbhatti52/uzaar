@@ -1,13 +1,14 @@
+import 'package:sellpad/widgets/navigate_back_icon.dart';
+import 'package:sellpad/widgets/text.dart';
+
 import '../../widgets/TextfromFieldWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sellpad/screens/beforeLoginScreens/LogInScreen.dart';
 
 import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/utils/Buttons.dart';
-
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});
@@ -34,53 +35,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     confirmNewPassController = TextEditingController();
   }
 
-  Widget text(String text) {
-    return Text(
-      text,
-      style: GoogleFonts.outfit(
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: black,
-      ),
-    );
-  }
-
-  final TextStyle hintStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: grey,
-  );
-
-  final TextStyle inputStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: black,
-  );
-
-  final InputBorder outlineBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: grey,
-      width: 1,
-    ),
-  );
-
-  final InputBorder focusBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: grey,
-      width: 1,
-    ),
-  );
-
-  final InputBorder enableBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: grey,
-      width: 1,
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -89,22 +43,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: white,
-          leading: GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
-            child: SvgPicture.asset(
-              'assets/back-arrow-button.svg',
-              fit: BoxFit.scaleDown,
-            ),
-          ),
+          leading: NavigateBack(),
           centerTitle: true,
-          title: Text(
-            'Reset Password',
-            style: GoogleFonts.outfit(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-              color: black,
-            ),
-          ),
+          title: Text('Reset Password', style: kAppBarTitleStyle),
         ),
         backgroundColor: white,
         body: SafeArea(
@@ -118,7 +59,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   SizedBox(
                     height: 50.h,
                   ),
-                  text('New Password'),
+                  ReusableText(text: 'New Password'),
                   SizedBox(
                     height: 7.h,
                   ),
@@ -127,7 +68,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     child: TextFormFieldWidget(
                       controller: newPassController,
                       textInputType: TextInputType.visiblePassword,
-                      enterTextStyle: inputStyle,
+                      enterTextStyle: kTextFieldInputStyle,
                       cursorColor: primaryBlue,
                       prefixIcon: SvgPicture.asset(
                         'assets/password-icon.svg',
@@ -154,24 +95,24 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               ),
                       ),
                       hintText: '***************',
-                      border: outlineBorder,
-                      hintStyle: hintStyle,
-                      focusedBorder: focusBorder,
+                      border: kBorderStyle,
+                      hintStyle: kTextFieldHintStyle,
+                      focusedBorder: kBorderStyle,
                       obscureText: isHiddenNew,
-                      enableBorder: enableBorder,
+                      enableBorder: kBorderStyle,
                     ),
                   ),
                   SizedBox(
                     height: 20.h,
                   ),
-                  text('Confirm New Password'),
+                  ReusableText(text: 'Confirm New Password'),
                   SizedBox(
                     height: 7.h,
                   ),
                   TextFormFieldWidget(
                     controller: confirmNewPassController,
                     textInputType: TextInputType.visiblePassword,
-                    enterTextStyle: inputStyle,
+                    enterTextStyle: kTextFieldInputStyle,
                     cursorColor: primaryBlue,
                     prefixIcon: SvgPicture.asset(
                       'assets/password-icon.svg',
@@ -198,11 +139,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             ),
                     ),
                     hintText: '***************',
-                    border: outlineBorder,
-                    hintStyle: hintStyle,
-                    focusedBorder: focusBorder,
+                    border: kBorderStyle,
+                    hintStyle: kTextFieldHintStyle,
+                    focusedBorder: kBorderStyle,
                     obscureText: isHiddenConfirm,
-                    enableBorder: enableBorder,
+                    enableBorder: kBorderStyle,
                   ),
                   Spacer(),
                   Padding(

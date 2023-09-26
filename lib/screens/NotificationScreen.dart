@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../Constants/Colors.dart';
+import 'package:sellpad/utils/Colors.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -85,8 +85,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       color: black,
                                     ),
                                   ),
-
-
                                   SizedBox(
                                     height: 10.h,
                                   ),

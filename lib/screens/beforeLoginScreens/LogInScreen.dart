@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,9 +9,9 @@ import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/utils/Buttons.dart';
 
 import 'package:sellpad/widgets/TextfromFieldWidget.dart';
+import 'package:sellpad/widgets/text.dart';
 
 import 'SignUpScreen.dart';
-
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -38,52 +37,6 @@ class _LogInScreenState extends State<LogInScreen> {
     emailController = TextEditingController();
   }
 
-  Widget text(String text) {
-    return Text(
-      text,
-      style: GoogleFonts.outfit(
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: black,
-      ),
-    );
-  }
-
-  final TextStyle hintStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: grey,
-  );
-
-  final TextStyle inputStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: black,
-  );
-
-  final InputBorder outlineBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: grey,
-      width: 1,
-    ),
-  );
-
-  final InputBorder focusBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: grey,
-      width: 1,
-    ),
-  );
-
-  final InputBorder enableBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: grey,
-      width: 1,
-    ),
-  );
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -121,8 +74,9 @@ class _LogInScreenState extends State<LogInScreen> {
                         height: 20.h,
                       ),
                       Align(
-                          alignment: Alignment.centerLeft,
-                          child: text('Email')),
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Email'),
+                      ),
                       SizedBox(
                         height: 7.h,
                       ),
@@ -131,26 +85,27 @@ class _LogInScreenState extends State<LogInScreen> {
                         child: TextFormFieldWidget(
                           controller: emailController,
                           textInputType: TextInputType.emailAddress,
-                          enterTextStyle: inputStyle,
+                          enterTextStyle: kTextFieldInputStyle,
                           cursorColor: primaryBlue,
                           prefixIcon: SvgPicture.asset(
                             'assets/email-icon.svg',
                             fit: BoxFit.scaleDown,
                           ),
                           hintText: 'username@gmail.com',
-                          border: outlineBorder,
-                          hintStyle: hintStyle,
-                          focusedBorder: focusBorder,
+                          border: kBorderStyle,
+                          hintStyle: kTextFieldInputStyle,
+                          focusedBorder: kBorderStyle,
                           obscureText: null,
-                          enableBorder: enableBorder,
+                          enableBorder: kBorderStyle,
                         ),
                       ),
                       SizedBox(
                         height: 20.h,
                       ),
                       Align(
-                          alignment: Alignment.centerLeft,
-                          child: text('Password')),
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Password'),
+                      ),
                       SizedBox(
                         height: 7.h,
                       ),
@@ -159,7 +114,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         child: TextFormFieldWidget(
                           controller: passwordController,
                           textInputType: TextInputType.visiblePassword,
-                          enterTextStyle: inputStyle,
+                          enterTextStyle: kTextFieldInputStyle,
                           cursorColor: primaryBlue,
                           prefixIcon: SvgPicture.asset(
                             'assets/password-icon.svg',
@@ -186,11 +141,11 @@ class _LogInScreenState extends State<LogInScreen> {
                                   ),
                           ),
                           hintText: '***************',
-                          border: outlineBorder,
-                          hintStyle: hintStyle,
-                          focusedBorder: focusBorder,
+                          border: kBorderStyle,
+                          hintStyle: kTextFieldHintStyle,
+                          focusedBorder: kBorderStyle,
                           obscureText: isHidden,
-                          enableBorder: enableBorder,
+                          enableBorder: kBorderStyle,
                         ),
                       ),
                       SizedBox(

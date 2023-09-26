@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../Constants/Colors.dart';
+import 'package:sellpad/utils/Colors.dart';
 
 class FeaturedProductsWidget extends StatefulWidget {
   final String image;
