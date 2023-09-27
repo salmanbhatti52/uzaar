@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sellpad/models/HousingCategoryModel.dart';
 
 import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/widgets/TextfromFieldWidget.dart';
@@ -34,50 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
     catSelected = 1;
   }
 
-  Widget text(String text) {
-    return Text(
-      text,
-      style: GoogleFonts.outfit(
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: black,
-      ),
-    );
-  }
-
-  final TextStyle hintStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: grey,
-  );
-
-  final TextStyle inputStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: black,
-  );
-
-  final InputBorder outlineBorder = OutlineInputBorder(
-    borderSide: BorderSide(
-      color: grey,
-      width: 1,
-    ),
-  );
-
-  final InputBorder focusBorder = OutlineInputBorder(
-    borderSide: BorderSide(
-      color: primaryBlue,
-      width: 1,
-    ),
-  );
-
-  final InputBorder enableBorder = OutlineInputBorder(
-    borderSide: BorderSide(
-      color: primaryBlue,
-      width: 1,
-    ),
-  );
-
   int catSelected = -1;
 
   @override
@@ -92,47 +49,59 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Name of account holder',
-                        style: GoogleFonts.outfit(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: black,
-                        ),
-                      )
-                    ],
-                    text: 'Good Morning!   ',
-                    style: GoogleFonts.outfit(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      color: black,
-                    ),
-                  ),
-                ),
+                // RichText(
+                //   text: TextSpan(
+                //     children: [
+                //       TextSpan(
+                //         text: 'John',
+                //         style: GoogleFonts.outfit(
+                //           fontSize: 16,
+                //           fontWeight: FontWeight.w500,
+                //           color: black,
+                //         ),
+                //       )
+                //     ],
+                //     text: 'Good Morning!   ',
+                //     style: GoogleFonts.outfit(
+                //       fontSize: 24,
+                //       fontWeight: FontWeight.w600,
+                //       color: black,
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 20.h,
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  height: 50.h,
+                Container(
+                  // width: double.infinity,
+                  // height: 50.h,
+                  // elevation: 5,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromRGBO(0, 0, 0, 0.14),
+                        blurRadius: 4,
+                        spreadRadius: 0,
+                        offset: Offset(0, 0),
+                      )
+                    ],
+                    borderRadius: BorderRadius.circular(40),
+                  ),
                   child: TextFormFieldWidget(
                     controller: searchController,
                     textInputType: TextInputType.name,
-                    enterTextStyle: inputStyle,
+                    enterTextStyle: kTextFieldInputStyle,
                     cursorColor: primaryBlue,
                     prefixIcon: SvgPicture.asset(
                       'assets/search-button.svg',
                       fit: BoxFit.scaleDown,
                     ),
                     hintText: 'Search Here',
-                    border: outlineBorder,
-                    hintStyle: hintStyle,
-                    focusedBorder: focusBorder,
+                    border: kRoundedWhiteBorderStyle,
+                    hintStyle: kTextFieldHintStyle,
+                    focusedBorder: kRoundedActiveBorderStyle,
                     obscureText: null,
-                    enableBorder: enableBorder,
+                    enableBorder: kRoundedWhiteBorderStyle,
                   ),
                 ),
                 SizedBox(
@@ -164,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           borderRadius: BorderRadius.circular(30),
                           gradient: catSelected == 1 ? gradient : null,
                           color:
-                              catSelected == 2 ? grey.withOpacity(0.3) : null,
+                              catSelected != 1 ? grey.withOpacity(0.3) : null,
                         ),
                         child: Center(
                           child: Text(
@@ -172,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: GoogleFonts.outfit(
                               fontWeight: FontWeight.w500,
                               fontSize: 15,
-                              color: catSelected == 2 ? grey : white,
+                              color: catSelected == 1 ? white : grey,
                             ),
                           ),
                         ),
@@ -194,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           borderRadius: BorderRadius.circular(30),
                           gradient: catSelected == 2 ? gradient : null,
                           color:
-                              catSelected == 1 ? grey.withOpacity(0.3) : null,
+                              catSelected != 2 ? grey.withOpacity(0.3) : null,
                         ),
                         child: Center(
                           child: Text(
@@ -203,6 +172,36 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.w500,
                               fontSize: 15,
                               color: catSelected == 2 ? white : grey,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          catSelected = 3;
+                        });
+                      },
+                      child: Container(
+                        width: 100.w,
+                        height: 40.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          gradient: catSelected == 3 ? gradient : null,
+                          color:
+                              catSelected != 3 ? grey.withOpacity(0.3) : null,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Housing',
+                            style: GoogleFonts.outfit(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              color: catSelected == 3 ? white : grey,
                             ),
                           ),
                         ),
@@ -253,43 +252,82 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                           },
                         )
-                      : ListView.builder(
-                          itemCount: servicesCategoryModel.length,
-                          shrinkWrap: true,
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: EdgeInsets.only(right: 7),
-                              // color: primaryBlue,
-                              child: SizedBox(
-                                width: 75.w,
-                                // height: 98.h,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      height: 70.h,
-                                      child: SvgPicture.asset(
-                                        servicesCategoryModel[index].image,
-                                        fit: BoxFit.cover,
-                                      ),
+                      : catSelected == 2
+                          ? ListView.builder(
+                              itemCount: servicesCategoryModel.length,
+                              shrinkWrap: true,
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: EdgeInsets.only(right: 7),
+                                  // color: primaryBlue,
+                                  child: SizedBox(
+                                    width: 75.w,
+                                    // height: 98.h,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SizedBox(
+                                          height: 70.h,
+                                          child: SvgPicture.asset(
+                                            servicesCategoryModel[index].image,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Text(
+                                          servicesCategoryModel[index]
+                                              .serviceName,
+                                          style: GoogleFonts.outfit(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: black,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      servicesCategoryModel[index].serviceName,
-                                      style: GoogleFonts.outfit(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: black,
-                                      ),
+                                  ),
+                                );
+                              },
+                            )
+                          : ListView.builder(
+                              itemCount: housingCategoryModel.length,
+                              shrinkWrap: true,
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: EdgeInsets.only(right: 7),
+                                  // color: primaryBlue,
+                                  child: SizedBox(
+                                    width: 75.w,
+                                    // height: 98.h,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SizedBox(
+                                          height: 70.h,
+                                          child: SvgPicture.asset(
+                                            housingCategoryModel[index].image,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Text(
+                                          housingCategoryModel[index].houseName,
+                                          style: GoogleFonts.outfit(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: black,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                                  ),
+                                );
+                              },
+                            ),
                 ),
                 SizedBox(
                   height: 30.h,
@@ -306,7 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 20.h,
                 ),
                 SizedBox(
-                  height: 190.h,
+                  height: 200.h,
                   child: GestureDetector(
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
@@ -316,11 +354,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         return FeaturedProductsWidget(
-                          image: 'assets/place-holder.png',
-                          productCategory: 'Product Category',
-                          productDescription: 'Product Description',
-                          productLocation: 'Product Location',
-                          productPrice: '20',
+                          image: 'assets/product-ph.png',
+                          productCategory: 'Electronics',
+                          productDescription: 'Iphone 14',
+                          productLocation: 'Los Angeles',
+                          productPrice: '120',
                         );
                       },
                       itemCount: 6,
@@ -350,7 +388,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: EdgeInsets.only(bottom: 20.0),
                   child: SizedBox(
-                    height: 190.h,
+                    height: 200.h,
                     child: GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
@@ -360,10 +398,52 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ListView.builder(
                         itemBuilder: (context, index) {
                           return FeaturedServicesWidget(
-                            image: 'assets/place-holder.png',
-                            productCategory: 'Product Category',
-                            productDescription: 'Product Description',
-                            productLocation: 'Product Location',
+                            image: 'assets/service-ph.png',
+                            productCategory: 'Designing',
+                            productDescription: 'Graphic Design',
+                            productLocation: 'Los Angeles',
+                            productPrice: '20',
+                          );
+                        },
+                        itemCount: 6,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        physics: BouncingScrollPhysics(),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+                  child: Text(
+                    'Featured Housing',
+                    style: GoogleFonts.outfit(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: black,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20.0),
+                  child: SizedBox(
+                    height: 200.h,
+                    child: GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ServiceDetailsPage(),
+                        ),
+                      ),
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return FeaturedServicesWidget(
+                            image: 'assets/housing-ph.png',
+                            productCategory: 'Rental',
+                            productDescription: '2 Bedroom house',
+                            productLocation: 'Los Angeles',
                             productPrice: '20',
                           );
                         },

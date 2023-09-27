@@ -25,15 +25,23 @@ class _VerifyEmailState extends State<VerifyEmail> {
         centerTitle: true,
       ),
       body: SafeArea(
-          child: Column(
-        children: [
-          Text(
-            'We have send a verification code to your email',
-          ),
-          Text('“ username@gmail.com”'),
-          Text('Enter code below to verify.'),
-        ],
-      )),
+        child: Column(
+          children: [
+            Text(
+              'We have send a verification code to your email',
+              style: kSimpleTextStyle,
+            ),
+            Text(
+              '“ username@gmail.com”',
+              style: kColoredTextStyle,
+            ),
+            Text(
+              'Enter code below to verify.',
+              style: kTextFieldHintStyle,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

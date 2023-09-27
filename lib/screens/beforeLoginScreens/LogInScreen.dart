@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sellpad/screens/beforeLoginScreens/ResetPasswordScreen.dart';
 import 'package:sellpad/screens/beforeLoginScreens/verify_email_screen.dart';
 import 'package:sellpad/widgets/BottomNaviBar.dart';
 import 'package:sellpad/utils/Colors.dart';
@@ -92,11 +93,11 @@ class _LogInScreenState extends State<LogInScreen> {
                             fit: BoxFit.scaleDown,
                           ),
                           hintText: 'username@gmail.com',
-                          border: kBorderStyle,
-                          hintStyle: kTextFieldInputStyle,
-                          focusedBorder: kBorderStyle,
+                          border: kRoundedBorderStyle,
+                          hintStyle: kTextFieldHintStyle,
+                          focusedBorder: kRoundedBorderStyle,
                           obscureText: null,
-                          enableBorder: kBorderStyle,
+                          enableBorder: kRoundedBorderStyle,
                         ),
                       ),
                       SizedBox(
@@ -141,11 +142,11 @@ class _LogInScreenState extends State<LogInScreen> {
                                   ),
                           ),
                           hintText: '***************',
-                          border: kBorderStyle,
+                          border: kRoundedBorderStyle,
                           hintStyle: kTextFieldHintStyle,
-                          focusedBorder: kBorderStyle,
+                          focusedBorder: kRoundedBorderStyle,
                           obscureText: isHidden,
-                          enableBorder: kBorderStyle,
+                          enableBorder: kRoundedBorderStyle,
                         ),
                       ),
                       SizedBox(
@@ -168,7 +169,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            const VerifyEmail(),
+                                            const ResetPasswordScreen(),
                                       ),
                                     );
                                   },

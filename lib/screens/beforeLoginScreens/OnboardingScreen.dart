@@ -231,7 +231,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                 curve: Curves.easeInCubic,
                               );
                       },
-                      child: primaryButton(context, 'Signup'),
+                      child: primaryButton(context, 'Continue'),
                     ),
                   ],
                 ),

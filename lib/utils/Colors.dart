@@ -46,10 +46,34 @@ final TextStyle kTextFieldInputStyle = GoogleFonts.outfit(
   color: black,
 );
 
-final InputBorder kBorderStyle = OutlineInputBorder(
+final kRoundedActiveBorderStyle = OutlineInputBorder(
   borderRadius: BorderRadius.circular(40),
   borderSide: const BorderSide(
-    color: grey,
+    color: primaryBlue,
     width: 1,
   ),
 );
+
+final kRoundedBorderStyle = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(40),
+  borderSide: const BorderSide(
+    color: Colors.grey,
+    width: 1,
+  ),
+);
+
+final kRoundedWhiteBorderStyle = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(40),
+  borderSide: const BorderSide(
+    color: Colors.white,
+    width: 1,
+  ),
+);
+
+// final kRoundedWhiteActiveBorderStyle = OutlineInputBorder(
+//   borderRadius: BorderRadius.circular(40),
+//   borderSide: const BorderSide(
+//     color: Colors.white,
+//     width: 1,
+//   ),
+// );

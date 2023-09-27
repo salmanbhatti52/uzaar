@@ -71,6 +71,7 @@ class _FeaturedProductsWidgetState extends State<FeaturedProductsWidget> {
                   left: 5,
                   bottom: 5,
                   child: Container(
+                    margin: EdgeInsets.only(left: 8),
                     padding: EdgeInsets.all(3.h),
                     width: 70.w,
                     height: 27.h,
@@ -78,13 +79,15 @@ class _FeaturedProductsWidgetState extends State<FeaturedProductsWidget> {
                       gradient: gradient,
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    child: Text(
-                      widget.productCategory,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.outfit(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w400,
-                          color: white),
+                    child: Center(
+                      child: Text(
+                        widget.productCategory,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.outfit(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400,
+                            color: white),
+                      ),
                     ),
                   ),
                 ),
@@ -94,75 +97,82 @@ class _FeaturedProductsWidgetState extends State<FeaturedProductsWidget> {
           SizedBox(
             height: 10.h,
           ),
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              widget.productDescription,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              softWrap: true,
-              textAlign: TextAlign.start,
-              style: GoogleFonts.outfit(
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-                color: black,
-              ).copyWith(overflow: TextOverflow.ellipsis),
-            ),
-          ),
-          SizedBox(
-            height: 3.h,
-          ),
-          Row(
-            children: [
-              SvgPicture.asset(
-                'assets/address-icon.svg',
-                width: 14.w,
-                height: 14.h,
-                fit: BoxFit.scaleDown,
-              ),
-              SizedBox(
-                width: 4.w,
-              ),
-              Expanded(
-                child: Text(
-                  widget.productLocation,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  softWrap: true,
-                  style: GoogleFonts.outfit(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w400,
-                    color: grey,
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    widget.productDescription,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    softWrap: true,
+                    textAlign: TextAlign.start,
+                    style: GoogleFonts.outfit(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: black,
+                    ).copyWith(overflow: TextOverflow.ellipsis),
                   ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 7.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SvgPicture.asset(
-                'assets/price-tag.svg',
-                width: 14.w,
-                height: 14.h,
-                fit: BoxFit.scaleDown,
-              ),
-              SizedBox(
-                width: 4.w,
-              ),
-              Text(
-                '\$${widget.productPrice}',
-                style: GoogleFonts.outfit(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  color: primaryBlue,
+                SizedBox(
+                  height: 3.h,
                 ),
-              ),
-            ],
-          ),
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/address-icon.svg',
+                      width: 14.w,
+                      height: 14.h,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    SizedBox(
+                      width: 4.w,
+                    ),
+                    Expanded(
+                      child: Text(
+                        widget.productLocation,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        softWrap: true,
+                        style: GoogleFonts.outfit(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w400,
+                          color: grey,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 7.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/price-tag.svg',
+                      width: 14.w,
+                      height: 14.h,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    SizedBox(
+                      width: 4.w,
+                    ),
+                    Text(
+                      '\$${widget.productPrice}',
+                      style: GoogleFonts.outfit(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: primaryBlue,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

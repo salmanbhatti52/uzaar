@@ -72,140 +72,153 @@ class _FeaturedServicesWidgetState extends State<FeaturedServicesWidget> {
                   bottom: 5,
                   child: SizedBox(
                     width: MediaQuery.sizeOf(context).width,
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(3.h),
-                          width: 70.w,
-                          height: 27.h,
-                          decoration: BoxDecoration(
-                            gradient: gradient,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Text(
-                            widget.productCategory,
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.outfit(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w400,
-                                color: white),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 50.w,
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.star_rate_rounded,
-                                color: Colors.yellow,
-                                size: 14,
-                              ),
-                              Text(
-                                '4.5',
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(6.h),
+                            width: 70.w,
+                            height: 27.h,
+                            decoration: BoxDecoration(
+                              gradient: gradient,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Center(
+                              child: Text(
+                                widget.productCategory,
+                                textAlign: TextAlign.center,
                                 style: GoogleFonts.outfit(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500,
-                                  color: black,
-                                ),
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w400,
+                                    color: white),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            width: 35.w,
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.star_rate_rounded,
+                                  color: Colors.yellow,
+                                  size: 14,
+                                ),
+                                Text(
+                                  '4.5',
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                    color: white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(
-            height: 10.h,
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              widget.productDescription,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              softWrap: true,
-              textAlign: TextAlign.start,
-              style: GoogleFonts.outfit(
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-                color: black,
-              ).copyWith(overflow: TextOverflow.ellipsis),
-            ),
-          ),
-          SizedBox(
-            height: 3.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/address-icon.svg',
-                    width: 14.w,
-                    height: 14.h,
-                    fit: BoxFit.scaleDown,
+          Padding(
+            padding: const EdgeInsets.only(left: 6.0, right: 6.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 10.h,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    widget.productDescription,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    softWrap: true,
+                    textAlign: TextAlign.start,
+                    style: GoogleFonts.outfit(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: black,
+                    ).copyWith(overflow: TextOverflow.ellipsis),
                   ),
-                  SizedBox(
-                    width: 4.w,
-                  ),
-                  SizedBox(
-                    width: 110.w,
-                    child: Text(
-                      widget.productLocation,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: true,
+                ),
+                SizedBox(
+                  height: 3.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/address-icon.svg',
+                          width: 14.w,
+                          height: 14.h,
+                          fit: BoxFit.scaleDown,
+                        ),
+                        // SizedBox(
+                        //   width: 2.w,
+                        // ),
+                        SizedBox(
+                          // width: 110.w,
+                          child: Text(
+                            widget.productLocation,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            softWrap: true,
+                            style: GoogleFonts.outfit(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w400,
+                              color: grey,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      'From',
                       style: GoogleFonts.outfit(
-                        fontSize: 11,
+                        fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: grey,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Text(
-                'From',
-                style: GoogleFonts.outfit(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: grey,
+                  ],
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 4.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SvgPicture.asset(
-                'assets/price-tag.svg',
-                width: 14.w,
-                height: 14.h,
-                fit: BoxFit.scaleDown,
-              ),
-              SizedBox(
-                width: 4.w,
-              ),
-              Text(
-                '\$${widget.productPrice}',
-                style: GoogleFonts.outfit(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  color: primaryBlue,
+                SizedBox(
+                  height: 4.h,
                 ),
-              ),
-            ],
-          ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/price-tag.svg',
+                      width: 14.w,
+                      height: 14.h,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    SizedBox(
+                      width: 4.w,
+                    ),
+                    Text(
+                      '\$${widget.productPrice}',
+                      style: GoogleFonts.outfit(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: primaryBlue,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

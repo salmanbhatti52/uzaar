@@ -15,6 +15,12 @@ import 'package:sellpad/utils/Colors.dart';
 import '../screens/MessagesScreen.dart';
 import 'package:sellpad/screens/NotificationScreen.dart';
 
+final kAppBarTitleStyle = GoogleFonts.outfit(
+  fontSize: 24,
+  fontWeight: FontWeight.w600,
+  color: black,
+);
+
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
 
@@ -101,25 +107,39 @@ class _BottomNavBarState extends State<BottomNavBar> {
             appBar: AppBar(
               iconTheme: IconThemeData(color: black),
               elevation: 0.0,
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.white,
               leadingWidth: 70,
-              leading: Builder(builder: (context) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 8.0, left: 20),
-                  child: GestureDetector(
-                    onTap: () => Scaffold.of(context).openDrawer(),
-                    child: SvgPicture.asset(
-                      'assets/drawer-button.svg',
-                      fit: BoxFit.scaleDown,
+              leading: Builder(
+                builder: (context) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 8.0, left: 20),
+                    child: GestureDetector(
+                      onTap: () => Scaffold.of(context).openDrawer(),
+                      child: SvgPicture.asset(
+                        'assets/drawer-button.svg',
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                },
+              ),
               actions: [
                 Padding(
                   padding: EdgeInsets.only(right: 15.w),
                   child: Row(
                     children: [
+                      // Column(
+                      //   children: [
+                      //     Text(
+                      //       'Good Morning!',
+                      //       style: kAppBarTitleStyle,
+                      //     ),
+                      //     Text(
+                      //       'John',
+                      //       style: kAppBarTitleStyle,
+                      //     ),
+                      //   ],
+                      // ),
                       GestureDetector(
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
@@ -153,37 +173,21 @@ class _BottomNavBarState extends State<BottomNavBar> {
               title: _currentIndex == 0
                   ? Text(
                       'Home',
-                      style: GoogleFonts.syne(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                        color: black,
-                      ),
+                      style: kAppBarTitleStyle,
                     )
                   : _currentIndex == 1
                       ? Text(
                           'Explore',
-                          style: GoogleFonts.syne(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700,
-                            color: black,
-                          ),
+                          style: kAppBarTitleStyle,
                         )
                       : _currentIndex == 2
                           ? Text(
                               'Sell',
-                              style: GoogleFonts.syne(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w700,
-                                color: black,
-                              ),
+                              style: kAppBarTitleStyle,
                             )
                           : Text(
                               'Profile',
-                              style: GoogleFonts.syne(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w700,
-                                color: black,
-                              ),
+                              style: kAppBarTitleStyle,
                             ),
             ),
             drawer: DrawerWidget(),

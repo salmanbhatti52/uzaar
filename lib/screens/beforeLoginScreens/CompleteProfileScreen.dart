@@ -119,21 +119,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: white,
-          leading: GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
-            child: SvgPicture.asset(
-              'assets/back-arrow-button.svg',
-              fit: BoxFit.scaleDown,
-            ),
-          ),
           centerTitle: true,
           title: Text(
             'Complete Profile',
-            style: GoogleFonts.outfit(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-              color: black,
-            ),
+            style: kAppBarTitleStyle,
           ),
         ),
         backgroundColor: white,
