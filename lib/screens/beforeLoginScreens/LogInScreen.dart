@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sellpad/screens/beforeLoginScreens/ResetPasswordScreen.dart';
-import 'package:sellpad/screens/beforeLoginScreens/verify_email_screen.dart';
 import 'package:sellpad/widgets/BottomNaviBar.dart';
 import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/utils/Buttons.dart';

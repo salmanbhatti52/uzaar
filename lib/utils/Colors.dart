@@ -77,3 +77,15 @@ final kRoundedWhiteBorderStyle = OutlineInputBorder(
 //     width: 1,
 //   ),
 // );
+
+final kSearchTextFieldBoxDecoration = BoxDecoration(
+  boxShadow: [
+    BoxShadow(
+      color: Color.fromRGBO(0, 0, 0, 0.14),
+      blurRadius: 4,
+      spreadRadius: 0,
+      offset: Offset(0, 0),
+    )
+  ],
+  borderRadius: BorderRadius.circular(40),
+);

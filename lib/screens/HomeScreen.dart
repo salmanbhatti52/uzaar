@@ -76,17 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // width: double.infinity,
                   // height: 50.h,
                   // elevation: 5,
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromRGBO(0, 0, 0, 0.14),
-                        blurRadius: 4,
-                        spreadRadius: 0,
-                        offset: Offset(0, 0),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(40),
-                  ),
+                  decoration: kSearchTextFieldBoxDecoration,
                   child: TextFormFieldWidget(
                     controller: searchController,
                     textInputType: TextInputType.name,

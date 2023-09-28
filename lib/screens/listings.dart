@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sellpad/utils/Colors.dart';
 
-import 'AddProductImageScreen.dart';
+import '../widgets/product_list_tile.dart';
 
-class SellScreen extends StatefulWidget {
-  const SellScreen({super.key});
+class ListingsScreen extends StatefulWidget {
+  const ListingsScreen({Key? key}) : super(key: key);
 
   @override
-  State<SellScreen> createState() => _SellScreenState();
+  State<ListingsScreen> createState() => _ListingsScreenState();
 }
 
-class _SellScreenState extends State<SellScreen> {
+class _ListingsScreenState extends State<ListingsScreen> {
   int pageSelected = -1;
 
   @override
@@ -32,64 +31,12 @@ class _SellScreenState extends State<SellScreen> {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 22.0.w),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 180.w,
-                height: 45.h,
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 10.w),
-                      // padding: EdgeInsets.symmetric(horizontal: 10.w),
-                      width: 45.w,
-                      height: 15.h,
-                      decoration: BoxDecoration(
-                        color: pageSelected == 1 ? null : grey,
-                        gradient: pageSelected == 1 ? gradient : null,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 10.w),
-                      width: 45.w,
-                      height: 15.h,
-                      decoration: BoxDecoration(
-                        color: pageSelected == 2 ? null : grey,
-                        gradient: pageSelected == 2 ? gradient : null,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    Container(
-                      width: 45.w,
-                      height: 15.h,
-                      decoration: BoxDecoration(
-                        color: pageSelected == 3 ? null : grey,
-                        gradient: pageSelected == 3 ? gradient : null,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Text(
-              'What do you want to sell?',
-              style: GoogleFonts.outfit(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: black,
-              ),
-            ),
             SizedBox(
               height: 20.h,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
                   onTap: () {
@@ -178,14 +125,27 @@ class _SellScreenState extends State<SellScreen> {
               ],
             ),
             SizedBox(
-              height: 20.h,
+              height: 6,
             ),
-            catSelected == 1
-                ? Expanded(
-                    child: AddProductImageScreen(
-                    pageSelected: pageSelected,
-                  ))
-                : SizedBox()
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return ProductListTile(
+                    productImage: 'assets/listed_pro_img.png',
+                    productName: 'Iphone 14',
+                    productLocation: 'Los Angeles',
+                    productPrice: '\$12',
+                  );
+                },
+                itemCount: 5,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                physics: BouncingScrollPhysics(),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            )
           ],
         ),
       ),

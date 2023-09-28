@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/widgets/TextfromFieldWidget.dart';
 import 'ExploreProductsScreen.dart';
@@ -30,38 +29,38 @@ class _ExploreScreenState extends State<ExploreScreen> {
     catSelected = 1;
   }
 
-  final TextStyle hintStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: grey,
-  );
+  // final TextStyle hintStyle = GoogleFonts.outfit(
+  //   fontSize: 14,
+  //   fontWeight: FontWeight.w300,
+  //   color: grey,
+  // );
+  //
+  // final TextStyle inputStyle = GoogleFonts.outfit(
+  //   fontSize: 14,
+  //   fontWeight: FontWeight.w300,
+  //   color: black,
+  // );
 
-  final TextStyle inputStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: black,
-  );
-
-  final InputBorder outlineBorder = OutlineInputBorder(
-      borderSide: BorderSide(
-        color: grey,
-        width: 1,
-      ),
-      borderRadius: BorderRadius.circular(40));
-
-  final InputBorder focusBorder = OutlineInputBorder(
-      borderSide: BorderSide(
-        color: primaryBlue,
-        width: 1,
-      ),
-      borderRadius: BorderRadius.circular(40));
-
-  final InputBorder enableBorder = OutlineInputBorder(
-      borderSide: BorderSide(
-        color: primaryBlue,
-        width: 1,
-      ),
-      borderRadius: BorderRadius.circular(40));
+  // final InputBorder outlineBorder = OutlineInputBorder(
+  //     borderSide: BorderSide(
+  //       color: grey,
+  //       width: 1,
+  //     ),
+  //     borderRadius: BorderRadius.circular(40));
+  //
+  // final InputBorder focusBorder = OutlineInputBorder(
+  //     borderSide: BorderSide(
+  //       color: primaryBlue,
+  //       width: 1,
+  //     ),
+  //     borderRadius: BorderRadius.circular(40));
+  //
+  // final InputBorder enableBorder = OutlineInputBorder(
+  //     borderSide: BorderSide(
+  //       color: primaryBlue,
+  //       width: 1,
+  //     ),
+  //     borderRadius: BorderRadius.circular(40));
 
   int catSelected = -1;
   @override
@@ -145,24 +144,25 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  height: 50.h,
+                Container(
+                  decoration: kSearchTextFieldBoxDecoration,
+                  // width: double.infinity,
+                  // height: 50.h,
                   child: TextFormFieldWidget(
                     controller: searchController,
                     textInputType: TextInputType.name,
-                    enterTextStyle: inputStyle,
+                    enterTextStyle: kTextFieldInputStyle,
                     cursorColor: primaryBlue,
                     prefixIcon: SvgPicture.asset(
                       'assets/search-button.svg',
                       fit: BoxFit.scaleDown,
                     ),
                     hintText: 'Search Here',
-                    border: outlineBorder,
-                    hintStyle: hintStyle,
-                    focusedBorder: focusBorder,
+                    border: kRoundedWhiteBorderStyle,
+                    hintStyle: kTextFieldInputStyle,
+                    focusedBorder: kRoundedActiveBorderStyle,
                     obscureText: null,
-                    enableBorder: enableBorder,
+                    enableBorder: kRoundedWhiteBorderStyle,
                   ),
                 ),
                 SizedBox(
