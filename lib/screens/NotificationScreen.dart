@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:sellpad/utils/Colors.dart';
+
+import '../widgets/common_list_tile.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -31,102 +31,30 @@ class _NotificationScreenState extends State<NotificationScreen> {
           centerTitle: false,
           title: Text(
             'Notifications',
-            style: GoogleFonts.outfit(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-              color: black,
-            ),
+            style: kAppBarTitleStyle,
           ),
         ),
         backgroundColor: white,
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 20),
+            padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 13),
             child: GlowingOverscrollIndicator(
               axisDirection: AxisDirection.down,
               color: primaryBlue,
               child: RefreshIndicator(
                 onRefresh: () async {},
                 color: primaryBlue,
-                child: ListView.separated(
+                child: ListView.builder(
                   itemCount: 6,
-                  shrinkWrap: false,
-                  physics: AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return Container(
-                      padding: EdgeInsets.all(10),
-                      width: double.infinity,
-                      height: 80.h,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: grey.withOpacity(0.5),
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset('assets/Notification.svg'),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Column(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Offer Received',
-                                    style: GoogleFonts.outfit(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: black,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  SizedBox(
-                                    width: 200.w,
-                                    child: Text(
-                                      'The notification details The notification details The notification details The notification details .',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      softWrap: true,
-                                      style: GoogleFonts.outfit(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w300,
-                                        color: grey,
-                                      ).copyWith(
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Expanded(
-                            child: Text(
-                              '4 hours ago',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.outfit(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w500,
-                                color: grey,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider(
-                      color: grey,
-                      height: 30,
+                    return CommonListTile(
+                      imageName: 'assets/Notification.svg',
+                      title: 'Offer Received',
+                      detail: 'You have received an offer on your product.',
+                      duration: '4 hours ago',
                     );
                   },
                 ),
