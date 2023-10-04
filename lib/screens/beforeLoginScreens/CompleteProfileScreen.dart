@@ -17,15 +17,14 @@ class CompleteProfileScreen extends StatefulWidget {
 }
 
 class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
-  late TextEditingController addressController;
-
+  final addressController = TextEditingController();
+  final phoneNumberController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    addressController = TextEditingController();
   }
 
   Widget text(String text) {
@@ -209,7 +208,23 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 7.h,
                       ),
-                      readOnlyContainer('assets/phone-fill.svg', '+4156565662'),
+                      // readOnlyContainer('assets/phone-fill.svg', '+4156565662'),
+                      TextFormFieldWidget(
+                        controller: phoneNumberController,
+                        textInputType: TextInputType.phone,
+                        enterTextStyle: inputStyle,
+                        cursorColor: primaryBlue,
+                        prefixIcon: SvgPicture.asset(
+                          'assets/phone-fill.svg',
+                          fit: BoxFit.scaleDown,
+                        ),
+                        hintText: '+4156565662',
+                        border: outlineBorder,
+                        hintStyle: hintStyle,
+                        focusedBorder: focusBorder,
+                        obscureText: null,
+                        enableBorder: enableBorder,
+                      ),
                       SizedBox(
                         height: 20.h,
                       ),

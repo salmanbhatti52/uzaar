@@ -11,7 +11,7 @@ class ReusableText extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.outfit(
-        fontSize: 18,
+        fontSize: 14,
         fontWeight: FontWeight.w500,
         color: black,
       ),

@@ -1,17 +1,15 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:sellpad/widgets/TextfromFieldWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sellpad/screens/beforeLoginScreens/CompleteProfileScreen.dart';
+import 'package:sellpad/widgets/text.dart';
 
+import '../../widgets/suffix_svg_icon.dart';
 import 'LogInScreen.dart';
 import 'package:sellpad/utils/Buttons.dart';
 import 'package:sellpad/utils/Colors.dart';
-
-
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -21,74 +19,20 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  late TextEditingController firstNameController;
-  late TextEditingController lastNameController;
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   final GlobalKey<FormState> _key = GlobalKey();
 
-  bool isHidden = false;
+  bool isHidden = true;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    firstNameController = TextEditingController();
-    lastNameController = TextEditingController();
-    passwordController = TextEditingController();
-    emailController = TextEditingController();
   }
-
-  Widget text(String text) {
-    return Text(
-      text,
-      style: GoogleFonts.outfit(
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: black,
-      ),
-    );
-  }
-
-  final TextStyle hintStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: grey,
-  );
-
-  final TextStyle inputStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: black,
-  );
-
-  final InputBorder outlineBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: grey,
-      width: 1,
-    ),
-  );
-
-  final InputBorder focusBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: primaryBlue,
-      width: 1,
-    ),
-  );
-
-  final InputBorder enableBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: primaryBlue,
-      width: 1,
-    ),
-  );
-
-  final contentPadding =
-      const EdgeInsets.symmetric(horizontal: 14, vertical: 16);
 
   @override
   Widget build(BuildContext context) {
@@ -117,39 +61,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       Text(
                         'Signup',
-                        style: GoogleFonts.outfit(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          color: black,
-                        ),
+                        style: kAppBarTitleStyle,
                       ),
                       SizedBox(
                         height: 20.h,
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: text('First Name'),
+                        child: ReusableText(text: 'First Name'),
                       ),
                       SizedBox(
                         height: 7.h,
                       ),
                       SizedBox(
                         height: 50.h,
-                        child: TextFormFieldWidget(
-                          controller: firstNameController,
-                          textInputType: TextInputType.name,
-                          enterTextStyle: inputStyle,
-                          cursorColor: primaryBlue,
-                          prefixIcon: SvgPicture.asset(
-                            'assets/person-icon.svg',
-                            fit: BoxFit.scaleDown,
+                        child: Container(
+                          decoration: kTextFieldBoxDecoration,
+                          child: TextFormFieldWidget(
+                            controller: firstNameController,
+                            textInputType: TextInputType.name,
+                            enterTextStyle: kTextFieldInputStyle,
+                            cursorColor: primaryBlue,
+                            prefixIcon:
+                                SvgIcon(imageName: 'assets/person-icon.svg'),
+                            hintText: 'First Name',
+                            border: kRoundedWhiteBorderStyle,
+                            hintStyle: kTextFieldHintStyle,
+                            focusedBorder: kRoundedActiveBorderStyle,
+                            obscureText: null,
+                            enableBorder: kRoundedWhiteBorderStyle,
                           ),
-                          hintText: 'First Name',
-                          border: outlineBorder,
-                          hintStyle: hintStyle,
-                          focusedBorder: focusBorder,
-                          obscureText: null,
-                          enableBorder: enableBorder,
                         ),
                       ),
                       SizedBox(
@@ -157,27 +98,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: text('Last Name')),
+                          child: ReusableText(text: 'Last Name')),
                       SizedBox(
                         height: 7.h,
                       ),
                       SizedBox(
                         height: 50.h,
-                        child: TextFormFieldWidget(
-                          controller: lastNameController,
-                          textInputType: TextInputType.name,
-                          enterTextStyle: inputStyle,
-                          cursorColor: primaryBlue,
-                          prefixIcon: SvgPicture.asset(
-                            'assets/person-icon.svg',
-                            fit: BoxFit.scaleDown,
+                        child: Container(
+                          decoration: kTextFieldBoxDecoration,
+                          child: TextFormFieldWidget(
+                            controller: lastNameController,
+                            textInputType: TextInputType.name,
+                            enterTextStyle: kTextFieldInputStyle,
+                            cursorColor: primaryBlue,
+                            prefixIcon:
+                                SvgIcon(imageName: 'assets/person-icon.svg'),
+                            hintText: 'Last Name',
+                            border: kRoundedWhiteBorderStyle,
+                            hintStyle: kTextFieldHintStyle,
+                            focusedBorder: kRoundedActiveBorderStyle,
+                            obscureText: null,
+                            enableBorder: kRoundedWhiteBorderStyle,
                           ),
-                          hintText: 'Last Name',
-                          border: outlineBorder,
-                          hintStyle: hintStyle,
-                          focusedBorder: focusBorder,
-                          obscureText: null,
-                          enableBorder: enableBorder,
                         ),
                       ),
                       SizedBox(
@@ -185,27 +127,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: text('Email')),
+                          child: ReusableText(text: 'Email')),
                       SizedBox(
                         height: 7.h,
                       ),
                       SizedBox(
                         height: 50.h,
-                        child: TextFormFieldWidget(
-                          controller: emailController,
-                          textInputType: TextInputType.emailAddress,
-                          enterTextStyle: inputStyle,
-                          cursorColor: primaryBlue,
-                          prefixIcon: SvgPicture.asset(
-                            'assets/email-icon.svg',
-                            fit: BoxFit.scaleDown,
+                        child: Container(
+                          decoration: kTextFieldBoxDecoration,
+                          child: TextFormFieldWidget(
+                            controller: emailController,
+                            textInputType: TextInputType.emailAddress,
+                            enterTextStyle: kTextFieldInputStyle,
+                            cursorColor: primaryBlue,
+                            prefixIcon:
+                                SvgIcon(imageName: 'assets/email-icon.svg'),
+                            hintText: 'username@gmail.com',
+                            border: kRoundedWhiteBorderStyle,
+                            hintStyle: kTextFieldHintStyle,
+                            focusedBorder: kRoundedActiveBorderStyle,
+                            obscureText: null,
+                            enableBorder: kRoundedWhiteBorderStyle,
                           ),
-                          hintText: 'username@gmail.com',
-                          border: outlineBorder,
-                          hintStyle: hintStyle,
-                          focusedBorder: focusBorder,
-                          obscureText: null,
-                          enableBorder: enableBorder,
                         ),
                       ),
                       SizedBox(
@@ -213,47 +156,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: text('Password')),
+                          child: ReusableText(text: 'Password')),
                       SizedBox(
                         height: 7.h,
                       ),
                       SizedBox(
                         height: 50.h,
-                        child: TextFormFieldWidget(
-                          controller: passwordController,
-                          textInputType: TextInputType.visiblePassword,
-                          enterTextStyle: inputStyle,
-                          cursorColor: primaryBlue,
-                          prefixIcon: SvgPicture.asset(
-                            'assets/password-icon.svg',
-                            fit: BoxFit.scaleDown,
+                        child: Container(
+                          decoration: kTextFieldBoxDecoration,
+                          child: TextFormFieldWidget(
+                            controller: passwordController,
+                            textInputType: TextInputType.visiblePassword,
+                            enterTextStyle: kTextFieldInputStyle,
+                            cursorColor: primaryBlue,
+                            prefixIcon:
+                                SvgIcon(imageName: 'assets/password-icon.svg'),
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isHidden = !isHidden;
+                                });
+                              },
+                              child: isHidden
+                                  ? SvgIcon(
+                                      imageName: 'assets/show-pass.svg',
+                                      colorFilter: ColorFilter.mode(
+                                          primaryBlue, BlendMode.srcIn),
+                                    )
+                                  : SvgIcon(
+                                      imageName: 'assets/hide-pass-icon.svg',
+                                      colorFilter: ColorFilter.mode(
+                                          primaryBlue, BlendMode.srcIn),
+                                    ),
+                            ),
+                            hintText: '***************',
+                            border: kRoundedWhiteBorderStyle,
+                            hintStyle: kTextFieldHintStyle,
+                            focusedBorder: kRoundedActiveBorderStyle,
+                            obscureText: isHidden,
+                            enableBorder: kRoundedWhiteBorderStyle,
                           ),
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isHidden = !isHidden;
-                              });
-                            },
-                            child: isHidden
-                                ? SvgPicture.asset(
-                                    'assets/hide-pass-icon.svg',
-                                    colorFilter: ColorFilter.mode(
-                                        primaryBlue, BlendMode.srcIn),
-                                    fit: BoxFit.scaleDown,
-                                  )
-                                : SvgPicture.asset(
-                                    'assets/show-pass.svg',
-                                    fit: BoxFit.scaleDown,
-                                    colorFilter: ColorFilter.mode(
-                                        primaryBlue, BlendMode.srcIn),
-                                  ),
-                          ),
-                          hintText: '***************',
-                          border: outlineBorder,
-                          hintStyle: hintStyle,
-                          focusedBorder: focusBorder,
-                          obscureText: isHidden,
-                          enableBorder: enableBorder,
                         ),
                       ),
                       SizedBox(
@@ -270,24 +212,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(
                         height: 30.h,
                       ),
-                      // googleButton(context),
-                      // SizedBox(
-                      //   height: 30.h,
-                      // ),
-                      // facebookButton(context),
-                      // SizedBox(
-                      //   height: 30.h,
-                      // ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 22.0.h),
                         child: RichText(
                           text: TextSpan(
                             text: 'Already have an account?  ',
-                            style: GoogleFonts.outfit(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: black,
-                            ),
+                            style: kBodyTextStyle,
                             children: [
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
@@ -299,11 +229,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     );
                                   },
                                 text: 'Login',
-                                style: GoogleFonts.outfit(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: primaryBlue,
-                                ).copyWith(
+                                style: kColoredBodyTextStyle.copyWith(
                                   decoration: TextDecoration.underline,
                                 ),
                               ),

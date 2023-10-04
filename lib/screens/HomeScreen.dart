@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // width: double.infinity,
                   // height: 50.h,
                   // elevation: 5,
-                  decoration: kSearchTextFieldBoxDecoration,
+                  decoration: kTextFieldBoxDecoration,
                   child: TextFormFieldWidget(
                     controller: searchController,
                     textInputType: TextInputType.name,

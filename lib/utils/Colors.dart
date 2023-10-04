@@ -16,6 +16,18 @@ const LinearGradient gradient = LinearGradient(
   end: Alignment.bottomCenter,
 );
 
+final kPrimaryButtonTextStyle = GoogleFonts.outfit(
+  fontWeight: FontWeight.w500,
+  fontSize: 18,
+  color: white,
+);
+
+final kOutlinedButtonTextStyle = GoogleFonts.outfit(
+  fontWeight: FontWeight.w500,
+  fontSize: 18,
+  color: primaryBlue,
+);
+
 final kAppBarTitleStyle = GoogleFonts.outfit(
   fontSize: 24,
   fontWeight: FontWeight.w600,
@@ -26,6 +38,18 @@ final kSimpleTextStyle = GoogleFonts.outfit(
   fontSize: 14,
   fontWeight: FontWeight.w400,
   color: grey,
+);
+
+final kBodyTextStyle = GoogleFonts.outfit(
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+  color: black,
+);
+
+final kColoredBodyTextStyle = GoogleFonts.outfit(
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+  color: primaryBlue,
 );
 
 final kColoredTextStyle = GoogleFonts.outfit(
@@ -70,16 +94,8 @@ final kRoundedWhiteBorderStyle = OutlineInputBorder(
   ),
 );
 
-// final kRoundedWhiteActiveBorderStyle = OutlineInputBorder(
-//   borderRadius: BorderRadius.circular(40),
-//   borderSide: const BorderSide(
-//     color: Colors.white,
-//     width: 1,
-//   ),
-// );
-
-final kSearchTextFieldBoxDecoration = BoxDecoration(
-  boxShadow: [
+final kTextFieldBoxDecoration = BoxDecoration(
+  boxShadow: const [
     BoxShadow(
       color: Color.fromRGBO(0, 0, 0, 0.14),
       blurRadius: 4,

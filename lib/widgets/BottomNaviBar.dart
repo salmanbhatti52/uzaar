@@ -17,12 +17,6 @@ import 'package:sellpad/utils/Colors.dart';
 import '../screens/MessagesScreen.dart';
 import 'package:sellpad/screens/NotificationScreen.dart';
 
-final kAppBarTitleStyle = GoogleFonts.outfit(
-  fontSize: 24,
-  fontWeight: FontWeight.w600,
-  color: black,
-);
-
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
 

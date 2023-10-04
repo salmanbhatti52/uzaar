@@ -145,7 +145,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   height: 20.h,
                 ),
                 Container(
-                  decoration: kSearchTextFieldBoxDecoration,
+                  decoration: kTextFieldBoxDecoration,
                   // width: double.infinity,
                   // height: 50.h,
                   child: TextFormFieldWidget(
