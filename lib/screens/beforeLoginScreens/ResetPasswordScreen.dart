@@ -26,8 +26,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   final GlobalKey<FormState> _key = GlobalKey();
 
-  bool isHiddenNew = false;
-  bool isHiddenConfirm = false;
+  bool isHiddenNew = true;
+  bool isHiddenConfirm = true;
 
   @override
   void initState() {
@@ -84,12 +84,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           },
                           child: isHiddenNew
                               ? SvgIcon(
-                                  imageName: 'assets/hide-pass-icon.svg',
+                                  imageName: 'assets/show-pass.svg',
                                   colorFilter: ColorFilter.mode(
                                       primaryBlue, BlendMode.srcIn),
                                 )
                               : SvgIcon(
-                                  imageName: 'assets/show-pass.svg',
+                                  imageName: 'assets/hide-pass-icon.svg',
                                   colorFilter: ColorFilter.mode(
                                       primaryBlue, BlendMode.srcIn),
                                 ),
@@ -127,12 +127,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         },
                         child: isHiddenConfirm
                             ? SvgIcon(
-                                imageName: 'assets/hide-pass-icon.svg',
+                                imageName: 'assets/show-pass.svg',
                                 colorFilter: ColorFilter.mode(
                                     primaryBlue, BlendMode.srcIn),
                               )
                             : SvgIcon(
-                                imageName: 'assets/show-pass.svg',
+                                imageName: 'assets/hide-pass-icon.svg',
                                 colorFilter: ColorFilter.mode(
                                     primaryBlue, BlendMode.srcIn),
                               ),

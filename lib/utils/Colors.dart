@@ -134,6 +134,20 @@ final kOtpBoxDecoration = BoxDecoration(
   borderRadius: BorderRadius.circular(10),
 );
 
+final kContainerBoxDecoration = BoxDecoration(
+  color: white,
+  borderRadius: BorderRadius.circular(40),
+  border: Border.all(color: white, width: 1),
+  boxShadow: const [
+    BoxShadow(
+      color: Color.fromRGBO(0, 0, 0, 0.14),
+      blurRadius: 4,
+      spreadRadius: 0,
+      offset: Offset(0, 0),
+    )
+  ],
+);
+
 final kOptInputDecoration = InputDecoration(
   // constraints:
   //     BoxConstraints(minHeight: 70, minWidth: 50, maxHeight: 70, maxWidth: 50),

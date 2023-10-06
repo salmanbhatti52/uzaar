@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:sellpad/widgets/suffix_svg_icon.dart';
 
 class NavigateBack extends StatelessWidget {
   final BuildContext buildContext;
@@ -8,9 +8,8 @@ class NavigateBack extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.pop(buildContext),
-      child: SvgPicture.asset(
-        'assets/back-arrow-button.svg',
-        fit: BoxFit.scaleDown,
+      child: SvgIcon(
+        imageName: 'assets/back-arrow-button.svg',
       ),
     );
   }

@@ -1,3 +1,6 @@
+import 'package:sellpad/widgets/suffix_svg_icon.dart';
+import 'package:sellpad/widgets/text.dart';
+
 import '../../widgets/TextfromFieldWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +11,7 @@ import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/screens/beforeLoginScreens/LogInScreen.dart';
 
 import '../../utils/Buttons.dart';
+import '../../widgets/read_only_container.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
   static const String id = 'complete_profile_screen';
@@ -26,89 +30,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-  }
-
-  Widget text(String text) {
-    return Text(
-      text,
-      style: GoogleFonts.outfit(
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: black,
-      ),
-    );
-  }
-
-  final TextStyle hintStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: grey,
-  );
-
-  final TextStyle inputStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: black,
-  );
-
-  final InputBorder outlineBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: grey,
-      width: 1,
-    ),
-  );
-
-  final InputBorder focusBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: primaryBlue,
-      width: 1,
-    ),
-  );
-
-  final InputBorder enableBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: primaryBlue,
-      width: 1,
-    ),
-  );
-
-  final contentPadding =
-      const EdgeInsets.symmetric(horizontal: 14, vertical: 16);
-
-  Widget readOnlyContainer(String objectIcon, String objectText) {
-    return Container(
-      padding: EdgeInsets.only(left: 13),
-      width: double.infinity,
-      height: 50.h,
-      decoration: BoxDecoration(
-        color: white,
-        borderRadius: BorderRadius.circular(40),
-        border: Border.all(color: primaryBlue, width: 1),
-      ),
-      child: Row(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SvgPicture.asset(
-            objectIcon,
-            fit: BoxFit.scaleDown,
-          ),
-          SizedBox(
-            width: 10.w,
-          ),
-          Text(
-            objectText,
-            style: GoogleFonts.outfit(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: black,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -160,10 +81,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             right: -10,
                             child: GestureDetector(
                               onTap: null,
-                              child: SvgPicture.asset(
-                                'assets/add-pic-button.svg',
-                                fit: BoxFit.scaleDown,
-                              ),
+                              child: SvgIcon(
+                                  imageName: 'assets/add-pic-button.svg'),
                             ),
                           ),
                         ],
@@ -173,7 +92,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: text('First Name'),
+                        child: ReusableText(text: 'First Name'),
                       ),
                       SizedBox(
                         height: 7.h,
@@ -184,7 +103,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: text('Last Name')),
+                          child: ReusableText(text: 'Last Name')),
                       SizedBox(
                         height: 7.h,
                       ),
@@ -194,7 +113,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: text('Email')),
+                          child: ReusableText(text: 'Email')),
                       SizedBox(
                         height: 7.h,
                       ),
@@ -205,59 +124,60 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: text('Phone Number')),
+                          child: ReusableText(text: 'Phone Number')),
                       SizedBox(
                         height: 7.h,
                       ),
                       // readOnlyContainer('assets/phone-fill.svg', '+4156565662'),
-                      TextFormFieldWidget(
-                        controller: phoneNumberController,
-                        textInputType: TextInputType.phone,
-                        enterTextStyle: inputStyle,
-                        cursorColor: primaryBlue,
-                        prefixIcon: SvgPicture.asset(
-                          'assets/phone-fill.svg',
-                          fit: BoxFit.scaleDown,
+                      Container(
+                        decoration: kTextFieldBoxDecoration,
+                        child: TextFormFieldWidget(
+                          controller: phoneNumberController,
+                          textInputType: TextInputType.phone,
+                          enterTextStyle: kTextFieldInputStyle,
+                          cursorColor: primaryBlue,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/phone-fill.svg'),
+                          hintText: '+4156565662',
+                          border: kRoundedWhiteBorderStyle,
+                          hintStyle: kTextFieldHintStyle,
+                          focusedBorder: kRoundedActiveBorderStyle,
+                          obscureText: null,
+                          enableBorder: kRoundedWhiteBorderStyle,
                         ),
-                        hintText: '+4156565662',
-                        border: outlineBorder,
-                        hintStyle: hintStyle,
-                        focusedBorder: focusBorder,
-                        obscureText: null,
-                        enableBorder: enableBorder,
                       ),
                       SizedBox(
                         height: 20.h,
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: text('Address')),
+                          child: ReusableText(text: 'Address')),
                       SizedBox(
                         height: 7.h,
                       ),
-                      SizedBox(
-                        height: 50.h,
-                        child: TextFormFieldWidget(
-                          controller: addressController,
-                          textInputType: TextInputType.streetAddress,
-                          enterTextStyle: inputStyle,
-                          cursorColor: primaryBlue,
-                          prefixIcon: SvgPicture.asset(
-                            'assets/address-icon.svg',
-                            fit: BoxFit.scaleDown,
+                      Container(
+                        decoration: kTextFieldBoxDecoration,
+                        child: SizedBox(
+                          height: 50.h,
+                          child: TextFormFieldWidget(
+                            controller: addressController,
+                            textInputType: TextInputType.streetAddress,
+                            enterTextStyle: kTextFieldInputStyle,
+                            cursorColor: primaryBlue,
+                            prefixIcon:
+                                SvgIcon(imageName: 'assets/address-icon.svg'),
+                            suffixIcon: SvgIcon(
+                              imageName: 'assets/address-icon.svg',
+                              colorFilter: ColorFilter.mode(
+                                  primaryBlue, BlendMode.srcIn),
+                            ),
+                            hintText: 'Your Address Here',
+                            border: kRoundedWhiteBorderStyle,
+                            hintStyle: kTextFieldHintStyle,
+                            focusedBorder: kRoundedActiveBorderStyle,
+                            obscureText: null,
+                            enableBorder: kRoundedWhiteBorderStyle,
                           ),
-                          suffixIcon: SvgPicture.asset(
-                            'assets/address-icon.svg',
-                            colorFilter:
-                                ColorFilter.mode(primaryBlue, BlendMode.srcIn),
-                            fit: BoxFit.scaleDown,
-                          ),
-                          hintText: 'Your Address Here',
-                          border: outlineBorder,
-                          hintStyle: hintStyle,
-                          focusedBorder: focusBorder,
-                          obscureText: null,
-                          enableBorder: enableBorder,
                         ),
                       ),
                       SizedBox(
@@ -266,11 +186,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       Padding(
                         padding: EdgeInsets.only(bottom: 25.0.h),
                         child: GestureDetector(
-                          onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => LogInScreen(),
-                            ),
-                          ),
+                          onTap: () =>
+                              Navigator.pushNamed(context, LogInScreen.id),
                           child: primaryButton(context, 'Continue'),
                         ),
                       ),
