@@ -217,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               margin: EdgeInsets.only(right: 7),
                               // color: primaryBlue,
                               child: SizedBox(
-                                width: 75.w,
+                                width: 75,
                                 // height: 98.h,
                                 child: Column(
                                   mainAxisAlignment:
@@ -254,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   margin: EdgeInsets.only(right: 7),
                                   // color: primaryBlue,
                                   child: SizedBox(
-                                    width: 75.w,
+                                    width: 75,
                                     // height: 98.h,
                                     child: Column(
                                       mainAxisAlignment:
@@ -264,7 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           height: 70.h,
                                           child: SvgPicture.asset(
                                             servicesCategoryModel[index].image,
-                                            fit: BoxFit.cover,
+                                            // fit: BoxFit.scaleDown,
                                           ),
                                         ),
                                         Text(
@@ -292,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   margin: EdgeInsets.only(right: 7),
                                   // color: primaryBlue,
                                   child: SizedBox(
-                                    width: 75.w,
+                                    width: 75,
                                     // height: 98.h,
                                     child: Column(
                                       mainAxisAlignment:
@@ -302,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           height: 70.h,
                                           child: SvgPicture.asset(
                                             housingCategoryModel[index].image,
-                                            fit: BoxFit.cover,
+                                            // fit: BoxFit.cover,
                                           ),
                                         ),
                                         Text(
