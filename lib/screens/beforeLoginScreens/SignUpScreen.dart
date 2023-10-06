@@ -1,4 +1,5 @@
 import 'package:flutter/gestures.dart';
+import 'package:sellpad/screens/beforeLoginScreens/verify_email_screen.dart';
 import 'package:sellpad/widgets/TextfromFieldWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +13,7 @@ import 'package:sellpad/utils/Buttons.dart';
 import 'package:sellpad/utils/Colors.dart';
 
 class SignUpScreen extends StatefulWidget {
+  static const String id = 'signup_screen';
   const SignUpScreen({super.key});
 
   @override
@@ -204,7 +206,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       GestureDetector(
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => CompleteProfileScreen(),
+                            builder: (context) => VerifyEmail(),
                           ),
                         ),
                         child: primaryButton(context, 'Signup'),
@@ -222,11 +224,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => LogInScreen(),
-                                      ),
-                                    );
+                                    Navigator.pushNamed(
+                                        context, LogInScreen.id);
                                   },
                                 text: 'Login',
                                 style: kColoredBodyTextStyle.copyWith(

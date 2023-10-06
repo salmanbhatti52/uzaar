@@ -14,6 +14,7 @@ import 'package:sellpad/widgets/text.dart';
 import 'SignUpScreen.dart';
 
 class LogInScreen extends StatefulWidget {
+  static const String id = 'login_screen';
   const LogInScreen({super.key});
 
   @override
@@ -154,12 +155,8 @@ class _LogInScreenState extends State<LogInScreen> {
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ResetPasswordScreen(),
-                                      ),
-                                    );
+                                    Navigator.pushNamed(
+                                        context, ResetPasswordScreen.id);
                                   },
                                 text: 'Reset',
                                 style: kColoredBodyTextStyle.copyWith(
@@ -174,11 +171,8 @@ class _LogInScreenState extends State<LogInScreen> {
                         height: 50.h,
                       ),
                       GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => BottomNavBar(),
-                          ),
-                        ),
+                        onTap: () =>
+                            Navigator.pushNamed(context, BottomNavBar.id),
                         child: primaryButton(context, 'Login'),
                       ),
                       SizedBox(
@@ -206,11 +200,8 @@ class _LogInScreenState extends State<LogInScreen> {
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => SignUpScreen(),
-                                      ),
-                                    );
+                                    Navigator.pushNamed(
+                                        context, SignUpScreen.id);
                                   },
                                 text: 'Signup',
                                 style: kColoredBodyTextStyle.copyWith(

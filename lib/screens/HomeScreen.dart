@@ -15,6 +15,7 @@ import 'ProductAndServicesDetailsPages/ProductDetailsPage.dart';
 import 'ProductAndServicesDetailsPages/ServiceDetailsPage.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const String id = 'home_screen';
   const HomeScreen({super.key});
 
   @override

@@ -60,13 +60,13 @@ final kColoredTextStyle = GoogleFonts.outfit(
 
 final TextStyle kTextFieldHintStyle = GoogleFonts.outfit(
   fontSize: 14,
-  fontWeight: FontWeight.w300,
+  fontWeight: FontWeight.w400,
   color: grey,
 );
 
 final TextStyle kTextFieldInputStyle = GoogleFonts.outfit(
   fontSize: 14,
-  fontWeight: FontWeight.w300,
+  fontWeight: FontWeight.w400,
   color: black,
 );
 
@@ -104,4 +104,46 @@ final kTextFieldBoxDecoration = BoxDecoration(
     )
   ],
   borderRadius: BorderRadius.circular(40),
+);
+
+final kOtpActiveBorderStyle = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(10),
+  borderSide: const BorderSide(
+    color: primaryBlue,
+    width: 1,
+  ),
+);
+
+final kOtpWhiteBorderStyle = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(10),
+  borderSide: const BorderSide(
+    color: Colors.white,
+    width: 1,
+  ),
+);
+
+final kOtpBoxDecoration = BoxDecoration(
+  boxShadow: const [
+    BoxShadow(
+      color: Color.fromRGBO(0, 0, 0, 0.14),
+      blurRadius: 4,
+      spreadRadius: 0,
+      offset: Offset(0, 0),
+    )
+  ],
+  borderRadius: BorderRadius.circular(10),
+);
+
+final kOptInputDecoration = InputDecoration(
+  // constraints:
+  //     BoxConstraints(minHeight: 70, minWidth: 50, maxHeight: 70, maxWidth: 50),
+  filled: true,
+  fillColor: Colors.white,
+  counterText: '',
+  hintText: '0',
+  hintStyle: kTextFieldHintStyle,
+  border: kOtpWhiteBorderStyle,
+  enabledBorder: kOtpWhiteBorderStyle,
+  focusedBorder: kOtpActiveBorderStyle,
+  // contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 );

@@ -10,6 +10,7 @@ import 'package:sellpad/screens/beforeLoginScreens/LogInScreen.dart';
 import '../../utils/Buttons.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
+  static const String id = 'complete_profile_screen';
   const CompleteProfileScreen({super.key});
 
   @override
@@ -101,7 +102,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
             objectText,
             style: GoogleFonts.outfit(
               fontSize: 14,
-              fontWeight: FontWeight.w300,
+              fontWeight: FontWeight.w400,
               color: black,
             ),
           ),

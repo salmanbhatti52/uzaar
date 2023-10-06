@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sellpad/screens/beforeLoginScreens/OnboardingScreen.dart';
 
 class CustomSplash extends StatefulWidget {
+  static const String id = 'custom_splash';
   const CustomSplash({Key? key}) : super(key: key);
 
   @override
@@ -23,23 +24,11 @@ class _CustomSplashState extends State<CustomSplash> {
     // isLogin = (await secureSharedPref.getString('isLogin')) ?? 'false';
 
     Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(seconds: 1),
       () async {
-        Navigator.pushReplacement(
+        Navigator.pushReplacementNamed(
           context,
-          MaterialPageRoute(
-            //pushReplacement = replacing the route so that
-            //splash screen won't show on back button press
-            //navigation to Home page.
-            // builder: (context) {
-            //   return isLogin == "true"
-            //       ? const BottomNavigationBarScreens()
-            //       : const OnBoardingScreens();
-            // },
-            builder: (context) {
-              return const OnBoardingScreen();
-            },
-          ),
+          OnBoardingScreen.id,
         );
       },
     );

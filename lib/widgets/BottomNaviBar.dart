@@ -18,6 +18,7 @@ import '../screens/MessagesScreen.dart';
 import 'package:sellpad/screens/NotificationScreen.dart';
 
 class BottomNavBar extends StatefulWidget {
+  static const String id = 'bottom_navbar';
   const BottomNavBar({super.key});
 
   @override

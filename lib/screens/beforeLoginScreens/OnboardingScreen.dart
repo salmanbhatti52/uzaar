@@ -9,6 +9,7 @@ import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/utils/Buttons.dart';
 
 class OnBoardingScreen extends StatefulWidget {
+  static const String id = 'onboarding_screen';
   const OnBoardingScreen({Key? key}) : super(key: key);
 
   @override
@@ -216,13 +217,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           true,
                         );
                         lastPage
-                            ? Navigator.of(
+                            ? Navigator.pushReplacementNamed(
                                 context,
-                                rootNavigator: true,
-                              ).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen(),
-                                ),
+                                SignUpScreen.id,
                               )
                             : controller.nextPage(
                                 duration: const Duration(
