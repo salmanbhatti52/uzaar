@@ -28,6 +28,12 @@ final kOutlinedButtonTextStyle = GoogleFonts.outfit(
   color: primaryBlue,
 );
 
+final kBodyHeadingTextStyle = GoogleFonts.outfit(
+  fontWeight: FontWeight.w500,
+  fontSize: 18,
+  color: black,
+);
+
 final kAppBarTitleStyle = GoogleFonts.outfit(
   fontSize: 24,
   fontWeight: FontWeight.w600,

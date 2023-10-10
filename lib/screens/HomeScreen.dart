@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sellpad/models/HousingCategoryModel.dart';
 
 import 'package:sellpad/utils/Colors.dart';
-import 'package:sellpad/widgets/TextfromFieldWidget.dart';
 import 'package:sellpad/widgets/FeaturedProductsWidget.dart';
 import 'package:sellpad/widgets/FeaturedServicesWidget.dart';
 import 'package:sellpad/models/ProductCategoryModel.dart';
@@ -79,11 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Text(
                   'What are you looking for?',
-                  style: GoogleFonts.outfit(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: black,
-                  ),
+                  style: kBodyHeadingTextStyle,
                 ),
                 SizedBox(
                   height: 20.h,

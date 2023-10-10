@@ -66,57 +66,18 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   ),
                   SizedBox(
                     height: 50.h,
-                    child: Container(
-                      decoration: kTextFieldBoxDecoration,
-                      child: TextFormFieldWidget(
-                        controller: newPassController,
-                        textInputType: TextInputType.visiblePassword,
-                        prefixIcon:
-                            SvgIcon(imageName: 'assets/password-icon.svg'),
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isHiddenNew = !isHiddenNew;
-                            });
-                          },
-                          child: isHiddenNew
-                              ? SvgIcon(
-                                  imageName: 'assets/show-pass.svg',
-                                  colorFilter: ColorFilter.mode(
-                                      primaryBlue, BlendMode.srcIn),
-                                )
-                              : SvgIcon(
-                                  imageName: 'assets/hide-pass-icon.svg',
-                                  colorFilter: ColorFilter.mode(
-                                      primaryBlue, BlendMode.srcIn),
-                                ),
-                        ),
-                        hintText: '***************',
-                        obscureText: isHiddenNew,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  ReusableText(text: 'Confirm New Password'),
-                  SizedBox(
-                    height: 7.h,
-                  ),
-                  Container(
-                    decoration: kTextFieldBoxDecoration,
                     child: TextFormFieldWidget(
-                      controller: confirmNewPassController,
+                      controller: newPassController,
                       textInputType: TextInputType.visiblePassword,
                       prefixIcon:
                           SvgIcon(imageName: 'assets/password-icon.svg'),
                       suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
-                            isHiddenConfirm = !isHiddenConfirm;
+                            isHiddenNew = !isHiddenNew;
                           });
                         },
-                        child: isHiddenConfirm
+                        child: isHiddenNew
                             ? SvgIcon(
                                 imageName: 'assets/show-pass.svg',
                                 colorFilter: ColorFilter.mode(
@@ -129,8 +90,40 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               ),
                       ),
                       hintText: '***************',
-                      obscureText: isHiddenConfirm,
+                      obscureText: isHiddenNew,
                     ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  ReusableText(text: 'Confirm New Password'),
+                  SizedBox(
+                    height: 7.h,
+                  ),
+                  TextFormFieldWidget(
+                    controller: confirmNewPassController,
+                    textInputType: TextInputType.visiblePassword,
+                    prefixIcon: SvgIcon(imageName: 'assets/password-icon.svg'),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isHiddenConfirm = !isHiddenConfirm;
+                        });
+                      },
+                      child: isHiddenConfirm
+                          ? SvgIcon(
+                              imageName: 'assets/show-pass.svg',
+                              colorFilter: ColorFilter.mode(
+                                  primaryBlue, BlendMode.srcIn),
+                            )
+                          : SvgIcon(
+                              imageName: 'assets/hide-pass-icon.svg',
+                              colorFilter: ColorFilter.mode(
+                                  primaryBlue, BlendMode.srcIn),
+                            ),
+                    ),
+                    hintText: '***************',
+                    obscureText: isHiddenConfirm,
                   ),
                   Spacer(),
                   Padding(

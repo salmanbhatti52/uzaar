@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/widgets/TextfromFieldWidget.dart';
+import 'package:sellpad/widgets/suffix_svg_icon.dart';
 import 'package:sellpad/widgets/text.dart';
 
 class SalesProfile extends StatefulWidget {
@@ -49,10 +50,7 @@ class _SalesProfileState extends State<SalesProfile> {
                 child: TextFormFieldWidget(
                   controller: firstNameController,
                   textInputType: TextInputType.name,
-                  prefixIcon: SvgPicture.asset(
-                    'assets/person-icon.svg',
-                    fit: BoxFit.scaleDown,
-                  ),
+                  prefixIcon: SvgIcon(imageName: 'assets/person-icon.svg'),
                   hintText: 'First Name',
                   obscureText: null,
                 ),
@@ -71,10 +69,7 @@ class _SalesProfileState extends State<SalesProfile> {
                 child: TextFormFieldWidget(
                   controller: lastNameController,
                   textInputType: TextInputType.name,
-                  prefixIcon: SvgPicture.asset(
-                    'assets/person-icon.svg',
-                    fit: BoxFit.scaleDown,
-                  ),
+                  prefixIcon: SvgIcon(imageName: 'assets/person-icon.svg'),
                   hintText: 'Last Name',
                   obscureText: null,
                 ),
@@ -93,10 +88,7 @@ class _SalesProfileState extends State<SalesProfile> {
                 child: TextFormFieldWidget(
                   controller: emailController,
                   textInputType: TextInputType.emailAddress,
-                  prefixIcon: SvgPicture.asset(
-                    'assets/email-icon.svg',
-                    fit: BoxFit.scaleDown,
-                  ),
+                  prefixIcon: SvgIcon(imageName: 'assets/email-icon.svg'),
                   hintText: 'username@gmail.com',
                   obscureText: null,
                 ),
@@ -115,14 +107,11 @@ class _SalesProfileState extends State<SalesProfile> {
                 child: TextFormFieldWidget(
                   controller: addressController,
                   textInputType: TextInputType.streetAddress,
-                  prefixIcon: SvgPicture.asset(
-                    'assets/address-icon.svg',
-                    fit: BoxFit.scaleDown,
-                  ),
-                  suffixIcon: SvgPicture.asset(
-                    'assets/address-icon.svg',
-                    fit: BoxFit.scaleDown,
-                    colorFilter: ColorFilter.mode(primaryBlue, BlendMode.srcIn),
+                  prefixIcon: SvgIcon(imageName: 'assets/address-icon.svg'),
+                  suffixIcon: SvgIcon(
+                    imageName: 'assets/address-icon.svg',
+                    colorFilter:
+                        const ColorFilter.mode(primaryBlue, BlendMode.srcIn),
                   ),
                   hintText: 'Address',
                   obscureText: null,

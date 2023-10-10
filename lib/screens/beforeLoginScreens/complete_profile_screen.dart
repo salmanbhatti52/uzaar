@@ -127,16 +127,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         height: 7.h,
                       ),
                       // readOnlyContainer('assets/phone-fill.svg', '+4156565662'),
-                      Container(
-                        decoration: kTextFieldBoxDecoration,
-                        child: TextFormFieldWidget(
-                          controller: phoneNumberController,
-                          textInputType: TextInputType.phone,
-                          prefixIcon:
-                              SvgIcon(imageName: 'assets/phone-fill.svg'),
-                          hintText: '+4156565662',
-                          obscureText: null,
-                        ),
+                      TextFormFieldWidget(
+                        controller: phoneNumberController,
+                        textInputType: TextInputType.phone,
+                        prefixIcon: SvgIcon(imageName: 'assets/phone-fill.svg'),
+                        hintText: '+4156565662',
+                        obscureText: null,
                       ),
                       SizedBox(
                         height: 20.h,
@@ -147,23 +143,20 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 7.h,
                       ),
-                      Container(
-                        decoration: kTextFieldBoxDecoration,
-                        child: SizedBox(
-                          height: 50.h,
-                          child: TextFormFieldWidget(
-                            controller: addressController,
-                            textInputType: TextInputType.streetAddress,
-                            prefixIcon:
-                                SvgIcon(imageName: 'assets/address-icon.svg'),
-                            suffixIcon: SvgIcon(
-                              imageName: 'assets/address-icon.svg',
-                              colorFilter: ColorFilter.mode(
-                                  primaryBlue, BlendMode.srcIn),
-                            ),
-                            hintText: 'Your Address Here',
-                            obscureText: null,
+                      SizedBox(
+                        height: 50.h,
+                        child: TextFormFieldWidget(
+                          controller: addressController,
+                          textInputType: TextInputType.streetAddress,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/address-icon.svg'),
+                          suffixIcon: SvgIcon(
+                            imageName: 'assets/address-icon.svg',
+                            colorFilter:
+                                ColorFilter.mode(primaryBlue, BlendMode.srcIn),
                           ),
+                          hintText: 'Your Address Here',
+                          obscureText: null,
                         ),
                       ),
                       SizedBox(

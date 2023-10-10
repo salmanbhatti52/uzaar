@@ -14,17 +14,12 @@ class SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: kTextFieldBoxDecoration,
-      // width: double.infinity,
-      // height: 50.h,
-      child: TextFormFieldWidget(
-        controller: searchController,
-        textInputType: TextInputType.name,
-        prefixIcon: SvgIcon(imageName: 'assets/search-button.svg'),
-        hintText: 'Search Here',
-        obscureText: null,
-      ),
+    return TextFormFieldWidget(
+      controller: searchController,
+      textInputType: TextInputType.name,
+      prefixIcon: SvgIcon(imageName: 'assets/search-button.svg'),
+      hintText: 'Search Here',
+      obscureText: null,
     );
   }
 }

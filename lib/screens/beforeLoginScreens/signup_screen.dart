@@ -76,16 +76,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       SizedBox(
                         height: 50.h,
-                        child: Container(
-                          decoration: kTextFieldBoxDecoration,
-                          child: TextFormFieldWidget(
-                            controller: firstNameController,
-                            textInputType: TextInputType.name,
-                            prefixIcon:
-                                SvgIcon(imageName: 'assets/person-icon.svg'),
-                            hintText: 'First Name',
-                            obscureText: null,
-                          ),
+                        child: TextFormFieldWidget(
+                          controller: firstNameController,
+                          textInputType: TextInputType.name,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/person-icon.svg'),
+                          hintText: 'First Name',
+                          obscureText: null,
                         ),
                       ),
                       SizedBox(
@@ -99,16 +96,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       SizedBox(
                         height: 50.h,
-                        child: Container(
-                          decoration: kTextFieldBoxDecoration,
-                          child: TextFormFieldWidget(
-                            controller: lastNameController,
-                            textInputType: TextInputType.name,
-                            prefixIcon:
-                                SvgIcon(imageName: 'assets/person-icon.svg'),
-                            hintText: 'Last Name',
-                            obscureText: null,
-                          ),
+                        child: TextFormFieldWidget(
+                          controller: lastNameController,
+                          textInputType: TextInputType.name,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/person-icon.svg'),
+                          hintText: 'Last Name',
+                          obscureText: null,
                         ),
                       ),
                       SizedBox(
@@ -122,16 +116,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       SizedBox(
                         height: 50.h,
-                        child: Container(
-                          decoration: kTextFieldBoxDecoration,
-                          child: TextFormFieldWidget(
-                            controller: emailController,
-                            textInputType: TextInputType.emailAddress,
-                            prefixIcon:
-                                SvgIcon(imageName: 'assets/email-icon.svg'),
-                            hintText: 'username@gmail.com',
-                            obscureText: null,
-                          ),
+                        child: TextFormFieldWidget(
+                          controller: emailController,
+                          textInputType: TextInputType.emailAddress,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/email-icon.svg'),
+                          hintText: 'username@gmail.com',
+                          obscureText: null,
                         ),
                       ),
                       SizedBox(
@@ -145,34 +136,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       SizedBox(
                         height: 50.h,
-                        child: Container(
-                          decoration: kTextFieldBoxDecoration,
-                          child: TextFormFieldWidget(
-                            controller: passwordController,
-                            textInputType: TextInputType.visiblePassword,
-                            prefixIcon:
-                                SvgIcon(imageName: 'assets/password-icon.svg'),
-                            suffixIcon: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  isHidden = !isHidden;
-                                });
-                              },
-                              child: isHidden
-                                  ? SvgIcon(
-                                      imageName: 'assets/show-pass.svg',
-                                      colorFilter: ColorFilter.mode(
-                                          primaryBlue, BlendMode.srcIn),
-                                    )
-                                  : SvgIcon(
-                                      imageName: 'assets/hide-pass-icon.svg',
-                                      colorFilter: ColorFilter.mode(
-                                          primaryBlue, BlendMode.srcIn),
-                                    ),
-                            ),
-                            hintText: '***************',
-                            obscureText: isHidden,
+                        child: TextFormFieldWidget(
+                          controller: passwordController,
+                          textInputType: TextInputType.visiblePassword,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/password-icon.svg'),
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isHidden = !isHidden;
+                              });
+                            },
+                            child: isHidden
+                                ? SvgIcon(
+                                    imageName: 'assets/show-pass.svg',
+                                    colorFilter: ColorFilter.mode(
+                                        primaryBlue, BlendMode.srcIn),
+                                  )
+                                : SvgIcon(
+                                    imageName: 'assets/hide-pass-icon.svg',
+                                    colorFilter: ColorFilter.mode(
+                                        primaryBlue, BlendMode.srcIn),
+                                  ),
                           ),
+                          hintText: '***************',
+                          obscureText: isHidden,
                         ),
                       ),
                       SizedBox(

@@ -45,34 +45,38 @@ class TextFormFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      onSaved: onSaved,
-      onTap: onTap,
-      readOnly: readOnly ?? false,
-      validator: validator,
-      // inputFormatters: [
-      //   LengthLimitingTextInputFormatter(
-      //     widget.length,
-      //   ),
-      // ],
-      keyboardType: textInputType,
-      controller: controller,
-      style: kTextFieldInputStyle,
-      cursorColor: primaryBlue,
-      obscureText: obscureText ?? false,
-      autofillHints: [autofillHints ?? ''],
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: white,
-        suffixIcon: suffixIcon,
-        // contentPadding: contentPadding,
-        border: kRoundedWhiteBorderStyle,
-        hintText: hintText,
-        hintStyle: kTextFieldHintStyle,
-        focusedBorder: kRoundedActiveBorderStyle,
-        enabledBorder: kRoundedWhiteBorderStyle,
-        prefixIcon: prefixIcon,
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+    return Container(
+      decoration: kTextFieldBoxDecoration,
+      child: TextFormField(
+        onSaved: onSaved,
+        onTap: onTap,
+        readOnly: readOnly ?? false,
+        validator: validator,
+        // inputFormatters: [
+        //   LengthLimitingTextInputFormatter(
+        //     widget.length,
+        //   ),
+        // ],
+        keyboardType: textInputType,
+        controller: controller,
+        style: kTextFieldInputStyle,
+        cursorColor: primaryBlue,
+        obscureText: obscureText ?? false,
+        autofillHints: [autofillHints ?? ''],
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: white,
+          suffixIcon: suffixIcon,
+          // contentPadding: contentPadding,
+          border: kRoundedWhiteBorderStyle,
+          hintText: hintText,
+          hintStyle: kTextFieldHintStyle,
+          focusedBorder: kRoundedActiveBorderStyle,
+          enabledBorder: kRoundedWhiteBorderStyle,
+          prefixIcon: prefixIcon,
+          contentPadding:
+              EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        ),
       ),
     );
   }

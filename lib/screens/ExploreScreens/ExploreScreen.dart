@@ -18,7 +18,7 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
-  late TextEditingController searchController;
+  final searchController = TextEditingController();
 
   // final GlobalKey<FormState> _key = GlobalKey();
 
@@ -27,42 +27,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
     // TODO: implement initState
     super.initState();
 
-    searchController = TextEditingController();
     catSelected = 1;
   }
-
-  // final TextStyle hintStyle = GoogleFonts.outfit(
-  //   fontSize: 14,
-  //   fontWeight: FontWeight.w300,
-  //   color: grey,
-  // );
-  //
-  // final TextStyle inputStyle = GoogleFonts.outfit(
-  //   fontSize: 14,
-  //   fontWeight: FontWeight.w300,
-  //   color: black,
-  // );
-
-  // final InputBorder outlineBorder = OutlineInputBorder(
-  //     borderSide: BorderSide(
-  //       color: grey,
-  //       width: 1,
-  //     ),
-  //     borderRadius: BorderRadius.circular(40));
-  //
-  // final InputBorder focusBorder = OutlineInputBorder(
-  //     borderSide: BorderSide(
-  //       color: primaryBlue,
-  //       width: 1,
-  //     ),
-  //     borderRadius: BorderRadius.circular(40));
-  //
-  // final InputBorder enableBorder = OutlineInputBorder(
-  //     borderSide: BorderSide(
-  //       color: primaryBlue,
-  //       width: 1,
-  //     ),
-  //     borderRadius: BorderRadius.circular(40));
 
   int catSelected = -1;
   @override
