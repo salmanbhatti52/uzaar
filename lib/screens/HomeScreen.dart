@@ -10,6 +10,7 @@ import 'package:sellpad/widgets/FeaturedProductsWidget.dart';
 import 'package:sellpad/widgets/FeaturedServicesWidget.dart';
 import 'package:sellpad/models/ProductCategoryModel.dart';
 import 'package:sellpad/models/ServicesCategoryModel.dart';
+import 'package:sellpad/widgets/search_field.dart';
 
 import 'ProductAndServicesDetailsPages/ProductDetailsPage.dart';
 import 'ProductAndServicesDetailsPages/ServiceDetailsPage.dart';
@@ -23,7 +24,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late TextEditingController searchController;
+  final searchController = TextEditingController();
 
   // final GlobalKey<FormState> _key = GlobalKey();
 
@@ -32,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
 
-    searchController = TextEditingController();
     catSelected = 1;
   }
 
@@ -73,28 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                Container(
-                  // width: double.infinity,
-                  // height: 50.h,
-                  // elevation: 5,
-                  decoration: kTextFieldBoxDecoration,
-                  child: TextFormFieldWidget(
-                    controller: searchController,
-                    textInputType: TextInputType.name,
-                    enterTextStyle: kTextFieldInputStyle,
-                    cursorColor: primaryBlue,
-                    prefixIcon: SvgPicture.asset(
-                      'assets/search-button.svg',
-                      fit: BoxFit.scaleDown,
-                    ),
-                    hintText: 'Search Here',
-                    border: kRoundedWhiteBorderStyle,
-                    hintStyle: kTextFieldHintStyle,
-                    focusedBorder: kRoundedActiveBorderStyle,
-                    obscureText: null,
-                    enableBorder: kRoundedWhiteBorderStyle,
-                  ),
-                ),
+                SearchField(searchController: searchController),
                 SizedBox(
                   height: 20.h,
                 ),

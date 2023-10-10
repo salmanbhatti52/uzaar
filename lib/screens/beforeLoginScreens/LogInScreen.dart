@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sellpad/screens/beforeLoginScreens/ResetPasswordScreen.dart';
+import 'package:sellpad/screens/beforeLoginScreens/reset_password_screen.dart';
 import 'package:sellpad/widgets/BottomNaviBar.dart';
 import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/utils/Buttons.dart';
@@ -11,7 +11,7 @@ import 'package:sellpad/widgets/TextfromFieldWidget.dart';
 import 'package:sellpad/widgets/suffix_svg_icon.dart';
 import 'package:sellpad/widgets/text.dart';
 
-import 'SignUpScreen.dart';
+import 'signup_screen.dart';
 
 class LogInScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -81,16 +81,10 @@ class _LogInScreenState extends State<LogInScreen> {
                           child: TextFormFieldWidget(
                             controller: emailController,
                             textInputType: TextInputType.emailAddress,
-                            enterTextStyle: kTextFieldInputStyle,
-                            cursorColor: primaryBlue,
                             prefixIcon:
                                 SvgIcon(imageName: 'assets/email-icon.svg'),
                             hintText: 'username@gmail.com',
-                            border: kRoundedWhiteBorderStyle,
-                            hintStyle: kTextFieldHintStyle,
-                            focusedBorder: kRoundedActiveBorderStyle,
                             obscureText: null,
-                            enableBorder: kRoundedWhiteBorderStyle,
                           ),
                         ),
                       ),
@@ -111,8 +105,6 @@ class _LogInScreenState extends State<LogInScreen> {
                           child: TextFormFieldWidget(
                             controller: passwordController,
                             textInputType: TextInputType.visiblePassword,
-                            enterTextStyle: kTextFieldInputStyle,
-                            cursorColor: primaryBlue,
                             prefixIcon:
                                 SvgIcon(imageName: 'assets/password-icon.svg'),
                             suffixIcon: GestureDetector(
@@ -134,11 +126,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                     ),
                             ),
                             hintText: '***************',
-                            border: kRoundedWhiteBorderStyle,
-                            hintStyle: kTextFieldHintStyle,
-                            focusedBorder: kRoundedActiveBorderStyle,
                             obscureText: isHidden,
-                            enableBorder: kRoundedWhiteBorderStyle,
                           ),
                         ),
                       ),

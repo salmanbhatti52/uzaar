@@ -7,6 +7,7 @@ import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/utils/Buttons.dart';
 import 'package:sellpad/widgets/TextfromFieldWidget.dart';
 
+import '../../widgets/text.dart';
 import 'OrderPlacedScreen.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -17,8 +18,8 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   final GlobalKey<FormState> _key = GlobalKey();
 
@@ -28,57 +29,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    passwordController = TextEditingController();
-    emailController = TextEditingController();
   }
-
-  Widget text(String text) {
-    return Text(
-      text,
-      style: GoogleFonts.outfit(
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: black,
-      ),
-    );
-  }
-
-  final TextStyle hintStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: grey,
-  );
-
-  final TextStyle inputStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: black,
-  );
-
-  final InputBorder outlineBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: grey,
-      width: 1,
-    ),
-  );
-
-  final InputBorder focusBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: primaryBlue,
-      width: 1,
-    ),
-  );
-
-  final InputBorder enableBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: grey,
-      width: 1,
-    ),
-  );
 
   Widget paymentWidget(String image, String text) {
     return Container(
@@ -170,7 +121,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       height: 20.h,
                     ),
                     Align(
-                        alignment: Alignment.centerLeft, child: text('Email')),
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Email')),
                     SizedBox(
                       height: 7.h,
                     ),
@@ -179,18 +131,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       child: TextFormFieldWidget(
                         controller: emailController,
                         textInputType: TextInputType.emailAddress,
-                        enterTextStyle: inputStyle,
-                        cursorColor: primaryBlue,
                         prefixIcon: SvgPicture.asset(
                           'assets/email-icon.svg',
                           fit: BoxFit.scaleDown,
                         ),
                         hintText: 'username@gmail.com',
-                        border: outlineBorder,
-                        hintStyle: hintStyle,
-                        focusedBorder: focusBorder,
                         obscureText: null,
-                        enableBorder: enableBorder,
                       ),
                     ),
                     SizedBox(
@@ -198,7 +144,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                     Align(
                         alignment: Alignment.centerLeft,
-                        child: text('Password')),
+                        child: ReusableText(text: 'Password')),
                     SizedBox(
                       height: 7.h,
                     ),
@@ -207,8 +153,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       child: TextFormFieldWidget(
                         controller: passwordController,
                         textInputType: TextInputType.visiblePassword,
-                        enterTextStyle: inputStyle,
-                        cursorColor: primaryBlue,
                         prefixIcon: SvgPicture.asset(
                           'assets/password-icon.svg',
                           fit: BoxFit.scaleDown,
@@ -234,11 +178,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 ),
                         ),
                         hintText: '***************',
-                        border: outlineBorder,
-                        hintStyle: hintStyle,
-                        focusedBorder: focusBorder,
                         obscureText: isHidden,
-                        enableBorder: enableBorder,
                       ),
                     ),
                     SizedBox(

@@ -4,7 +4,6 @@ import 'package:sellpad/widgets/TextfromFieldWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sellpad/screens/beforeLoginScreens/CompleteProfileScreen.dart';
 import 'package:sellpad/widgets/text.dart';
 
 import '../../widgets/suffix_svg_icon.dart';
@@ -82,16 +81,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: TextFormFieldWidget(
                             controller: firstNameController,
                             textInputType: TextInputType.name,
-                            enterTextStyle: kTextFieldInputStyle,
-                            cursorColor: primaryBlue,
                             prefixIcon:
                                 SvgIcon(imageName: 'assets/person-icon.svg'),
                             hintText: 'First Name',
-                            border: kRoundedWhiteBorderStyle,
-                            hintStyle: kTextFieldHintStyle,
-                            focusedBorder: kRoundedActiveBorderStyle,
                             obscureText: null,
-                            enableBorder: kRoundedWhiteBorderStyle,
                           ),
                         ),
                       ),
@@ -111,16 +104,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: TextFormFieldWidget(
                             controller: lastNameController,
                             textInputType: TextInputType.name,
-                            enterTextStyle: kTextFieldInputStyle,
-                            cursorColor: primaryBlue,
                             prefixIcon:
                                 SvgIcon(imageName: 'assets/person-icon.svg'),
                             hintText: 'Last Name',
-                            border: kRoundedWhiteBorderStyle,
-                            hintStyle: kTextFieldHintStyle,
-                            focusedBorder: kRoundedActiveBorderStyle,
                             obscureText: null,
-                            enableBorder: kRoundedWhiteBorderStyle,
                           ),
                         ),
                       ),
@@ -140,16 +127,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: TextFormFieldWidget(
                             controller: emailController,
                             textInputType: TextInputType.emailAddress,
-                            enterTextStyle: kTextFieldInputStyle,
-                            cursorColor: primaryBlue,
                             prefixIcon:
                                 SvgIcon(imageName: 'assets/email-icon.svg'),
                             hintText: 'username@gmail.com',
-                            border: kRoundedWhiteBorderStyle,
-                            hintStyle: kTextFieldHintStyle,
-                            focusedBorder: kRoundedActiveBorderStyle,
                             obscureText: null,
-                            enableBorder: kRoundedWhiteBorderStyle,
                           ),
                         ),
                       ),
@@ -169,8 +150,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: TextFormFieldWidget(
                             controller: passwordController,
                             textInputType: TextInputType.visiblePassword,
-                            enterTextStyle: kTextFieldInputStyle,
-                            cursorColor: primaryBlue,
                             prefixIcon:
                                 SvgIcon(imageName: 'assets/password-icon.svg'),
                             suffixIcon: GestureDetector(
@@ -192,11 +171,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     ),
                             ),
                             hintText: '***************',
-                            border: kRoundedWhiteBorderStyle,
-                            hintStyle: kTextFieldHintStyle,
-                            focusedBorder: kRoundedActiveBorderStyle,
                             obscureText: isHidden,
-                            enableBorder: kRoundedWhiteBorderStyle,
                           ),
                         ),
                       ),

@@ -3,7 +3,7 @@ import 'package:sellpad/utils/Buttons.dart';
 import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/widgets/navigate_back_icon.dart';
 
-import 'CompleteProfileScreen.dart';
+import 'complete_profile_screen.dart';
 
 class VerifyEmail extends StatefulWidget {
   static const String id = 'verify_email_screen';

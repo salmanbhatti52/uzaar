@@ -4,8 +4,6 @@ import 'package:sellpad/widgets/text.dart';
 import '../../widgets/TextfromFieldWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/screens/beforeLoginScreens/LogInScreen.dart';
@@ -134,16 +132,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         child: TextFormFieldWidget(
                           controller: phoneNumberController,
                           textInputType: TextInputType.phone,
-                          enterTextStyle: kTextFieldInputStyle,
-                          cursorColor: primaryBlue,
                           prefixIcon:
                               SvgIcon(imageName: 'assets/phone-fill.svg'),
                           hintText: '+4156565662',
-                          border: kRoundedWhiteBorderStyle,
-                          hintStyle: kTextFieldHintStyle,
-                          focusedBorder: kRoundedActiveBorderStyle,
                           obscureText: null,
-                          enableBorder: kRoundedWhiteBorderStyle,
                         ),
                       ),
                       SizedBox(
@@ -162,8 +154,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           child: TextFormFieldWidget(
                             controller: addressController,
                             textInputType: TextInputType.streetAddress,
-                            enterTextStyle: kTextFieldInputStyle,
-                            cursorColor: primaryBlue,
                             prefixIcon:
                                 SvgIcon(imageName: 'assets/address-icon.svg'),
                             suffixIcon: SvgIcon(
@@ -172,11 +162,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                   primaryBlue, BlendMode.srcIn),
                             ),
                             hintText: 'Your Address Here',
-                            border: kRoundedWhiteBorderStyle,
-                            hintStyle: kTextFieldHintStyle,
-                            focusedBorder: kRoundedActiveBorderStyle,
                             obscureText: null,
-                            enableBorder: kRoundedWhiteBorderStyle,
                           ),
                         ),
                       ),

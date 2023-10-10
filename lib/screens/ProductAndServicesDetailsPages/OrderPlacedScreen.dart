@@ -18,51 +18,14 @@ class OrderPlacedScreen extends StatefulWidget {
 }
 
 class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
-  late TextEditingController reviewController;
+  final reviewController = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    reviewController = TextEditingController();
   }
 
-  final TextStyle hintStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: grey,
-  );
-
-  final TextStyle inputStyle = GoogleFonts.outfit(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: black,
-  );
-
-  final InputBorder outlineBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: grey,
-      width: 1,
-    ),
-  );
-
-  final InputBorder focusBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: primaryBlue,
-      width: 1,
-    ),
-  );
-
-  final InputBorder enableBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
-    borderSide: BorderSide(
-      color: grey,
-      width: 1,
-    ),
-  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,8 +87,6 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
                 child: TextFormFieldWidget(
                   controller: reviewController,
                   textInputType: TextInputType.visiblePassword,
-                  enterTextStyle: inputStyle,
-                  cursorColor: primaryBlue,
                   hintText: 'Type here....',
                   suffixIcon: GestureDetector(
                     onTap: null,
@@ -134,10 +95,6 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
                       fit: BoxFit.scaleDown,
                     ),
                   ),
-                  border: outlineBorder,
-                  hintStyle: hintStyle,
-                  focusedBorder: focusBorder,
-                  enableBorder: enableBorder,
                   obscureText: null,
                   prefixIcon: SizedBox(),
                 ),

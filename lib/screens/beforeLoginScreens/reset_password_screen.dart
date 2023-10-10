@@ -5,7 +5,6 @@ import 'package:sellpad/widgets/text.dart';
 import '../../widgets/TextfromFieldWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sellpad/screens/beforeLoginScreens/LogInScreen.dart';
 
 import 'package:sellpad/utils/Colors.dart';
@@ -72,8 +71,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       child: TextFormFieldWidget(
                         controller: newPassController,
                         textInputType: TextInputType.visiblePassword,
-                        enterTextStyle: kTextFieldInputStyle,
-                        cursorColor: primaryBlue,
                         prefixIcon:
                             SvgIcon(imageName: 'assets/password-icon.svg'),
                         suffixIcon: GestureDetector(
@@ -95,11 +92,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 ),
                         ),
                         hintText: '***************',
-                        border: kRoundedWhiteBorderStyle,
-                        hintStyle: kTextFieldHintStyle,
-                        focusedBorder: kRoundedActiveBorderStyle,
                         obscureText: isHiddenNew,
-                        enableBorder: kRoundedWhiteBorderStyle,
                       ),
                     ),
                   ),
@@ -115,8 +108,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     child: TextFormFieldWidget(
                       controller: confirmNewPassController,
                       textInputType: TextInputType.visiblePassword,
-                      enterTextStyle: kTextFieldInputStyle,
-                      cursorColor: primaryBlue,
                       prefixIcon:
                           SvgIcon(imageName: 'assets/password-icon.svg'),
                       suffixIcon: GestureDetector(
@@ -138,11 +129,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               ),
                       ),
                       hintText: '***************',
-                      border: kRoundedWhiteBorderStyle,
-                      hintStyle: kTextFieldHintStyle,
-                      focusedBorder: kRoundedActiveBorderStyle,
                       obscureText: isHiddenConfirm,
-                      enableBorder: kRoundedWhiteBorderStyle,
                     ),
                   ),
                   Spacer(),

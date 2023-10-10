@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'SignUpScreen.dart';
+import 'signup_screen.dart';
 import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/utils/Buttons.dart';
 
