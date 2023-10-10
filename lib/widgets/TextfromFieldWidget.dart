@@ -8,19 +8,19 @@ class TextFormFieldWidget extends StatelessWidget {
   final TextStyle enterTextStyle;
   final Color cursorColor;
   final String hintText;
-  VoidCallback? onTap;
+  final VoidCallback? onTap;
   final InputBorder border;
   final TextStyle hintStyle;
   final InputBorder focusedBorder;
 
   final InputBorder enableBorder;
   final Widget prefixIcon;
-  String? autofillHints;
+  final String? autofillHints;
   final String? Function(String? value)? validator;
-  String? Function(String? value)? onSaved;
-  bool? obscureText;
+  final String? Function(String? value)? onSaved;
+  final bool? obscureText;
   final Widget? suffixIcon;
-  bool? readOnly;
+  final bool? readOnly;
 
   TextFormFieldWidget({
     super.key,

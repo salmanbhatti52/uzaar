@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../utils/Colors.dart';
 
 class SvgIcon extends StatelessWidget {
-  String imageName;
-  ColorFilter? colorFilter;
+  final String imageName;
+  final ColorFilter? colorFilter;
   SvgIcon({required this.imageName, this.colorFilter});
 
   @override

@@ -5,15 +5,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sellpad/screens/ProfileScreens/SaleProfileScreens/SaleProfileMain.dart';
 import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/screens/beforeLoginScreens/LogInScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DrawerWidget extends StatefulWidget {
-  const DrawerWidget({super.key});
+  final BuildContext buildContext;
+  const DrawerWidget({super.key, required this.buildContext});
 
   @override
   State<DrawerWidget> createState() => _DrawerWidgetState();
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> {
+  removeDataFormSharedPreferences() async {
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    await sharedPref.clear();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final TextStyle style = GoogleFonts.outfit(
@@ -163,11 +171,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ListTile(
                   style: ListTileStyle.drawer,
                   onTap: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => LogInScreen(),
-                      ),
+                    Navigator.pushReplacementNamed(
+                      widget.buildContext,
+                      LogInScreen.id,
                     );
+                    // removeDataFormSharedPreferences();
+                    // Navigator.of(context).pushAndRemoveUntil(
+                    //   MaterialPageRoute(
+                    //       builder: (context) => const LogInScreen()),
+                    //   (Route<dynamic> route) => false,
+                    // );
                   },
                   leading: SvgPicture.asset(
                     'assets/logout-icon.svg',

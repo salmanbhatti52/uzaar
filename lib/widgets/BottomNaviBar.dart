@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:sellpad/screens/listings.dart';
 
 import 'DrawerWidget.dart';
@@ -95,6 +96,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       return WillPopScope(
         onWillPop: () async {
           if (_currentIndex == 0) {
+            SystemNavigator.pop();
             return true;
           } else {
             setState(() {
@@ -197,7 +199,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
                                     'Profile',
                                     style: kAppBarTitleStyle,
                                   )),
-            drawer: DrawerWidget(),
+            drawer: DrawerWidget(
+              buildContext: context,
+            ),
             body: _pages[_currentIndex],
             bottomNavigationBar: Container(
               decoration: BoxDecoration(
