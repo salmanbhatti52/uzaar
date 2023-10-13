@@ -206,11 +206,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       controller: controller,
                       count: 3,
                     ),
-                    // SizedBox(
-                    //   height: 190.h,
-                    // ),
-                    GestureDetector(
-                      onTap: () async {
+
+                    primaryButton(
+                      context,
+                      'Continue',
+                      () async {
                         final prefs = await SharedPreferences.getInstance();
                         prefs.setBool(
                           'showSignUp',
@@ -228,7 +228,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                 curve: Curves.easeInCubic,
                               );
                       },
-                      child: primaryButton(context, 'Continue'),
                     ),
                   ],
                 ),

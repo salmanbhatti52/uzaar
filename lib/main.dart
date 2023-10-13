@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sellpad/screens/HomeScreen.dart';
+import 'package:sellpad/screens/SellScreens/ProductSellScreens/product_add_screen_one.dart';
+import 'package:sellpad/screens/SellScreens/ProductSellScreens/product_add_screen_two.dart';
 import 'package:sellpad/screens/beforeLoginScreens/complete_profile_screen.dart';
 import 'package:sellpad/screens/beforeLoginScreens/LogInScreen.dart';
 import 'package:sellpad/screens/beforeLoginScreens/OnboardingScreen.dart';
@@ -51,7 +53,9 @@ class _MyAppState extends State<MyApp> {
           LogInScreen.id: (context) => LogInScreen(),
           HomeScreen.id: (context) => HomeScreen(),
           ResetPasswordScreen.id: (context) => ResetPasswordScreen(),
-          BottomNavBar.id: (context) => BottomNavBar()
+          BottomNavBar.id: (context) => BottomNavBar(),
+          // ProductAddScreenOne.id: (context) => ProductAddScreenOne(),
+          // ProductAddScreenTwo.id: (context) => ProductAddScreenTwo(),
         },
       ),
     );

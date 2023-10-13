@@ -6,14 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/widgets/FeaturedProductsWidget.dart';
 
-class ExploreProductsScreen extends StatefulWidget {
-  const ExploreProductsScreen({super.key});
+class ExploreHousingScreen extends StatefulWidget {
+  const ExploreHousingScreen({super.key});
 
   @override
-  State<ExploreProductsScreen> createState() => _ExploreProductsScreenState();
+  State<ExploreHousingScreen> createState() => _ExploreHousingScreenState();
 }
 
-class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
+class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
   bool selectedCategory = false;
   bool selectedPrice = false;
   bool selectedLocation = false;
@@ -58,6 +58,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
                 onTap: () {
@@ -116,7 +117,20 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                               selectedValue = value;
                             });
                           },
-
+                          // buttonStyleData: ButtonStyleData(
+                          //     height: 50,
+                          //     width: 160,
+                          //     padding:
+                          //         const EdgeInsets.only(left: 14, right: 14),
+                          //     decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(14),
+                          //       border: Border.all(
+                          //         color: Colors.black26,
+                          //       ),
+                          //       color: Colors.redAccent,
+                          //     ),
+                          //     elevation: 2,
+                          //     ),
                           iconStyleData: IconStyleData(
                             icon:
                                 SvgPicture.asset('assets/drop-down-button.svg'),
@@ -148,7 +162,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                 ),
               ),
               SizedBox(
-                width: 10,
+                width: 10.h,
               ),
               GestureDetector(
                 onTap: () => setState(() {
@@ -250,7 +264,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                 ),
               ),
               SizedBox(
-                width: 10,
+                width: 10.h,
               ),
               GestureDetector(
                 onTap: () => setState(() {
@@ -309,7 +323,20 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                                 price = value;
                               });
                             },
-
+                            // buttonStyleData: ButtonStyleData(
+                            //     height: 50,
+                            //     width: 160,
+                            //     padding:
+                            //         const EdgeInsets.only(left: 14, right: 14),
+                            //     decoration: BoxDecoration(
+                            //       borderRadius: BorderRadius.circular(14),
+                            //       border: Border.all(
+                            //         color: Colors.black26,
+                            //       ),
+                            //       color: Colors.redAccent,
+                            //     ),
+                            //     elevation: 2,
+                            //     ),
                             iconStyleData: IconStyleData(
                               icon: SvgPicture.asset(
                                   'assets/drop-down-button.svg'),
@@ -350,7 +377,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
           height: 20.h,
         ),
         Text(
-          'Featured Products',
+          'Featured Housing',
           style: GoogleFonts.outfit(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -377,7 +404,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
               itemBuilder: (BuildContext context, int index) {
                 return FeaturedProductsWidget(
                   image: 'assets/place-holder.png',
-                  productCategory: 'Fashion',
+                  productCategory: 'Rental',
                   productDescription: 'Product Description',
                   productLocation: 'Product Location',
                   productPrice: '20',

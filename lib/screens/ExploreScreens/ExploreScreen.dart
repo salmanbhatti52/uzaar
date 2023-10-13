@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:sellpad/screens/ExploreScreens/explore_housing_screen.dart';
 
 import 'package:sellpad/utils/Colors.dart';
-import 'package:sellpad/widgets/TextfromFieldWidget.dart';
+
 import '../../widgets/business_type_button.dart';
 import '../../widgets/search_field.dart';
 import 'ExploreProductsScreen.dart';
@@ -26,11 +25,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    catSelected = 1;
   }
 
-  int catSelected = -1;
+  int selectedCategory = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,15 +47,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          catSelected = 1;
+                          selectedCategory = 1;
                         });
                       },
                       child: BusinessTypeButton(
                         businessName: 'Products',
-                        gradient: catSelected == 1 ? gradient : null,
-                        buttonBackground:
-                            catSelected != 1 ? grey.withOpacity(0.3) : null,
-                        textColor: catSelected == 1 ? white : grey,
+                        gradient: selectedCategory == 1 ? gradient : null,
+                        buttonBackground: selectedCategory != 1
+                            ? grey.withOpacity(0.3)
+                            : null,
+                        textColor: selectedCategory == 1 ? white : grey,
                       ),
                     ),
                     SizedBox(
@@ -67,15 +65,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          catSelected = 2;
+                          selectedCategory = 2;
                         });
                       },
                       child: BusinessTypeButton(
                         businessName: 'Services',
-                        gradient: catSelected == 2 ? gradient : null,
-                        buttonBackground:
-                            catSelected != 2 ? grey.withOpacity(0.3) : null,
-                        textColor: catSelected == 2 ? white : grey,
+                        gradient: selectedCategory == 2 ? gradient : null,
+                        buttonBackground: selectedCategory != 2
+                            ? grey.withOpacity(0.3)
+                            : null,
+                        textColor: selectedCategory == 2 ? white : grey,
                       ),
                     ),
                     SizedBox(
@@ -84,15 +83,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          catSelected = 3;
+                          selectedCategory = 3;
                         });
                       },
                       child: BusinessTypeButton(
                         businessName: 'Housing',
-                        gradient: catSelected == 3 ? gradient : null,
-                        buttonBackground:
-                            catSelected != 3 ? grey.withOpacity(0.3) : null,
-                        textColor: catSelected == 3 ? white : grey,
+                        gradient: selectedCategory == 3 ? gradient : null,
+                        buttonBackground: selectedCategory != 3
+                            ? grey.withOpacity(0.3)
+                            : null,
+                        textColor: selectedCategory == 3 ? white : grey,
                       ),
                     ),
                   ],
@@ -104,9 +104,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                catSelected == 2
-                    ? ExploreServicesScreen()
-                    : ExploreProductsScreen(),
+                selectedCategory == 1
+                    ? ExploreProductsScreen()
+                    : selectedCategory == 2
+                        ? ExploreServicesScreen()
+                        : ExploreHousingScreen(),
+                // :
               ],
             ),
           ),

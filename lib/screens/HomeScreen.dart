@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,11 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    catSelected = 1;
   }
 
-  int catSelected = -1;
+  int catSelected = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -310,27 +309,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(
                   height: 200.h,
-                  child: GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ProductDetailsPage(),
-                      ),
-                    ),
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return FeaturedProductsWidget(
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProductDetailsPage(),
+                          ),
+                        ),
+                        child: FeaturedProductsWidget(
                           image: 'assets/product-ph.png',
                           productCategory: 'Electronics',
                           productDescription: 'Iphone 14',
                           productLocation: 'Los Angeles',
                           productPrice: '120',
-                        );
-                      },
-                      itemCount: 6,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      physics: BouncingScrollPhysics(),
-                    ),
+                        ),
+                      );
+                    },
+                    itemCount: 6,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    physics: BouncingScrollPhysics(),
                   ),
                 ),
                 SizedBox(

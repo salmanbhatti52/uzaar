@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sellpad/utils/Colors.dart';
 import 'package:sellpad/utils/Buttons.dart';
 
-
 class BottomSheetForSendOffer extends StatefulWidget {
   const BottomSheetForSendOffer({super.key});
 
@@ -134,10 +133,7 @@ class _BottomSheetForSendOfferState extends State<BottomSheetForSendOffer> {
           SizedBox(
             height: 30.h,
           ),
-          GestureDetector(
-            onTap: null,
-            child: primaryButton(context, 'Send Offer'),
-          ),
+          primaryButton(context, 'Send Offer', () => null),
         ],
       ),
     );

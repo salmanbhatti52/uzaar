@@ -3,16 +3,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'Colors.dart';
 
-Widget primaryButton(context, String buttonText) {
-  return Container(
-    width: double.infinity,
-    height: 55.h,
-    decoration: BoxDecoration(
-      color: primaryBlue,
-      borderRadius: BorderRadius.circular(30),
-    ),
-    child: Center(
-      child: Text(buttonText, style: kPrimaryButtonTextStyle),
+Widget primaryButton(context, String buttonText, Function()? onTap) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      width: double.infinity,
+      height: 55.h,
+      decoration: BoxDecoration(
+        color: primaryBlue,
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Center(
+        child: Text(buttonText, style: kPrimaryButtonTextStyle),
+      ),
     ),
   );
 }

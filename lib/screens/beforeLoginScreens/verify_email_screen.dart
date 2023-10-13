@@ -128,11 +128,10 @@ class _VerifyEmailState extends State<VerifyEmail> {
                       decoration: TextDecoration.underline),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, CompleteProfileScreen.id);
-                },
-                child: primaryButton(context, 'Continue'),
+              primaryButton(
+                context,
+                'Continue',
+                () => Navigator.pushNamed(context, CompleteProfileScreen.id),
               )
             ],
           ),

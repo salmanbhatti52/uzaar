@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sellpad/widgets/suffix_svg_icon.dart';
 
-import '../utils/Colors.dart';
 import 'TextfromFieldWidget.dart';
 
 class SearchField extends StatelessWidget {

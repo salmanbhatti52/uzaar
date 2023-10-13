@@ -31,6 +31,12 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
     'Sports',
   ];
 
+  final List<String> locations = [
+    'Multan',
+    'Lahore',
+    'Karachi',
+  ];
+
   final List<String> prices = [
     '0-40',
     '40-80',
@@ -48,226 +54,114 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: double.infinity,
-          // height: 45.h,
-          child: Column(
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = !selectedCategory;
-                      });
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w),
-                      // margin: EdgeInsets.only(bottom: 20.h),
-                      width: 140.w,
-                      height: 40.h,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: primaryBlue,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedCategory = !selectedCategory;
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  // margin: EdgeInsets.only(bottom: 20.h),
+                  width: 140.w,
+                  height: 40.h,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: primaryBlue,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                  child: Row(
+                    children: [
+                      selectedCategory
+                          ? SvgPicture.asset('assets/cat-selcected.svg')
+                          : SvgPicture.asset('assets/cat-unselect.svg'),
+                      SizedBox(
+                        width: 4.w,
                       ),
-                      child: Row(
-                        children: [
-                          selectedCategory
-                              ? SvgPicture.asset('assets/cat-selcected.svg')
-                              : SvgPicture.asset('assets/cat-unselect.svg'),
-                          SizedBox(
-                            width: 4.w,
-                          ),
-                          DropdownButtonHideUnderline(
-                            child: DropdownButton2<String>(
-                              // isExpanded: true,
-                              hint: Text(
-                                'Category',
-                                style: GoogleFonts.outfit(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: primaryBlue,
-                                ),
-                              ),
-                              items: items
-                                  .map(
-                                      (String item) => DropdownMenuItem<String>(
-                                            value: item,
-                                            child: Text(
-                                              item,
-                                              style: GoogleFonts.outfit(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                color: primaryBlue,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ))
-                                  .toList(),
-                              value: selectedValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedValue = value;
-                                });
-                              },
-                              // buttonStyleData: ButtonStyleData(
-                              //     height: 50,
-                              //     width: 160,
-                              //     padding:
-                              //         const EdgeInsets.only(left: 14, right: 14),
-                              //     decoration: BoxDecoration(
-                              //       borderRadius: BorderRadius.circular(14),
-                              //       border: Border.all(
-                              //         color: Colors.black26,
-                              //       ),
-                              //       color: Colors.redAccent,
-                              //     ),
-                              //     elevation: 2,
-                              //     ),
-                              iconStyleData: IconStyleData(
-                                icon: SvgPicture.asset(
-                                    'assets/drop-down-button.svg'),
-                                iconEnabledColor: primaryBlue,
-                                iconDisabledColor: grey,
-                              ),
-                              dropdownStyleData: DropdownStyleData(
-                                maxHeight: 200.h,
-                                width: 140.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(14),
-                                  color: white,
-                                ),
-                                offset: const Offset(-20, 0),
-                                scrollbarTheme: ScrollbarThemeData(
-                                  radius: const Radius.circular(40),
-                                  thickness: MaterialStateProperty.all(6),
-                                  thumbVisibility:
-                                      MaterialStateProperty.all(true),
-                                ),
-                              ),
-                              // menuItemStyleData: const MenuItemStyleData(
-                              //   height: 40,
-                              //   padding: EdgeInsets.only(left: 14, right: 14),
-                              // ),
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton2<String>(
+                          // isExpanded: true,
+                          hint: Text(
+                            'Category',
+                            style: GoogleFonts.outfit(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: primaryBlue,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => setState(() {
-                      selectedPrice = !selectedPrice;
-                    }),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w),
-                      // margin: EdgeInsets.only(bottom: 20.h),
-                      width: 140.w,
-                      height: 40.h,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: primaryBlue,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          selectedPrice
-                              ? SvgPicture.asset('assets/cat-selcected.svg')
-                              : SvgPicture.asset('assets/cat-unselect.svg'),
-                          SizedBox(
-                            width: 8.w,
+                          items: items
+                              .map((String item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: primaryBlue,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ))
+                              .toList(),
+                          value: selectedValue,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedValue = value;
+                            });
+                          },
+                          // buttonStyleData: ButtonStyleData(
+                          //     height: 50,
+                          //     width: 160,
+                          //     padding:
+                          //         const EdgeInsets.only(left: 14, right: 14),
+                          //     decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(14),
+                          //       border: Border.all(
+                          //         color: Colors.black26,
+                          //       ),
+                          //       color: Colors.redAccent,
+                          //     ),
+                          //     elevation: 2,
+                          //     ),
+                          iconStyleData: IconStyleData(
+                            icon:
+                                SvgPicture.asset('assets/drop-down-button.svg'),
+                            iconEnabledColor: primaryBlue,
+                            iconDisabledColor: grey,
                           ),
-                          DropdownButtonHideUnderline(
-                            child: Expanded(
-                              child: DropdownButton2<String>(
-                                // isExpanded: true,
-                                hint: Text(
-                                  'Price',
-                                  style: GoogleFonts.outfit(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: primaryBlue,
-                                  ),
-                                ),
-                                items: prices
-                                    .map((String item) =>
-                                        DropdownMenuItem<String>(
-                                          value: item,
-                                          child: Text(
-                                            item,
-                                            style: GoogleFonts.outfit(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: primaryBlue,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ))
-                                    .toList(),
-                                value: price,
-                                onChanged: (value) {
-                                  setState(() {
-                                    price = value;
-                                  });
-                                },
-                                // buttonStyleData: ButtonStyleData(
-                                //     height: 50,
-                                //     width: 160,
-                                //     padding:
-                                //         const EdgeInsets.only(left: 14, right: 14),
-                                //     decoration: BoxDecoration(
-                                //       borderRadius: BorderRadius.circular(14),
-                                //       border: Border.all(
-                                //         color: Colors.black26,
-                                //       ),
-                                //       color: Colors.redAccent,
-                                //     ),
-                                //     elevation: 2,
-                                //     ),
-                                iconStyleData: IconStyleData(
-                                  icon: SvgPicture.asset(
-                                      'assets/drop-down-button.svg'),
-                                  iconEnabledColor: primaryBlue,
-                                  iconDisabledColor: grey,
-                                ),
-                                dropdownStyleData: DropdownStyleData(
-                                  padding: EdgeInsets.only(right: 15.w),
-                                  maxHeight: 200.h,
-                                  width: 140.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(14),
-                                    color: white,
-                                  ),
-                                  offset: const Offset(-20, 0),
-                                  scrollbarTheme: ScrollbarThemeData(
-                                    radius: const Radius.circular(40),
-                                    thickness: MaterialStateProperty.all(6),
-                                    thumbVisibility:
-                                        MaterialStateProperty.all(true),
-                                  ),
-                                ),
-                                menuItemStyleData: const MenuItemStyleData(
-                                  height: 40,
-                                  padding: EdgeInsets.only(left: 14, right: 14),
-                                ),
-                              ),
+                          dropdownStyleData: DropdownStyleData(
+                            maxHeight: 200.h,
+                            width: 140.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              color: white,
+                            ),
+                            offset: const Offset(-20, 0),
+                            scrollbarTheme: ScrollbarThemeData(
+                              radius: const Radius.circular(40),
+                              thickness: MaterialStateProperty.all(6),
+                              thumbVisibility: MaterialStateProperty.all(true),
                             ),
                           ),
-                        ],
+                          // menuItemStyleData: const MenuItemStyleData(
+                          //   height: 40,
+                          //   padding: EdgeInsets.only(left: 14, right: 14),
+                          // ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
               SizedBox(
-                height: 10.h,
+                width: 10.h,
               ),
               GestureDetector(
                 onTap: () => setState(() {
@@ -368,6 +262,113 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
                   ),
                 ),
               ),
+              SizedBox(
+                width: 10.h,
+              ),
+              GestureDetector(
+                onTap: () => setState(() {
+                  selectedPrice = !selectedPrice;
+                }),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  // margin: EdgeInsets.only(bottom: 20.h),
+                  width: 140.w,
+                  height: 40.h,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: primaryBlue,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      selectedPrice
+                          ? SvgPicture.asset('assets/cat-selcected.svg')
+                          : SvgPicture.asset('assets/cat-unselect.svg'),
+                      SizedBox(
+                        width: 8.w,
+                      ),
+                      DropdownButtonHideUnderline(
+                        child: Expanded(
+                          child: DropdownButton2<String>(
+                            // isExpanded: true,
+                            hint: Text(
+                              'Price',
+                              style: GoogleFonts.outfit(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: primaryBlue,
+                              ),
+                            ),
+                            items: prices
+                                .map((String item) => DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: GoogleFonts.outfit(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: primaryBlue,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ))
+                                .toList(),
+                            value: price,
+                            onChanged: (value) {
+                              setState(() {
+                                price = value;
+                              });
+                            },
+                            // buttonStyleData: ButtonStyleData(
+                            //     height: 50,
+                            //     width: 160,
+                            //     padding:
+                            //         const EdgeInsets.only(left: 14, right: 14),
+                            //     decoration: BoxDecoration(
+                            //       borderRadius: BorderRadius.circular(14),
+                            //       border: Border.all(
+                            //         color: Colors.black26,
+                            //       ),
+                            //       color: Colors.redAccent,
+                            //     ),
+                            //     elevation: 2,
+                            //     ),
+                            iconStyleData: IconStyleData(
+                              icon: SvgPicture.asset(
+                                  'assets/drop-down-button.svg'),
+                              iconEnabledColor: primaryBlue,
+                              iconDisabledColor: grey,
+                            ),
+                            dropdownStyleData: DropdownStyleData(
+                              padding: EdgeInsets.only(right: 15.w),
+                              maxHeight: 200.h,
+                              width: 140.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                color: white,
+                              ),
+                              offset: const Offset(-20, 0),
+                              scrollbarTheme: ScrollbarThemeData(
+                                radius: const Radius.circular(40),
+                                thickness: MaterialStateProperty.all(6),
+                                thumbVisibility:
+                                    MaterialStateProperty.all(true),
+                              ),
+                            ),
+                            menuItemStyleData: const MenuItemStyleData(
+                              height: 40,
+                              padding: EdgeInsets.only(left: 14, right: 14),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -402,7 +403,7 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
               itemBuilder: (BuildContext context, int index) {
                 return FeaturedServicesWidget(
                   image: 'assets/place-holder.png',
-                  productCategory: 'Product Category',
+                  productCategory: 'Vehical',
                   productDescription: 'Product Description',
                   productLocation: 'Product Location',
                   productPrice: '20',

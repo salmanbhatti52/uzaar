@@ -164,10 +164,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 25.0.h),
-                        child: GestureDetector(
-                          onTap: () =>
-                              Navigator.pushNamed(context, LogInScreen.id),
-                          child: primaryButton(context, 'Continue'),
+                        child: primaryButton(
+                          context,
+                          'Continue',
+                          () => Navigator.pushNamed(context, LogInScreen.id),
                         ),
                       ),
                     ],

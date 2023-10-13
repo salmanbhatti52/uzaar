@@ -56,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(
                         height: 57.h,
                       ),
-                      SvgPicture.asset('assets/app-logo.svg'),
+                      Image.asset('assets/uzaar_logo.png'),
                       SizedBox(
                         height: 20.h,
                       ),
@@ -166,13 +166,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(
                         height: 70.h,
                       ),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).push(
+                      primaryButton(
+                        context,
+                        'Signup',
+                        () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => VerifyEmail(),
                           ),
                         ),
-                        child: primaryButton(context, 'Signup'),
                       ),
                       SizedBox(
                         height: 30.h,

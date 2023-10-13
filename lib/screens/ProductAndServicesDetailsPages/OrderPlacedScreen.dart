@@ -106,14 +106,13 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
                 padding: EdgeInsets.only(
                   bottom: 20,
                 ),
-                child: GestureDetector(
-                  onTap: () => Navigator.of(context).push(
+                child: primaryButton(context, 'Track Order', () {
+                  return Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => TrackOrderScreen(),
                     ),
-                  ),
-                  child: primaryButton(context, 'Track Order'),
-                ),
+                  );
+                }),
               ),
             ],
           ),

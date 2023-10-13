@@ -128,11 +128,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   Spacer(),
                   Padding(
                     padding: EdgeInsets.only(bottom: 20.0.h),
-                    child: GestureDetector(
-                      onTap: () {
+                    child: primaryButton(
+                      context,
+                      'Save',
+                      () {
                         Navigator.pushNamed(context, LogInScreen.id);
                       },
-                      child: primaryButton(context, 'Save'),
                     ),
                   ),
                 ],

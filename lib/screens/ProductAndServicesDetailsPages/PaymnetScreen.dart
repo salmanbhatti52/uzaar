@@ -188,13 +188,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       padding: EdgeInsets.only(
                         bottom: 20,
                       ),
-                      child: GestureDetector(
-                        onTap: () => Navigator.of(context).push(
+                      child: primaryButton(
+                        context,
+                        'Continue',
+                        () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => OrderPlacedScreen(),
                           ),
                         ),
-                        child: primaryButton(context, 'Continue'),
                       ),
                     ),
                   ],

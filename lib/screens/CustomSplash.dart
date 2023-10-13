@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sellpad/screens/beforeLoginScreens/OnboardingScreen.dart';
+import 'package:sellpad/utils/Colors.dart';
 
 class CustomSplash extends StatefulWidget {
   static const String id = 'custom_splash';
@@ -40,12 +41,15 @@ class _CustomSplashState extends State<CustomSplash> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
+          decoration: const BoxDecoration(gradient: gradient),
           width: double.infinity,
           height: MediaQuery.sizeOf(context).height,
           constraints: const BoxConstraints.expand(),
-          child: Image.asset(
-            'assets/Splash.png',
-            fit: BoxFit.cover,
+          child: Center(
+            child: Image.asset(
+              'assets/white_logo.png',
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       ),

@@ -410,15 +410,17 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                   height: 30.h,
                 ),
                 padding(
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => PaymentScreen(),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0.h),
+                    child: primaryButton(
+                      context,
+                      'Buy Now',
+                      () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => PaymentScreen(),
+                        ),
                       ),
                     ),
-                    child: Padding(
-                        padding: EdgeInsets.only(bottom: 20.0.h),
-                        child: primaryButton(context, 'Buy Now')),
                   ),
                 ),
               ],
