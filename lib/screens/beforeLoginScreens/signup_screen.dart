@@ -188,8 +188,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Navigator.pushNamed(
-                                        context, LogInScreen.id);
+                                    // Navigator.pushNamed(
+                                    //     context, LogInScreen.id);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                LogInScreen()));
                                   },
                                 text: 'Login',
                                 style: kColoredBodyTextStyle.copyWith(

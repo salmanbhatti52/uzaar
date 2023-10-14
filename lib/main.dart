@@ -53,7 +53,9 @@ class _MyAppState extends State<MyApp> {
           LogInScreen.id: (context) => LogInScreen(),
           HomeScreen.id: (context) => HomeScreen(),
           ResetPasswordScreen.id: (context) => ResetPasswordScreen(),
-          BottomNavBar.id: (context) => BottomNavBar(),
+          BottomNavBar.id: (context) => BottomNavBar(
+                loginAsGuest: false,
+              ),
           // ProductAddScreenOne.id: (context) => ProductAddScreenOne(),
           // ProductAddScreenTwo.id: (context) => ProductAddScreenTwo(),
         },

@@ -120,7 +120,12 @@ class _VerifyEmailState extends State<VerifyEmail> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, CompleteProfileScreen.id);
+                  // Navigator.pushNamed(context, CompleteProfileScreen.id);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CompleteProfileScreen(),
+                      ));
                 },
                 child: Text(
                   'Skip for now',
@@ -131,7 +136,12 @@ class _VerifyEmailState extends State<VerifyEmail> {
               primaryButton(
                 context,
                 'Continue',
-                () => Navigator.pushNamed(context, CompleteProfileScreen.id),
+                () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return CompleteProfileScreen();
+                  },
+                  // Navigator.pushNamed(context, CompleteProfileScreen.id),
+                )),
               )
             ],
           ),

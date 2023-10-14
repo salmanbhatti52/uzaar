@@ -82,11 +82,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 // profile list
                 ListTile(
                   style: ListTileStyle.drawer,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => SalesProfileMain(),
-                    ),
-                  ),
+                  // onTap: () => Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => SalesProfileMain(),
+                  //   ),
+                  // ),
                   leading: SvgPicture.asset(
                     'assets/person-icon.svg',
                     colorFilter: ColorFilter.mode(primaryBlue, BlendMode.srcIn),
@@ -171,10 +171,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ListTile(
                   style: ListTileStyle.drawer,
                   onTap: () {
-                    Navigator.pushReplacementNamed(
-                      widget.buildContext,
-                      LogInScreen.id,
-                    );
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) {
+                        return LogInScreen();
+                      },
+                    ));
+
                     // removeDataFormSharedPreferences();
                     // Navigator.of(context).pushAndRemoveUntil(
                     //   MaterialPageRoute(

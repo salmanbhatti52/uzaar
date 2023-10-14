@@ -43,6 +43,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   height: 20.h,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
                       onTap: () {

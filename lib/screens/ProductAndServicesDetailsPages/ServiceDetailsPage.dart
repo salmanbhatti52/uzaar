@@ -76,13 +76,13 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                       child: Container(
                         padding: EdgeInsets.all(3.h),
                         width: 75.w,
-                        height: 27.h,
+                        height: 24.h,
                         decoration: BoxDecoration(
                           gradient: gradient,
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: Text(
-                          'category of product',
+                          'Designing',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.outfit(
                               fontSize: 10,
@@ -399,7 +399,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                     itemBuilder: (context, index) {
                       return FeaturedProductsWidget(
                           image: 'assets/place-holder.png',
-                          productCategory: 'productCategory',
+                          productCategory: 'Designing',
                           productDescription: 'productDescription',
                           productLocation: 'productLocation',
                           productPrice: 'productPrice');

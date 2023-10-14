@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/OnboardingScreen.dart';
 import 'package:Uzaar/utils/Colors.dart';
@@ -52,12 +53,16 @@ class _CustomSplashState extends State<CustomSplash> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.30,
               ),
-              SvgPicture.asset(
-                'assets/splash_logo.svg',
-                // fit: BoxFit.cover,
+              SizedBox(
+                height: 280.h,
+                width: 180.w,
+                child: SvgPicture.asset(
+                  'assets/splash_logo.svg',
+                  // fit: BoxFit.cover,
+                ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
+                height: MediaQuery.of(context).size.height * 0.15,
               ),
               GestureDetector(
                 onTap: () {
@@ -66,9 +71,13 @@ class _CustomSplashState extends State<CustomSplash> {
                     OnBoardingScreen.id,
                   );
                 },
-                child: SvgIcon(
-                  imageName: 'assets/splash_button.svg',
-                  // fit: BoxFit.cover,
+                child: SizedBox(
+                  height: 70.h,
+                  width: 160.w,
+                  child: SvgIcon(
+                    imageName: 'assets/splash_button.svg',
+                    // fit: BoxFit.cover,
+                  ),
                 ),
               ),
               SizedBox(

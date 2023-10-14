@@ -132,7 +132,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       context,
                       'Save',
                       () {
-                        Navigator.pushNamed(context, LogInScreen.id);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LogInScreen(),
+                            ));
+                        // Navigator.pushNamed(context, LogInScreen.id);
                       },
                     ),
                   ),

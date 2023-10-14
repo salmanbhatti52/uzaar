@@ -1,6 +1,9 @@
+import 'package:Uzaar/screens/beforeLoginScreens/signup_screen.dart';
+import 'package:Uzaar/utils/Buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_one.dart';
 import 'package:Uzaar/screens/listings.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../screens/SellScreens/ProductSellScreens/product_add_screen_two.dart';
 import 'DrawerWidget.dart';
@@ -21,7 +24,8 @@ import 'package:Uzaar/screens/NotificationScreen.dart';
 
 class BottomNavBar extends StatefulWidget {
   static const String id = 'bottom_navbar';
-  const BottomNavBar({super.key});
+  bool? loginAsGuest;
+  BottomNavBar({super.key, this.loginAsGuest});
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -205,7 +209,44 @@ class _BottomNavBarState extends State<BottomNavBar> {
         drawer: DrawerWidget(
           buildContext: context,
         ),
-        body: _pages[_currentIndex],
+        body: _currentIndex > 1 && widget.loginAsGuest == true
+            ? AlertDialog(
+                titleTextStyle: GoogleFonts.outfit(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    color: primaryBlue),
+                elevation: 3,
+                contentTextStyle: GoogleFonts.outfit(
+                    fontWeight: FontWeight.w400, fontSize: 14, color: grey),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                title: Text(
+                  'Can not Complete Action',
+                  textAlign: TextAlign.center,
+                ),
+                content: Text(
+                  'You can not sell anything on platform in guest mode. Signup now if you want to list any item.',
+                  textAlign: TextAlign.center,
+                ),
+                actions: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(bottom: 14.0, left: 8, right: 8),
+                    child: primaryButton(
+                      context,
+                      'Signup',
+                      () =>
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder: (context) {
+                          return SignUpScreen();
+                        },
+                      )),
+                    ),
+                  )
+                ],
+              )
+            : _pages[_currentIndex],
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(

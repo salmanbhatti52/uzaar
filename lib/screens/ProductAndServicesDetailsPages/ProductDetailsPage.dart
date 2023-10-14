@@ -35,7 +35,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     return WillPopScope(
       onWillPop: () async {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const BottomNavBar()),
+            MaterialPageRoute(builder: (context) => BottomNavBar()),
             (Route<dynamic> route) => false);
         return false;
       },
@@ -89,13 +89,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         child: Container(
                           padding: EdgeInsets.all(3.h),
                           width: 75.w,
-                          height: 27.h,
+                          height: 24.h,
                           decoration: BoxDecoration(
                             gradient: gradient,
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: Text(
-                            'category of product',
+                            'Electronics',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.outfit(
                                 fontSize: 10,
@@ -419,7 +419,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       itemBuilder: (context, index) {
                         return FeaturedProductsWidget(
                             image: 'assets/place-holder.png',
-                            productCategory: 'productCategory',
+                            productCategory: 'Electronics',
                             productDescription: 'productDescription',
                             productLocation: 'productLocation',
                             productPrice: 'productPrice');

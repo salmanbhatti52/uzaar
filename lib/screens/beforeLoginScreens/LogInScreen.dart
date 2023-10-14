@@ -135,8 +135,14 @@ class _LogInScreenState extends State<LogInScreen> {
                             TextSpan(
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  Navigator.pushNamed(
-                                      context, ResetPasswordScreen.id);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ResetPasswordScreen(),
+                                      ));
+                                  // Navigator.pushNamed(
+                                  //     context, ResetPasswordScreen.id);
                                 },
                               text: 'Reset',
                               style: kColoredBodyTextStyle.copyWith(
@@ -156,7 +162,9 @@ class _LogInScreenState extends State<LogInScreen> {
                       () {
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
-                                builder: (context) => const BottomNavBar()),
+                                builder: (context) => BottomNavBar(
+                                      loginAsGuest: false,
+                                    )),
                             (Route<dynamic> route) => false);
                       },
                     ),
@@ -171,7 +179,17 @@ class _LogInScreenState extends State<LogInScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    outlinedButton(context),
+                    outlinedButton(
+                      context,
+                      () {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => BottomNavBar(
+                                      loginAsGuest: true,
+                                    )),
+                            (Route<dynamic> route) => false);
+                      },
+                    ),
                     SizedBox(
                       height: 25.h,
                     ),
@@ -185,7 +203,12 @@ class _LogInScreenState extends State<LogInScreen> {
                             TextSpan(
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  Navigator.pushNamed(context, SignUpScreen.id);
+                                  // Navigator.pushNamed(context, SignUpScreen.id);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SignUpScreen(),
+                                      ));
                                 },
                               text: 'Signup',
                               style: kColoredBodyTextStyle.copyWith(

@@ -167,7 +167,11 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         child: primaryButton(
                           context,
                           'Continue',
-                          () => Navigator.pushNamed(context, LogInScreen.id),
+                          () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LogInScreen(),
+                              )),
                         ),
                       ),
                     ],

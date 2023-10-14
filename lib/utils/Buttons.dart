@@ -87,29 +87,32 @@ Widget facebookButton(context) {
   );
 }
 
-Widget outlinedButton(context) {
-  return Container(
-    // padding: EdgeInsets.symmetric(horizontal: 65.w),
-    width: double.infinity,
-    height: 55.h,
-    decoration: BoxDecoration(
-      color: white,
-      border: Border.all(
-        color: primaryBlue,
-        width: 2,
+Widget outlinedButton(context, Function()? onTap) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      // padding: EdgeInsets.symmetric(horizontal: 65.w),
+      width: double.infinity,
+      height: 55.h,
+      decoration: BoxDecoration(
+        color: white,
+        border: Border.all(
+          color: primaryBlue,
+          width: 2,
+        ),
+        borderRadius: BorderRadius.circular(30),
       ),
-      borderRadius: BorderRadius.circular(30),
-    ),
-    child: Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            'Continue as Guest',
-            style: kOutlinedButtonTextStyle,
-          ),
-        ],
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Continue as Guest',
+              style: kOutlinedButtonTextStyle,
+            ),
+          ],
+        ),
       ),
     ),
   );

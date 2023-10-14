@@ -83,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 20.h,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
                       onTap: () {
