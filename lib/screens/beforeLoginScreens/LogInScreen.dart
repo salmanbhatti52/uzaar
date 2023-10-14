@@ -55,7 +55,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     SizedBox(
                       height: 57.h,
                     ),
-                    Image.asset('assets/uzaar_logo.png'),
+                    SvgIcon(imageName: 'assets/app_logo.svg'),
                     SizedBox(
                       height: 20.h,
                     ),

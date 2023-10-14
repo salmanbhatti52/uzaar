@@ -5,6 +5,7 @@ import 'package:sellpad/widgets/BottomNaviBar.dart';
 import '../../../utils/Buttons.dart';
 import '../../../utils/Colors.dart';
 import '../../../widgets/TextfromFieldWidget.dart';
+import '../../../widgets/rounded_dropdown_menu.dart';
 import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
@@ -18,13 +19,16 @@ class ServiceAddScreen extends StatefulWidget {
 
 class _ServiceAddScreenState extends State<ServiceAddScreen> {
   int noOfTabs = 2;
+  late String serviceDropDownValue;
+  late String boostingDropDownValue;
+
   final nameEditingController = TextEditingController();
-  final categoryEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final locationEditingController = TextEditingController();
   final priceEditingController = TextEditingController();
-  final optionEditingController = TextEditingController();
 
+  List<String> serviceCategories = ['Tech', 'Designing', 'Beauty', 'Medical'];
+  List<String> boostingOptions = ['Free', 'Paid'];
   @override
   void initState() {
     // TODO: implement initState
@@ -95,17 +99,20 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: categoryEditingController,
-                        textInputType: TextInputType.text,
-                        prefixIcon:
-                            SvgIcon(imageName: 'assets/category_icon.svg'),
+                    RoundedDropdownMenu(
+                        leadingIconName: 'category_icon',
                         hintText: 'Category',
-                        obscureText: null,
-                      ),
-                    ),
+                        onSelected: (value) {
+                          setState(() {
+                            serviceDropDownValue = value;
+                          });
+                        },
+                        dropdownMenuEntries: serviceCategories
+                            .map(
+                              (String value) => DropdownMenuEntry<String>(
+                                  value: value, label: value),
+                            )
+                            .toList()),
                     SizedBox(
                       height: 14.h,
                     ),
@@ -191,16 +198,20 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: optionEditingController,
-                        textInputType: TextInputType.text,
-                        prefixIcon: SvgIcon(imageName: 'assets/boost_icon.svg'),
+                    RoundedDropdownMenu(
+                        leadingIconName: 'boost_icon',
                         hintText: 'Select Option',
-                        obscureText: null,
-                      ),
-                    ),
+                        onSelected: (value) {
+                          setState(() {
+                            boostingDropDownValue = value;
+                          });
+                        },
+                        dropdownMenuEntries: boostingOptions
+                            .map(
+                              (String value) => DropdownMenuEntry<String>(
+                                  value: value, label: value),
+                            )
+                            .toList()),
                     SizedBox(
                       height: 14.h,
                     ),

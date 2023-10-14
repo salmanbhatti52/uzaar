@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sellpad/screens/beforeLoginScreens/OnboardingScreen.dart';
 import 'package:sellpad/utils/Colors.dart';
+import 'package:sellpad/widgets/suffix_svg_icon.dart';
 
 class CustomSplash extends StatefulWidget {
   static const String id = 'custom_splash';
@@ -24,15 +26,15 @@ class _CustomSplashState extends State<CustomSplash> {
     // secureSharedPref = await SecureSharedPref.getInstance();
     // isLogin = (await secureSharedPref.getString('isLogin')) ?? 'false';
 
-    Future.delayed(
-      const Duration(seconds: 1),
-      () async {
-        Navigator.pushReplacementNamed(
-          context,
-          OnBoardingScreen.id,
-        );
-      },
-    );
+    // Future.delayed(
+    //   const Duration(seconds: 1),
+    //   () async {
+    //     Navigator.pushReplacementNamed(
+    //       context,
+    //       OnBoardingScreen.id,
+    //     );
+    //   },
+    // );
   }
 
   @override
@@ -45,11 +47,34 @@ class _CustomSplashState extends State<CustomSplash> {
           width: double.infinity,
           height: MediaQuery.sizeOf(context).height,
           constraints: const BoxConstraints.expand(),
-          child: Center(
-            child: Image.asset(
-              'assets/white_logo.png',
-              fit: BoxFit.cover,
-            ),
+          child: Column(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.30,
+              ),
+              SvgPicture.asset(
+                'assets/splash_logo.svg',
+                // fit: BoxFit.cover,
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.1,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacementNamed(
+                    context,
+                    OnBoardingScreen.id,
+                  );
+                },
+                child: SvgIcon(
+                  imageName: 'assets/splash_button.svg',
+                  // fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.04,
+              ),
+            ],
           ),
         ),
       ),

@@ -5,6 +5,7 @@ import '../../../utils/Buttons.dart';
 import '../../../utils/Colors.dart';
 import '../../../widgets/BottomNaviBar.dart';
 import '../../../widgets/TextfromFieldWidget.dart';
+import '../../../widgets/rounded_dropdown_menu.dart';
 import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
@@ -18,13 +19,19 @@ class HouseAddScreen extends StatefulWidget {
 
 class _HouseAddScreenState extends State<HouseAddScreen> {
   int noOfTabs = 2;
+  late String housingDropdownValue;
+  late String boostingDropdownValue;
+  late int bedroomsDropdownValue;
+  late int bathroomsDropdownValue;
   final nameEditingController = TextEditingController();
-  final categoryEditingController = TextEditingController();
   final locationEditingController = TextEditingController();
   final priceEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final areaEditingController = TextEditingController();
-  final optionEditingController = TextEditingController();
+  List<String> housingCategories = ['Rental', 'For Sale', 'Lease'];
+  List<String> boostingOptions = ['Free', 'Paid'];
+  List<int> bedrooms = [1, 2, 3, 4, 5];
+  List<int> bathrooms = [1, 2, 3, 4, 5];
 
   @override
   void initState() {
@@ -95,17 +102,31 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: categoryEditingController,
-                        textInputType: TextInputType.text,
-                        prefixIcon:
-                            SvgIcon(imageName: 'assets/category_icon.svg'),
+                    // SizedBox(
+                    //   height: 50.h,
+                    //   child: TextFormFieldWidget(
+                    //     controller: categoryEditingController,
+                    //     textInputType: TextInputType.text,
+                    //     prefixIcon:
+                    //         SvgIcon(imageName: 'assets/category_icon.svg'),
+                    //     hintText: 'Rental',
+                    //     obscureText: null,
+                    //   ),
+                    // ),
+                    RoundedDropdownMenu(
+                        leadingIconName: 'category_icon',
                         hintText: 'Rental',
-                        obscureText: null,
-                      ),
-                    ),
+                        onSelected: (value) {
+                          setState(() {
+                            housingDropdownValue = value;
+                          });
+                        },
+                        dropdownMenuEntries: housingCategories
+                            .map(
+                              (String value) => DropdownMenuEntry<String>(
+                                  value: value, label: value),
+                            )
+                            .toList()),
                     SizedBox(
                       height: 14.h,
                     ),
@@ -197,6 +218,76 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                     SizedBox(
                       height: 14.h,
                     ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: ReusableText(text: 'Bedroom'),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              RoundedDropdownMenu(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.40,
+                                  leadingIconName: 'bed_icon',
+                                  hintText: '2',
+                                  onSelected: (value) {
+                                    setState(() {
+                                      bedroomsDropdownValue = value;
+                                    });
+                                  },
+                                  dropdownMenuEntries: bedrooms
+                                      .map(
+                                        (int value) => DropdownMenuEntry<int>(
+                                            value: value,
+                                            label: value.toString()),
+                                      )
+                                      .toList()),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: ReusableText(text: 'Bathroom'),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              RoundedDropdownMenu(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.40,
+                                  leadingIconName: 'bath_icon',
+                                  hintText: '2',
+                                  onSelected: (value) {
+                                    setState(() {
+                                      bathroomsDropdownValue = value;
+                                    });
+                                  },
+                                  dropdownMenuEntries: bathrooms
+                                      .map(
+                                        (int value) => DropdownMenuEntry<int>(
+                                            value: value,
+                                            label: value.toString()),
+                                      )
+                                      .toList()),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 14.h,
+                    ),
                     Text(
                       '*Boost your listings now to get more orders or you can boost later',
                       style: kTextFieldInputStyle,
@@ -211,16 +302,30 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: optionEditingController,
-                        textInputType: TextInputType.text,
-                        prefixIcon: SvgIcon(imageName: 'assets/boost_icon.svg'),
+                    // SizedBox(
+                    //   height: 50.h,
+                    //   child: TextFormFieldWidget(
+                    //     controller: optionEditingController,
+                    //     textInputType: TextInputType.text,
+                    //     prefixIcon: SvgIcon(imageName: 'assets/boost_icon.svg'),
+                    //     hintText: 'Select Option',
+                    //     obscureText: null,
+                    //   ),
+                    // ),
+                    RoundedDropdownMenu(
+                        leadingIconName: 'boost_icon',
                         hintText: 'Select Option',
-                        obscureText: null,
-                      ),
-                    ),
+                        onSelected: (value) {
+                          setState(() {
+                            boostingDropdownValue = value;
+                          });
+                        },
+                        dropdownMenuEntries: boostingOptions
+                            .map(
+                              (String value) => DropdownMenuEntry<String>(
+                                  value: value, label: value),
+                            )
+                            .toList()),
                     SizedBox(
                       height: 14.h,
                     ),

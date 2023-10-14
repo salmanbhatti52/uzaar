@@ -21,7 +21,6 @@ class ProductAddScreenTwo extends StatefulWidget {
 class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
   int noOfTabs = 3;
   final priceEditingController = TextEditingController();
-  final optionEditingController = TextEditingController();
   late String dropdownValue;
   List<String> boostingOptions = ['Free', 'Paid'];
   @override
