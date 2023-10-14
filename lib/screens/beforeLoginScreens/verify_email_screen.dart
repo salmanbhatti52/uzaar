@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sellpad/utils/Buttons.dart';
-import 'package:sellpad/utils/Colors.dart';
-import 'package:sellpad/widgets/navigate_back_icon.dart';
+import 'package:Uzaar/utils/Buttons.dart';
+import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/widgets/navigate_back_icon.dart';
 
 import 'complete_profile_screen.dart';
 

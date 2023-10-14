@@ -1,15 +1,15 @@
 import 'package:flutter/gestures.dart';
-import 'package:sellpad/screens/beforeLoginScreens/verify_email_screen.dart';
-import 'package:sellpad/widgets/TextfromFieldWidget.dart';
+import 'package:Uzaar/screens/beforeLoginScreens/verify_email_screen.dart';
+import 'package:Uzaar/widgets/TextfromFieldWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sellpad/widgets/text.dart';
+import 'package:Uzaar/widgets/text.dart';
 
 import '../../widgets/suffix_svg_icon.dart';
 import 'LogInScreen.dart';
-import 'package:sellpad/utils/Buttons.dart';
-import 'package:sellpad/utils/Colors.dart';
+import 'package:Uzaar/utils/Buttons.dart';
+import 'package:Uzaar/utils/Colors.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String id = 'signup_screen';

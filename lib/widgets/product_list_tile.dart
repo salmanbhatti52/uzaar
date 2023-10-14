@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sellpad/utils/Colors.dart';
+import 'package:Uzaar/utils/Colors.dart';
 
 class ProductListTile extends StatelessWidget {
   final String productImage;

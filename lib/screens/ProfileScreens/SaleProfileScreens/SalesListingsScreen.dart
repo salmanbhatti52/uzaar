@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/widgets/FeaturedServicesWidget.dart';
+import 'package:Uzaar/widgets/AddListingsButtonSales.dart';
 
-import 'package:sellpad/utils/Colors.dart';
-import 'package:sellpad/widgets/FeaturedServicesWidget.dart';
-import 'package:sellpad/widgets/AddListingsButtonSales.dart';
-
-import 'package:sellpad/widgets/FeaturedProductsWidget.dart';
+import 'package:Uzaar/widgets/FeaturedProductsWidget.dart';
 
 class SalesListingsScreen extends StatefulWidget {
   const SalesListingsScreen({super.key});

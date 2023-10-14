@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sellpad/utils/Colors.dart';
+import 'package:Uzaar/utils/Colors.dart';
 
 import '../widgets/product_list_tile.dart';
 

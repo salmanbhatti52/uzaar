@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sellpad/utils/Colors.dart';
+import 'package:Uzaar/utils/Colors.dart';
 
 class ReusableText extends StatelessWidget {
   final String text;

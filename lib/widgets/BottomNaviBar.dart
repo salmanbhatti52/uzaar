@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
-import 'package:sellpad/screens/SellScreens/ProductSellScreens/product_add_screen_one.dart';
-import 'package:sellpad/screens/listings.dart';
+import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_one.dart';
+import 'package:Uzaar/screens/listings.dart';
 
 import '../screens/SellScreens/ProductSellScreens/product_add_screen_two.dart';
 import 'DrawerWidget.dart';
@@ -14,10 +14,10 @@ import '../screens/ExploreScreens/ExploreScreen.dart';
 import '../screens/HomeScreen.dart';
 import '../screens/ProfileScreens/ProfileScreen.dart';
 import '../screens/SellScreens/SellScreen.dart';
-import 'package:sellpad/utils/Colors.dart';
+import 'package:Uzaar/utils/Colors.dart';
 
 import '../screens/MessagesScreen.dart';
-import 'package:sellpad/screens/NotificationScreen.dart';
+import 'package:Uzaar/screens/NotificationScreen.dart';
 
 class BottomNavBar extends StatefulWidget {
   static const String id = 'bottom_navbar';

@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:sellpad/utils/Colors.dart';
-import 'package:sellpad/utils/Buttons.dart';
+import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/Buttons.dart';
 
 class BottomSheetForSendOffer extends StatefulWidget {
   const BottomSheetForSendOffer({super.key});

@@ -3,7 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:sellpad/utils/Colors.dart';
+import 'package:Uzaar/utils/Colors.dart';
 
 class ReviewsScreenSales extends StatefulWidget {
   const ReviewsScreenSales({super.key});

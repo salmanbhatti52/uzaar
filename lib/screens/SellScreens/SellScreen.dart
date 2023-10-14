@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sellpad/screens/SellScreens/HousingSellScreens/house_add_screen.dart';
-import 'package:sellpad/screens/SellScreens/ProductSellScreens/product_add_screen_one.dart';
-import 'package:sellpad/screens/SellScreens/ProductSellScreens/product_add_screen_two.dart';
-import 'package:sellpad/screens/SellScreens/ServiceSellScreens/service_add_screen.dart';
-import 'package:sellpad/screens/SellScreens/add_item_image_screen.dart';
+import 'package:Uzaar/screens/SellScreens/HousingSellScreens/house_add_screen.dart';
+import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_one.dart';
+import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_two.dart';
+import 'package:Uzaar/screens/SellScreens/ServiceSellScreens/service_add_screen.dart';
+import 'package:Uzaar/screens/SellScreens/add_item_image_screen.dart';
 
-import 'package:sellpad/utils/Colors.dart';
+import 'package:Uzaar/utils/Colors.dart';
 
 import '../../utils/Buttons.dart';
 import '../../widgets/business_type_button.dart';

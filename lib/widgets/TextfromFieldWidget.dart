@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sellpad/utils/Colors.dart';
+import 'package:Uzaar/utils/Colors.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
   final TextEditingController controller;

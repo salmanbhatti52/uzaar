@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sellpad/screens/beforeLoginScreens/signup_screen.dart';
+import 'package:Uzaar/screens/beforeLoginScreens/signup_screen.dart';
 
-import 'package:sellpad/utils/Colors.dart';
-import 'package:sellpad/utils/Buttons.dart';
-import 'package:sellpad/widgets/FeaturedProductsWidget.dart';
+import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/Buttons.dart';
+import 'package:Uzaar/widgets/FeaturedProductsWidget.dart';
 
 import '../../widgets/BottomNaviBar.dart';
 import '../HomeScreen.dart';

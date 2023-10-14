@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sellpad/models/HousingCategoryModel.dart';
+import 'package:Uzaar/models/HousingCategoryModel.dart';
 
-import 'package:sellpad/utils/Colors.dart';
-import 'package:sellpad/widgets/FeaturedProductsWidget.dart';
-import 'package:sellpad/widgets/FeaturedServicesWidget.dart';
-import 'package:sellpad/models/ProductCategoryModel.dart';
-import 'package:sellpad/models/ServicesCategoryModel.dart';
-import 'package:sellpad/widgets/search_field.dart';
+import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/widgets/FeaturedProductsWidget.dart';
+import 'package:Uzaar/widgets/FeaturedServicesWidget.dart';
+import 'package:Uzaar/models/ProductCategoryModel.dart';
+import 'package:Uzaar/models/ServicesCategoryModel.dart';
+import 'package:Uzaar/widgets/search_field.dart';
 
 import 'ProductAndServicesDetailsPages/ProductDetailsPage.dart';
 import 'ProductAndServicesDetailsPages/ServiceDetailsPage.dart';

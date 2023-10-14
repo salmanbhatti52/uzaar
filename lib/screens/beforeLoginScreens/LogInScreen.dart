@@ -2,15 +2,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sellpad/screens/HomeScreen.dart';
-import 'package:sellpad/screens/beforeLoginScreens/reset_password_screen.dart';
-import 'package:sellpad/widgets/BottomNaviBar.dart';
-import 'package:sellpad/utils/Colors.dart';
-import 'package:sellpad/utils/Buttons.dart';
+import 'package:Uzaar/screens/HomeScreen.dart';
+import 'package:Uzaar/screens/beforeLoginScreens/reset_password_screen.dart';
+import 'package:Uzaar/widgets/BottomNaviBar.dart';
+import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/Buttons.dart';
 
-import 'package:sellpad/widgets/TextfromFieldWidget.dart';
-import 'package:sellpad/widgets/suffix_svg_icon.dart';
-import 'package:sellpad/widgets/text.dart';
+import 'package:Uzaar/widgets/TextfromFieldWidget.dart';
+import 'package:Uzaar/widgets/suffix_svg_icon.dart';
+import 'package:Uzaar/widgets/text.dart';
 
 import 'signup_screen.dart';
 

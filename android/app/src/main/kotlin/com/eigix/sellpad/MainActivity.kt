@@ -1,4 +1,4 @@
-package com.eigix.sellpad
+package com.eigix.Uzaar
 
 import io.flutter.embedding.android.FlutterActivity
 

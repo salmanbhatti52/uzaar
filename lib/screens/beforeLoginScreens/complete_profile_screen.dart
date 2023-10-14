@@ -1,12 +1,12 @@
-import 'package:sellpad/widgets/suffix_svg_icon.dart';
-import 'package:sellpad/widgets/text.dart';
+import 'package:Uzaar/widgets/suffix_svg_icon.dart';
+import 'package:Uzaar/widgets/text.dart';
 
 import '../../widgets/TextfromFieldWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:sellpad/utils/Colors.dart';
-import 'package:sellpad/screens/beforeLoginScreens/LogInScreen.dart';
+import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/screens/beforeLoginScreens/LogInScreen.dart';
 
 import '../../utils/Buttons.dart';
 import '../../widgets/read_only_container.dart';

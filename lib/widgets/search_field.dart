@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sellpad/widgets/suffix_svg_icon.dart';
+import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 
 import 'TextfromFieldWidget.dart';
 

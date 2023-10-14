@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sellpad/widgets/BottomNaviBar.dart';
-import 'package:sellpad/widgets/rounded_dropdown_menu.dart';
+import 'package:Uzaar/widgets/BottomNaviBar.dart';
+import 'package:Uzaar/widgets/rounded_dropdown_menu.dart';
 
 import '../../../utils/Buttons.dart';
 import '../../../utils/Colors.dart';
