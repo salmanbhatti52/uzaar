@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sellpad/widgets/BottomNaviBar.dart';
+import 'package:sellpad/widgets/rounded_dropdown_menu.dart';
 
 import '../../../utils/Buttons.dart';
 import '../../../utils/Colors.dart';
@@ -21,7 +22,8 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
   int noOfTabs = 3;
   final priceEditingController = TextEditingController();
   final optionEditingController = TextEditingController();
-
+  late String dropdownValue;
+  List<String> boostingOptions = ['Free', 'Paid'];
   @override
   void initState() {
     // TODO: implement initState
@@ -99,15 +101,20 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: optionEditingController,
-                        textInputType: TextInputType.text,
-                        prefixIcon: SvgIcon(imageName: 'assets/boost_icon.svg'),
-                        hintText: 'Select Option',
-                        obscureText: null,
-                      ),
+                    RoundedDropdownMenu(
+                      leadingIconName: 'boost_icon',
+                      hintText: 'Select Option',
+                      onSelected: (value) {
+                        setState(() {
+                          dropdownValue = value;
+                        });
+                      },
+                      dropdownMenuEntries: boostingOptions
+                          .map(
+                            (String value) => DropdownMenuEntry<String>(
+                                value: value, label: value),
+                          )
+                          .toList(),
                     ),
                     SizedBox(
                       height: 14.h,

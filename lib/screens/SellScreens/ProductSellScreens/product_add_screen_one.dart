@@ -8,6 +8,7 @@ import 'package:sellpad/utils/Buttons.dart';
 import 'package:sellpad/utils/Colors.dart';
 
 import '../../../widgets/TextfromFieldWidget.dart';
+import '../../../widgets/rounded_dropdown_menu.dart';
 import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
@@ -111,157 +112,20 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    // SizedBox(
-                    //   height: 50.h,
-                    //   child: TextFormFieldWidget(
-                    //     controller: nameEditingController,
-                    //     textInputType: TextInputType.text,
-                    //     prefixIcon:
-                    //         SvgIcon(imageName: 'assets/category_icon.svg'),
-                    //     hintText: 'Category',
-                    //     obscureText: null,
-                    //   ),
-                    // ),
-                    // DropdownMenu(
-                    //     width: MediaQuery.sizeOf(context).width * 0.88,
-                    //     initialSelection: productCategories.first,
-                    //     onSelected: (String? value) {
-                    //       setState(() {
-                    //         dropDownValue = value;
-                    //       });
-                    //     },
-                    //     dropdownMenuEntries: productCategories
-                    //         .map(
-                    //           (String value) => DropdownMenuEntry<String>(
-                    //               value: value, label: value),
-                    //         )
-                    //         .toList()),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(
-                    //       left: 10, right: 10, top: 5, bottom: 5),
-                    //   child: DropdownButtonFormField<String>(
-                    //     iconDisabledColor: Colors.transparent,
-                    //     iconEnabledColor: Colors.transparent,
-                    //     value: dropDownValue,
-                    //     onChanged: (newValue) {
-                    //       setState(() {
-                    //         dropDownValue = newValue;
-                    //         print(dropDownValue);
-                    //       });
-                    //     },
-                    //     items: productCategories.map((country) {
-                    //           return DropdownMenuItem<String>(
-                    //             value: country,
-                    //             child: Text(country),
-                    //           );
-                    //         }).toList() ??
-                    //         [],
-                    //     decoration: InputDecoration(
-                    //       suffixIcon: Row(
-                    //         mainAxisAlignment: MainAxisAlignment.end,
-                    //         mainAxisSize: MainAxisSize.min,
-                    //         children: [
-                    //           Padding(
-                    //             padding: const EdgeInsets.all(8.0),
-                    //             child:
-                    //                 SvgPicture.asset("assets/arrowDown1.svg"),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //       focusedBorder: OutlineInputBorder(
-                    //         borderSide:
-                    //             const BorderSide(color: Color(0xFFF65734)),
-                    //         borderRadius: BorderRadius.circular(15.0),
-                    //       ),
-                    //       hintText: "Select Country",
-                    //       enabledBorder: OutlineInputBorder(
-                    //         borderRadius: BorderRadius.circular(15),
-                    //         borderSide: const BorderSide(
-                    //           color: Color(0xFFF3F3F3),
-                    //         ),
-                    //       ),
-                    //       hintStyle: const TextStyle(
-                    //         color: Color(0xFFA7A9B7),
-                    //         fontSize: 16,
-                    //         fontWeight: FontWeight.w300,
-                    //         fontFamily: "Satoshi",
-                    //       ),
-                    //       border: OutlineInputBorder(
-                    //         borderRadius: BorderRadius.circular(15),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton2<String>(
-                        // isExpanded: true,
-                        hint: Text(
-                          'Location',
-                          style: GoogleFonts.outfit(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: primaryBlue,
-                          ),
-                        ),
-                        items: productCategories
-                            .map((String item) => DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: GoogleFonts.outfit(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: primaryBlue,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ))
-                            .toList(),
-                        value: dropDownValue,
-                        onChanged: (value) {
+                    RoundedDropdownMenu(
+                        leadingIconName: 'category_icon',
+                        hintText: 'Category',
+                        onSelected: (value) {
                           setState(() {
                             dropDownValue = value;
                           });
                         },
-                        // buttonStyleData: ButtonStyleData(
-                        //     height: 50,
-                        //     width: 160,
-                        //     padding:
-                        //         const EdgeInsets.only(left: 14, right: 14),
-                        //     decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(14),
-                        //       border: Border.all(
-                        //         color: Colors.black26,
-                        //       ),
-                        //       color: Colors.redAccent,
-                        //     ),
-                        //     elevation: 2,
-                        //     ),
-                        iconStyleData: IconStyleData(
-                          icon: SvgPicture.asset('assets/drop-down-button.svg'),
-                          iconEnabledColor: primaryBlue,
-                          iconDisabledColor: grey,
-                        ),
-                        dropdownStyleData: DropdownStyleData(
-                          // maxHeight: 200.h,
-                          // width: 140.w,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14),
-                            color: white,
-                          ),
-                          // offset: const Offset(-20, 0),
-                          scrollbarTheme: ScrollbarThemeData(
-                            radius: const Radius.circular(40),
-                            thickness: MaterialStateProperty.all(6),
-                            thumbVisibility: MaterialStateProperty.all(true),
-                          ),
-                        ),
-                        // menuItemStyleData: const MenuItemStyleData(
-                        //   height: 40,
-                        //   padding: EdgeInsets.only(left: 14, right: 14),
-                        // ),
-                      ),
-                    ),
+                        dropdownMenuEntries: productCategories
+                            .map(
+                              (String value) => DropdownMenuEntry<String>(
+                                  value: value, label: value),
+                            )
+                            .toList()),
                     SizedBox(
                       height: 14.h,
                     ),
