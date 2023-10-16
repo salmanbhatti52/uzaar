@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/utils/Colors.dart';
-import 'package:Uzaar/widgets/FeaturedProductsWidget.dart';
+import 'package:Uzaar/widgets/featured_products_widget.dart';
 
 class ExploreHousingScreen extends StatefulWidget {
   const ExploreHousingScreen({super.key});

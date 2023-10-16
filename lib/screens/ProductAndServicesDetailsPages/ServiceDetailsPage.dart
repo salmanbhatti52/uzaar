@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:Uzaar/utils/Colors.dart';
 import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/widgets/FeaturedProductsWidget.dart';
+import 'package:Uzaar/widgets/featured_products_widget.dart';
 
 import 'PaymnetScreen.dart';
 

@@ -1,11 +1,24 @@
-<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_25_3052)">
-<path d="M2.07153 15.3929C3.89296 6.60715 14.7144 5.8923e-06 25.0001 11.6786C39.6787 -5.14285 55.3572 15.7143 44.7144 26.4643L25.0001 44.6429L13.4644 33.9286" stroke="#5FA8EC" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M1.78577 25H10.7143L16.0715 17.8572L23.2143 30.3572L28.5715 23.2143H33.9286" stroke="#5FA8EC" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_25_3050)">
+<circle cx="39" cy="39" r="35" fill="#F5F5F5"/>
+</g>
+<g clip-path="url(#clip0_25_3050)">
+<path d="M16.0715 29.3929C17.893 20.6071 28.7144 14 39.0001 25.6786C53.6787 8.85715 69.3572 29.7143 58.7144 40.4643L39.0001 58.6429L27.4644 47.9286" stroke="#5FA8EC" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15.7858 39H24.7143L30.0715 31.8572L37.2143 44.3572L42.5715 37.2143H47.9286" stroke="#5FA8EC" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
-<clipPath id="clip0_25_3052">
-<rect width="50" height="50" fill="white"/>
+<filter id="filter0_d_25_3050" x="0" y="0" width="78" height="78" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.14 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_25_3050"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_25_3050" result="shape"/>
+</filter>
+<clipPath id="clip0_25_3050">
+<rect width="50" height="50" fill="white" transform="translate(14 14)"/>
 </clipPath>
 </defs>
 </svg>

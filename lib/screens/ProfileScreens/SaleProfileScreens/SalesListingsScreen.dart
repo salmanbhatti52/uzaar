@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:Uzaar/utils/Colors.dart';
-import 'package:Uzaar/widgets/FeaturedServicesWidget.dart';
+import 'package:Uzaar/widgets/featured_services_widget.dart';
 import 'package:Uzaar/widgets/AddListingsButtonSales.dart';
 
-import 'package:Uzaar/widgets/FeaturedProductsWidget.dart';
+import 'package:Uzaar/widgets/featured_products_widget.dart';
 
 class SalesListingsScreen extends StatefulWidget {
   const SalesListingsScreen({super.key});

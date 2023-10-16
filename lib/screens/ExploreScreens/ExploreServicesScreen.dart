@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/utils/Colors.dart';
-import 'package:Uzaar/widgets/FeaturedServicesWidget.dart';
+import 'package:Uzaar/widgets/featured_services_widget.dart';
 
 class ExploreServicesScreen extends StatefulWidget {
   const ExploreServicesScreen({super.key});

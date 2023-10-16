@@ -1,3 +1,4 @@
+import 'package:Uzaar/widgets/featured_housing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,12 +7,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/models/HousingCategoryModel.dart';
 
 import 'package:Uzaar/utils/Colors.dart';
-import 'package:Uzaar/widgets/FeaturedProductsWidget.dart';
-import 'package:Uzaar/widgets/FeaturedServicesWidget.dart';
+import 'package:Uzaar/widgets/featured_products_widget.dart';
+import 'package:Uzaar/widgets/featured_services_widget.dart';
 import 'package:Uzaar/models/ProductCategoryModel.dart';
 import 'package:Uzaar/models/ServicesCategoryModel.dart';
 import 'package:Uzaar/widgets/search_field.dart';
 
+import '../widgets/business_type_button.dart';
 import 'ProductAndServicesDetailsPages/ProductDetailsPage.dart';
 import 'ProductAndServicesDetailsPages/ServiceDetailsPage.dart';
 
@@ -34,11 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  int catSelected = 1;
+  int selectedCategory = 1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: GlowingOverscrollIndicator(
         axisDirection: AxisDirection.down,
         color: primaryBlue,
@@ -77,40 +80,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Text(
                   'What are you looking for?',
-                  style: kBodyHeadingTextStyle,
+                  style: kBodySubHeadingTextStyle,
                 ),
                 SizedBox(
                   height: 20.h,
                 ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          catSelected = 1;
+                          selectedCategory = 1;
                         });
                       },
-                      child: Container(
-                        width: 100.w,
-                        height: 40.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          gradient: catSelected == 1 ? gradient : null,
-                          color:
-                              catSelected != 1 ? grey.withOpacity(0.3) : null,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Products',
-                            style: GoogleFonts.outfit(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                              color: catSelected == 1 ? white : grey,
-                            ),
-                          ),
-                        ),
-                      ),
+                      child: BusinessTypeButton(
+                          businessName: 'Products',
+                          gradient: selectedCategory == 1 ? gradient : null,
+                          buttonBackground: selectedCategory != 1
+                              ? grey.withOpacity(0.3)
+                              : null,
+                          textColor: selectedCategory == 1 ? white : grey),
                     ),
                     SizedBox(
                       width: 10.w,
@@ -118,29 +109,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          catSelected = 2;
+                          selectedCategory = 2;
                         });
                       },
-                      child: Container(
-                        width: 100.w,
-                        height: 40.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          gradient: catSelected == 2 ? gradient : null,
-                          color:
-                              catSelected != 2 ? grey.withOpacity(0.3) : null,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Services',
-                            style: GoogleFonts.outfit(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                              color: catSelected == 2 ? white : grey,
-                            ),
-                          ),
-                        ),
-                      ),
+                      child: BusinessTypeButton(
+                          businessName: 'Services',
+                          gradient: selectedCategory == 2 ? gradient : null,
+                          buttonBackground: selectedCategory != 2
+                              ? grey.withOpacity(0.3)
+                              : null,
+                          textColor: selectedCategory == 2 ? white : grey),
                     ),
                     SizedBox(
                       width: 10.w,
@@ -148,112 +126,53 @@ class _HomeScreenState extends State<HomeScreen> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          catSelected = 3;
+                          selectedCategory = 3;
                         });
                       },
-                      child: Container(
-                        width: 100.w,
-                        height: 40.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          gradient: catSelected == 3 ? gradient : null,
-                          color:
-                              catSelected != 3 ? grey.withOpacity(0.3) : null,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Housing',
-                            style: GoogleFonts.outfit(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                              color: catSelected == 3 ? white : grey,
-                            ),
-                          ),
-                        ),
-                      ),
+                      child: BusinessTypeButton(
+                          businessName: 'Housing',
+                          gradient: selectedCategory == 3 ? gradient : null,
+                          buttonBackground: selectedCategory != 3
+                              ? grey.withOpacity(0.3)
+                              : null,
+                          textColor: selectedCategory == 3 ? white : grey),
                     ),
                   ],
                 ),
                 SizedBox(
                   height: 30.h,
                 ),
-                SizedBox(),
+
                 SizedBox(
                   height: 100.h,
-                  child: catSelected == 1
+                  child: selectedCategory == 1
                       ? ListView.builder(
                           itemCount: productCategoryModel.length,
                           shrinkWrap: true,
                           physics: BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            return Container(
-                              margin: EdgeInsets.only(right: 7),
-                              // color: primaryBlue,
-                              child: SizedBox(
-                                width: 75,
-                                // height: 98.h,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      height: 70.h,
-                                      child: SvgPicture.asset(
-                                        productCategoryModel[index].image,
-                                      ),
-                                    ),
-                                    Text(
-                                      productCategoryModel[index].catName,
-                                      style: GoogleFonts.outfit(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            return BusinessListTile(
+                              businessTileImageName:
+                                  productCategoryModel[index].image,
+                              businessTileName:
+                                  productCategoryModel[index].catName,
                             );
                           },
                         )
-                      : catSelected == 2
+                      : selectedCategory == 2
                           ? ListView.builder(
                               itemCount: servicesCategoryModel.length,
                               shrinkWrap: true,
                               physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                return Container(
-                                  margin: EdgeInsets.only(right: 7),
-                                  // color: primaryBlue,
-                                  child: SizedBox(
-                                    width: 75,
-                                    // height: 98.h,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                          height: 70.h,
-                                          child: SvgPicture.asset(
-                                            servicesCategoryModel[index].image,
-                                            // fit: BoxFit.scaleDown,
-                                          ),
-                                        ),
-                                        Text(
-                                          servicesCategoryModel[index]
-                                              .serviceName,
-                                          style: GoogleFonts.outfit(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: black,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
+                                return BusinessListTile(
+                                    businessTileName:
+                                        servicesCategoryModel[index]
+                                            .serviceName,
+                                    businessTileImageName:
+                                        servicesCategoryModel[index].image);
                               },
                             )
                           : ListView.builder(
@@ -262,35 +181,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                return Container(
-                                  margin: EdgeInsets.only(right: 7),
-                                  // color: primaryBlue,
-                                  child: SizedBox(
-                                    width: 75,
-                                    // height: 98.h,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                          height: 70.h,
-                                          child: SvgPicture.asset(
-                                            housingCategoryModel[index].image,
-                                            // fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Text(
-                                          housingCategoryModel[index].houseName,
-                                          style: GoogleFonts.outfit(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: black,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
+                                return BusinessListTile(
+                                    businessTileName:
+                                        housingCategoryModel[index].houseName,
+                                    businessTileImageName:
+                                        housingCategoryModel[index].image);
                               },
                             ),
                 ),
@@ -299,53 +194,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Text(
                   'Featured Products',
-                  style: GoogleFonts.outfit(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: black,
-                  ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                SizedBox(
-                  height: 200.h,
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => ProductDetailsPage(),
-                          ),
-                        ),
-                        child: FeaturedProductsWidget(
-                          image: 'assets/product-ph.png',
-                          productCategory: 'Electronics',
-                          productDescription: 'Iphone 14',
-                          productLocation: 'Los Angeles',
-                          productPrice: '120',
-                        ),
-                      );
-                    },
-                    itemCount: 6,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    physics: BouncingScrollPhysics(),
-                  ),
+                  style: kBodyHeadingTextStyle,
                 ),
                 SizedBox(
                   height: 20.h,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-                  child: Text(
-                    'Featured Services',
-                    style: GoogleFonts.outfit(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: black,
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Container(
+                    decoration: BoxDecoration(color: Colors.white),
+                    height: 205.h,
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ProductDetailsPage(),
+                            ),
+                          ),
+                          child: FeaturedProductsWidget(
+                            image: 'assets/product-ph.png',
+                            productCategory: 'Electronics',
+                            productDescription: 'Iphone 14',
+                            productLocation: 'Los Angeles',
+                            productPrice: '120',
+                          ),
+                        );
+                      },
+                      itemCount: 6,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      physics: BouncingScrollPhysics(),
                     ),
                   ),
+                ),
+
+                Text(
+                  'Featured Services',
+                  style: kBodyHeadingTextStyle,
                 ),
                 SizedBox(
                   height: 20.h,
@@ -353,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: EdgeInsets.only(bottom: 20.0),
                   child: SizedBox(
-                    height: 200.h,
+                    height: 204.h,
                     child: GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
@@ -378,16 +264,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-                  child: Text(
-                    'Featured Housing',
-                    style: GoogleFonts.outfit(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: black,
-                    ),
-                  ),
+                Text(
+                  'Featured Housing',
+                  style: kBodyHeadingTextStyle,
                 ),
                 SizedBox(
                   height: 20.h,
@@ -395,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: EdgeInsets.only(bottom: 20.0),
                   child: SizedBox(
-                    height: 200.h,
+                    height: 215.h,
                     child: GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
@@ -404,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: ListView.builder(
                         itemBuilder: (context, index) {
-                          return FeaturedServicesWidget(
+                          return FeaturedHousingWidget(
                             image: 'assets/housing-ph.png',
                             productCategory: 'Rental',
                             productDescription: '2 Bedroom house',
@@ -423,6 +302,46 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class BusinessListTile extends StatelessWidget {
+  const BusinessListTile({
+    required this.businessTileName,
+    required this.businessTileImageName,
+    super.key,
+  });
+  final String businessTileName;
+  final String businessTileImageName;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 7),
+      // color: primaryBlue,
+      child: SizedBox(
+        width: 80.w,
+        // height: 98.h,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              height: 70.h,
+              child: SvgPicture.asset(
+                businessTileImageName,
+              ),
+            ),
+            Center(
+              child: Text(
+                businessTileName,
+                style: kBodyTextStyle,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
       ),
     );

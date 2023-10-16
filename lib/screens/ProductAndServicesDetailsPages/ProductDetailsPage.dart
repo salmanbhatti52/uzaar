@@ -6,7 +6,7 @@ import 'package:Uzaar/screens/beforeLoginScreens/signup_screen.dart';
 
 import 'package:Uzaar/utils/Colors.dart';
 import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/widgets/FeaturedProductsWidget.dart';
+import 'package:Uzaar/widgets/featured_products_widget.dart';
 
 import '../../widgets/BottomNaviBar.dart';
 import '../HomeScreen.dart';

@@ -28,9 +28,15 @@ final kOutlinedButtonTextStyle = GoogleFonts.outfit(
   color: primaryBlue,
 );
 
-final kBodyHeadingTextStyle = GoogleFonts.outfit(
+final kBodySubHeadingTextStyle = GoogleFonts.outfit(
   fontWeight: FontWeight.w500,
   fontSize: 18,
+  color: black,
+);
+
+final kBodyHeadingTextStyle = GoogleFonts.outfit(
+  fontWeight: FontWeight.w600,
+  fontSize: 20,
   color: black,
 );
 
@@ -110,6 +116,19 @@ final kTextFieldBoxDecoration = BoxDecoration(
     )
   ],
   borderRadius: BorderRadius.circular(40),
+);
+
+final kCardBoxDecoration = BoxDecoration(
+  boxShadow: const [
+    BoxShadow(
+      color: Color.fromRGBO(0, 0, 0, 0.14),
+      blurRadius: 4,
+      spreadRadius: 0,
+      offset: Offset(0, 0),
+    )
+  ],
+  borderRadius: BorderRadius.circular(10),
+  color: white,
 );
 
 final kOtpActiveBorderStyle = OutlineInputBorder(

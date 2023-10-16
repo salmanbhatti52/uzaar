@@ -6,10 +6,10 @@ class ProductCategoryClass {
 }
 
 final productCategoryModel = [
-  ProductCategoryClass(image: 'assets/printing.svg', catName: 'Electronics'),
+  ProductCategoryClass(image: 'assets/electronics.svg', catName: 'Electronics'),
   ProductCategoryClass(image: 'assets/vehical.svg', catName: 'Vehicle'),
   ProductCategoryClass(image: 'assets/fashion.svg', catName: 'Fashion'),
-  ProductCategoryClass(image: 'assets/books (2).svg', catName: 'Books'),
+  ProductCategoryClass(image: 'assets/books.svg', catName: 'Books'),
   ProductCategoryClass(image: 'assets/furniture.svg', catName: 'Furniture'),
   ProductCategoryClass(image: 'assets/sports.svg', catName: 'Sports'),
   ProductCategoryClass(image: 'assets/accessories.svg', catName: 'Accessories'),
