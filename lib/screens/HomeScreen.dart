@@ -208,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Container(
                     decoration: BoxDecoration(color: Colors.white),
-                    height: 185,
+                    height: 187,
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         return GestureDetector(
@@ -243,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20.h,
                   ),
                   SizedBox(
-                    height: 185,
+                    height: 187,
                     child: GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
@@ -278,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20.h,
                   ),
                   SizedBox(
-                    height: 200,
+                    height: 202,
                     child: GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(

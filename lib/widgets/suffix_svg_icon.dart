@@ -4,7 +4,10 @@ import 'package:flutter_svg/svg.dart';
 class SvgIcon extends StatelessWidget {
   final String imageName;
   final ColorFilter? colorFilter;
-  SvgIcon({required this.imageName, this.colorFilter});
+  final double? width;
+  final double? height;
+
+  SvgIcon({required this.imageName, this.colorFilter, this.width, this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +15,8 @@ class SvgIcon extends StatelessWidget {
       imageName,
       colorFilter: colorFilter,
       fit: BoxFit.scaleDown,
+      width: width,
+      height: height,
     );
   }
 }

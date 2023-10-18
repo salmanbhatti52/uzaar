@@ -6,8 +6,8 @@ import 'package:Uzaar/utils/Colors.dart';
 
 import '../../widgets/business_type_button.dart';
 import '../../widgets/search_field.dart';
-import 'ExploreProductsScreen.dart';
-import 'ExploreServicesScreen.dart';
+import 'explore_products_screen.dart';
+import 'explore_services_screen.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
@@ -108,7 +108,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   height: 20.h,
                 ),
                 SizedBox(
-                    height: 46,
                     child: SearchField(searchController: searchController)),
                 SizedBox(
                   height: 20.h,

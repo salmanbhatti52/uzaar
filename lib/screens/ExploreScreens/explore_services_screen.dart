@@ -1,22 +1,21 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/utils/Colors.dart';
-import 'package:Uzaar/widgets/featured_products_widget.dart';
+import 'package:Uzaar/widgets/featured_services_widget.dart';
 
-import '../../widgets/featured_housing_widget.dart';
 import '../../widgets/rounded_small_dropdown_menu.dart';
 
-class ExploreHousingScreen extends StatefulWidget {
-  const ExploreHousingScreen({super.key});
+class ExploreServicesScreen extends StatefulWidget {
+  const ExploreServicesScreen({super.key});
 
   @override
-  State<ExploreHousingScreen> createState() => _ExploreHousingScreenState();
+  State<ExploreServicesScreen> createState() => _ExploreServicesScreenState();
 }
 
-class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
+class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
   String? selectedCategory;
   String? selectedPrice;
   String? selectedLocation;
@@ -49,7 +48,6 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
     '320-360',
     '360-400',
   ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -213,7 +211,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
           height: 20.h,
         ),
         Text(
-          'Featured Housing',
+          'Featured Services',
           style: kBodyHeadingTextStyle,
         ),
         SizedBox(
@@ -233,14 +231,14 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                mainAxisExtent: 200,
+                mainAxisExtent: 185,
               ),
               itemCount: 15,
               itemBuilder: (context, index) {
-                return FeaturedHousingWidget(
-                  image: 'assets/housing-ph.png',
-                  productCategory: 'Rental',
-                  productDescription: '2 Bedroom house',
+                return FeaturedServicesWidget(
+                  image: 'assets/service-ph.png',
+                  productCategory: 'Designing',
+                  productDescription: 'Graphic Design',
                   productLocation: 'Los Angeles',
                   productPrice: '20',
                 );
@@ -263,9 +261,9 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
         //           crossAxisSpacing: 15.0.w,
         //           mainAxisSpacing: 15.0.h),
         //       itemBuilder: (BuildContext context, int index) {
-        //         return FeaturedProductsWidget(
+        //         return FeaturedServicesWidget(
         //           image: 'assets/place-holder.png',
-        //           productCategory: 'Rental',
+        //           productCategory: 'Vehical',
         //           productDescription: 'Product Description',
         //           productLocation: 'Product Location',
         //           productPrice: '20',
