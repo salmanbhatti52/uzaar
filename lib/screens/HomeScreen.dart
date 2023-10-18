@@ -40,170 +40,175 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: GlowingOverscrollIndicator(
-        axisDirection: AxisDirection.down,
-        color: primaryBlue,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // RichText(
-                //   text: TextSpan(
-                //     children: [
-                //       TextSpan(
-                //         text: 'John',
-                //         style: GoogleFonts.outfit(
-                //           fontSize: 16,
-                //           fontWeight: FontWeight.w500,
-                //           color: black,
-                //         ),
-                //       )
-                //     ],
-                //     text: 'Good Morning!   ',
-                //     style: GoogleFonts.outfit(
-                //       fontSize: 24,
-                //       fontWeight: FontWeight.w600,
-                //       color: black,
-                //     ),
-                //   ),
-                // ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                SearchField(searchController: searchController),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'What are you looking for?',
-                  style: kBodySubHeadingTextStyle,
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: GlowingOverscrollIndicator(
+          axisDirection: AxisDirection.down,
+          color: primaryBlue,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // RichText(
+                  //   text: TextSpan(
+                  //     children: [
+                  //       TextSpan(
+                  //         text: 'John',
+                  //         style: GoogleFonts.outfit(
+                  //           fontSize: 16,
+                  //           fontWeight: FontWeight.w500,
+                  //           color: black,
+                  //         ),
+                  //       )
+                  //     ],
+                  //     text: 'Good Morning!   ',
+                  //     style: GoogleFonts.outfit(
+                  //       fontSize: 24,
+                  //       fontWeight: FontWeight.w600,
+                  //       color: black,
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  SearchField(searchController: searchController),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'What are you looking for?',
+                    style: kBodySubHeadingTextStyle,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedCategory = 1;
-                        });
-                      },
-                      child: BusinessTypeButton(
-                          businessName: 'Products',
-                          gradient: selectedCategory == 1 ? gradient : null,
-                          buttonBackground: selectedCategory != 1
-                              ? grey.withOpacity(0.3)
-                              : null,
-                          textColor: selectedCategory == 1 ? white : grey),
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedCategory = 2;
-                        });
-                      },
-                      child: BusinessTypeButton(
-                          businessName: 'Services',
-                          gradient: selectedCategory == 2 ? gradient : null,
-                          buttonBackground: selectedCategory != 2
-                              ? grey.withOpacity(0.3)
-                              : null,
-                          textColor: selectedCategory == 2 ? white : grey),
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedCategory = 3;
-                        });
-                      },
-                      child: BusinessTypeButton(
-                          businessName: 'Housing',
-                          gradient: selectedCategory == 3 ? gradient : null,
-                          buttonBackground: selectedCategory != 3
-                              ? grey.withOpacity(0.3)
-                              : null,
-                          textColor: selectedCategory == 3 ? white : grey),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 30.h,
-                ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedCategory = 1;
+                          });
+                        },
+                        child: BusinessTypeButton(
+                            businessName: 'Products',
+                            gradient: selectedCategory == 1 ? gradient : null,
+                            buttonBackground: selectedCategory != 1
+                                ? grey.withOpacity(0.3)
+                                : null,
+                            textColor: selectedCategory == 1 ? white : grey),
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedCategory = 2;
+                          });
+                        },
+                        child: BusinessTypeButton(
+                            businessName: 'Services',
+                            gradient: selectedCategory == 2 ? gradient : null,
+                            buttonBackground: selectedCategory != 2
+                                ? grey.withOpacity(0.3)
+                                : null,
+                            textColor: selectedCategory == 2 ? white : grey),
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedCategory = 3;
+                          });
+                        },
+                        child: BusinessTypeButton(
+                            businessName: 'Housing',
+                            gradient: selectedCategory == 3 ? gradient : null,
+                            buttonBackground: selectedCategory != 3
+                                ? grey.withOpacity(0.3)
+                                : null,
+                            textColor: selectedCategory == 3 ? white : grey),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30.h,
+                  ),
 
-                SizedBox(
-                  height: 100.h,
-                  child: selectedCategory == 1
-                      ? ListView.builder(
-                          itemCount: productCategoryModel.length,
-                          shrinkWrap: true,
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return BusinessListTile(
-                              businessTileImageName:
-                                  productCategoryModel[index].image,
-                              businessTileName:
-                                  productCategoryModel[index].catName,
-                            );
-                          },
-                        )
-                      : selectedCategory == 2
-                          ? ListView.builder(
-                              itemCount: servicesCategoryModel.length,
-                              shrinkWrap: true,
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return BusinessListTile(
-                                    businessTileName:
-                                        servicesCategoryModel[index]
-                                            .serviceName,
-                                    businessTileImageName:
-                                        servicesCategoryModel[index].image);
-                              },
-                            )
-                          : ListView.builder(
-                              itemCount: housingCategoryModel.length,
-                              shrinkWrap: true,
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return BusinessListTile(
-                                    businessTileName:
-                                        housingCategoryModel[index].houseName,
-                                    businessTileImageName:
-                                        housingCategoryModel[index].image);
-                              },
-                            ),
-                ),
-                SizedBox(
-                  height: 30.h,
-                ),
-                Text(
-                  'Featured Products',
-                  style: kBodyHeadingTextStyle,
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
-                  child: Container(
+                  SizedBox(
+                    height: 98,
+                    child: selectedCategory == 1
+                        ? ListView.builder(
+                            itemCount: productCategoryModel.length,
+                            shrinkWrap: true,
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return BusinessListTile(
+                                businessTileImageName:
+                                    productCategoryModel[index].image,
+                                businessTileName:
+                                    productCategoryModel[index].catName,
+                              );
+                            },
+                          )
+                        : selectedCategory == 2
+                            ? ListView.builder(
+                                itemCount: servicesCategoryModel.length,
+                                shrinkWrap: true,
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return BusinessListTile(
+                                      businessTileName:
+                                          servicesCategoryModel[index]
+                                              .serviceName,
+                                      businessTileImageName:
+                                          servicesCategoryModel[index].image);
+                                },
+                              )
+                            : ListView.builder(
+                                itemCount: housingCategoryModel.length,
+                                shrinkWrap: true,
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return BusinessListTile(
+                                      businessTileName:
+                                          housingCategoryModel[index].houseName,
+                                      businessTileImageName:
+                                          housingCategoryModel[index].image);
+                                },
+                              ),
+                  ),
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                  Text(
+                    'Featured Products',
+                    style: kBodyHeadingTextStyle,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Container(
                     decoration: BoxDecoration(color: Colors.white),
-                    height: 205.h,
+                    height: 185,
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         return GestureDetector(
@@ -227,19 +232,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       physics: BouncingScrollPhysics(),
                     ),
                   ),
-                ),
-
-                Text(
-                  'Featured Services',
-                  style: kBodyHeadingTextStyle,
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: SizedBox(
-                    height: 204.h,
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'Featured Services',
+                    style: kBodyHeadingTextStyle,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  SizedBox(
+                    height: 185,
                     child: GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
@@ -263,18 +267,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                ),
-                Text(
-                  'Featured Housing',
-                  style: kBodyHeadingTextStyle,
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: SizedBox(
-                    height: 215.h,
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'Featured Housing',
+                    style: kBodyHeadingTextStyle,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  SizedBox(
+                    height: 200,
                     child: GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
@@ -298,8 +302,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -321,15 +328,13 @@ class BusinessListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(right: 7),
-      // color: primaryBlue,
       child: SizedBox(
-        width: 80.w,
-        // height: 98.h,
+        width: 74,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              height: 70.h,
+              height: 70,
               child: SvgPicture.asset(
                 businessTileImageName,
               ),

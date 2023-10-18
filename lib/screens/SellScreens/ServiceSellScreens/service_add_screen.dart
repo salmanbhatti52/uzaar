@@ -1,3 +1,4 @@
+import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/widgets/BottomNaviBar.dart';
@@ -51,191 +52,206 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: getPageIndicators(),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ReusableText(text: 'Service Name'),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: nameEditingController,
-                        textInputType: TextInputType.text,
-                        prefixIcon:
-                            SvgIcon(imageName: 'assets/service_icon.svg'),
-                        hintText: 'Service Name',
-                        obscureText: null,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ReusableText(text: 'Category'),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    RoundedDropdownMenu(
-                        leadingIconName: 'category_icon',
-                        hintText: 'Category',
-                        onSelected: (value) {
-                          setState(() {
-                            serviceDropDownValue = value;
-                          });
-                        },
-                        dropdownMenuEntries: serviceCategories
-                            .map(
-                              (String value) => DropdownMenuEntry<String>(
-                                  value: value, label: value),
-                            )
-                            .toList()),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ReusableText(text: 'Service Description'),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: descriptionEditingController,
-                        textInputType: TextInputType.text,
-                        prefixIcon:
-                            SvgIcon(imageName: 'assets/description_icon.svg'),
-                        hintText: 'Description here',
-                        obscureText: null,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ReusableText(text: 'Location'),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: locationEditingController,
-                        textInputType: TextInputType.streetAddress,
-                        prefixIcon:
-                            SvgIcon(imageName: 'assets/address-icon.svg'),
-                        suffixIcon: SvgIcon(
-                          imageName: 'assets/address-icon.svg',
-                          colorFilter:
-                              ColorFilter.mode(primaryBlue, BlendMode.srcIn),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: white,
+          leading: NavigateBack(buildContext: context),
+        ),
+        backgroundColor: white,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: getPageIndicators(),
                         ),
-                        hintText: 'Your Location here',
-                        obscureText: null,
                       ),
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ReusableText(text: 'Price'),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: priceEditingController,
-                        textInputType: TextInputType.number,
-                        prefixIcon:
-                            SvgIcon(imageName: 'assets/tag_price_bold.svg'),
-                        hintText: 'Enter Price',
-                        obscureText: null,
+                      SizedBox(
+                        height: 20.h,
                       ),
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Text(
-                      '*Boost your listings now to get more orders or you can boost later',
-                      style: kTextFieldInputStyle,
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ReusableText(text: 'Boosting Options (Optional)'),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    RoundedDropdownMenu(
-                        leadingIconName: 'boost_icon',
-                        hintText: 'Select Option',
-                        onSelected: (value) {
-                          setState(() {
-                            boostingDropDownValue = value;
-                          });
-                        },
-                        dropdownMenuEntries: boostingOptions
-                            .map(
-                              (String value) => DropdownMenuEntry<String>(
-                                  value: value, label: value),
-                            )
-                            .toList()),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.05,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 14.0),
-                  child: primaryButton(
-                    context,
-                    'Publish',
-                    () => Navigator.push(
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Service Name'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      SizedBox(
+                        height: 50.h,
+                        child: TextFormFieldWidget(
+                          controller: nameEditingController,
+                          textInputType: TextInputType.text,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/service_icon.svg'),
+                          hintText: 'Service Name',
+                          obscureText: null,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Category'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      RoundedDropdownMenu(
+                          leadingIconName: 'category_icon',
+                          hintText: 'Category',
+                          onSelected: (value) {
+                            setState(() {
+                              serviceDropDownValue = value;
+                            });
+                          },
+                          dropdownMenuEntries: serviceCategories
+                              .map(
+                                (String value) => DropdownMenuEntry<String>(
+                                    value: value, label: value),
+                              )
+                              .toList()),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Service Description'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      SizedBox(
+                        height: 50.h,
+                        child: TextFormFieldWidget(
+                          controller: descriptionEditingController,
+                          textInputType: TextInputType.text,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/description_icon.svg'),
+                          hintText: 'Description here',
+                          obscureText: null,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Location'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      SizedBox(
+                        height: 50.h,
+                        child: TextFormFieldWidget(
+                          controller: locationEditingController,
+                          textInputType: TextInputType.streetAddress,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/address-icon.svg'),
+                          suffixIcon: SvgIcon(
+                            imageName: 'assets/address-icon.svg',
+                            colorFilter:
+                                ColorFilter.mode(primaryBlue, BlendMode.srcIn),
+                          ),
+                          hintText: 'Your Location here',
+                          obscureText: null,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Price'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      SizedBox(
+                        height: 50.h,
+                        child: TextFormFieldWidget(
+                          controller: priceEditingController,
+                          textInputType: TextInputType.number,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/tag_price_bold.svg'),
+                          hintText: 'Enter Price',
+                          obscureText: null,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Text(
+                        '*Boost your listings now to get more orders or you can boost later',
+                        style: kTextFieldInputStyle,
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child:
+                            ReusableText(text: 'Boosting Options (Optional)'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      RoundedDropdownMenu(
+                          leadingIconName: 'boost_icon',
+                          hintText: 'Select Option',
+                          onSelected: (value) {
+                            setState(() {
+                              boostingDropDownValue = value;
+                            });
+                          },
+                          dropdownMenuEntries: boostingOptions
+                              .map(
+                                (String value) => DropdownMenuEntry<String>(
+                                    value: value, label: value),
+                              )
+                              .toList()),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 14.0),
+                    child: primaryButton(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return BottomNavBar();
-                        },
+                      'Publish',
+                      () => Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return BottomNavBar();
+                          },
+                        ),
+                        (route) => false,
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -57,7 +57,7 @@ class FeaturedServicesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(right: 10, top: 2, bottom: 2, left: 1),
-      width: 160.w,
+      width: 154,
       decoration: kCardBoxDecoration,
       child: Column(
         children: [
@@ -77,13 +77,13 @@ class FeaturedServicesWidget extends StatelessWidget {
                 top: 5,
                 child: SvgPicture.asset(
                   'assets/verify-check.svg',
-                  width: 20.w,
-                  height: 20.h,
+                  width: 20,
+                  height: 20,
                 ),
               ),
               Positioned(
-                right: 3.w,
-                top: 5.h,
+                right: 3,
+                top: 5,
                 child: Icon(
                   Icons.more_vert,
                   color: Colors.white,
@@ -92,49 +92,46 @@ class FeaturedServicesWidget extends StatelessWidget {
               Positioned(
                 left: 6,
                 bottom: 9,
+                child: Container(
+                  padding: EdgeInsets.all(6.h),
+                  width: 70,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    gradient: gradient,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Center(
+                    child: Text(
+                      productCategory,
+                      style: kCardTagTextStyle,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 10,
+                bottom: 10,
                 child: Row(
                   children: [
-                    Container(
-                      padding: EdgeInsets.all(6.h),
-                      width: 77.w,
-                      height: 27.h,
-                      decoration: BoxDecoration(
-                        gradient: gradient,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Center(
-                        child: Text(
-                          productCategory,
-                          style: kCardTagTextStyle,
-                        ),
-                      ),
+                    Icon(
+                      Icons.star_rate_rounded,
+                      color: Colors.yellow,
+                      size: 14,
                     ),
                     SizedBox(
-                      width: 32.w,
+                      width: 2,
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.star_rate_rounded,
-                          color: Colors.yellow,
-                          size: 14,
-                        ),
-                        SizedBox(
-                          width: 2.w,
-                        ),
-                        Text(
-                          '4.5',
-                          style: kCardTagTextStyle,
-                        ),
-                      ],
+                    Text(
+                      '4.5',
+                      style: kCardTagTextStyle,
                     ),
                   ],
                 ),
-              ),
+              )
             ],
           ),
           SizedBox(
-            height: 6.h,
+            height: 6,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 7.0, right: 7.0),
@@ -152,7 +149,7 @@ class FeaturedServicesWidget extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 1.h,
+                  height: 1,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,15 +157,15 @@ class FeaturedServicesWidget extends StatelessWidget {
                     Row(
                       children: [
                         SizedBox(
-                          height: 2.h,
+                          height: 2,
                         ),
                         SvgPicture.asset(
                           'assets/address-icon.svg',
-                          width: 14.w,
-                          height: 14.h,
+                          width: 14,
+                          height: 14,
                         ),
                         SizedBox(
-                          width: 2.w,
+                          width: 2,
                         ),
                         Text(
                           productLocation,
@@ -187,17 +184,17 @@ class FeaturedServicesWidget extends StatelessWidget {
                           style: kFromTagTextStyle,
                         ),
                         SizedBox(
-                          height: 2.5.h,
+                          height: 2.5,
                         ),
                         Row(
                           children: [
                             SvgPicture.asset(
                               'assets/price-tag.svg',
-                              width: 14.w,
-                              height: 14.h,
+                              width: 14,
+                              height: 14,
                             ),
                             SizedBox(
-                              width: 3.w,
+                              width: 3,
                             ),
                             Text(
                               '\$$productPrice',

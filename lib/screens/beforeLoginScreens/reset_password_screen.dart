@@ -5,7 +5,7 @@ import 'package:Uzaar/widgets/text.dart';
 import '../../widgets/TextfromFieldWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:Uzaar/screens/beforeLoginScreens/LogInScreen.dart';
+import 'package:Uzaar/screens/beforeLoginScreens/logIn_screen.dart';
 
 import 'package:Uzaar/utils/Colors.dart';
 import 'package:Uzaar/utils/Buttons.dart';
@@ -36,9 +36,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: white,
@@ -65,7 +70,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     height: 7.h,
                   ),
                   SizedBox(
-                    height: 50.h,
+                    height: 46,
                     child: TextFormFieldWidget(
                       controller: newPassController,
                       textInputType: TextInputType.visiblePassword,
@@ -100,30 +105,34 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   SizedBox(
                     height: 7.h,
                   ),
-                  TextFormFieldWidget(
-                    controller: confirmNewPassController,
-                    textInputType: TextInputType.visiblePassword,
-                    prefixIcon: SvgIcon(imageName: 'assets/password-icon.svg'),
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isHiddenConfirm = !isHiddenConfirm;
-                        });
-                      },
-                      child: isHiddenConfirm
-                          ? SvgIcon(
-                              imageName: 'assets/show-pass.svg',
-                              colorFilter: ColorFilter.mode(
-                                  primaryBlue, BlendMode.srcIn),
-                            )
-                          : SvgIcon(
-                              imageName: 'assets/hide-pass-icon.svg',
-                              colorFilter: ColorFilter.mode(
-                                  primaryBlue, BlendMode.srcIn),
-                            ),
+                  SizedBox(
+                    height: 46,
+                    child: TextFormFieldWidget(
+                      controller: confirmNewPassController,
+                      textInputType: TextInputType.visiblePassword,
+                      prefixIcon:
+                          SvgIcon(imageName: 'assets/password-icon.svg'),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isHiddenConfirm = !isHiddenConfirm;
+                          });
+                        },
+                        child: isHiddenConfirm
+                            ? SvgIcon(
+                                imageName: 'assets/show-pass.svg',
+                                colorFilter: ColorFilter.mode(
+                                    primaryBlue, BlendMode.srcIn),
+                              )
+                            : SvgIcon(
+                                imageName: 'assets/hide-pass-icon.svg',
+                                colorFilter: ColorFilter.mode(
+                                    primaryBlue, BlendMode.srcIn),
+                              ),
+                      ),
+                      hintText: '***************',
+                      obscureText: isHiddenConfirm,
                     ),
-                    hintText: '***************',
-                    obscureText: isHiddenConfirm,
                   ),
                   Spacer(),
                   Padding(

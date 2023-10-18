@@ -1,3 +1,4 @@
+import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/widgets/BottomNaviBar.dart';
@@ -45,100 +46,112 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: getPageIndicators(),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: white,
+          leading: NavigateBack(buildContext: context),
+        ),
+        backgroundColor: white,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: getPageIndicators(),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ReusableText(text: 'Add Minimum Offer Price '),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: priceEditingController,
-                        textInputType: TextInputType.number,
-                        prefixIcon:
-                            SvgIcon(imageName: 'assets/tag_price_bold.svg'),
-                        hintText: 'Enter Minimum Price',
-                        obscureText: null,
+                      SizedBox(
+                        height: 20.h,
                       ),
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Text(
-                      '*Boost your listings now to get more  orders or you can boost later',
-                      style: kTextFieldInputStyle,
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ReusableText(text: 'Boosting Options (Optional)'),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    RoundedDropdownMenu(
-                      leadingIconName: 'boost_icon',
-                      hintText: 'Select Option',
-                      onSelected: (value) {
-                        setState(() {
-                          dropdownValue = value;
-                        });
-                      },
-                      dropdownMenuEntries: boostingOptions
-                          .map(
-                            (String value) => DropdownMenuEntry<String>(
-                                value: value, label: value),
-                          )
-                          .toList(),
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.49,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 14.0),
-                  child: primaryButton(
-                    context,
-                    'Publish',
-                    () => Navigator.push(
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Add Minimum Offer Price '),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      SizedBox(
+                        height: 50.h,
+                        child: TextFormFieldWidget(
+                          controller: priceEditingController,
+                          textInputType: TextInputType.number,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/tag_price_bold.svg'),
+                          hintText: 'Enter Minimum Price',
+                          obscureText: null,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Text(
+                        '*Boost your listings now to get more  orders or you can boost later',
+                        style: kTextFieldInputStyle,
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child:
+                            ReusableText(text: 'Boosting Options (Optional)'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      RoundedDropdownMenu(
+                        leadingIconName: 'boost_icon',
+                        hintText: 'Select Option',
+                        onSelected: (value) {
+                          setState(() {
+                            dropdownValue = value;
+                          });
+                        },
+                        dropdownMenuEntries: boostingOptions
+                            .map(
+                              (String value) => DropdownMenuEntry<String>(
+                                  value: value, label: value),
+                            )
+                            .toList(),
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.49,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 14.0),
+                    child: primaryButton(
                       context,
-                      MaterialPageRoute(
+                      'Publish',
+                      () => Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(
                         builder: (context) {
                           return BottomNavBar();
                         },
-                      ),
+                      ), (Route<dynamic> route) => false),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

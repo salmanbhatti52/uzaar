@@ -62,6 +62,7 @@ final kColoredBodyTextStyle = GoogleFonts.outfit(
   fontSize: 14,
   fontWeight: FontWeight.w500,
   color: primaryBlue,
+  textStyle: TextStyle(overflow: TextOverflow.ellipsis),
 );
 
 final kColoredTextStyle = GoogleFonts.outfit(
@@ -118,8 +119,8 @@ final kTextFieldBoxDecoration = BoxDecoration(
   borderRadius: BorderRadius.circular(40),
 );
 
-final kCardBoxDecoration = BoxDecoration(
-  boxShadow: const [
+const kCardBoxDecoration = BoxDecoration(
+  boxShadow: [
     BoxShadow(
       color: Color.fromRGBO(0, 0, 0, 0.14),
       blurRadius: 4,
@@ -127,7 +128,7 @@ final kCardBoxDecoration = BoxDecoration(
       offset: Offset(0, 0),
     )
   ],
-  borderRadius: BorderRadius.circular(10),
+  borderRadius: BorderRadius.all(Radius.circular(10)),
   color: white,
 );
 

@@ -8,7 +8,7 @@ Widget primaryButton(context, String buttonText, Function()? onTap) {
     onTap: onTap,
     child: Container(
       width: double.infinity,
-      height: 55.h,
+      height: 54,
       decoration: BoxDecoration(
         color: primaryBlue,
         borderRadius: BorderRadius.circular(30),
@@ -26,7 +26,7 @@ Widget googleButton(context) {
   return Container(
     // padding: EdgeInsets.symmetric(horizontal: 65.w),
     width: double.infinity,
-    height: 55.h,
+    height: 54,
     decoration: BoxDecoration(
       color: white,
       border: Border.all(
@@ -59,7 +59,7 @@ Widget facebookButton(context) {
   return Container(
     // padding: EdgeInsets.symmetric(horizontal: 65.w),
     width: double.infinity,
-    height: 55.h,
+    height: 54,
     decoration: BoxDecoration(
       color: white,
       border: Border.all(
@@ -93,7 +93,7 @@ Widget outlinedButton(context, Function()? onTap) {
     child: Container(
       // padding: EdgeInsets.symmetric(horizontal: 65.w),
       width: double.infinity,
-      height: 55.h,
+      height: 54,
       decoration: BoxDecoration(
         color: white,
         border: Border.all(

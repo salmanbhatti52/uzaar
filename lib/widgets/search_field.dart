@@ -13,12 +13,15 @@ class SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormFieldWidget(
-      controller: searchController,
-      textInputType: TextInputType.name,
-      prefixIcon: SvgIcon(imageName: 'assets/search-button.svg'),
-      hintText: 'Search Here',
-      obscureText: null,
+    return SizedBox(
+      height: 46,
+      child: TextFormFieldWidget(
+        controller: searchController,
+        textInputType: TextInputType.name,
+        prefixIcon: SvgIcon(imageName: 'assets/search-button.svg'),
+        hintText: 'Search Here',
+        obscureText: null,
+      ),
     );
   }
 }

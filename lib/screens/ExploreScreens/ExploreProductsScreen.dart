@@ -52,6 +52,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // return Container();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -67,7 +68,6 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  // margin: EdgeInsets.only(bottom: 20.h),
                   width: 140.w,
                   height: 40.h,
                   decoration: BoxDecoration(
@@ -137,10 +137,6 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                               thumbVisibility: MaterialStateProperty.all(true),
                             ),
                           ),
-                          // menuItemStyleData: const MenuItemStyleData(
-                          //   height: 40,
-                          //   padding: EdgeInsets.only(left: 14, right: 14),
-                          // ),
                         ),
                       ),
                     ],
@@ -150,108 +146,108 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
               SizedBox(
                 width: 10,
               ),
-              GestureDetector(
-                onTap: () => setState(() {
-                  selectedLocation = !selectedLocation;
-                }),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 14.w),
-                  // margin: EdgeInsets.only(bottom: 20.h),
-                  width: 155.w,
-                  height: 40.h,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: primaryBlue,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  child: Row(
-                    children: [
-                      selectedLocation
-                          ? SvgPicture.asset('assets/cat-selcected.svg')
-                          : SvgPicture.asset('assets/cat-unselect.svg'),
-                      SizedBox(
-                        width: 4.w,
-                      ),
-                      DropdownButtonHideUnderline(
-                        child: DropdownButton2<String>(
-                          // isExpanded: true,
-                          hint: Text(
-                            'Location',
-                            style: GoogleFonts.outfit(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: primaryBlue,
-                            ),
-                          ),
-                          items: items
-                              .map((String item) => DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: GoogleFonts.outfit(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: primaryBlue,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ))
-                              .toList(),
-                          value: selectedValue,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedValue = value;
-                            });
-                          },
-                          // buttonStyleData: ButtonStyleData(
-                          //     height: 50,
-                          //     width: 160,
-                          //     padding:
-                          //         const EdgeInsets.only(left: 14, right: 14),
-                          //     decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(14),
-                          //       border: Border.all(
-                          //         color: Colors.black26,
-                          //       ),
-                          //       color: Colors.redAccent,
-                          //     ),
-                          //     elevation: 2,
-                          //     ),
-                          iconStyleData: IconStyleData(
-                            icon:
-                                SvgPicture.asset('assets/drop-down-button.svg'),
-                            iconEnabledColor: primaryBlue,
-                            iconDisabledColor: grey,
-                          ),
-                          dropdownStyleData: DropdownStyleData(
-                            maxHeight: 200.h,
-                            width: 140.w,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              color: white,
-                            ),
-                            // offset: const Offset(-20, 0),
-                            scrollbarTheme: ScrollbarThemeData(
-                              radius: const Radius.circular(40),
-                              thickness: MaterialStateProperty.all(6),
-                              thumbVisibility: MaterialStateProperty.all(true),
-                            ),
-                          ),
-                          // menuItemStyleData: const MenuItemStyleData(
-                          //   height: 40,
-                          //   padding: EdgeInsets.only(left: 14, right: 14),
-                          // ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
+              // GestureDetector(
+              //   onTap: () => setState(() {
+              //     selectedLocation = !selectedLocation;
+              //   }),
+              //   child: Container(
+              //     padding: EdgeInsets.symmetric(horizontal: 14.w),
+              //     // margin: EdgeInsets.only(bottom: 20.h),
+              //     width: 155.w,
+              //     height: 40.h,
+              //     decoration: BoxDecoration(
+              //       border: Border.all(
+              //         color: primaryBlue,
+              //         width: 2,
+              //       ),
+              //       borderRadius: BorderRadius.circular(40),
+              //     ),
+              //     child: Row(
+              //       children: [
+              //         selectedLocation
+              //             ? SvgPicture.asset('assets/cat-selcected.svg')
+              //             : SvgPicture.asset('assets/cat-unselect.svg'),
+              //         SizedBox(
+              //           width: 4.w,
+              //         ),
+              //         DropdownButtonHideUnderline(
+              //           child: DropdownButton2<String>(
+              //             // isExpanded: true,
+              //             hint: Text(
+              //               'Location',
+              //               style: GoogleFonts.outfit(
+              //                 fontSize: 14,
+              //                 fontWeight: FontWeight.w500,
+              //                 color: primaryBlue,
+              //               ),
+              //             ),
+              //             items: items
+              //                 .map((String item) => DropdownMenuItem<String>(
+              //                       value: item,
+              //                       child: Text(
+              //                         item,
+              //                         style: GoogleFonts.outfit(
+              //                           fontSize: 14,
+              //                           fontWeight: FontWeight.w500,
+              //                           color: primaryBlue,
+              //                         ),
+              //                         overflow: TextOverflow.ellipsis,
+              //                       ),
+              //                     ))
+              //                 .toList(),
+              //             value: selectedValue,
+              //             onChanged: (value) {
+              //               setState(() {
+              //                 selectedValue = value;
+              //               });
+              //             },
+              //             // buttonStyleData: ButtonStyleData(
+              //             //     height: 50,
+              //             //     width: 160,
+              //             //     padding:
+              //             //         const EdgeInsets.only(left: 14, right: 14),
+              //             //     decoration: BoxDecoration(
+              //             //       borderRadius: BorderRadius.circular(14),
+              //             //       border: Border.all(
+              //             //         color: Colors.black26,
+              //             //       ),
+              //             //       color: Colors.redAccent,
+              //             //     ),
+              //             //     elevation: 2,
+              //             //     ),
+              //             iconStyleData: IconStyleData(
+              //               icon:
+              //                   SvgPicture.asset('assets/drop-down-button.svg'),
+              //               iconEnabledColor: primaryBlue,
+              //               iconDisabledColor: grey,
+              //             ),
+              //             dropdownStyleData: DropdownStyleData(
+              //               maxHeight: 200.h,
+              //               width: 140.w,
+              //               decoration: BoxDecoration(
+              //                 borderRadius: BorderRadius.circular(14),
+              //                 color: white,
+              //               ),
+              //               // offset: const Offset(-20, 0),
+              //               scrollbarTheme: ScrollbarThemeData(
+              //                 radius: const Radius.circular(40),
+              //                 thickness: MaterialStateProperty.all(6),
+              //                 thumbVisibility: MaterialStateProperty.all(true),
+              //               ),
+              //             ),
+              //             // menuItemStyleData: const MenuItemStyleData(
+              //             //   height: 40,
+              //             //   padding: EdgeInsets.only(left: 14, right: 14),
+              //             // ),
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(
+              //   width: 10,
+              // ),
               GestureDetector(
                 onTap: () => setState(() {
                   selectedPrice = !selectedPrice;
@@ -351,41 +347,63 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
         ),
         Text(
           'Featured Products',
-          style: GoogleFonts.outfit(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: black,
-          ),
+          style: kBodyHeadingTextStyle,
         ),
         SizedBox(
           height: 20.h,
         ),
-        SizedBox(
-          height: 500.h,
-          child: GlowingOverscrollIndicator(
-            axisDirection: AxisDirection.down,
-            color: primaryBlue,
-            child: GridView.builder(
-              padding: EdgeInsets.only(bottom: 14.w),
-              shrinkWrap: true,
-              itemCount: 10,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 0.85,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 15.0.w,
-                  mainAxisSpacing: 15.0.h),
-              itemBuilder: (BuildContext context, int index) {
-                return FeaturedProductsWidget(
-                  image: 'assets/place-holder.png',
-                  productCategory: 'Fashion',
-                  productDescription: 'Product Description',
-                  productLocation: 'Product Location',
-                  productPrice: '20',
-                );
-              },
+        Container(
+          height: 415.h,
+          child: GridView.builder(
+            padding: EdgeInsets.only(bottom: 20),
+            physics: BouncingScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 9,
+              mainAxisSpacing: 10,
+              // childAspectRatio: 0.85.h,
+              mainAxisExtent: 200.w,
             ),
+            itemCount: 15,
+            itemBuilder: (context, index) {
+              return FeaturedProductsWidget(
+                image: 'assets/product-ph.png',
+                productCategory: 'Electronics',
+                productDescription: 'Iphone 14',
+                productLocation: 'Los Angeles',
+                productPrice: '120',
+              );
+            },
           ),
         )
+        // SizedBox(
+        //   height: 540.h,
+        //   child: GlowingOverscrollIndicator(
+        //     axisDirection: AxisDirection.down,
+        //     color: primaryBlue,
+        //     child: GridView.builder(
+        //       padding: EdgeInsets.only(bottom: 14.w),
+        //       shrinkWrap: true,
+        //       itemCount: 10,
+        //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        //           // childAspectRatio: 0.85,
+        //           crossAxisCount: 2,
+        //           crossAxisSpacing: 15.0.w,
+        //           mainAxisSpacing: 15.0.h),
+        //       itemBuilder: (BuildContext context, int index) {
+        //         return FeaturedProductsWidget(
+        //           image: 'assets/place-holder.png',
+        //           productCategory: 'Fashion',
+        //           productDescription: 'Product Description',
+        //           productLocation: 'Product Location',
+        //           productPrice: '20',
+        //         );
+        //       },
+        //     ),
+        //   ),
+        // )
       ],
     );
   }

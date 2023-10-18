@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/screens/ProfileScreens/SaleProfileScreens/SaleProfileMain.dart';
 import 'package:Uzaar/utils/Colors.dart';
-import 'package:Uzaar/screens/beforeLoginScreens/LogInScreen.dart';
+import 'package:Uzaar/screens/beforeLoginScreens/logIn_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DrawerWidget extends StatefulWidget {

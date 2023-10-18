@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../utils/Colors.dart';
 
-final double width = 100.w;
-final double height = 40.h;
+final double width = 94;
+final double height = 38;
 
 class BusinessTypeButton extends StatelessWidget {
   final String businessName;

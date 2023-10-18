@@ -16,134 +16,143 @@ class VerifyEmail extends StatefulWidget {
 class _VerifyEmailState extends State<VerifyEmail> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
         backgroundColor: Colors.white,
-        leading: NavigateBack(
-          buildContext: context,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: NavigateBack(
+            buildContext: context,
+          ),
+          title: Text(
+            'Verify Email',
+            style: kAppBarTitleStyle,
+          ),
+          elevation: 0.0,
+          centerTitle: true,
         ),
-        title: Text(
-          'Verify Email',
-          style: kAppBarTitleStyle,
-        ),
-        elevation: 0.0,
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                children: [
-                  // SizedBox(
-                  //   height: 40,
-                  // ),
-                  Text(
-                    'We have send a verification code to your email',
-                    style: kSimpleTextStyle,
-                  ),
-                  Text(
-                    '“ username@gmail.com”',
-                    style: kColoredTextStyle,
-                  ),
-                  Text(
-                    'Enter code below to verify.',
-                    style: kTextFieldHintStyle,
-                  ),
-                  SizedBox(
-                    height: 35,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      OtpInputField(
-                        padding: const EdgeInsets.only(right: 14.0, left: 14.0),
-                        onChanged: (value) {
-                          // if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                          // }
-                        },
-                      ),
-                      OtpInputField(
-                        padding: const EdgeInsets.only(right: 14.0),
-                        onChanged: (value) {
-                          FocusScope.of(context).nextFocus();
-                        },
-                      ),
-                      OtpInputField(
-                        padding: const EdgeInsets.only(right: 14.0),
-                        onChanged: (value) {
-                          FocusScope.of(context).nextFocus();
-                        },
-                      ),
-                      OtpInputField(
-                        padding: const EdgeInsets.only(right: 14.0),
-                        onChanged: (value) {
-                          FocusScope.of(context).unfocus();
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 70,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Didn’t Receive? ',
-                        style: kBodyTextStyle,
-                        children: [
-                          TextSpan(
-                            // recognizer: TapGestureRecognizer()
-                            //   ..onTap = () {
-                            //     Navigator.of(context).push(
-                            //       MaterialPageRoute(
-                            //         builder: (context) => const ResetPasswordScreen(),
-                            //       ),
-                            //     );
-                            //   },
-                            text: 'Resend',
-                            style: kColoredBodyTextStyle.copyWith(
-                              decoration: TextDecoration.underline,
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 22.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  children: [
+                    // SizedBox(
+                    //   height: 40,
+                    // ),
+                    Text(
+                      'We have send a verification code to your email',
+                      style: kSimpleTextStyle,
+                    ),
+                    Text(
+                      '“ username@gmail.com”',
+                      style: kColoredTextStyle,
+                    ),
+                    Text(
+                      'Enter code below to verify.',
+                      style: kTextFieldHintStyle,
+                    ),
+                    SizedBox(
+                      height: 35,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        OtpInputField(
+                          padding:
+                              const EdgeInsets.only(right: 14.0, left: 14.0),
+                          onChanged: (value) {
+                            // if (value.length == 1) {
+                            FocusScope.of(context).nextFocus();
+                            // }
+                          },
+                        ),
+                        OtpInputField(
+                          padding: const EdgeInsets.only(right: 14.0),
+                          onChanged: (value) {
+                            FocusScope.of(context).nextFocus();
+                          },
+                        ),
+                        OtpInputField(
+                          padding: const EdgeInsets.only(right: 14.0),
+                          onChanged: (value) {
+                            FocusScope.of(context).nextFocus();
+                          },
+                        ),
+                        OtpInputField(
+                          padding: const EdgeInsets.only(right: 14.0),
+                          onChanged: (value) {
+                            FocusScope.of(context).unfocus();
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 70,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Didn’t Receive? ',
+                          style: kBodyTextStyle,
+                          children: [
+                            TextSpan(
+                              // recognizer: TapGestureRecognizer()
+                              //   ..onTap = () {
+                              //     Navigator.of(context).push(
+                              //       MaterialPageRoute(
+                              //         builder: (context) => const ResetPasswordScreen(),
+                              //       ),
+                              //     );
+                              //   },
+                              text: 'Resend',
+                              style: kColoredBodyTextStyle.copyWith(
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              GestureDetector(
-                onTap: () {
-                  // Navigator.pushNamed(context, CompleteProfileScreen.id);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CompleteProfileScreen(),
-                      ));
-                },
-                child: Text(
-                  'Skip for now',
-                  style: kColoredBodyTextStyle.copyWith(
-                      decoration: TextDecoration.underline),
+                  ],
                 ),
-              ),
-              primaryButton(
-                context,
-                'Continue',
-                () => Navigator.push(context, MaterialPageRoute(
-                  builder: (context) {
-                    return CompleteProfileScreen();
+                GestureDetector(
+                  onTap: () {
+                    // Navigator.pushNamed(context, CompleteProfileScreen.id);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CompleteProfileScreen(),
+                        ));
                   },
-                  // Navigator.pushNamed(context, CompleteProfileScreen.id),
-                )),
-              )
-            ],
+                  child: Text(
+                    'Skip for now',
+                    style: kColoredBodyTextStyle.copyWith(
+                        decoration: TextDecoration.underline),
+                  ),
+                ),
+                primaryButton(
+                  context,
+                  'Continue',
+                  () => Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return CompleteProfileScreen();
+                    },
+                    // Navigator.pushNamed(context, CompleteProfileScreen.id),
+                  )),
+                )
+              ],
+            ),
           ),
         ),
       ),

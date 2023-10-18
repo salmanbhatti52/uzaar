@@ -30,10 +30,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
   int selectedCategory = 1;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: white,
-      body: SafeArea(
-        child: SingleChildScrollView(
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: white,
+        body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 22.0.w),
             child: Column(
@@ -101,7 +107,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                SearchField(searchController: searchController),
+                SizedBox(
+                    height: 46,
+                    child: SearchField(searchController: searchController)),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -109,8 +117,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ? ExploreProductsScreen()
                     : selectedCategory == 2
                         ? ExploreServicesScreen()
-                        : ExploreHousingScreen(),
-                // :
+                        : ExploreHousingScreen()
+                // : Container(),
               ],
             ),
           ),

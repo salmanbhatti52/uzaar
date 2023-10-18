@@ -1,27 +1,27 @@
 import 'package:flutter/gestures.dart';
-import 'package:Uzaar/screens/beforeLoginScreens/verify_email_screen.dart';
-import 'package:Uzaar/widgets/TextfromFieldWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:Uzaar/screens/beforeLoginScreens/reset_password_screen.dart';
+import 'package:Uzaar/widgets/BottomNaviBar.dart';
+import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/Buttons.dart';
+
+import 'package:Uzaar/widgets/TextfromFieldWidget.dart';
+import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:Uzaar/widgets/text.dart';
 
-import '../../widgets/suffix_svg_icon.dart';
-import 'logIn_screen.dart';
-import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/utils/Colors.dart';
+import 'signup_screen.dart';
 
-class SignUpScreen extends StatefulWidget {
-  static const String id = 'signup_screen';
-  const SignUpScreen({super.key});
+class LogInScreen extends StatefulWidget {
+  static const String id = 'login_screen';
+  const LogInScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<LogInScreen> createState() => _LogInScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
+class _LogInScreenState extends State<LogInScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -54,7 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Form(
                 key: _key,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 22.0),
+                  padding: EdgeInsets.symmetric(horizontal: 22.0.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -66,7 +66,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 20.h,
                       ),
                       Text(
-                        'Signup',
+                        'Login',
                         style: kAppBarTitleStyle,
                       ),
                       SizedBox(
@@ -74,48 +74,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: ReusableText(text: 'First Name'),
+                        child: ReusableText(text: 'Email'),
                       ),
-                      SizedBox(
-                        height: 7.h,
-                      ),
-                      SizedBox(
-                        height: 46,
-                        child: TextFormFieldWidget(
-                          controller: firstNameController,
-                          textInputType: TextInputType.name,
-                          prefixIcon:
-                              SvgIcon(imageName: 'assets/person-icon.svg'),
-                          hintText: 'First Name',
-                          obscureText: null,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: ReusableText(text: 'Last Name')),
-                      SizedBox(
-                        height: 7.h,
-                      ),
-                      SizedBox(
-                        height: 46,
-                        child: TextFormFieldWidget(
-                          controller: lastNameController,
-                          textInputType: TextInputType.name,
-                          prefixIcon:
-                              SvgIcon(imageName: 'assets/person-icon.svg'),
-                          hintText: 'Last Name',
-                          obscureText: null,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: ReusableText(text: 'Email')),
                       SizedBox(
                         height: 7.h,
                       ),
@@ -134,8 +94,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 20.h,
                       ),
                       Align(
-                          alignment: Alignment.centerLeft,
-                          child: ReusableText(text: 'Password')),
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Password'),
+                      ),
                       SizedBox(
                         height: 7.h,
                       ),
@@ -169,39 +130,94 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 70.h,
+                        height: 20.h,
                       ),
-                      primaryButton(
-                        context,
-                        'Signup',
-                        () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => VerifyEmail(),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30.h,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 22.0.h),
+                      Align(
+                        alignment: Alignment.centerLeft,
                         child: RichText(
                           text: TextSpan(
-                            text: 'Already have an account?  ',
+                            text: 'Forgot Password? ',
                             style: kBodyTextStyle,
                             children: [
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    // Navigator.pushNamed(
-                                    //     context, LogInScreen.id);
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                LogInScreen()));
+                                          builder: (context) =>
+                                              ResetPasswordScreen(),
+                                        ));
+                                    // Navigator.pushNamed(
+                                    //     context, ResetPasswordScreen.id);
                                   },
-                                text: 'Login',
+                                text: 'Reset',
+                                style: kColoredBodyTextStyle.copyWith(
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50.h,
+                      ),
+                      primaryButton(
+                        context,
+                        'Login',
+                        () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => BottomNavBar(
+                                        loginAsGuest: false,
+                                      )),
+                              (Route<dynamic> route) => false);
+                        },
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      googleButton(context),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      facebookButton(context),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      outlinedButton(
+                        context,
+                        () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => BottomNavBar(
+                                        loginAsGuest: true,
+                                      )),
+                              (Route<dynamic> route) => false);
+                        },
+                      ),
+                      SizedBox(
+                        height: 25.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 20.0.h),
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'Don\'t have an account?  ',
+                            style: kBodyTextStyle,
+                            children: [
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    // Navigator.pushNamed(context, SignUpScreen.id);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => SignUpScreen(),
+                                        ));
+                                  },
+                                text: 'Signup',
                                 style: kColoredBodyTextStyle.copyWith(
                                   decoration: TextDecoration.underline,
                                 ),

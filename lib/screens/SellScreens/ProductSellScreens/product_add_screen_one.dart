@@ -1,3 +1,4 @@
+import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -63,171 +64,186 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-            child: Column(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: getPageIndicators(),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: white,
+          leading: NavigateBack(buildContext: context),
+        ),
+        backgroundColor: white,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+              child: Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: getPageIndicators(),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ReusableText(text: 'Product Name'),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: nameEditingController,
-                        textInputType: TextInputType.text,
-                        prefixIcon:
-                            SvgIcon(imageName: 'assets/product_icon.svg'),
-                        hintText: 'Product Name',
-                        obscureText: null,
+                      SizedBox(
+                        height: 20.h,
                       ),
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ReusableText(text: 'Category'),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    RoundedDropdownMenu(
-                        leadingIconName: 'category_icon',
-                        hintText: 'Category',
-                        onSelected: (value) {
-                          setState(() {
-                            dropDownValue = value;
-                          });
-                        },
-                        dropdownMenuEntries: productCategories
-                            .map(
-                              (String value) => DropdownMenuEntry<String>(
-                                  value: value, label: value),
-                            )
-                            .toList()),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ReusableText(text: 'Condition'),
-                    ),
-                    SizedBox(
-                      height: 7.h,
-                    ),
-                    Row(
-                      children: [
-                        ImageWithText(
-                          onTap: () {
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Product Name'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      SizedBox(
+                        height: 50.h,
+                        child: TextFormFieldWidget(
+                          controller: nameEditingController,
+                          textInputType: TextInputType.text,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/product_icon.svg'),
+                          hintText: 'Product Name',
+                          obscureText: null,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Category'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      RoundedDropdownMenu(
+                          leadingIconName: 'category_icon',
+                          hintText: 'Category',
+                          onSelected: (value) {
                             setState(() {
-                              selectedProductCondition = Condition.fresh;
+                              dropDownValue = value;
                             });
                           },
-                          text: 'New',
-                          imageName: selectedProductCondition == Condition.fresh
-                              ? 'radio_filled'
-                              : 'radio_blank',
-                        ),
-                        SizedBox(
-                          width: 30.w,
-                        ),
-                        ImageWithText(
-                          onTap: () {
-                            setState(() {
-                              selectedProductCondition = Condition.used;
-                            });
-                          },
-                          text: 'Used',
-                          imageName: selectedProductCondition == Condition.used
-                              ? 'radio_filled'
-                              : 'radio_blank',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ReusableText(text: 'Product Description'),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: descriptionEditingController,
-                        textInputType: TextInputType.text,
-                        prefixIcon:
-                            SvgIcon(imageName: 'assets/description_icon.svg'),
-                        hintText: 'Description here',
-                        obscureText: null,
+                          dropdownMenuEntries: productCategories
+                              .map(
+                                (String value) => DropdownMenuEntry<String>(
+                                    value: value, label: value),
+                              )
+                              .toList()),
+                      SizedBox(
+                        height: 14.h,
                       ),
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ReusableText(text: 'Price'),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: priceEditingController,
-                        textInputType: TextInputType.number,
-                        prefixIcon:
-                            SvgIcon(imageName: 'assets/tag_price_bold.svg'),
-                        hintText: 'Enter Price',
-                        obscureText: null,
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Condition'),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.27,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 14.0),
-                  child: primaryButton(
-                    context,
-                    'Next',
-                    () => Navigator.push(
+                      SizedBox(
+                        height: 7.h,
+                      ),
+                      Row(
+                        children: [
+                          ImageWithText(
+                            onTap: () {
+                              setState(() {
+                                selectedProductCondition = Condition.fresh;
+                              });
+                            },
+                            text: 'New',
+                            imageName:
+                                selectedProductCondition == Condition.fresh
+                                    ? 'radio_filled'
+                                    : 'radio_blank',
+                          ),
+                          SizedBox(
+                            width: 30.w,
+                          ),
+                          ImageWithText(
+                            onTap: () {
+                              setState(() {
+                                selectedProductCondition = Condition.used;
+                              });
+                            },
+                            text: 'Used',
+                            imageName:
+                                selectedProductCondition == Condition.used
+                                    ? 'radio_filled'
+                                    : 'radio_blank',
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Product Description'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      SizedBox(
+                        height: 50.h,
+                        child: TextFormFieldWidget(
+                          controller: descriptionEditingController,
+                          textInputType: TextInputType.text,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/description_icon.svg'),
+                          hintText: 'Description here',
+                          obscureText: null,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Price'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      SizedBox(
+                        height: 50.h,
+                        child: TextFormFieldWidget(
+                          controller: priceEditingController,
+                          textInputType: TextInputType.number,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/tag_price_bold.svg'),
+                          hintText: 'Enter Price',
+                          obscureText: null,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.27,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 14.0),
+                    child: primaryButton(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return ProductAddScreenTwo();
-                        },
+                      'Next',
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ProductAddScreenTwo();
+                          },
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:Uzaar/utils/Colors.dart';
-import 'package:Uzaar/screens/beforeLoginScreens/LogInScreen.dart';
+import 'package:Uzaar/screens/beforeLoginScreens/logIn_screen.dart';
 
 import '../../utils/Buttons.dart';
 import '../../widgets/read_only_container.dart';
@@ -32,9 +32,14 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: white,
@@ -126,13 +131,16 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 7.h,
                       ),
-                      // readOnlyContainer('assets/phone-fill.svg', '+4156565662'),
-                      TextFormFieldWidget(
-                        controller: phoneNumberController,
-                        textInputType: TextInputType.phone,
-                        prefixIcon: SvgIcon(imageName: 'assets/phone-fill.svg'),
-                        hintText: '+4156565662',
-                        obscureText: null,
+                      SizedBox(
+                        height: 46,
+                        child: TextFormFieldWidget(
+                          controller: phoneNumberController,
+                          textInputType: TextInputType.phone,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/phone-fill.svg'),
+                          hintText: '+4156565662',
+                          obscureText: null,
+                        ),
                       ),
                       SizedBox(
                         height: 20.h,
@@ -144,7 +152,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         height: 7.h,
                       ),
                       SizedBox(
-                        height: 50.h,
+                        height: 46,
                         child: TextFormFieldWidget(
                           controller: addressController,
                           textInputType: TextInputType.streetAddress,

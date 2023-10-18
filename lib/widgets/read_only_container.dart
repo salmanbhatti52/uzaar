@@ -8,7 +8,7 @@ Widget readOnlyContainer(String objectIcon, String objectText) {
   return Container(
     padding: EdgeInsets.only(left: 13),
     width: double.infinity,
-    height: 50.h,
+    height: 46,
     decoration: kContainerBoxDecoration,
     child: Row(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
