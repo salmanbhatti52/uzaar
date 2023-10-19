@@ -1,3 +1,7 @@
+import 'package:Uzaar/screens/ListingsScreens/housing_listing_screen.dart';
+import 'package:Uzaar/screens/ListingsScreens/product_listing_screen.dart';
+import 'package:Uzaar/screens/ListingsScreens/service_listing_screen.dart';
+import 'package:Uzaar/widgets/business_type_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,17 +17,13 @@ class ListingsScreen extends StatefulWidget {
 }
 
 class _ListingsScreenState extends State<ListingsScreen> {
-  int pageSelected = -1;
-
+  int selectedCategory = 1;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    pageSelected = 1;
-    catSelected = 1;
   }
 
-  int catSelected = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,28 +41,15 @@ class _ListingsScreenState extends State<ListingsScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      catSelected = 1;
+                      selectedCategory = 1;
                     });
                   },
-                  child: Container(
-                    width: 100.w,
-                    height: 40.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      gradient: catSelected == 1 ? gradient : null,
-                      color: catSelected != 1 ? grey.withOpacity(0.3) : null,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Products',
-                        style: GoogleFonts.outfit(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15,
-                          color: catSelected == 1 ? white : grey,
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: BusinessTypeButton(
+                      businessName: 'Products',
+                      gradient: selectedCategory == 1 ? gradient : null,
+                      buttonBackground:
+                          selectedCategory != 1 ? grey.withOpacity(0.3) : null,
+                      textColor: selectedCategory == 1 ? white : grey),
                 ),
                 SizedBox(
                   width: 10.w,
@@ -70,28 +57,15 @@ class _ListingsScreenState extends State<ListingsScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      catSelected = 2;
+                      selectedCategory = 2;
                     });
                   },
-                  child: Container(
-                    width: 100.w,
-                    height: 40.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      gradient: catSelected == 2 ? gradient : null,
-                      color: catSelected != 2 ? grey.withOpacity(0.3) : null,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Services',
-                        style: GoogleFonts.outfit(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15,
-                          color: catSelected == 2 ? white : grey,
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: BusinessTypeButton(
+                      businessName: 'Services',
+                      gradient: selectedCategory == 2 ? gradient : null,
+                      buttonBackground:
+                          selectedCategory != 2 ? grey.withOpacity(0.3) : null,
+                      textColor: selectedCategory == 2 ? white : grey),
                 ),
                 SizedBox(
                   width: 10.w,
@@ -99,53 +73,29 @@ class _ListingsScreenState extends State<ListingsScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      catSelected = 3;
+                      selectedCategory = 3;
                     });
                   },
-                  child: Container(
-                    width: 100.w,
-                    height: 40.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      gradient: catSelected == 3 ? gradient : null,
-                      color: catSelected != 3 ? grey.withOpacity(0.3) : null,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Housing',
-                        style: GoogleFonts.outfit(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15,
-                          color: catSelected == 3 ? white : grey,
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: BusinessTypeButton(
+                      businessName: 'Housing',
+                      gradient: selectedCategory == 3 ? gradient : null,
+                      buttonBackground:
+                          selectedCategory != 3 ? grey.withOpacity(0.3) : null,
+                      textColor: selectedCategory == 3 ? white : grey),
                 ),
               ],
             ),
             SizedBox(
-              height: 6,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return ProductListTile(
-                    productImage: 'assets/listed_pro_img.png',
-                    productName: 'Iphone 14',
-                    productLocation: 'Los Angeles',
-                    productPrice: '\$12',
-                  );
-                },
-                itemCount: 5,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
-              ),
-            ),
-            SizedBox(
               height: 20,
-            )
+            ),
+            selectedCategory == 1
+                ? ProductListingScreen()
+                : selectedCategory == 2
+                    ? ServiceListingScreen()
+                    : HousingListingScreen(),
+            // SizedBox(
+            //   height: 10,
+            // )
           ],
         ),
       ),

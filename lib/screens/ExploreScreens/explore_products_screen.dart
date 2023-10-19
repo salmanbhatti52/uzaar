@@ -188,7 +188,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                   width: 10.w,
                 ),
                 RoundedSmallDropdownMenu(
-                  trailingIconName: 'blue_address_icon',
+                  // trailingIconName: 'blue_address_icon',
                   width: 170,
                   leadingIconName: selectedLocation != null
                       ? 'cat-selected'

@@ -187,7 +187,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                   width: 10.w,
                 ),
                 RoundedSmallDropdownMenu(
-                  trailingIconName: 'blue_address_icon',
+                  // trailingIconName: 'blue_address_icon',
                   width: 170,
                   leadingIconName: selectedLocation != null
                       ? 'cat-selected'

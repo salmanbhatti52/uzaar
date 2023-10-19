@@ -19,7 +19,7 @@ final TextStyle kDropDownTextStyle = GoogleFonts.outfit(
 );
 final kDropDownMenuInputDecoration = InputDecorationTheme(
   constraints: BoxConstraints(maxHeight: 36),
-  contentPadding: EdgeInsets.only(left: 7),
+  // contentPadding: EdgeInsets.only(left: 7),
   border: kDropDownActiveBorderStyle,
   enabledBorder: kDropDownActiveBorderStyle,
   focusedBorder: kDropDownActiveBorderStyle,
@@ -61,8 +61,6 @@ class RoundedSmallDropdownMenu extends StatelessWidget {
       // selectedTrailingIcon: SvgIcon(imageName: 'assets/cat-selected.svg'),
       trailingIcon: SvgIcon(
         imageName: 'assets/$trailingIconName.svg',
-        // width: 24,
-        // height: 24,
       ),
 
       leadingIcon: SvgIcon(imageName: 'assets/$leadingIconName.svg'),

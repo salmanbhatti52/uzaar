@@ -1,4 +1,6 @@
+import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/utils/Colors.dart';
@@ -20,17 +22,18 @@ final priceTextStyle = GoogleFonts.outfit(
   color: primaryBlue,
 );
 
-class ProductListTile extends StatelessWidget {
-  final String productImage;
-  final String productName;
-  final String productLocation;
-  final String productPrice;
+class ServiceListTile extends StatelessWidget {
+  final String serviceImage;
+  final String serviceName;
+  final String serviceLocation;
+  final String servicePrice;
 
-  ProductListTile(
-      {required this.productImage,
-      required this.productName,
-      required this.productLocation,
-      required this.productPrice});
+  const ServiceListTile({
+    required this.serviceImage,
+    required this.serviceName,
+    required this.serviceLocation,
+    required this.servicePrice,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +55,7 @@ class ProductListTile extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.asset(productImage),
+              Image.asset(serviceImage),
               SizedBox(
                 width: 8.0,
               ),
@@ -60,7 +63,7 @@ class ProductListTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    productName,
+                    serviceName,
                     style: productNameTextStyle,
                   ),
                   SizedBox(
@@ -77,7 +80,7 @@ class ProductListTile extends StatelessWidget {
                         width: 4,
                       ),
                       Text(
-                        productLocation,
+                        serviceLocation,
                         style: locationNameTextStyle,
                       )
                     ],
@@ -96,13 +99,20 @@ class ProductListTile extends StatelessWidget {
                         width: 2,
                       ),
                       Text(
-                        productPrice,
+                        servicePrice,
                         style: priceTextStyle,
                       )
                     ],
                   ),
                 ],
               ),
+            ],
+          ),
+          Row(
+            children: [
+              SvgIcon(imageName: 'assets/edit_list_tile.svg'),
+              SizedBox(width: 6),
+              SvgIcon(imageName: 'assets/del_list_tile.svg'),
             ],
           ),
           Icon(
