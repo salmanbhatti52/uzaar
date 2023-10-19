@@ -53,7 +53,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -212,9 +212,12 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
         SizedBox(
           height: 20.h,
         ),
-        Text(
-          'Featured Housing',
-          style: kBodyHeadingTextStyle,
+        Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            'Featured Housing',
+            style: kBodyHeadingTextStyle,
+          ),
         ),
         SizedBox(
           height: 20.h,
@@ -225,7 +228,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
             axisDirection: AxisDirection.down,
             color: primaryBlue,
             child: GridView.builder(
-              padding: EdgeInsets.only(bottom: 15),
+              padding: EdgeInsets.only(bottom: 33, left: 8),
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
@@ -248,32 +251,6 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
             ),
           ),
         )
-        // SizedBox(
-        //   height: 500.h,
-        //   child: GlowingOverscrollIndicator(
-        //     axisDirection: AxisDirection.down,
-        //     color: primaryBlue,
-        //     child: GridView.builder(
-        //       padding: EdgeInsets.only(bottom: 14.w),
-        //       shrinkWrap: true,
-        //       itemCount: 10,
-        //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        //           childAspectRatio: 0.85,
-        //           crossAxisCount: 2,
-        //           crossAxisSpacing: 15.0.w,
-        //           mainAxisSpacing: 15.0.h),
-        //       itemBuilder: (BuildContext context, int index) {
-        //         return FeaturedProductsWidget(
-        //           image: 'assets/place-holder.png',
-        //           productCategory: 'Rental',
-        //           productDescription: 'Product Description',
-        //           productLocation: 'Product Location',
-        //           productPrice: '20',
-        //         );
-        //       },
-        //     ),
-        //   ),
-        // )
       ],
     );
   }

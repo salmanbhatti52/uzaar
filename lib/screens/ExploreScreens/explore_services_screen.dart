@@ -51,7 +51,7 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -210,9 +210,12 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
         SizedBox(
           height: 20.h,
         ),
-        Text(
-          'Featured Services',
-          style: kBodyHeadingTextStyle,
+        Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            'Featured Services',
+            style: kBodyHeadingTextStyle,
+          ),
         ),
         SizedBox(
           height: 20.h,
@@ -223,7 +226,7 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
             axisDirection: AxisDirection.down,
             color: primaryBlue,
             child: GridView.builder(
-              padding: EdgeInsets.only(bottom: 15),
+              padding: EdgeInsets.only(bottom: 33, left: 8),
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,

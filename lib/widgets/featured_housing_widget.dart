@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/utils/Colors.dart';
 
+import 'housing_icon_text_widget.dart';
+
 final kCardTagTextStyle = GoogleFonts.outfit(
   fontSize: 10,
   fontWeight: FontWeight.w500,
@@ -24,12 +26,6 @@ final kCardHeadingTextStyle = GoogleFonts.outfit(
 final kLocationTexStyle = GoogleFonts.outfit(
   fontSize: 10,
   fontWeight: FontWeight.w400,
-  color: grey,
-);
-
-final kLittleLabelTexStyle = GoogleFonts.outfit(
-  fontSize: 8,
-  fontWeight: FontWeight.w500,
   color: grey,
 );
 
@@ -172,15 +168,15 @@ class FeaturedHousingWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconTextComboWidget(
+                    HousingIconTextWidget(
                       imageName: 'area_icon',
-                      text: '4500 sq.ft',
+                      text: '4500 sq.mt',
                     ),
-                    IconTextComboWidget(
+                    HousingIconTextWidget(
                       imageName: 'bath_icon',
                       text: '2',
                     ),
-                    IconTextComboWidget(
+                    HousingIconTextWidget(
                       imageName: 'bed_icon',
                       text: '2',
                     ),
@@ -191,33 +187,6 @@ class FeaturedHousingWidget extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-}
-
-class IconTextComboWidget extends StatelessWidget {
-  const IconTextComboWidget(
-      {super.key, required this.imageName, required this.text});
-  final String imageName;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SvgPicture.asset(
-          'assets/$imageName.svg',
-          width: 14,
-          height: 14,
-        ),
-        SizedBox(
-          width: 2.w,
-        ),
-        Text(
-          text,
-          style: kLittleLabelTexStyle,
-        )
-      ],
     );
   }
 }

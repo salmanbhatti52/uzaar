@@ -49,7 +49,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return CommonListTile(
-                    imageName: 'assets/chatImage1.svg',
+                    imageName: 'assets/chat_image.png',
                     title: 'John Doe',
                     detail: 'Lorem ipsum dolor sit amet consectetur.',
                     duration: '2 min ago',

@@ -49,7 +49,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return CommonListTile(
-                    imageName: 'assets/Notification.svg',
+                    imageName: 'assets/notification.png',
                     title: 'Offer Received',
                     detail: 'You have received an offer on your product.',
                     duration: '4 hours ago',

@@ -5,6 +5,18 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/Colors.dart';
 
+final userNameTextStyle = GoogleFonts.outfit(
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+  color: black,
+);
+
+final durationTextStyle = GoogleFonts.outfit(
+  fontSize: 11,
+  fontWeight: FontWeight.w500,
+  color: grey,
+);
+
 class CommonListTile extends StatelessWidget {
   final String imageName;
   final String detail;
@@ -21,8 +33,8 @@ class CommonListTile extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 7),
       padding: EdgeInsets.all(10),
-      width: double.infinity,
-      height: 80.h,
+      width: MediaQuery.sizeOf(context).width,
+      // height: 80.h,
       decoration: BoxDecoration(
         border: Border.all(
           color: grey.withOpacity(0.5),
@@ -30,59 +42,43 @@ class CommonListTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              SvgPicture.asset(imageName),
-              SizedBox(
-                width: 10.w,
-              ),
-              Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.outfit(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: black,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  SizedBox(
-                    width: 200.w,
-                    child: Text(
-                      detail,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
-                      style: GoogleFonts.outfit(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300,
-                        color: grey,
-                      ).copyWith(
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+          Image.asset(imageName),
+          SizedBox(
+            width: 9,
           ),
           Expanded(
-            child: Text(
-              duration,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.outfit(
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-                color: grey,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title,
+                      style: userNameTextStyle,
+                    ),
+                    Text(
+                      duration,
+                      textAlign: TextAlign.center,
+                      style: durationTextStyle,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.5,
+                  child: Text(
+                    detail,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    style: kTextFieldHintStyle,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

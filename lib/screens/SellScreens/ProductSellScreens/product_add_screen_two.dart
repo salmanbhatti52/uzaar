@@ -86,7 +86,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                         height: 10.h,
                       ),
                       SizedBox(
-                        height: 50.h,
+                        height: 46,
                         child: TextFormFieldWidget(
                           controller: priceEditingController,
                           textInputType: TextInputType.number,
@@ -115,6 +115,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                         height: 10.h,
                       ),
                       RoundedDropdownMenu(
+                        width: MediaQuery.sizeOf(context).width * 0.887,
                         leadingIconName: 'boost_icon',
                         hintText: 'Select Option',
                         onSelected: (value) {
@@ -135,7 +136,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                     ],
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.49,
+                    height: MediaQuery.of(context).size.height * 0.34,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 14.0),

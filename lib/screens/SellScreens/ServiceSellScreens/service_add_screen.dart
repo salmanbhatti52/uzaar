@@ -92,7 +92,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                         height: 10.h,
                       ),
                       SizedBox(
-                        height: 50.h,
+                        height: 46,
                         child: TextFormFieldWidget(
                           controller: nameEditingController,
                           textInputType: TextInputType.text,
@@ -113,6 +113,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                         height: 10.h,
                       ),
                       RoundedDropdownMenu(
+                          width: MediaQuery.sizeOf(context).width * 0.887,
                           leadingIconName: 'category_icon',
                           hintText: 'Category',
                           onSelected: (value) {
@@ -137,7 +138,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                         height: 10.h,
                       ),
                       SizedBox(
-                        height: 50.h,
+                        height: 46,
                         child: TextFormFieldWidget(
                           controller: descriptionEditingController,
                           textInputType: TextInputType.text,
@@ -158,7 +159,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                         height: 10.h,
                       ),
                       SizedBox(
-                        height: 50.h,
+                        height: 46,
                         child: TextFormFieldWidget(
                           controller: locationEditingController,
                           textInputType: TextInputType.streetAddress,
@@ -184,7 +185,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                         height: 10.h,
                       ),
                       SizedBox(
-                        height: 50.h,
+                        height: 46,
                         child: TextFormFieldWidget(
                           controller: priceEditingController,
                           textInputType: TextInputType.number,
@@ -213,6 +214,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                         height: 10.h,
                       ),
                       RoundedDropdownMenu(
+                          width: MediaQuery.sizeOf(context).width * 0.887,
                           leadingIconName: 'boost_icon',
                           hintText: 'Select Option',
                           onSelected: (value) {

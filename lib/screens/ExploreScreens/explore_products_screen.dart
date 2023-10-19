@@ -54,7 +54,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
   Widget build(BuildContext context) {
     // return Container();
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -213,9 +213,12 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
         SizedBox(
           height: 20.h,
         ),
-        Text(
-          'Featured Products',
-          style: kBodyHeadingTextStyle,
+        Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            'Featured Products',
+            style: kBodyHeadingTextStyle,
+          ),
         ),
         SizedBox(
           height: 20.h,
@@ -226,7 +229,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
             axisDirection: AxisDirection.down,
             color: primaryBlue,
             child: GridView.builder(
-              padding: EdgeInsets.only(bottom: 15),
+              padding: EdgeInsets.only(bottom: 33, left: 8),
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
