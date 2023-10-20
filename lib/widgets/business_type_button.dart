@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../utils/Colors.dart';
 
-final double width = 94;
 final double height = 38;
 
 class BusinessTypeButton extends StatelessWidget {
@@ -11,18 +10,20 @@ class BusinessTypeButton extends StatelessWidget {
   final Gradient? gradient;
   final Color? buttonBackground;
   final Color textColor;
+  double? width;
   // final int catSelected;
 
   BusinessTypeButton(
       {required this.businessName,
       required this.gradient,
       required this.buttonBackground,
-      required this.textColor});
+      required this.textColor,
+      this.width});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
+      width: width ?? 94,
       height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),

@@ -116,17 +116,6 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      // SizedBox(
-                      //   height: 50.h,
-                      //   child: TextFormFieldWidget(
-                      //     controller: categoryEditingController,
-                      //     textInputType: TextInputType.text,
-                      //     prefixIcon:
-                      //         SvgIcon(imageName: 'assets/category_icon.svg'),
-                      //     hintText: 'Rental',
-                      //     obscureText: null,
-                      //   ),
-                      // ),
                       RoundedDropdownMenu(
                           width: MediaQuery.sizeOf(context).width * 0.887,
                           leadingIconName: 'category_icon',
@@ -238,6 +227,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                         children: [
                           Expanded(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Align(
                                   alignment: Alignment.centerLeft,
@@ -248,7 +238,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                 ),
                                 RoundedDropdownMenu(
                                     width: MediaQuery.of(context).size.width *
-                                        0.40,
+                                        0.43,
                                     leadingIconName: 'bed_icon',
                                     hintText: '2',
                                     onSelected: (value) {
@@ -267,10 +257,11 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                             ),
                           ),
                           SizedBox(
-                            width: 10,
+                            width: 16,
                           ),
                           Expanded(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Align(
                                   alignment: Alignment.centerLeft,
@@ -281,7 +272,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                 ),
                                 RoundedDropdownMenu(
                                     width: MediaQuery.of(context).size.width *
-                                        0.40,
+                                        0.435,
                                     leadingIconName: 'bath_icon',
                                     hintText: '2',
                                     onSelected: (value) {
@@ -319,16 +310,6 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      // SizedBox(
-                      //   height: 50.h,
-                      //   child: TextFormFieldWidget(
-                      //     controller: optionEditingController,
-                      //     textInputType: TextInputType.text,
-                      //     prefixIcon: SvgIcon(imageName: 'assets/boost_icon.svg'),
-                      //     hintText: 'Select Option',
-                      //     obscureText: null,
-                      //   ),
-                      // ),
                       RoundedDropdownMenu(
                           width: MediaQuery.sizeOf(context).width * 0.887,
                           leadingIconName: 'boost_icon',

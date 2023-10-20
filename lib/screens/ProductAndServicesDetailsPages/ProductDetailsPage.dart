@@ -9,7 +9,7 @@ import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/widgets/featured_products_widget.dart';
 
 import '../../widgets/BottomNaviBar.dart';
-import '../HomeScreen.dart';
+import '../home_screen.dart';
 import 'BottomSheetForSendOffer.dart';
 import 'PaymnetScreen.dart';
 

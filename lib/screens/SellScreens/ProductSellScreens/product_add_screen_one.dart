@@ -80,12 +80,12 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
         backgroundColor: white,
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 22.0.w),
               child: Column(
                 children: [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    // crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 20),

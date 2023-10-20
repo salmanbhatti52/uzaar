@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/utils/Colors.dart';
 
-import '../widgets/product_list_tile.dart';
+import '../../widgets/product_list_tile.dart';
 
 class ListingsScreen extends StatefulWidget {
   const ListingsScreen({Key? key}) : super(key: key);

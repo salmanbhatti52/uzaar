@@ -2,7 +2,7 @@ import 'package:Uzaar/screens/beforeLoginScreens/signup_screen.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_one.dart';
-import 'package:Uzaar/screens/listings.dart';
+import 'package:Uzaar/screens/ListingsScreens/listings.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../screens/SellScreens/ProductSellScreens/product_add_screen_two.dart';
@@ -14,13 +14,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../screens/ExploreScreens/explore_screen.dart';
-import '../screens/HomeScreen.dart';
-import '../screens/ProfileScreens/ProfileScreen.dart';
+import '../screens/home_screen.dart';
+import '../screens/ProfileScreens/profile_screen.dart';
 import '../screens/SellScreens/SellScreen.dart';
 import 'package:Uzaar/utils/Colors.dart';
 
-import '../screens/MessagesScreen.dart';
-import 'package:Uzaar/screens/NotificationScreen.dart';
+import '../screens/messages_screen.dart';
+import 'package:Uzaar/screens/notifications_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   static const String id = 'bottom_navbar';

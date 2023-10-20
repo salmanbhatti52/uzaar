@@ -31,7 +31,7 @@ class _ReviewsScreenSalesState extends State<ReviewsScreenSales> {
               return Container(
                 padding: EdgeInsets.all(10),
                 width: double.infinity,
-                height: 80.h,
+                // height: 80.h,
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: grey.withOpacity(0.5),
