@@ -51,18 +51,18 @@ class _CustomSplashState extends State<CustomSplash> {
           child: Column(
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.30,
+                height: MediaQuery.of(context).size.height * 0.25,
               ),
               SizedBox(
-                height: 280.h,
-                width: 180.w,
+                height: 280,
+                width: 180,
                 child: SvgPicture.asset(
                   'assets/splash_logo.svg',
                   // fit: BoxFit.cover,
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.15,
+                height: MediaQuery.of(context).size.height * 0.11,
               ),
               GestureDetector(
                 onTap: () {
@@ -72,16 +72,13 @@ class _CustomSplashState extends State<CustomSplash> {
                   );
                 },
                 child: SizedBox(
-                  height: 70.h,
-                  width: 160.w,
+                  height: 70,
+                  width: 189,
                   child: SvgIcon(
                     imageName: 'assets/splash_button.svg',
                     // fit: BoxFit.cover,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.04,
               ),
             ],
           ),

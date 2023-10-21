@@ -1,5 +1,6 @@
 import 'package:Uzaar/screens/ProfileScreens/personal_info_screen.dart';
 import 'package:Uzaar/screens/ProfileScreens/profile_reviews_screen.dart';
+import 'package:Uzaar/widgets/get_stars_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -27,18 +28,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-  }
-
-  List<Widget> getStars(int noOfStars) {
-    List<Widget> stars = [];
-    const space = SizedBox(width: 4);
-    final star = SvgPicture.asset('assets/star.svg');
-    stars.add(space);
-    for (int i = 0; i < noOfStars; i++) {
-      stars.add(star);
-      stars.add(space);
-    }
-    return stars;
   }
 
   final ratingsNumberTextStyle = GoogleFonts.outfit(
@@ -69,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: 25,
+                      height: 15,
                     ),
                     Container(
                       alignment: AlignmentDirectional.topEnd,
@@ -113,9 +102,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(
                       height: 15,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: getStars(5),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: getStars(5),
+                    // ),
+                    StarsTile(
+                      noOfStars: 5,
+                      alignment: MainAxisAlignment.center,
                     ),
                     SizedBox(
                       height: 4,

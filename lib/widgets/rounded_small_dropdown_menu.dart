@@ -19,7 +19,9 @@ final TextStyle kDropDownTextStyle = GoogleFonts.outfit(
 );
 final kDropDownMenuInputDecoration = InputDecorationTheme(
   constraints: BoxConstraints(maxHeight: 36),
-  contentPadding: EdgeInsets.only(left: 7),
+  contentPadding: EdgeInsets.only(
+    left: 15,
+  ),
   border: kDropDownActiveBorderStyle,
   enabledBorder: kDropDownActiveBorderStyle,
   focusedBorder: kDropDownActiveBorderStyle,
@@ -44,12 +46,12 @@ class RoundedSmallDropdownMenu extends StatelessWidget {
       required this.onSelected,
       required this.dropdownMenuEntries,
       required this.hintText,
-      required this.leadingIconName,
+      this.leadingIconName,
       this.width,
       this.trailingIconName = 'drop-down-button'});
   final Function(dynamic)? onSelected;
   final List<DropdownMenuEntry<Object?>> dropdownMenuEntries;
-  final String leadingIconName;
+  final String? leadingIconName;
   final String? trailingIconName;
   final String hintText;
   final double? width;
@@ -63,7 +65,9 @@ class RoundedSmallDropdownMenu extends StatelessWidget {
         imageName: 'assets/$trailingIconName.svg',
       ),
 
-      leadingIcon: SvgIcon(imageName: 'assets/$leadingIconName.svg'),
+      leadingIcon: leadingIconName == null
+          ? null
+          : SvgIcon(imageName: 'assets/$leadingIconName.svg'),
       inputDecorationTheme: kDropDownMenuInputDecoration,
       menuStyle: kDropDownMenuStyle,
       width: width ?? MediaQuery.sizeOf(context).width * 0.88,
