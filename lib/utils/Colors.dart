@@ -53,6 +53,12 @@ final kAppBarTitleStyle = GoogleFonts.outfit(
   color: black,
 );
 
+final kFontEightFiveHG = GoogleFonts.outfit(
+  fontSize: 8,
+  fontWeight: FontWeight.w500,
+  color: grey,
+);
+
 final kSimpleTextStyle = GoogleFonts.outfit(
   fontSize: 14,
   fontWeight: FontWeight.w400,

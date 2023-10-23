@@ -145,6 +145,9 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                           HousingIconTextWidget(
                             imageName: 'area_icon',
                             text: '4500 sq.mt',
+                            height: 16,
+                            width: 16,
+                            style: kSimpleTextStyle,
                           ),
                           SizedBox(
                             width: 18,
@@ -152,6 +155,9 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                           HousingIconTextWidget(
                             imageName: 'bath_icon',
                             text: '2',
+                            height: 16,
+                            width: 16,
+                            style: kSimpleTextStyle,
                           ),
                           SizedBox(
                             width: 18,
@@ -159,6 +165,9 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                           HousingIconTextWidget(
                             imageName: 'bed_icon',
                             text: '2',
+                            height: 16,
+                            width: 16,
+                            style: kSimpleTextStyle,
                           ),
                         ],
                       ),
