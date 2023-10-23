@@ -32,17 +32,19 @@ class ReviewListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 7),
+      margin: EdgeInsets.symmetric(vertical: 7, horizontal: 2),
       padding: EdgeInsets.all(10),
       width: MediaQuery.sizeOf(context).width,
       // height: 80.h,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: grey.withOpacity(0.5),
-        ),
-        borderRadius: BorderRadius.circular(10),
-      ),
+      // decoration: BoxDecoration(
+      //   border: Border.all(
+      //     color: grey.withOpacity(0.5),
+      //   ),
+      //   borderRadius: BorderRadius.circular(10),
+      // ),
+      decoration: kCardBoxDecoration,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset(imageName),
           SizedBox(
@@ -88,6 +90,10 @@ class ReviewListTile extends StatelessWidget {
                     style: kTextFieldHintStyle,
                   ),
                 ),
+                SizedBox(
+                  height: 4,
+                ),
+                Image.asset('assets/review_item.png'),
               ],
             ),
           ),

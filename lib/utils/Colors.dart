@@ -6,6 +6,7 @@ const Color primaryBlue = Color(0xff450E8B);
 const Color grey = Color(0xff808080);
 const Color white = Color(0xffFFFFFF);
 const Color green = Color(0xff34A853);
+const Color f7f8f8 = Color(0xffF7F8F8);
 
 const LinearGradient gradient = LinearGradient(
   colors: [
@@ -40,6 +41,12 @@ final kBodyHeadingTextStyle = GoogleFonts.outfit(
   color: black,
 );
 
+final kBodyPrimaryBoldTextStyle = GoogleFonts.outfit(
+  fontWeight: FontWeight.w600,
+  fontSize: 20,
+  color: primaryBlue,
+);
+
 final kAppBarTitleStyle = GoogleFonts.outfit(
   fontSize: 24,
   fontWeight: FontWeight.w600,
@@ -71,6 +78,18 @@ final kColoredTextStyle = GoogleFonts.outfit(
   color: primaryBlue,
 );
 
+final kFontTwelveFourHG = GoogleFonts.outfit(
+  fontSize: 12,
+  fontWeight: FontWeight.w400,
+  color: grey,
+);
+
+final kFontFourteenFiveHG = GoogleFonts.outfit(
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+  color: grey,
+);
+
 final TextStyle kTextFieldHintStyle = GoogleFonts.outfit(
   fontSize: 14,
   fontWeight: FontWeight.w400,
@@ -81,6 +100,12 @@ final TextStyle kTextFieldInputStyle = GoogleFonts.outfit(
   fontSize: 14,
   fontWeight: FontWeight.w400,
   color: black,
+);
+
+final kFontFourteenSixHPB = GoogleFonts.outfit(
+  fontSize: 14,
+  fontWeight: FontWeight.w600,
+  color: primaryBlue,
 );
 
 final kRoundedActiveBorderStyle = OutlineInputBorder(
@@ -118,6 +143,8 @@ final kTextFieldBoxDecoration = BoxDecoration(
   ],
   borderRadius: BorderRadius.circular(40),
 );
+
+// final k
 
 const kCardBoxDecoration = BoxDecoration(
   boxShadow: [

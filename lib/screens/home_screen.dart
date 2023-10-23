@@ -1,3 +1,4 @@
+import 'package:Uzaar/screens/BusinessDetailPages/housing_details_page.dart';
 import 'package:Uzaar/widgets/featured_housing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,8 +15,8 @@ import 'package:Uzaar/models/ServicesCategoryModel.dart';
 import 'package:Uzaar/widgets/search_field.dart';
 
 import '../widgets/business_type_button.dart';
-import 'ProductAndServicesDetailsPages/ProductDetailsPage.dart';
-import 'ProductAndServicesDetailsPages/ServiceDetailsPage.dart';
+import 'BusinessDetailPages/product_details_page.dart';
+import 'BusinessDetailPages/service_details_page.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = 'home_screen';
@@ -282,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ServiceDetailsPage(),
+                          builder: (context) => HousingDetailsPage(),
                         ),
                       ),
                       child: ListView.builder(

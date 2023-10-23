@@ -35,12 +35,13 @@ class CommonListTile extends StatelessWidget {
       padding: EdgeInsets.all(10),
       width: MediaQuery.sizeOf(context).width,
       // height: 80.h,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: grey.withOpacity(0.5),
-        ),
-        borderRadius: BorderRadius.circular(10),
-      ),
+      // decoration: BoxDecoration(
+      //   border: Border.all(
+      //     color: grey.withOpacity(0.5),
+      //   ),
+      //   borderRadius: BorderRadius.circular(10),
+      // ),
+      decoration: kCardBoxDecoration,
       child: Row(
         children: [
           Image.asset(imageName),

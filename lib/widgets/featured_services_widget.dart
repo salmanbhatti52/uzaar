@@ -93,7 +93,7 @@ class FeaturedServicesWidget extends StatelessWidget {
                 left: 6,
                 bottom: 9,
                 child: Container(
-                  padding: EdgeInsets.all(6.h),
+                  // padding: EdgeInsets.all(6.h),
                   width: 70,
                   height: 24,
                   decoration: BoxDecoration(
