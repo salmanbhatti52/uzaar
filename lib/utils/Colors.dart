@@ -35,6 +35,12 @@ final kBodySubHeadingTextStyle = GoogleFonts.outfit(
   color: black,
 );
 
+final kFontEighteenSixHB = GoogleFonts.outfit(
+  fontSize: 18,
+  fontWeight: FontWeight.w600,
+  color: black,
+);
+
 final kBodyHeadingTextStyle = GoogleFonts.outfit(
   fontWeight: FontWeight.w600,
   fontSize: 20,
@@ -205,6 +211,14 @@ final kContainerBoxDecoration = BoxDecoration(
       offset: Offset(0, 0),
     )
   ],
+);
+
+final kCardBoxBorder = BoxDecoration(
+  border: Border.all(
+    color: primaryBlue,
+    width: 2,
+  ),
+  borderRadius: BorderRadius.circular(10),
 );
 
 final kOptInputDecoration = InputDecoration(

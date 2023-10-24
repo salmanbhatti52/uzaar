@@ -7,6 +7,7 @@ import 'package:Uzaar/utils/Colors.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/widgets/TextfromFieldWidget.dart';
 
+import '../../widgets/payment_button.dart';
 import '../../widgets/text.dart';
 import 'OrderPlacedScreen.dart';
 
@@ -24,46 +25,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
   final GlobalKey<FormState> _key = GlobalKey();
 
   bool isHidden = false;
+  bool paypalMethod = true;
+  bool zelleMethod = false;
+  bool cashUpMethod = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-  }
-
-  Widget paymentWidget(String image, String text) {
-    return Container(
-      margin: EdgeInsets.only(right: 10),
-      padding: EdgeInsets.symmetric(horizontal: 14),
-      width: 145.w,
-      height: 50.h,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: primaryBlue,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          Image.asset(
-            image,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(
-            width: 7.w,
-          ),
-          Text(
-            text,
-            style: GoogleFonts.outfit(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: black,
-            ),
-          )
-        ],
-      ),
-    );
   }
 
   @override
@@ -82,11 +51,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         centerTitle: false,
         title: Text(
           'Payment',
-          style: GoogleFonts.outfit(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-            color: black,
-          ),
+          style: kAppBarTitleStyle,
         ),
       ),
       body: SafeArea(
@@ -104,17 +69,57 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    SizedBox(
-                      height: 50.h,
+                    Container(
+                      height: 56,
+                      width: double.infinity,
+                      margin: const EdgeInsets.all(2.0),
                       child: ListView(
-                        children: [
-                          paymentWidget('assets/paypal.png', 'PayPal'),
-                          paymentWidget('assets/Cashup (1).png', 'CashUp'),
-                          paymentWidget('assets/zelle.png', 'Zelle'),
-                        ],
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         physics: BouncingScrollPhysics(),
+                        children: [
+                          Container(
+                            child: paymentWidget(
+                                onTap: () {
+                                  setState(() {
+                                    paypalMethod = true;
+                                    zelleMethod = false;
+                                    cashUpMethod = false;
+                                  });
+                                },
+                                image: 'assets/paypal_logo.png',
+                                text: 'PayPal',
+                                decoration: paypalMethod
+                                    ? kCardBoxBorder
+                                    : kCardBoxDecoration),
+                          ),
+                          paymentWidget(
+                              onTap: () {
+                                setState(() {
+                                  paypalMethod = false;
+                                  zelleMethod = true;
+                                  cashUpMethod = false;
+                                });
+                              },
+                              image: 'assets/zelle_logo.png',
+                              text: 'Zelle',
+                              decoration: zelleMethod
+                                  ? kCardBoxBorder
+                                  : kCardBoxDecoration),
+                          paymentWidget(
+                              onTap: () {
+                                setState(() {
+                                  paypalMethod = false;
+                                  zelleMethod = false;
+                                  cashUpMethod = true;
+                                });
+                              },
+                              image: 'assets/cashup_logo.png',
+                              text: 'CashUp',
+                              decoration: cashUpMethod
+                                  ? kCardBoxBorder
+                                  : kCardBoxDecoration),
+                        ],
                       ),
                     ),
                     SizedBox(
