@@ -10,7 +10,7 @@ import 'package:Uzaar/widgets/TextfromFieldWidget.dart';
 
 import '../../widgets/payment_button.dart';
 import '../../widgets/text.dart';
-import 'OrderPlacedScreen.dart';
+import 'order_placed_screen.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});

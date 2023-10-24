@@ -10,7 +10,7 @@ import '../../widgets/carousel_builder.dart';
 import '../../widgets/featured_housing_widget.dart';
 import '../../widgets/featured_services_widget.dart';
 import '../../widgets/housing_icon_text_widget.dart';
-import 'PaymnetScreen.dart';
+import 'paymnet_screen.dart';
 
 class HousingDetailsPage extends StatefulWidget {
   const HousingDetailsPage({Key? key}) : super(key: key);

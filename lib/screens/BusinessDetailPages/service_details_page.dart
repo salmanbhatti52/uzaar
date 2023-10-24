@@ -10,7 +10,7 @@ import 'package:Uzaar/widgets/featured_products_widget.dart';
 import '../../widgets/BottomNaviBar.dart';
 import '../../widgets/carousel_builder.dart';
 import '../../widgets/featured_services_widget.dart';
-import 'PaymnetScreen.dart';
+import 'paymnet_screen.dart';
 
 class ServiceDetailsPage extends StatefulWidget {
   const ServiceDetailsPage({super.key});

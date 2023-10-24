@@ -18,7 +18,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: white,
+        backgroundColor: Colors.white,
         leading: GestureDetector(
           onTap: () => Navigator.of(context).pop(),
           child: SvgPicture.asset(
@@ -32,7 +32,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           style: kAppBarTitleStyle,
         ),
       ),
-      backgroundColor: white,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 13),

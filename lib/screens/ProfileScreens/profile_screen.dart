@@ -46,7 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: white,
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: GlowingOverscrollIndicator(
             axisDirection: AxisDirection.down,

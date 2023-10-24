@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:Uzaar/utils/Colors.dart';
-import 'package:Uzaar/screens/beforeLoginScreens/logIn_screen.dart';
+import 'package:Uzaar/screens/beforeLoginScreens/login_screen.dart';
 
 import '../../utils/Buttons.dart';
 import '../../widgets/read_only_container.dart';
@@ -42,7 +42,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: white,
+          backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
             'Complete Profile',

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/screens/home_screen.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/complete_profile_screen.dart';
-import 'package:Uzaar/screens/beforeLoginScreens/logIn_screen.dart';
+import 'package:Uzaar/screens/beforeLoginScreens/login_screen.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/OnboardingScreen.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/reset_password_screen.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/signup_screen.dart';

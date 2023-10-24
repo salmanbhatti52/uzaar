@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Uzaar/widgets/text.dart';
 
 import '../../widgets/suffix_svg_icon.dart';
-import 'logIn_screen.dart';
+import 'login_screen.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/utils/Colors.dart';
 
@@ -45,7 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: white,
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: GlowingOverscrollIndicator(
             axisDirection: AxisDirection.down,

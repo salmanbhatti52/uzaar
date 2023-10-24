@@ -12,7 +12,7 @@ import '../../widgets/BottomNaviBar.dart';
 import '../../widgets/carousel_builder.dart';
 import '../home_screen.dart';
 import 'BottomSheetForSendOffer.dart';
-import 'PaymnetScreen.dart';
+import 'paymnet_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class ProductDetailsPage extends StatefulWidget {

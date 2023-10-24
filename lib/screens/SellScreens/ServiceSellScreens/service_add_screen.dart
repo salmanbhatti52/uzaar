@@ -62,10 +62,10 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: white,
+          backgroundColor: Colors.white,
           leading: NavigateBack(buildContext: context),
         ),
-        backgroundColor: white,
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(

@@ -18,7 +18,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: white,
+        backgroundColor: Colors.white,
         leading: GestureDetector(
           onTap: () => Navigator.of(context).pop(),
           child: SvgPicture.asset(
@@ -32,7 +32,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
           style: kAppBarTitleStyle,
         ),
       ),
-      backgroundColor: white,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 13),

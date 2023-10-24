@@ -16,7 +16,7 @@ import 'package:flutter_svg/svg.dart';
 import '../screens/ExploreScreens/explore_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/ProfileScreens/profile_screen.dart';
-import '../screens/SellScreens/SellScreen.dart';
+import '../screens/SellScreens/sell_screen.dart';
 import 'package:Uzaar/utils/Colors.dart';
 
 import '../screens/messages_screen.dart';

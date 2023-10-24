@@ -38,7 +38,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: white,
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 22.0.w),

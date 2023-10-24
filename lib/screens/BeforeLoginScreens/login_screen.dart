@@ -45,7 +45,7 @@ class _LogInScreenState extends State<LogInScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: white,
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: GlowingOverscrollIndicator(
             axisDirection: AxisDirection.down,
