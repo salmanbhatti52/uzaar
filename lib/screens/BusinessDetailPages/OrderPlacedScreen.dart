@@ -1,3 +1,4 @@
+import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,6 +40,14 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
         child: SafeArea(
           child: Column(
             children: [
+              Container(
+                alignment: Alignment.centerLeft,
+                height: 50,
+                child: NavigateBack(
+                    buildContext: context,
+                    colorFilter:
+                        ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+              ),
               SizedBox(
                 height: 60.h,
               ),
@@ -47,7 +56,7 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
                 height: 60.h,
               ),
               Text(
-                'Your Order has been placed. Add review and track your order.',
+                'Your Order has been placed.',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.outfit(
                   fontSize: 18,
@@ -58,62 +67,43 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
               SizedBox(
                 height: 30.h,
               ),
-              RatingBar.builder(
-                glow: true,
-                maxRating: 5,
-                tapOnlyMode: true,
-                unratedColor: grey,
-                glowColor: primaryBlue,
-                initialRating: 4,
-                minRating: 0,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: EdgeInsets.zero,
-                itemSize: 24,
-                itemBuilder: (BuildContext context, int index) {
-                  return Icon(
-                    Icons.star_rate_rounded,
-                    color: Colors.yellow,
-                  );
-                },
-                onRatingUpdate: (double value) {},
-              ),
+              // RatingBar.builder(
+              //   glow: true,
+              //   maxRating: 5,
+              //   tapOnlyMode: true,
+              //   unratedColor: grey,
+              //   glowColor: primaryBlue,
+              //   initialRating: 4,
+              //   minRating: 0,
+              //   direction: Axis.horizontal,
+              //   allowHalfRating: true,
+              //   itemCount: 5,
+              //   itemPadding: EdgeInsets.zero,
+              //   itemSize: 24,
+              //   itemBuilder: (BuildContext context, int index) {
+              //     return Icon(
+              //       Icons.star_rate_rounded,
+              //       color: Colors.yellow,
+              //     );
+              //   },
+              //   onRatingUpdate: (double value) {},
+              // ),
               SizedBox(
                 height: 30.h,
               ),
-              SizedBox(
-                height: 50.h,
-                child: TextFormFieldWidget(
-                  controller: reviewController,
-                  textInputType: TextInputType.visiblePassword,
-                  hintText: 'Type here....',
-                  suffixIcon: GestureDetector(
-                    onTap: null,
-                    child: SvgPicture.asset(
-                      'assets/send-button.svg',
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
-                  obscureText: null,
-                  prefixIcon: SizedBox(),
-                ),
-              ),
-              SizedBox(
-                height: 210.h,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: 20,
-                ),
-                child: primaryButton(context, 'Track Order', () {
-                  return Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => TrackOrderScreen(),
-                    ),
-                  );
-                }),
-              ),
+
+              // Padding(
+              //   padding: EdgeInsets.only(
+              //     bottom: 20,
+              //   ),
+              //   child: primaryButton(context, 'Track Order', () {
+              //     return Navigator.of(context).push(
+              //       MaterialPageRoute(
+              //         builder: (context) => TrackOrderScreen(),
+              //       ),
+              //     );
+              //   }),
+              // ),
             ],
           ),
         ),

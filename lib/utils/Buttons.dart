@@ -7,6 +7,8 @@ Widget primaryButton(context, String buttonText, Function()? onTap) {
   return GestureDetector(
     onTap: onTap,
     child: Container(
+      // margin:  EdgeInsets.only(
+      //     bottom: 25),
       width: double.infinity,
       height: 54,
       decoration: BoxDecoration(

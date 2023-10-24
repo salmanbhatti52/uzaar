@@ -1,3 +1,4 @@
+import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -24,7 +25,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   final GlobalKey<FormState> _key = GlobalKey();
 
-  bool isHidden = false;
+  bool isHidden = true;
   bool paypalMethod = true;
   bool zelleMethod = false;
   bool cashUpMethod = false;
@@ -37,49 +38,56 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: white,
-        leading: GestureDetector(
-          onTap: () => Navigator.of(context).pop(),
-          child: SvgPicture.asset(
-            'assets/back-arrow-button.svg',
-            fit: BoxFit.scaleDown,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: white,
+          leading: GestureDetector(
+            onTap: () => Navigator.of(context).pop(),
+            child: SvgPicture.asset(
+              'assets/back-arrow-button.svg',
+              fit: BoxFit.scaleDown,
+            ),
+          ),
+          centerTitle: false,
+          title: Text(
+            'Payment',
+            style: kAppBarTitleStyle,
           ),
         ),
-        centerTitle: false,
-        title: Text(
-          'Payment',
-          style: kAppBarTitleStyle,
-        ),
-      ),
-      body: SafeArea(
-        child: GlowingOverscrollIndicator(
-          axisDirection: AxisDirection.down,
-          color: primaryBlue,
-          child: SingleChildScrollView(
-            child: Form(
-              key: _key,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Container(
-                      height: 56,
-                      width: double.infinity,
-                      margin: const EdgeInsets.all(2.0),
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        children: [
-                          Container(
-                            child: paymentWidget(
+        body: SafeArea(
+          child: GlowingOverscrollIndicator(
+            axisDirection: AxisDirection.down,
+            color: primaryBlue,
+            child: SingleChildScrollView(
+              child: Form(
+                key: _key,
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 22.0.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 54,
+                        child: ListView(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          children: [
+                            paymentWidget(
                                 onTap: () {
                                   setState(() {
                                     paypalMethod = true;
@@ -92,118 +100,120 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 decoration: paypalMethod
                                     ? kCardBoxBorder
                                     : kCardBoxDecoration),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            paymentWidget(
+                                onTap: () {
+                                  setState(() {
+                                    paypalMethod = false;
+                                    zelleMethod = true;
+                                    cashUpMethod = false;
+                                  });
+                                },
+                                image: 'assets/zelle_logo.png',
+                                text: 'Zelle',
+                                decoration: zelleMethod
+                                    ? kCardBoxBorder
+                                    : kCardBoxDecoration),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            paymentWidget(
+                                onTap: () {
+                                  setState(() {
+                                    paypalMethod = false;
+                                    zelleMethod = false;
+                                    cashUpMethod = true;
+                                  });
+                                },
+                                image: 'assets/cashup_logo.png',
+                                text: 'CashUp',
+                                decoration: cashUpMethod
+                                    ? kCardBoxBorder
+                                    : kCardBoxDecoration),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: ReusableText(text: 'Email')),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        height: 46,
+                        child: TextFormFieldWidget(
+                          controller: emailController,
+                          textInputType: TextInputType.emailAddress,
+                          prefixIcon: SvgPicture.asset(
+                            'assets/email-icon.svg',
+                            fit: BoxFit.scaleDown,
                           ),
-                          paymentWidget(
-                              onTap: () {
-                                setState(() {
-                                  paypalMethod = false;
-                                  zelleMethod = true;
-                                  cashUpMethod = false;
-                                });
-                              },
-                              image: 'assets/zelle_logo.png',
-                              text: 'Zelle',
-                              decoration: zelleMethod
-                                  ? kCardBoxBorder
-                                  : kCardBoxDecoration),
-                          paymentWidget(
-                              onTap: () {
-                                setState(() {
-                                  paypalMethod = false;
-                                  zelleMethod = false;
-                                  cashUpMethod = true;
-                                });
-                              },
-                              image: 'assets/cashup_logo.png',
-                              text: 'CashUp',
-                              decoration: cashUpMethod
-                                  ? kCardBoxBorder
-                                  : kCardBoxDecoration),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: ReusableText(text: 'Email')),
-                    SizedBox(
-                      height: 7.h,
-                    ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: emailController,
-                        textInputType: TextInputType.emailAddress,
-                        prefixIcon: SvgPicture.asset(
-                          'assets/email-icon.svg',
-                          fit: BoxFit.scaleDown,
+                          hintText: 'username@gmail.com',
+                          obscureText: null,
                         ),
-                        hintText: 'username@gmail.com',
-                        obscureText: null,
                       ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: ReusableText(text: 'Password')),
-                    SizedBox(
-                      height: 7.h,
-                    ),
-                    SizedBox(
-                      height: 50.h,
-                      child: TextFormFieldWidget(
-                        controller: passwordController,
-                        textInputType: TextInputType.visiblePassword,
-                        prefixIcon: SvgPicture.asset(
-                          'assets/password-icon.svg',
-                          fit: BoxFit.scaleDown,
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: ReusableText(text: 'Password')),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        height: 46,
+                        child: TextFormFieldWidget(
+                          controller: passwordController,
+                          textInputType: TextInputType.visiblePassword,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/password-icon.svg'),
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isHidden = !isHidden;
+                              });
+                            },
+                            child: isHidden
+                                ? SvgIcon(
+                                    imageName: 'assets/show-pass.svg',
+                                    colorFilter: ColorFilter.mode(
+                                        primaryBlue, BlendMode.srcIn),
+                                  )
+                                : SvgIcon(
+                                    imageName: 'assets/hide-pass-icon.svg',
+                                    colorFilter: ColorFilter.mode(
+                                        primaryBlue, BlendMode.srcIn),
+                                  ),
+                          ),
+                          hintText: '***************',
+                          obscureText: isHidden,
                         ),
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isHidden = !isHidden;
-                            });
-                          },
-                          child: isHidden
-                              ? SvgPicture.asset(
-                                  'assets/hide-pass-icon.svg',
-                                  colorFilter: ColorFilter.mode(
-                                      primaryBlue, BlendMode.srcIn),
-                                  fit: BoxFit.scaleDown,
-                                )
-                              : SvgPicture.asset(
-                                  'assets/show-pass.svg',
-                                  fit: BoxFit.scaleDown,
-                                  colorFilter: ColorFilter.mode(
-                                      primaryBlue, BlendMode.srcIn),
-                                ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.33,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                          bottom: 20,
                         ),
-                        hintText: '***************',
-                        obscureText: isHidden,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 400.h,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        bottom: 20,
-                      ),
-                      child: primaryButton(
-                        context,
-                        'Continue',
-                        () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => OrderPlacedScreen(),
+                        child: primaryButton(
+                          context,
+                          'Continue',
+                          () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => OrderPlacedScreen(),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

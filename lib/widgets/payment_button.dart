@@ -14,7 +14,7 @@ Widget paymentWidget(
       padding: EdgeInsets.symmetric(horizontal: 14, vertical: 11),
       width: 142,
       height: 54,
-      // decoration: decoration,
+      decoration: decoration,
       child: Row(
         children: [
           Image.asset(
