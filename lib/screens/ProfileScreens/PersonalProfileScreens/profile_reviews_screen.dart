@@ -42,26 +42,25 @@ class _ProfileReviewsScreenState extends State<ProfileReviewsScreen> {
         SizedBox(
           height: 15,
         ),
-        SizedBox(
-          height: MediaQuery.sizeOf(context).height * 0.33,
-          child: GlowingOverscrollIndicator(
-            axisDirection: AxisDirection.down,
-            color: primaryBlue,
-            child: ListView.builder(
-              padding: EdgeInsets.only(bottom: 15),
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              itemCount: 6,
-              scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) {
-                return ReviewListTile(
-                  imageName: 'assets/chat_image.png',
-                  title: 'John Doe',
-                  detail: 'Lorem ipsum dolor sit amet consectetur.',
-                  date: '08/08/2023',
-                );
-              },
-            ),
+        //height for sized box
+        // height: MediaQuery.sizeOf(context).height * 0.33,
+        GlowingOverscrollIndicator(
+          axisDirection: AxisDirection.down,
+          color: primaryBlue,
+          child: ListView.builder(
+            padding: EdgeInsets.only(bottom: 15),
+            shrinkWrap: true,
+            physics: BouncingScrollPhysics(),
+            itemCount: 6,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) {
+              return ReviewListTile(
+                imageName: 'assets/chat_image.png',
+                title: 'John Doe',
+                detail: 'Lorem ipsum dolor sit amet consectetur.',
+                date: '08/08/2023',
+              );
+            },
           ),
         )
       ],
