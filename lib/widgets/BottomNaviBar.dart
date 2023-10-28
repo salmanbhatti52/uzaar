@@ -1,5 +1,6 @@
 import 'package:Uzaar/screens/beforeLoginScreens/signup_screen.dart';
 import 'package:Uzaar/utils/Buttons.dart';
+import 'package:Uzaar/widgets/alert_dialog_reusable.dart';
 import 'package:flutter/services.dart';
 import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_one.dart';
 import 'package:Uzaar/screens/ListingsScreens/listings.dart';
@@ -17,7 +18,7 @@ import '../screens/ExploreScreens/explore_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/ProfileScreens/profile_screen.dart';
 import '../screens/SellScreens/sell_screen.dart';
-import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/colors.dart';
 
 import '../screens/messages_screen.dart';
 import 'package:Uzaar/screens/notifications_screen.dart';
@@ -208,40 +209,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
         buildContext: context,
       ),
       body: _currentIndex > 1 && widget.loginAsGuest == true
-          ? AlertDialog(
-              titleTextStyle: GoogleFonts.outfit(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20,
-                  color: primaryBlue),
-              elevation: 3,
-              contentTextStyle: GoogleFonts.outfit(
-                  fontWeight: FontWeight.w400, fontSize: 14, color: grey),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+          ? AlertDialogReusable(
+              title: 'Can not Complete Action',
+              description:
+                  'You can not sell anything on platform in guest mode. Signup now if you want to list any item.',
+              button: primaryButton(
+                context,
+                'Signup',
+                () => Navigator.pushReplacement(context, MaterialPageRoute(
+                  builder: (context) {
+                    return SignUpScreen();
+                  },
+                )),
               ),
-              title: Text(
-                'Can not Complete Action',
-                textAlign: TextAlign.center,
-              ),
-              content: Text(
-                'You can not sell anything on platform in guest mode. Signup now if you want to list any item.',
-                textAlign: TextAlign.center,
-              ),
-              actions: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(bottom: 14.0, left: 8, right: 8),
-                  child: primaryButton(
-                    context,
-                    'Signup',
-                    () => Navigator.pushReplacement(context, MaterialPageRoute(
-                      builder: (context) {
-                        return SignUpScreen();
-                      },
-                    )),
-                  ),
-                )
-              ],
             )
           : _pages[_currentIndex],
       bottomNavigationBar: Container(

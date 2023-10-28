@@ -1,7 +1,8 @@
+import 'package:Uzaar/widgets/popup_menu_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/colors.dart';
 
 final productNameTextStyle = GoogleFonts.outfit(
   fontSize: 16,
@@ -25,12 +26,19 @@ class ProductListTile extends StatelessWidget {
   final String productName;
   final String productLocation;
   final String productPrice;
+  final void Function(dynamic)? onSelected;
+  final List<PopupMenuEntry<dynamic>> Function(BuildContext) itemBuilder;
+  final dynamic initialValue;
 
-  ProductListTile(
-      {required this.productImage,
-      required this.productName,
-      required this.productLocation,
-      required this.productPrice});
+  ProductListTile({
+    required this.productImage,
+    required this.productName,
+    required this.productLocation,
+    required this.productPrice,
+    required this.onSelected,
+    required this.itemBuilder,
+    this.initialValue,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -105,10 +113,11 @@ class ProductListTile extends StatelessWidget {
               ),
             ],
           ),
-          Icon(
-            Icons.more_vert,
-            color: Color(0xff450E8B),
-          )
+          PopupMenuButtonReusable(
+            itemBuilder: itemBuilder,
+            onSelected: onSelected,
+            initialValue: initialValue,
+          ),
         ],
       ),
     );

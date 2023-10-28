@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../utils/Colors.dart';
-import '../../widgets/TextfromFieldWidget.dart';
+import '../../utils/colors.dart';
+import '../../widgets/text_form_field_reusable.dart';
 import '../../widgets/text.dart';
 
 class PersonalInfoScreen extends StatefulWidget {

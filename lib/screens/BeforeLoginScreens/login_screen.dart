@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:Uzaar/screens/beforeLoginScreens/reset_password_screen.dart';
 import 'package:Uzaar/widgets/BottomNaviBar.dart';
-import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 
-import 'package:Uzaar/widgets/TextfromFieldWidget.dart';
+import 'package:Uzaar/widgets/text_form_field_reusable.dart';
 import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:Uzaar/widgets/text.dart';
 

@@ -1,9 +1,10 @@
+import 'package:Uzaar/widgets/popup_menu_button.dart';
 import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/colors.dart';
 
 final productNameTextStyle = GoogleFonts.outfit(
   fontSize: 16,
@@ -27,12 +28,18 @@ class ServiceListTile extends StatelessWidget {
   final String serviceName;
   final String serviceLocation;
   final String servicePrice;
+  final void Function(dynamic)? onSelected;
+  final List<PopupMenuEntry<dynamic>> Function(BuildContext) itemBuilder;
+  final dynamic initialValue;
 
   const ServiceListTile({
     required this.serviceImage,
     required this.serviceName,
     required this.serviceLocation,
     required this.servicePrice,
+    required this.onSelected,
+    required this.itemBuilder,
+    this.initialValue,
   });
 
   @override
@@ -115,10 +122,11 @@ class ServiceListTile extends StatelessWidget {
               SvgIcon(imageName: 'assets/del_list_tile.svg'),
             ],
           ),
-          Icon(
-            Icons.more_vert,
-            color: Color(0xff450E8B),
-          )
+          PopupMenuButtonReusable(
+            itemBuilder: itemBuilder,
+            onSelected: onSelected,
+            initialValue: initialValue,
+          ),
         ],
       ),
     );

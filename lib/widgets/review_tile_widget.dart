@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../utils/Colors.dart';
+import '../utils/colors.dart';
 
 final userNameTextStyle = GoogleFonts.outfit(
   fontSize: 16,

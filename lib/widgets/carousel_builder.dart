@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/Colors.dart';
+import '../utils/colors.dart';
 import 'featured_housing_widget.dart';
 
 class CarouselBuilder extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 
-import '../utils/Colors.dart';
+import '../utils/colors.dart';
 
 Widget readOnlyContainer(String objectIcon, String objectText) {
   return Container(

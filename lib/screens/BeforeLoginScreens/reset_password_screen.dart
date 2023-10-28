@@ -2,12 +2,12 @@ import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:Uzaar/widgets/text.dart';
 
-import '../../widgets/TextfromFieldWidget.dart';
+import '../../widgets/text_form_field_reusable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/login_screen.dart';
 
-import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 
 class ResetPasswordScreen extends StatefulWidget {

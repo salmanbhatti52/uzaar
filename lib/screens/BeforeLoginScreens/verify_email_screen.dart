@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/widgets/navigate_back_icon.dart';
 
 import 'complete_profile_screen.dart';

@@ -3,21 +3,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../utils/Colors.dart';
+import '../utils/colors.dart';
 
-class HousingIconTextWidget extends StatelessWidget {
-  const HousingIconTextWidget(
+class IconTextReusable extends StatelessWidget {
+  const IconTextReusable(
       {super.key,
       required this.imageName,
       required this.text,
       this.style,
       this.width,
-      this.height});
+      this.height,
+      this.spaceBetween});
   final String imageName;
   final String text;
   final TextStyle? style;
   final double? height;
   final double? width;
+  final double? spaceBetween;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -28,7 +30,7 @@ class HousingIconTextWidget extends StatelessWidget {
           height: height ?? 14,
         ),
         SizedBox(
-          width: 2.w,
+          width: spaceBetween ?? 2.w,
         ),
         Text(
           text,

@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/models/HousingCategoryModel.dart';
 
-import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/widgets/featured_products_widget.dart';
 import 'package:Uzaar/widgets/featured_services_widget.dart';
 import 'package:Uzaar/models/ProductCategoryModel.dart';

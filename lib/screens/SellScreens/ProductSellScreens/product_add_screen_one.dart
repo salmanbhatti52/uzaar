@@ -6,9 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_two.dart';
 import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/colors.dart';
 
-import '../../../widgets/TextfromFieldWidget.dart';
+import '../../../widgets/text_form_field_reusable.dart';
 import '../../../widgets/rounded_dropdown_menu.dart';
 import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// import '../utils/Colors.dart';
+// import '../utils/colors.dart';
 // int noOfTabs = 3;
 
 class TabIndicator extends StatelessWidget {

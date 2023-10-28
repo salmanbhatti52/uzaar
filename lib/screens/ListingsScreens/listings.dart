@@ -5,7 +5,7 @@ import 'package:Uzaar/widgets/business_type_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/colors.dart';
 
 import '../../widgets/product_list_tile.dart';
 

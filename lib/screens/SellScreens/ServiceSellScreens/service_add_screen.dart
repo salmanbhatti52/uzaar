@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/widgets/BottomNaviBar.dart';
 
 import '../../../utils/Buttons.dart';
-import '../../../utils/Colors.dart';
-import '../../../widgets/TextfromFieldWidget.dart';
+import '../../../utils/colors.dart';
+import '../../../widgets/text_form_field_reusable.dart';
 import '../../../widgets/rounded_dropdown_menu.dart';
 import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';

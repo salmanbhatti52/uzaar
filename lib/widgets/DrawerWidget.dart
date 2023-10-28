@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/screens/ProfileScreens/SaleProfileScreens/SaleProfileMain.dart';
-import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

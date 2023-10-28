@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../utils/Buttons.dart';
-import '../../../utils/Colors.dart';
+import '../../../utils/colors.dart';
 import '../../../widgets/BottomNaviBar.dart';
-import '../../../widgets/TextfromFieldWidget.dart';
+import '../../../widgets/text_form_field_reusable.dart';
 import '../../../widgets/rounded_dropdown_menu.dart';
 import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';

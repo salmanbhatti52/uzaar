@@ -5,7 +5,7 @@ import 'package:Uzaar/screens/SellScreens/HousingSellScreens/house_add_screen.da
 import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_one.dart';
 import 'package:Uzaar/screens/SellScreens/ServiceSellScreens/service_add_screen.dart';
 
-import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/colors.dart';
 
 import '../../utils/Buttons.dart';
 import '../../widgets/business_type_button.dart';

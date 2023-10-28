@@ -1,11 +1,12 @@
+import 'package:Uzaar/widgets/popup_menu_button.dart';
 import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/colors.dart';
 
-import 'housing_icon_text_widget.dart';
+import 'icon_text_combo.dart';
 
 final productNameTextStyle = GoogleFonts.outfit(
   fontSize: 16,
@@ -38,6 +39,9 @@ class HousingListTile extends StatelessWidget {
   final String houseArea;
   final String noOfBeds;
   final String noOfBaths;
+  final void Function(dynamic)? onSelected;
+  final List<PopupMenuEntry<dynamic>> Function(BuildContext) itemBuilder;
+  final dynamic initialValue;
 
   const HousingListTile({
     required this.houseImage,
@@ -48,6 +52,9 @@ class HousingListTile extends StatelessWidget {
     required this.houseType,
     required this.noOfBaths,
     required this.noOfBeds,
+    required this.onSelected,
+    required this.itemBuilder,
+    this.initialValue,
   });
 
   @override
@@ -135,21 +142,21 @@ class HousingListTile extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      HousingIconTextWidget(
+                      IconTextReusable(
                         imageName: 'area_icon',
                         text: '$houseArea sq.mt',
                       ),
                       SizedBox(
                         width: 18,
                       ),
-                      HousingIconTextWidget(
+                      IconTextReusable(
                         imageName: 'bath_icon',
                         text: noOfBaths,
                       ),
                       SizedBox(
                         width: 18,
                       ),
-                      HousingIconTextWidget(
+                      IconTextReusable(
                         imageName: 'bed_icon',
                         text: noOfBeds,
                       ),
@@ -159,10 +166,11 @@ class HousingListTile extends StatelessWidget {
               ),
             ],
           ),
-          Icon(
-            Icons.more_vert,
-            color: Color(0xff450E8B),
-          )
+          PopupMenuButtonReusable(
+            itemBuilder: itemBuilder,
+            onSelected: onSelected,
+            initialValue: initialValue,
+          ),
         ],
       ),
     );

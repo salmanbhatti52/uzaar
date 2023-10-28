@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../utils/Colors.dart';
+import '../utils/colors.dart';
 
 Widget paymentWidget(
     {required String image,

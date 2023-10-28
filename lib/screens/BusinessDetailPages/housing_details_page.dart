@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:Uzaar/utils/Colors.dart';
+import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 
 import '../../widgets/BottomNaviBar.dart';
 import '../../widgets/carousel_builder.dart';
 import '../../widgets/featured_housing_widget.dart';
 import '../../widgets/featured_services_widget.dart';
-import '../../widgets/housing_icon_text_widget.dart';
+import '../../widgets/icon_text_combo.dart';
 import 'paymnet_screen.dart';
 
 class HousingDetailsPage extends StatefulWidget {
@@ -142,7 +142,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          HousingIconTextWidget(
+                          IconTextReusable(
                             imageName: 'area_icon',
                             text: '4500 sq.mt',
                             height: 16,
@@ -152,7 +152,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                           SizedBox(
                             width: 18,
                           ),
-                          HousingIconTextWidget(
+                          IconTextReusable(
                             imageName: 'bath_icon',
                             text: '2',
                             height: 16,
@@ -162,7 +162,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                           SizedBox(
                             width: 18,
                           ),
-                          HousingIconTextWidget(
+                          IconTextReusable(
                             imageName: 'bed_icon',
                             text: '2',
                             height: 16,

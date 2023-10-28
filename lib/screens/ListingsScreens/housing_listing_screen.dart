@@ -1,6 +1,8 @@
 import 'package:Uzaar/widgets/housing_list_tile.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/reusable_data.dart';
+
 class HousingListingScreen extends StatefulWidget {
   const HousingListingScreen({Key? key}) : super(key: key);
 
@@ -9,6 +11,7 @@ class HousingListingScreen extends StatefulWidget {
 }
 
 class _HousingListingScreenState extends State<HousingListingScreen> {
+  dynamic selectedOption;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -23,6 +26,15 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
             houseType: 'Rental',
             noOfBaths: '2',
             noOfBeds: '2',
+            onSelected: (selectedValue) {
+              setState(() {
+                selectedOption = selectedValue;
+              });
+            },
+            itemBuilder: (context) {
+              return popupMenuOptions;
+            },
+            initialValue: selectedOption,
           );
         },
         itemCount: 10,
