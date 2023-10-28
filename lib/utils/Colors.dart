@@ -101,6 +101,26 @@ final kFontFourteenFiveHG = GoogleFonts.outfit(
   fontWeight: FontWeight.w500,
   color: grey,
 );
+final kFontSixteenSixHPB = GoogleFonts.outfit(
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+  color: primaryBlue,
+);
+
+final kUploadImageBoxBorderShadow = ShapeDecoration(
+  color: Colors.white,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(10),
+  ),
+  shadows: const [
+    BoxShadow(
+      color: Color(0x23000000),
+      blurRadius: 4,
+      offset: Offset(0, 0),
+      spreadRadius: 0,
+    )
+  ],
+);
 
 final TextStyle kTextFieldHintStyle = GoogleFonts.outfit(
   fontSize: 14,

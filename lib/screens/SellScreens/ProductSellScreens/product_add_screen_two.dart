@@ -13,7 +13,8 @@ import '../../../widgets/text.dart';
 
 class ProductAddScreenTwo extends StatefulWidget {
   static const String id = 'product_add_screen_two';
-  const ProductAddScreenTwo({Key? key}) : super(key: key);
+  ProductAddScreenTwo({super.key, this.editDetails});
+  bool? editDetails;
 
   @override
   State<ProductAddScreenTwo> createState() => _ProductAddScreenTwoState();
@@ -142,7 +143,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                     padding: const EdgeInsets.only(bottom: 14.0),
                     child: primaryButton(
                       context,
-                      'Publish',
+                      widget.editDetails == true ? 'Save Changes' : 'Publish',
                       () => Navigator.pushAndRemoveUntil(context,
                           MaterialPageRoute(
                         builder: (context) {

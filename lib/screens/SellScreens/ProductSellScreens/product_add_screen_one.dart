@@ -18,7 +18,8 @@ enum Condition { fresh, used }
 
 class ProductAddScreenOne extends StatefulWidget {
   static const String id = 'product_add_screen_one';
-  const ProductAddScreenOne({Key? key}) : super(key: key);
+  ProductAddScreenOne({super.key, this.editDetails});
+  bool? editDetails;
 
   @override
   State<ProductAddScreenOne> createState() => _ProductAddScreenOneState();
@@ -237,7 +238,9 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return ProductAddScreenTwo();
+                            return ProductAddScreenTwo(
+                              editDetails: widget.editDetails,
+                            );
                           },
                         ),
                       ),

@@ -1,3 +1,5 @@
+import 'package:Uzaar/screens/home_screen.dart';
+import 'package:Uzaar/widgets/BottomNaviBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -66,10 +68,9 @@ class _CustomSplashState extends State<CustomSplash> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacementNamed(
-                    context,
-                    OnBoardingScreen.id,
-                  );
+                  Navigator.pushReplacementNamed(context, BottomNavBar.id
+                      // OnBoardingScreen.id,
+                      );
                 },
                 child: SizedBox(
                   height: 70,

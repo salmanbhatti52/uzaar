@@ -62,7 +62,8 @@ class BottomSheetForSendOffer extends StatelessWidget {
             Center(
               child: Container(
                   width: MediaQuery.sizeOf(context).width * 0.8,
-                  child: primaryButton(context, 'Send', () => null)),
+                  child: primaryButton(
+                      context, 'Send', () => Navigator.pop(context))),
             ),
           ],
         ),

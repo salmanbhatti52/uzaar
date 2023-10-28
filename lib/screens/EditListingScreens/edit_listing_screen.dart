@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:Uzaar/screens/SellScreens/HousingSellScreens/house_add_screen.dart';
-import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_one.dart';
-import 'package:Uzaar/screens/SellScreens/ServiceSellScreens/service_add_screen.dart';
-
-import 'package:Uzaar/utils/colors.dart';
 
 import '../../utils/Buttons.dart';
-import '../../widgets/DrawerWidget.dart';
-import '../../widgets/business_type_button.dart';
+import '../../utils/Colors.dart';
+
 import '../../widgets/tab_indicator.dart';
+import '../SellScreens/HousingSellScreens/house_add_screen.dart';
+import '../SellScreens/ProductSellScreens/product_add_screen_one.dart';
+import '../SellScreens/ServiceSellScreens/service_add_screen.dart';
 import '../messages_screen.dart';
 import '../notifications_screen.dart';
 
-class SellScreen extends StatefulWidget {
-  const SellScreen({super.key});
+class EditListingScreen extends StatefulWidget {
+  EditListingScreen({
+    super.key,
+    required this.selectedCategory,
+  });
+  int selectedCategory;
 
   @override
-  State<SellScreen> createState() => _SellScreenState();
+  State<EditListingScreen> createState() => _EditListingScreenState();
 }
 
-class _SellScreenState extends State<SellScreen> {
-  int selectedPage = 0;
+class _EditListingScreenState extends State<EditListingScreen> {
   int selectedCategory = 1;
   int noOfTabs = 3;
 
@@ -49,6 +50,7 @@ class _SellScreenState extends State<SellScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    selectedCategory = widget.selectedCategory;
   }
 
   @override
@@ -59,20 +61,27 @@ class _SellScreenState extends State<SellScreen> {
         elevation: 0.0,
         backgroundColor: Colors.white,
         leadingWidth: 70,
-        leading: Builder(
-          builder: (context) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 20),
-              child: GestureDetector(
-                onTap: () => Scaffold.of(context).openDrawer(),
-                child: SvgPicture.asset(
-                  'assets/drawer-button.svg',
-                  fit: BoxFit.scaleDown,
-                ),
-              ),
-            );
-          },
+        leading: GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: SvgPicture.asset(
+            'assets/back-arrow-button.svg',
+            fit: BoxFit.scaleDown,
+          ),
         ),
+        // leading: Builder(
+        //   builder: (context) {
+        //     return Padding(
+        //       padding: const EdgeInsets.only(top: 8.0, left: 20),
+        //       child: GestureDetector(
+        //         onTap: () => Scaffold.of(context).openDrawer(),
+        //         child: SvgPicture.asset(
+        //           'assets/drawer-button.svg',
+        //           fit: BoxFit.scaleDown,
+        //         ),
+        //       ),
+        //     );
+        //   },
+        // ),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 15.w),
@@ -109,13 +118,13 @@ class _SellScreenState extends State<SellScreen> {
         ],
         centerTitle: false,
         title: Text(
-          'Sell',
+          'Edit Listings',
           style: kAppBarTitleStyle,
         ),
       ),
-      drawer: DrawerWidget(
-        buildContext: context,
-      ),
+      // drawer: DrawerWidget(
+      //   buildContext: context,
+      // ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
@@ -128,72 +137,6 @@ class _SellScreenState extends State<SellScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: getPageIndicators(),
                 ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Text(
-                'What do you want to sell?',
-                style: kBodySubHeadingTextStyle,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = 1;
-                        getPageIndicators();
-                      });
-                    },
-                    child: BusinessTypeButton(
-                        businessName: 'Products',
-                        gradient: selectedCategory == 1 ? gradient : null,
-                        buttonBackground: selectedCategory != 1
-                            ? grey.withOpacity(0.3)
-                            : null,
-                        textColor: selectedCategory == 1 ? white : grey),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = 2;
-                        getPageIndicators();
-                      });
-                    },
-                    child: BusinessTypeButton(
-                        businessName: 'Services',
-                        gradient: selectedCategory == 2 ? gradient : null,
-                        buttonBackground: selectedCategory != 2
-                            ? grey.withOpacity(0.3)
-                            : null,
-                        textColor: selectedCategory == 2 ? white : grey),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = 3;
-                        getPageIndicators();
-                      });
-                    },
-                    child: BusinessTypeButton(
-                        businessName: 'Housing',
-                        gradient: selectedCategory == 3 ? gradient : null,
-                        buttonBackground: selectedCategory != 3
-                            ? grey.withOpacity(0.3)
-                            : null,
-                        textColor: selectedCategory == 3 ? white : grey),
-                  ),
-                ],
               ),
               SizedBox(
                 height: 20.h,
@@ -235,10 +178,16 @@ class _SellScreenState extends State<SellScreen> {
                     MaterialPageRoute(
                       builder: (context) {
                         return selectedCategory == 1
-                            ? ProductAddScreenOne()
+                            ? ProductAddScreenOne(
+                                editDetails: true,
+                              )
                             : selectedCategory == 2
-                                ? ServiceAddScreen()
-                                : HouseAddScreen();
+                                ? ServiceAddScreen(
+                                    editDetails: true,
+                                  )
+                                : HouseAddScreen(
+                                    editDetails: true,
+                                  );
                       },
                     ),
                   );

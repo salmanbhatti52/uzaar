@@ -2,12 +2,11 @@ import 'package:Uzaar/screens/beforeLoginScreens/signup_screen.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/widgets/alert_dialog_reusable.dart';
 import 'package:flutter/services.dart';
-import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_one.dart';
-import 'package:Uzaar/screens/ListingsScreens/listings.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../screens/SellScreens/ProductSellScreens/product_add_screen_two.dart';
-import 'DrawerWidget.dart';
+import 'package:Uzaar/screens/ListingsScreens/listings.dart';
+
+import '../screens/ProfileScreens/PersonalProfileScreens/profile_screen.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
@@ -16,12 +15,8 @@ import 'package:flutter_svg/svg.dart';
 
 import '../screens/ExploreScreens/explore_screen.dart';
 import '../screens/home_screen.dart';
-import '../screens/ProfileScreens/profile_screen.dart';
 import '../screens/SellScreens/sell_screen.dart';
 import 'package:Uzaar/utils/colors.dart';
-
-import '../screens/messages_screen.dart';
-import 'package:Uzaar/screens/notifications_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   static const String id = 'bottom_navbar';
@@ -115,99 +110,99 @@ class _BottomNavBarState extends State<BottomNavBar> {
     // child:
     return Scaffold(
       key: key,
-      appBar: AppBar(
-          iconTheme: IconThemeData(color: black),
-          elevation: 0.0,
-          backgroundColor: Colors.white,
-          leadingWidth: 70,
-          leading: Builder(
-            builder: (context) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 8.0, left: 20),
-                child: GestureDetector(
-                  onTap: () => Scaffold.of(context).openDrawer(),
-                  child: SvgPicture.asset(
-                    'assets/drawer-button.svg',
-                    fit: BoxFit.scaleDown,
-                  ),
-                ),
-              );
-            },
-          ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: 15.w),
-              child: Row(
-                children: [
-                  // Column(
-                  //   children: [
-                  //     Text(
-                  //       'Good Morning!',
-                  //       style: kAppBarTitleStyle,
-                  //     ),
-                  //     Text(
-                  //       'John',
-                  //       style: kAppBarTitleStyle,
-                  //     ),
-                  //   ],
-                  // ),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => MessagesScreen(),
-                      ),
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/msg-icon.svg',
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 15.w,
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => NotificationScreen(),
-                      ),
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/notification-icon.svg',
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-          centerTitle: false,
-          title: _currentIndex == 0
-              ? Text(
-                  'Home',
-                  style: kAppBarTitleStyle,
-                )
-              : _currentIndex == 1
-                  ? Text(
-                      'Explore',
-                      style: kAppBarTitleStyle,
-                    )
-                  : _currentIndex == 2
-                      ? Text(
-                          'Sell',
-                          style: kAppBarTitleStyle,
-                        )
-                      : _currentIndex == 3
-                          ? Text(
-                              'Listings',
-                              style: kAppBarTitleStyle,
-                            )
-                          : Text(
-                              'Profile',
-                              style: kAppBarTitleStyle,
-                            )),
-      drawer: DrawerWidget(
-        buildContext: context,
-      ),
+      // appBar: AppBar(
+      //     iconTheme: IconThemeData(color: black),
+      //     elevation: 0.0,
+      //     backgroundColor: Colors.white,
+      //     leadingWidth: 70,
+      //     leading: Builder(
+      //       builder: (context) {
+      //         return Padding(
+      //           padding: const EdgeInsets.only(top: 8.0, left: 20),
+      //           child: GestureDetector(
+      //             onTap: () => Scaffold.of(context).openDrawer(),
+      //             child: SvgPicture.asset(
+      //               'assets/drawer-button.svg',
+      //               fit: BoxFit.scaleDown,
+      //             ),
+      //           ),
+      //         );
+      //       },
+      //     ),
+      //     actions: [
+      //       Padding(
+      //         padding: EdgeInsets.only(right: 15.w),
+      //         child: Row(
+      //           children: [
+      //             // Column(
+      //             //   children: [
+      //             //     Text(
+      //             //       'Good Morning!',
+      //             //       style: kAppBarTitleStyle,
+      //             //     ),
+      //             //     Text(
+      //             //       'John',
+      //             //       style: kAppBarTitleStyle,
+      //             //     ),
+      //             //   ],
+      //             // ),
+      //             GestureDetector(
+      //               onTap: () => Navigator.of(context).push(
+      //                 MaterialPageRoute(
+      //                   builder: (context) => MessagesScreen(),
+      //                 ),
+      //               ),
+      //               child: SvgPicture.asset(
+      //                 'assets/msg-icon.svg',
+      //                 fit: BoxFit.scaleDown,
+      //               ),
+      //             ),
+      //             SizedBox(
+      //               width: 15.w,
+      //             ),
+      //             GestureDetector(
+      //               onTap: () => Navigator.of(context).push(
+      //                 MaterialPageRoute(
+      //                   builder: (context) => NotificationScreen(),
+      //                 ),
+      //               ),
+      //               child: SvgPicture.asset(
+      //                 'assets/notification-icon.svg',
+      //                 fit: BoxFit.scaleDown,
+      //               ),
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //     ],
+      //     centerTitle: false,
+      //     title: _currentIndex == 0
+      //         ? Text(
+      //             'Home',
+      //             style: kAppBarTitleStyle,
+      //           )
+      //         : _currentIndex == 1
+      //             ? Text(
+      //                 'Explore',
+      //                 style: kAppBarTitleStyle,
+      //               )
+      //             : _currentIndex == 2
+      //                 ? Text(
+      //                     'Sell',
+      //                     style: kAppBarTitleStyle,
+      //                   )
+      //                 : _currentIndex == 3
+      //                     ? Text(
+      //                         'Listings',
+      //                         style: kAppBarTitleStyle,
+      //                       )
+      //                     : Text(
+      //                         'Profile',
+      //                         style: kAppBarTitleStyle,
+      //                       )),
+      // drawer: DrawerWidget(
+      //   buildContext: context,
+      // ),
       body: _currentIndex > 1 && widget.loginAsGuest == true
           ? AlertDialogReusable(
               title: 'Can not Complete Action',

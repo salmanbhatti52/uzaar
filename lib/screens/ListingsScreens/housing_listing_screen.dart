@@ -5,11 +5,13 @@ import '../../utils/reusable_data.dart';
 import '../../utils/Buttons.dart';
 import '../../utils/Colors.dart';
 import '../../widgets/alert_dialog_reusable.dart';
+import '../EditListingScreens/edit_listing_screen.dart';
 
 enum BoostingPackages { pkg1, pkg2, pkg3, pkg4 }
 
 class HousingListingScreen extends StatefulWidget {
-  const HousingListingScreen({Key? key}) : super(key: key);
+  HousingListingScreen({super.key, required this.selectedCategory});
+  int selectedCategory;
 
   @override
   State<HousingListingScreen> createState() => _HousingListingScreenState();
@@ -138,7 +140,14 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                       );
                     },
                   );
-                }
+                } else if (selectedOption == 'edit') {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => EditListingScreen(
+                      selectedCategory: widget.selectedCategory,
+                    ),
+                  ));
+                } else if (selectedOption == 'delete') {
+                } else {}
               });
             },
             itemBuilder: (context) {

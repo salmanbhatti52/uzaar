@@ -12,7 +12,8 @@ import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
 
 class ServiceAddScreen extends StatefulWidget {
-  const ServiceAddScreen({Key? key}) : super(key: key);
+  ServiceAddScreen({super.key, this.editDetails});
+  bool? editDetails;
 
   @override
   State<ServiceAddScreen> createState() => _ServiceAddScreenState();
@@ -240,7 +241,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                     padding: const EdgeInsets.only(bottom: 14.0),
                     child: primaryButton(
                       context,
-                      'Publish',
+                      widget.editDetails == true ? 'Save Changes' : 'Publish',
                       () => Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(

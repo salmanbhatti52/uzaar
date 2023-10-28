@@ -1,3 +1,4 @@
+import 'package:Uzaar/screens/BusinessDetailPages/service_details_page.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -238,12 +239,17 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
               ),
               itemCount: 15,
               itemBuilder: (context, index) {
-                return FeaturedServicesWidget(
-                  image: 'assets/service-ph.png',
-                  productCategory: 'Designing',
-                  productDescription: 'Graphic Design',
-                  productLocation: 'Los Angeles',
-                  productPrice: '20',
+                return GestureDetector(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ServiceDetailsPage(),
+                  )),
+                  child: FeaturedServicesWidget(
+                    image: 'assets/service-ph.png',
+                    productCategory: 'Designing',
+                    productDescription: 'Graphic Design',
+                    productLocation: 'Los Angeles',
+                    productPrice: '20',
+                  ),
                 );
               },
             ),

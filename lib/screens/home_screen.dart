@@ -14,9 +14,12 @@ import 'package:Uzaar/models/ProductCategoryModel.dart';
 import 'package:Uzaar/models/ServicesCategoryModel.dart';
 import 'package:Uzaar/widgets/search_field.dart';
 
+import '../widgets/DrawerWidget.dart';
 import '../widgets/business_type_button.dart';
 import 'BusinessDetailPages/product_details_page.dart';
 import 'BusinessDetailPages/service_details_page.dart';
+import 'messages_screen.dart';
+import 'notifications_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = 'home_screen';
@@ -49,6 +52,80 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       },
       child: Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: black),
+          elevation: 0.0,
+          backgroundColor: Colors.white,
+          leadingWidth: 70,
+          leading: Builder(
+            builder: (context) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 8.0, left: 20),
+                child: GestureDetector(
+                  onTap: () => Scaffold.of(context).openDrawer(),
+                  child: SvgPicture.asset(
+                    'assets/drawer-button.svg',
+                    fit: BoxFit.scaleDown,
+                  ),
+                ),
+              );
+            },
+          ),
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: 15.w),
+              child: Row(
+                children: [
+                  // Column(
+                  //   children: [
+                  //     Text(
+                  //       'Good Morning!',
+                  //       style: kAppBarTitleStyle,
+                  //     ),
+                  //     Text(
+                  //       'John',
+                  //       style: kAppBarTitleStyle,
+                  //     ),
+                  //   ],
+                  // ),
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => MessagesScreen(),
+                      ),
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/msg-icon.svg',
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15.w,
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => NotificationScreen(),
+                      ),
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/notification-icon.svg',
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+          centerTitle: false,
+          title: Text(
+            'Home',
+            style: kAppBarTitleStyle,
+          ),
+        ),
+        drawer: DrawerWidget(
+          buildContext: context,
+        ),
         backgroundColor: Colors.white,
         body: GlowingOverscrollIndicator(
           axisDirection: AxisDirection.down,

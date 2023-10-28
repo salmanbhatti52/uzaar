@@ -1,3 +1,4 @@
+import 'package:Uzaar/screens/EditListingScreens/edit_listing_screen.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/utils/Colors.dart';
 import 'package:Uzaar/widgets/alert_dialog_reusable.dart';
@@ -9,7 +10,8 @@ import '../../widgets/product_list_tile.dart';
 enum BoostingPackages { pkg1, pkg2, pkg3, pkg4 }
 
 class ProductListingScreen extends StatefulWidget {
-  const ProductListingScreen({Key? key}) : super(key: key);
+  ProductListingScreen({super.key, required this.selectedCategory});
+  int selectedCategory;
 
   @override
   State<ProductListingScreen> createState() => _ProductListingScreenState();
@@ -135,7 +137,14 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                       );
                     },
                   );
-                }
+                } else if (selectedOption == 'edit') {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => EditListingScreen(
+                      selectedCategory: widget.selectedCategory,
+                    ),
+                  ));
+                } else if (selectedOption == 'delete') {
+                } else {}
               });
             },
             itemBuilder: (context) {

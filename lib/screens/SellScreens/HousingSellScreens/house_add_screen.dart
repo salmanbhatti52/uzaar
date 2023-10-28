@@ -12,7 +12,8 @@ import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
 
 class HouseAddScreen extends StatefulWidget {
-  const HouseAddScreen({Key? key}) : super(key: key);
+  HouseAddScreen({super.key, this.editDetails});
+  bool? editDetails;
 
   @override
   State<HouseAddScreen> createState() => _HouseAddScreenState();
@@ -238,7 +239,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                 ),
                                 RoundedDropdownMenu(
                                     width: MediaQuery.of(context).size.width *
-                                        0.43,
+                                        0.42,
                                     leadingIconName: 'bed_icon',
                                     hintText: '2',
                                     onSelected: (value) {
@@ -272,7 +273,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                 ),
                                 RoundedDropdownMenu(
                                     width: MediaQuery.of(context).size.width *
-                                        0.435,
+                                        0.42,
                                     leadingIconName: 'bath_icon',
                                     hintText: '2',
                                     onSelected: (value) {
@@ -337,7 +338,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                     padding: const EdgeInsets.only(bottom: 14.0),
                     child: primaryButton(
                       context,
-                      'Publish',
+                      widget.editDetails == true ? 'Save Changes' : 'Publish',
                       () => Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(

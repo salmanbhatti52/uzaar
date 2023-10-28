@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../utils/colors.dart';
-import '../../widgets/text_form_field_reusable.dart';
-import '../../widgets/text.dart';
+import '../../../utils/colors.dart';
+import '../../../widgets/suffix_svg_icon.dart';
+import '../../../widgets/text_form_field_reusable.dart';
+import '../../../widgets/text.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
   const PersonalInfoScreen({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   final lastNameController = TextEditingController();
   final emailController = TextEditingController();
   final addressController = TextEditingController();
+  final phoneNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +88,25 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 fit: BoxFit.scaleDown,
               ),
               hintText: 'username@gmail.com',
+              obscureText: null,
+            ),
+          ),
+          SizedBox(
+            height: 14,
+          ),
+          Align(
+              alignment: Alignment.centerLeft,
+              child: ReusableText(text: 'Phone Number')),
+          SizedBox(
+            height: 8,
+          ),
+          SizedBox(
+            height: 46,
+            child: TextFormFieldWidget(
+              controller: phoneNumberController,
+              textInputType: TextInputType.phone,
+              prefixIcon: SvgIcon(imageName: 'assets/phone-fill.svg'),
+              hintText: '+4156565662',
               obscureText: null,
             ),
           ),

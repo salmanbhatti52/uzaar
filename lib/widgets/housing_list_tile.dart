@@ -61,7 +61,7 @@ class HousingListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
-      padding: EdgeInsets.all(9),
+      padding: EdgeInsets.only(left: 9, top: 9, bottom: 9),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: white,

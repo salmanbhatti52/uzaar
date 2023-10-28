@@ -1,3 +1,4 @@
+import 'package:Uzaar/screens/BusinessDetailPages/product_details_page.dart';
 import 'package:Uzaar/widgets/rounded_small_dropdown_menu.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -241,12 +242,17 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
               ),
               itemCount: 15,
               itemBuilder: (context, index) {
-                return FeaturedProductsWidget(
-                  image: 'assets/product-ph.png',
-                  productCategory: 'Electronics',
-                  productDescription: 'Iphone 14',
-                  productLocation: 'Los Angeles',
-                  productPrice: '120',
+                return GestureDetector(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ProductDetailsPage(),
+                  )),
+                  child: FeaturedProductsWidget(
+                    image: 'assets/product-ph.png',
+                    productCategory: 'Electronics',
+                    productDescription: 'Iphone 14',
+                    productLocation: 'Los Angeles',
+                    productPrice: '120',
+                  ),
                 );
               },
             ),
