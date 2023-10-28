@@ -200,8 +200,8 @@ class _LogInScreenState extends State<LogInScreen> {
                       SizedBox(
                         height: 25.h,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 20.0.h),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 22),
                         child: RichText(
                           text: TextSpan(
                             text: 'Don\'t have an account?  ',

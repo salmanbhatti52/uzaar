@@ -1,4 +1,5 @@
 import 'package:Uzaar/utils/Buttons.dart';
+import 'package:Uzaar/utils/Colors.dart';
 import 'package:Uzaar/widgets/alert_dialog_reusable.dart';
 import 'package:flutter/material.dart';
 
@@ -44,63 +45,93 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                     ) {
                       return StatefulBuilder(
                         builder: (BuildContext context,
-                                StateSetter stateSetterObject) =>
-                            AlertDialogReusable(
-                          description: 'Boost your listings to get more orders',
-                          title: 'Boost Listings',
-                          itemsList: [
-                            ListTile(
-                              title: Text('\$1 Per Day for 1 Item'),
-                              leading: Radio(
-                                value: BoostingPackages.pkg1,
-                                groupValue: _selectedPackage,
-                                onChanged: (value) {
-                                  stateSetterObject(() {
-                                    updateSelectedPackage(value);
-                                  });
-                                },
+                            StateSetter stateSetterObject) {
+                          return AlertDialogReusable(
+                            description:
+                                'Boost your listings to get more orders',
+                            title: 'Boost Listings',
+                            itemsList: [
+                              SizedBox(
+                                height: 35,
+                                child: ListTile(
+                                  title: Text(
+                                    '\$1 Per Day for 1 Item',
+                                    style: kTextFieldInputStyle,
+                                  ),
+                                  leading: Radio(
+                                    activeColor: primaryBlue,
+                                    value: BoostingPackages.pkg1,
+                                    groupValue: _selectedPackage,
+                                    onChanged: (value) {
+                                      stateSetterObject(() {
+                                        updateSelectedPackage(value);
+                                      });
+                                    },
+                                  ),
+                                ),
                               ),
-                            ),
-                            ListTile(
-                              title: Text('\$5 Per Week for 1 Item'),
-                              leading: Radio(
-                                value: BoostingPackages.pkg2,
-                                groupValue: _selectedPackage,
-                                onChanged: (value) {
-                                  stateSetterObject(() {
-                                    updateSelectedPackage(value);
-                                  });
-                                },
+                              SizedBox(
+                                height: 35,
+                                child: ListTile(
+                                  title: Text(
+                                    '\$5 Per Week for 1 Item',
+                                    style: kTextFieldInputStyle,
+                                  ),
+                                  leading: Radio(
+                                    activeColor: primaryBlue,
+                                    value: BoostingPackages.pkg2,
+                                    groupValue: _selectedPackage,
+                                    onChanged: (value) {
+                                      stateSetterObject(() {
+                                        updateSelectedPackage(value);
+                                      });
+                                    },
+                                  ),
+                                ),
                               ),
-                            ),
-                            ListTile(
-                              title: Text('\$10 Per Month for 1 Item'),
-                              leading: Radio(
-                                value: BoostingPackages.pkg3,
-                                groupValue: _selectedPackage,
-                                onChanged: (value) {
-                                  stateSetterObject(() {
-                                    updateSelectedPackage(value);
-                                  });
-                                },
+                              SizedBox(
+                                height: 35,
+                                child: ListTile(
+                                  title: Text(
+                                    '\$10 Per Month for 1 Item',
+                                    style: kTextFieldInputStyle,
+                                  ),
+                                  leading: Radio(
+                                    activeColor: primaryBlue,
+                                    value: BoostingPackages.pkg3,
+                                    groupValue: _selectedPackage,
+                                    onChanged: (value) {
+                                      stateSetterObject(() {
+                                        updateSelectedPackage(value);
+                                      });
+                                    },
+                                  ),
+                                ),
                               ),
-                            ),
-                            ListTile(
-                              title: Text('\$20 Per Month for Unlimited Items'),
-                              leading: Radio(
-                                value: BoostingPackages.pkg4,
-                                groupValue: _selectedPackage,
-                                onChanged: (value) {
-                                  stateSetterObject(() {
-                                    updateSelectedPackage(value);
-                                  });
-                                },
+                              SizedBox(
+                                height: 35,
+                                child: ListTile(
+                                  title: Text(
+                                    '\$20 Per Month for Unlimited Items',
+                                    style: kTextFieldInputStyle,
+                                  ),
+                                  leading: Radio(
+                                    activeColor: primaryBlue,
+                                    value: BoostingPackages.pkg4,
+                                    groupValue: _selectedPackage,
+                                    onChanged: (value) {
+                                      stateSetterObject(() {
+                                        updateSelectedPackage(value);
+                                      });
+                                    },
+                                  ),
+                                ),
                               ),
-                            ),
-                          ],
-                          button: primaryButton(context, 'Boost Now',
-                              () => Navigator.of(context).pop()),
-                        ),
+                            ],
+                            button: primaryButton(context, 'Boost Now',
+                                () => Navigator.of(context).pop()),
+                          );
+                        },
                       );
                     },
                   );

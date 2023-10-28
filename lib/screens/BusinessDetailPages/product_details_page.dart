@@ -188,14 +188,22 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         ),
                       ),
                       GestureDetector(
-                        // onTap: () => showModalBottomSheet(
-                        //   shape: RoundedRectangleBorder(
-                        //     borderRadius:
-                        //         BorderRadius.vertical(top: Radius.circular(20)),
-                        //   ),
-                        //   context: context,
-                        //   builder: (context) => BottomSheetForSendOffer(),
-                        // ),
+                        onTap: () => showModalBottomSheet(
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.vertical(top: Radius.circular(20)),
+                          ),
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                                padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom),
+                                child: BottomSheetForSendOffer()),
+                          ),
+                        ),
                         child: Row(
                           children: [
                             SvgPicture.asset(

@@ -183,8 +183,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(
                         height: 30.h,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 22.0.h),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 22),
                         child: RichText(
                           text: TextSpan(
                             text: 'Already have an account?  ',

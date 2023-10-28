@@ -9,7 +9,7 @@ Widget primaryButton(context, String buttonText, Function()? onTap) {
     child: Container(
       // margin:  EdgeInsets.only(
       //     bottom: 25),
-      width: double.infinity,
+      width: MediaQuery.sizeOf(context).width,
       height: 54,
       decoration: BoxDecoration(
         color: primaryBlue,

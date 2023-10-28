@@ -6,135 +6,66 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 
-class BottomSheetForSendOffer extends StatefulWidget {
-  const BottomSheetForSendOffer({super.key});
+import '../../widgets/suffix_svg_icon.dart';
+import '../../widgets/text.dart';
+import '../../widgets/text_form_field_reusable.dart';
 
-  @override
-  State<BottomSheetForSendOffer> createState() =>
-      _BottomSheetForSendOfferState();
-}
-
-class _BottomSheetForSendOfferState extends State<BottomSheetForSendOffer> {
-  int selectedOffer = -1;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    selectedOffer = -1;
-  }
-
+class BottomSheetForSendOffer extends StatelessWidget {
+  BottomSheetForSendOffer({super.key});
+  TextEditingController nameEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 20.h),
-      height: 230.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        color: white,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Send Offer',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.outfit(
-              fontWeight: FontWeight.w600,
-              color: black,
-              fontSize: 20,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 20.h),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          color: white,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Send Offer',
+              textAlign: TextAlign.center,
+              style: kBodyHeadingTextStyle,
             ),
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    selectedOffer = 1;
-                  });
-                },
-                child: Row(
-                  children: [
-                    selectedOffer == 1
-                        ? SvgPicture.asset('assets/selected.svg')
-                        : SvgPicture.asset('assets/unselected.svg'),
-                    SizedBox(
-                      width: 4.w,
-                    ),
-                    Text(
-                      '\$${'200'}',
-                      style: GoogleFonts.outfit(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: black,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    selectedOffer = 2;
-                  });
-                },
-                child: Row(
-                  children: [
-                    selectedOffer == 2
-                        ? SvgPicture.asset('assets/selected.svg')
-                        : SvgPicture.asset('assets/unselected.svg'),
-                    SizedBox(
-                      width: 4.w,
-                    ),
-                    Text(
-                      '\$${'200'}',
-                      style: GoogleFonts.outfit(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: black,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                selectedOffer = 3;
-              });
-            },
-            child: Row(
-              children: [
-                selectedOffer == 3
-                    ? SvgPicture.asset('assets/selected.svg')
-                    : SvgPicture.asset('assets/unselected.svg'),
-                SizedBox(
-                  width: 4.w,
-                ),
-                Text(
-                  '\$${'200'}',
-                  style: GoogleFonts.outfit(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: black,
-                  ),
-                )
-              ],
+            SizedBox(
+              height: 20,
             ),
-          ),
-          SizedBox(
-            height: 30.h,
-          ),
-          primaryButton(context, 'Send Offer', () => null),
-        ],
+            Align(
+              alignment: Alignment.centerLeft,
+              child: ReusableText(text: 'Enter Offer Price'),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 46,
+              child: TextFormFieldWidget(
+                controller: nameEditingController,
+                textInputType: TextInputType.text,
+                prefixIcon: SvgIcon(imageName: 'assets/service_icon.svg'),
+                hintText: 'Amount not less than \$20 ',
+                obscureText: null,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: Container(
+                  width: MediaQuery.sizeOf(context).width * 0.8,
+                  child: primaryButton(context, 'Send', () => null)),
+            ),
+          ],
+        ),
       ),
     );
   }
