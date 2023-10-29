@@ -185,6 +185,7 @@ final kTextFieldBoxDecoration = BoxDecoration(
       offset: Offset(0, 0),
     )
   ],
+  color: Colors.white,
   borderRadius: BorderRadius.circular(40),
 );
 
