@@ -9,7 +9,7 @@ import '../../widgets/tab_indicator.dart';
 import '../SellScreens/HousingSellScreens/house_add_screen.dart';
 import '../SellScreens/ProductSellScreens/product_add_screen_one.dart';
 import '../SellScreens/ServiceSellScreens/service_add_screen.dart';
-import '../messages_screen.dart';
+import '../chat_list_screen.dart';
 import '../notifications_screen.dart';
 
 class EditListingScreen extends StatefulWidget {

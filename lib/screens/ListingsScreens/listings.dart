@@ -10,7 +10,7 @@ import 'package:Uzaar/utils/colors.dart';
 
 import '../../widgets/DrawerWidget.dart';
 import '../../widgets/product_list_tile.dart';
-import '../messages_screen.dart';
+import '../chat_list_screen.dart';
 import '../notifications_screen.dart';
 
 class ListingsScreen extends StatefulWidget {

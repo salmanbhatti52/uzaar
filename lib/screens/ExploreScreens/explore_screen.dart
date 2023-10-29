@@ -8,7 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../widgets/DrawerWidget.dart';
 import '../../widgets/business_type_button.dart';
 import '../../widgets/search_field.dart';
-import '../messages_screen.dart';
+import '../chat_list_screen.dart';
 import '../notifications_screen.dart';
 import 'explore_products_screen.dart';
 import 'explore_services_screen.dart';

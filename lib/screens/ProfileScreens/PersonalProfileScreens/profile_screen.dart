@@ -13,7 +13,7 @@ import 'package:Uzaar/utils/colors.dart';
 
 import '../../../widgets/DrawerWidget.dart';
 import '../../../widgets/business_type_button.dart';
-import '../../messages_screen.dart';
+import '../../chat_list_screen.dart';
 import '../../notifications_screen.dart';
 
 class ProfileScreen extends StatefulWidget {

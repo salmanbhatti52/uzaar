@@ -7,7 +7,7 @@ import '../../utils/Colors.dart';
 import '../../widgets/suffix_svg_icon.dart';
 import '../../widgets/text.dart';
 import '../../widgets/text_form_field_reusable.dart';
-import '../messages_screen.dart';
+import '../chat_list_screen.dart';
 import '../notifications_screen.dart';
 
 class EditProfileScreen extends StatelessWidget {

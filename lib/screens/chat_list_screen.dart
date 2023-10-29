@@ -1,3 +1,4 @@
+import 'package:Uzaar/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -35,7 +36,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 13),
+          padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
           child: GlowingOverscrollIndicator(
             axisDirection: AxisDirection.down,
             color: primaryBlue,
@@ -48,11 +49,16 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 // scrollDirection: Axis.vertical,
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return CommonListTile(
-                    imageName: 'assets/chat_image.png',
-                    title: 'John Doe',
-                    detail: 'Lorem ipsum dolor sit amet consectetur.',
-                    duration: '2 min ago',
+                  return GestureDetector(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ChatScreen(),
+                    )),
+                    child: CommonListTile(
+                      imageName: 'assets/chat_image.png',
+                      title: 'John Doe',
+                      detail: 'Lorem ipsum dolor sit amet consectetur.',
+                      duration: '2 min ago',
+                    ),
                   );
                 },
               ),

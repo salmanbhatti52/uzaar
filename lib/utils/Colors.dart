@@ -96,6 +96,12 @@ final kFontTwelveFourHG = GoogleFonts.outfit(
   color: grey,
 );
 
+final kFontTwelveFourHW = GoogleFonts.outfit(
+  fontSize: 12,
+  fontWeight: FontWeight.w400,
+  color: white,
+);
+
 final kFontFourteenFiveHG = GoogleFonts.outfit(
   fontSize: 14,
   fontWeight: FontWeight.w500,
@@ -132,6 +138,12 @@ final TextStyle kTextFieldInputStyle = GoogleFonts.outfit(
   fontSize: 14,
   fontWeight: FontWeight.w400,
   color: black,
+);
+
+final TextStyle kFontFourteenFourHW = GoogleFonts.outfit(
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+  color: white,
 );
 
 final kFontFourteenSixHPB = GoogleFonts.outfit(
