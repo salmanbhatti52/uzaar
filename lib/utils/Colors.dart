@@ -7,6 +7,9 @@ const Color grey = Color(0xff808080);
 const Color white = Color(0xffFFFFFF);
 const Color green = Color(0xff34A853);
 const Color f7f8f8 = Color(0xffF7F8F8);
+const Color lightGreen = Color(0xff00D796);
+const Color yellow = Color(0xffFEBC5A);
+const Color red = Color(0xffFB4B40);
 
 const LinearGradient gradient = LinearGradient(
   colors: [
@@ -90,6 +93,12 @@ final kColoredTextStyle = GoogleFonts.outfit(
   color: primaryBlue,
 );
 
+final kFontTenFiveHG = GoogleFonts.outfit(
+  fontSize: 10,
+  fontWeight: FontWeight.w500,
+  color: grey,
+);
+
 final kFontTwelveFourHG = GoogleFonts.outfit(
   fontSize: 12,
   fontWeight: FontWeight.w400,
@@ -102,6 +111,18 @@ final kFontTwelveFourHW = GoogleFonts.outfit(
   color: white,
 );
 
+final kFontTwelveSixHPB = GoogleFonts.outfit(
+  fontSize: 12,
+  fontWeight: FontWeight.w600,
+  color: primaryBlue,
+);
+
+final kFontTwelveSixHW = GoogleFonts.outfit(
+  fontSize: 12,
+  fontWeight: FontWeight.w600,
+  color: white,
+);
+
 final kFontFourteenFiveHG = GoogleFonts.outfit(
   fontSize: 14,
   fontWeight: FontWeight.w500,
@@ -111,6 +132,11 @@ final kFontSixteenSixHPB = GoogleFonts.outfit(
   fontSize: 16,
   fontWeight: FontWeight.w600,
   color: primaryBlue,
+);
+final kFontSixteenSixHB = GoogleFonts.outfit(
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+  color: black,
 );
 
 final kUploadImageBoxBorderShadow = ShapeDecoration(

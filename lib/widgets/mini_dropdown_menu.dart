@@ -53,16 +53,18 @@ class RoundedMiniDropdownMenu extends StatelessWidget {
       {super.key,
       required this.onSelected,
       required this.dropdownMenuEntries,
-      required this.hintText,
+      this.hintText,
       this.leadingIconName,
       this.width,
+      this.initialSelection,
       this.trailingIconName = 'drop-down-button'});
   final Function(dynamic)? onSelected;
   final List<DropdownMenuEntry<Object?>> dropdownMenuEntries;
   final String? leadingIconName;
   final String? trailingIconName;
-  final String hintText;
+  final String? hintText;
   final double? width;
+  final String? initialSelection;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -81,7 +83,7 @@ class RoundedMiniDropdownMenu extends StatelessWidget {
         inputDecorationTheme: kDropDownMenuInputDecoration,
         menuStyle: kDropDownMenuStyle,
         width: width ?? MediaQuery.sizeOf(context).width * 0.88,
-        // initialSelection: null,
+        initialSelection: initialSelection,
         onSelected: onSelected,
         dropdownMenuEntries: dropdownMenuEntries,
       ),

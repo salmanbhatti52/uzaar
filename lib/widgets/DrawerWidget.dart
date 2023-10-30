@@ -1,3 +1,8 @@
+import 'package:Uzaar/screens/BusinessDetailPages/TrackOrderScreen.dart';
+import 'package:Uzaar/screens/BusinessDetailPages/order_placed_screen.dart';
+import 'package:Uzaar/screens/my_orders_screen.dart';
+import 'package:Uzaar/screens/sales_orders_screen.dart';
+import 'package:Uzaar/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -80,6 +85,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
                   ListTile(
                     style: ListTileStyle.drawer,
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => MyOrdersScreen(),
+                      ));
+                    },
                     leading: SvgPicture.asset(
                       'assets/order-icon.svg',
                       colorFilter:
@@ -97,6 +107,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     height: 10,
                   ),
                   ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SalesOrdersScreen(),
+                      ));
+                    },
                     style: ListTileStyle.drawer,
                     leading: SvgPicture.asset(
                       'assets/order-icon.svg',
@@ -115,6 +130,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     height: 10,
                   ),
                   ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SettingScreen(),
+                      ));
+                    },
                     style: ListTileStyle.drawer,
                     leading: SvgPicture.asset(
                       'assets/settings-icon.svg',
