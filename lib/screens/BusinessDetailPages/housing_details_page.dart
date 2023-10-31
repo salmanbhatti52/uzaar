@@ -10,6 +10,7 @@ import '../../widgets/carousel_builder.dart';
 import '../../widgets/featured_housing_widget.dart';
 import '../../widgets/featured_services_widget.dart';
 import '../../widgets/icon_text_combo.dart';
+import '../ProfileScreens/SellerProfileScreens/seller_profile_screen.dart';
 import 'paymnet_screen.dart';
 
 class HousingDetailsPage extends StatefulWidget {
@@ -237,100 +238,108 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                 ),
 
                 HorizontalPadding(
-                  child: Container(
-                    decoration: kCardBoxDecoration,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 14.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Stack(
-                              clipBehavior: Clip.none,
-                              alignment: Alignment.bottomRight,
-                              children: [
-                                Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Image.asset(
-                                    'assets/pd_seller.png',
-                                  ),
-                                ),
-                                Positioned(
-                                  child: SvgPicture.asset(
-                                    'assets/verify-check.svg',
-                                    width: 19,
-                                    height: 19,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Lisa Fernandes',
-                                  style: kBodyTextStyle,
-                                ),
-                                SizedBox(
-                                  height: 4.5,
-                                ),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/address-icon.svg',
-                                      width: 14,
-                                      height: 14,
-                                      // fit: BoxFit.scaleDown,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SellerProfileScreen(),
+                      ));
+                    },
+                    child: Container(
+                      decoration: kCardBoxDecoration,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 14.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Stack(
+                                clipBehavior: Clip.none,
+                                alignment: Alignment.bottomRight,
+                                children: [
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
                                     ),
-                                    SizedBox(
-                                      width: 4,
+                                    child: Image.asset(
+                                      'assets/pd_seller.png',
                                     ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.4,
-                                      child: Text(
-                                        'Los Angeles',
-                                        overflow: TextOverflow.ellipsis,
-                                        softWrap: true,
-                                        maxLines: 1,
-                                        style: kFontTwelveFourHG,
+                                  ),
+                                  Positioned(
+                                    child: SvgPicture.asset(
+                                      'assets/verify-check.svg',
+                                      width: 19,
+                                      height: 19,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Lisa Fernandes',
+                                    style: kBodyTextStyle,
+                                  ),
+                                  SizedBox(
+                                    height: 4.5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/address-icon.svg',
+                                        width: 14,
+                                        height: 14,
+                                        // fit: BoxFit.scaleDown,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/star.svg',
-                              height: 17,
-                              width: 17,
-                            ),
-                            SizedBox(
-                              width: 6,
-                            ),
-                            Text(
-                              '4.5',
-                              style: kBodyTextStyle,
-                            ),
-                            Text(
-                              '  (14)',
-                              style: kFontFourteenFiveHG,
-                            ),
-                          ],
-                        ),
-                      ],
+                                      SizedBox(
+                                        width: 4,
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.4,
+                                        child: Text(
+                                          'Los Angeles',
+                                          overflow: TextOverflow.ellipsis,
+                                          softWrap: true,
+                                          maxLines: 1,
+                                          style: kFontTwelveFourHG,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/star.svg',
+                                height: 17,
+                                width: 17,
+                              ),
+                              SizedBox(
+                                width: 6,
+                              ),
+                              Text(
+                                '4.5',
+                                style: kBodyTextStyle,
+                              ),
+                              Text(
+                                '  (14)',
+                                style: kFontFourteenFiveHG,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

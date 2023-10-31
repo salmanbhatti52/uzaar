@@ -1,8 +1,3 @@
-import 'package:Uzaar/screens/BusinessDetailPages/TrackOrderScreen.dart';
-import 'package:Uzaar/screens/BusinessDetailPages/order_placed_screen.dart';
-import 'package:Uzaar/screens/ProfileScreens/SaleProfileScreens/ReviewsScreenSales.dart';
-import 'package:Uzaar/screens/ProfileScreens/SaleProfileScreens/SalesListingsScreen.dart';
-import 'package:Uzaar/screens/ProfileScreens/SaleProfileScreens/SalesProfile.dart';
 import 'package:Uzaar/screens/SideMenuScreens/about_us_screen.dart';
 import 'package:Uzaar/screens/SideMenuScreens/contact_us_screen.dart';
 import 'package:Uzaar/screens/SideMenuScreens/privacy_policy_screen.dart';
@@ -13,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:Uzaar/screens/ProfileScreens/SaleProfileScreens/SaleProfileMain.dart';
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -288,9 +282,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     contentPadding: EdgeInsets.zero,
                     dense: true,
                   ),
-                  SizedBox(
-                    height: 12,
-                  ),
+                  // SizedBox(
+                  //   height: 12,
+                  // ),
 
                   Spacer(),
                   // log out tile

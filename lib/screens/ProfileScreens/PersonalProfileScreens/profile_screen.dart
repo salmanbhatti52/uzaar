@@ -33,12 +33,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
   }
 
-  final ratingsNumberTextStyle = GoogleFonts.outfit(
-    fontSize: 16,
-    fontWeight: FontWeight.w600,
-    color: black,
-  );
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -196,7 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Text(
                       '(14)',
-                      style: ratingsNumberTextStyle,
+                      style: kFontSixteenSixHB,
                     ),
                     SizedBox(
                       height: 20,

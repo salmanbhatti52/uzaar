@@ -23,11 +23,13 @@ class ReviewListTile extends StatelessWidget {
   final String detail;
   final String date;
   final String title;
+  final bool? showProductImage;
   ReviewListTile(
       {required this.imageName,
       required this.title,
       required this.detail,
-      required this.date});
+      required this.date,
+      this.showProductImage = true});
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +95,9 @@ class ReviewListTile extends StatelessWidget {
                 SizedBox(
                   height: 4,
                 ),
-                Image.asset('assets/review_item.png'),
+                showProductImage == true
+                    ? Image.asset('assets/review_item.png')
+                    : SizedBox(),
               ],
             ),
           ),
