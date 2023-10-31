@@ -21,7 +21,7 @@ class _OfferedServicesOfMyOrdersState extends State<OfferedServicesOfMyOrders> {
             serviceLocation: 'Los Angeles',
             servicePrice: '\$12',
             date: '08/08/2023',
-            offeredPrice: '\$12',
+            // offeredPrice: '\$12',
           );
         },
         itemCount: 10,

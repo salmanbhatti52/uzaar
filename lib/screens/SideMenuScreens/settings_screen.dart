@@ -1,9 +1,8 @@
-import 'package:Uzaar/widgets/common_list_tile.dart';
 import 'package:Uzaar/widgets/settings_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../utils/Colors.dart';
+import '../../utils/Colors.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);

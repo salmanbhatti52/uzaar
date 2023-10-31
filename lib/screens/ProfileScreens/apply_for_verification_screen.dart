@@ -3,7 +3,7 @@ import 'package:Uzaar/utils/Buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../utils/Colors.dart';
+import '../../utils/Colors.dart';
 
 class ApplyForVerificationScreen extends StatefulWidget {
   const ApplyForVerificationScreen({Key? key}) : super(key: key);

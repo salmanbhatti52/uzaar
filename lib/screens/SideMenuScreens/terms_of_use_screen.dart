@@ -50,7 +50,10 @@ class TermsOfUseScreen extends StatelessWidget {
               HeadingAndDetail(
                   title: 'Data Flow',
                   description:
-                      'Lorem ipsum dolor sit amet consectetur. Integer aliquam turpis consectetur molestie. At sit felis luctus amet consequat odio in justo diam. Arcu commodo vitae nullam eget lectus sed. Et habitasse netus malesuada vivamus cum enim eleifend in orci. Consectetur id aliquet orci diam integer volutpat erat semper quis.')
+                      'Lorem ipsum dolor sit amet consectetur. Integer aliquam turpis consectetur molestie. At sit felis luctus amet consequat odio in justo diam. Arcu commodo vitae nullam eget lectus sed. Et habitasse netus malesuada vivamus cum enim eleifend in orci. Consectetur id aliquet orci diam integer volutpat erat semper quis.'),
+              SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),

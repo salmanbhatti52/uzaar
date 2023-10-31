@@ -11,9 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../utils/Colors.dart';
-import '../widgets/business_type_button.dart';
-import '../widgets/mini_dropdown_menu.dart';
+import '../../utils/Colors.dart';
+import '../../widgets/business_type_button.dart';
+import '../../widgets/mini_dropdown_menu.dart';
 
 class SalesOrdersScreen extends StatefulWidget {
   const SalesOrdersScreen({Key? key}) : super(key: key);

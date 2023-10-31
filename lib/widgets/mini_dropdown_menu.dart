@@ -25,19 +25,6 @@ final TextStyle dropDownTextStyle = GoogleFonts.outfit(
   fontWeight: FontWeight.w500,
   color: black,
 );
-final kDropDownMenuInputDecoration = InputDecorationTheme(
-  constraints: BoxConstraints(maxHeight: 30),
-  contentPadding: EdgeInsets.only(
-    left: 15,
-  ),
-  border: kDropDownBorderStyle,
-  enabledBorder: kDropDownBorderStyle,
-  focusedBorder: kDropDownBorderStyle,
-  fillColor: white,
-  labelStyle: dropDownTextStyle,
-  filled: true,
-  hintStyle: kDropDownHintStyle,
-);
 final kDropDownMenuStyle = MenuStyle(
     maximumSize: MaterialStatePropertyAll(Size.fromHeight(200)),
     shape: MaterialStatePropertyAll(RoundedRectangleBorder(
@@ -57,6 +44,9 @@ class RoundedMiniDropdownMenu extends StatelessWidget {
       this.leadingIconName,
       this.width,
       this.initialSelection,
+      this.textStyle,
+      this.fillColor,
+      this.colorFilter,
       this.trailingIconName = 'drop-down-button'});
   final Function(dynamic)? onSelected;
   final List<DropdownMenuEntry<Object?>> dropdownMenuEntries;
@@ -65,22 +55,38 @@ class RoundedMiniDropdownMenu extends StatelessWidget {
   final String? hintText;
   final double? width;
   final String? initialSelection;
+  final TextStyle? textStyle;
+  final Color? fillColor;
+  final ColorFilter? colorFilter;
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: kTextFieldBoxDecoration,
       child: DropdownMenu(
-        textStyle: dropDownTextStyle,
+        textStyle: textStyle ?? dropDownTextStyle,
         hintText: hintText,
         // selectedTrailingIcon: SvgIcon(imageName: 'assets/cat-selected.svg'),
         trailingIcon: SvgIcon(
           imageName: 'assets/$trailingIconName.svg',
+          colorFilter: colorFilter,
         ),
 
         leadingIcon: leadingIconName == null
             ? null
             : SvgIcon(imageName: 'assets/$leadingIconName.svg'),
-        inputDecorationTheme: kDropDownMenuInputDecoration,
+        inputDecorationTheme: InputDecorationTheme(
+          constraints: BoxConstraints(maxHeight: 30),
+          contentPadding: EdgeInsets.only(
+            left: 15,
+          ),
+          border: kDropDownBorderStyle,
+          enabledBorder: kDropDownBorderStyle,
+          focusedBorder: kDropDownBorderStyle,
+          fillColor: fillColor ?? white,
+          labelStyle: dropDownTextStyle,
+          filled: true,
+          hintStyle: kDropDownHintStyle,
+        ),
         menuStyle: kDropDownMenuStyle,
         width: width ?? MediaQuery.sizeOf(context).width * 0.88,
         initialSelection: initialSelection,

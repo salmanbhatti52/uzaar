@@ -202,6 +202,21 @@ final kRoundedWhiteBorderStyle = OutlineInputBorder(
   ),
 );
 
+final kTextAreaRoundedWhiteBorderStyle = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(30),
+  borderSide: const BorderSide(
+    color: Colors.white,
+    width: 1,
+  ),
+);
+final kTextAreaRoundedActiveBorderStyle = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(30),
+  borderSide: const BorderSide(
+    color: primaryBlue,
+    width: 1,
+  ),
+);
+
 final kTextFieldBoxDecoration = BoxDecoration(
   boxShadow: const [
     BoxShadow(
@@ -213,6 +228,19 @@ final kTextFieldBoxDecoration = BoxDecoration(
   ],
   color: Colors.white,
   borderRadius: BorderRadius.circular(40),
+);
+
+final kTextAreaBoxDecoration = BoxDecoration(
+  boxShadow: const [
+    BoxShadow(
+      color: Color.fromRGBO(0, 0, 0, 0.14),
+      blurRadius: 4,
+      spreadRadius: 0,
+      offset: Offset(0, 0),
+    )
+  ],
+  color: Colors.white,
+  borderRadius: BorderRadius.circular(30),
 );
 
 // final k

@@ -1,8 +1,14 @@
 import 'package:Uzaar/screens/BusinessDetailPages/TrackOrderScreen.dart';
 import 'package:Uzaar/screens/BusinessDetailPages/order_placed_screen.dart';
-import 'package:Uzaar/screens/my_orders_screen.dart';
-import 'package:Uzaar/screens/sales_orders_screen.dart';
-import 'package:Uzaar/screens/settings_screen.dart';
+import 'package:Uzaar/screens/ProfileScreens/SaleProfileScreens/ReviewsScreenSales.dart';
+import 'package:Uzaar/screens/ProfileScreens/SaleProfileScreens/SalesListingsScreen.dart';
+import 'package:Uzaar/screens/ProfileScreens/SaleProfileScreens/SalesProfile.dart';
+import 'package:Uzaar/screens/SideMenuScreens/about_us_screen.dart';
+import 'package:Uzaar/screens/SideMenuScreens/contact_us_screen.dart';
+import 'package:Uzaar/screens/SideMenuScreens/privacy_policy_screen.dart';
+import 'package:Uzaar/screens/SideMenuScreens/terms_of_use_screen.dart';
+
+import 'package:Uzaar/screens/SideMenuScreens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,6 +17,9 @@ import 'package:Uzaar/screens/ProfileScreens/SaleProfileScreens/SaleProfileMain.
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../screens/SideMenuScreens/my_orders_screen.dart';
+import '../screens/SideMenuScreens/sales_orders_screen.dart';
 
 class DrawerWidget extends StatefulWidget {
   final BuildContext buildContext;
@@ -87,8 +96,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     style: ListTileStyle.drawer,
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => MyOrdersScreen(),
-                      ));
+                          builder: (context) => MyOrdersScreen()
+                          // SalesProfileMain(),
+                          ));
                     },
                     leading: SvgPicture.asset(
                       'assets/order-icon.svg',
@@ -154,6 +164,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
 
                   ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => TermsOfUseScreen(),
+                      ));
+                    },
                     style: ListTileStyle.drawer,
                     leading: SvgPicture.asset(
                       'assets/terms_of_use_icon.svg',
@@ -173,6 +188,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
 
                   ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => PrivacyPolicyScreen(),
+                      ));
+                    },
                     style: ListTileStyle.drawer,
                     leading: SvgPicture.asset(
                       'assets/safety_and_privacy_icon.svg',
@@ -192,6 +212,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
 
                   ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ContactUsScreen(),
+                      ));
+                    },
                     style: ListTileStyle.drawer,
                     leading: SvgPicture.asset(
                       'assets/contact_us_icon.svg',
@@ -211,6 +236,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
 
                   ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AboutUsScreen(),
+                      ));
+                    },
                     style: ListTileStyle.drawer,
                     leading: SvgPicture.asset(
                       'assets/about_us_icon.svg',

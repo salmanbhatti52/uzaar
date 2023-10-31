@@ -65,6 +65,7 @@ class TextFormFieldWidget extends StatelessWidget {
         autofillHints: [autofillHints ?? ''],
         decoration: InputDecoration(
           filled: true,
+
           fillColor: white,
           suffixIcon: suffixIcon,
           // contentPadding: contentPadding,

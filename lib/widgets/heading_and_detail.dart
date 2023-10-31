@@ -11,15 +11,19 @@ class HeadingAndDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          title,
-          style: kFontSixteenSixHB,
+        Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            title,
+            style: kFontSixteenSixHB,
+          ),
         ),
         SizedBox(
           height: 14,
         ),
         Text(
           description,
+          textAlign: TextAlign.justify,
           style: kSimpleTextStyle,
         )
       ],

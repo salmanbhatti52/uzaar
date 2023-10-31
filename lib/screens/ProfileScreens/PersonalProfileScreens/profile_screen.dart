@@ -1,7 +1,7 @@
 import 'package:Uzaar/screens/ProfileScreens/PersonalProfileScreens/personal_info_screen.dart';
 import 'package:Uzaar/screens/ProfileScreens/PersonalProfileScreens/profile_reviews_screen.dart';
 import 'package:Uzaar/screens/ProfileScreens/edit_profile_screen.dart';
-import 'package:Uzaar/screens/apply_for_verification_screen.dart';
+import 'package:Uzaar/screens/ProfileScreens/apply_for_verification_screen.dart';
 
 import 'package:Uzaar/widgets/get_stars_tile.dart';
 import 'package:flutter/material.dart';

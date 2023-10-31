@@ -1,4 +1,5 @@
 import 'package:Uzaar/widgets/my_orders_housings_list_tile.dart';
+import 'package:Uzaar/widgets/sales_orders_housings_list_tile.dart';
 import 'package:flutter/material.dart';
 
 class PendingHousingsOfSalesOrders extends StatefulWidget {
@@ -11,12 +12,14 @@ class PendingHousingsOfSalesOrders extends StatefulWidget {
 
 class _PendingHousingsOfSalesOrdersState
     extends State<PendingHousingsOfSalesOrders> {
+  String offerStatus = 'Pending';
+  List<String> offerStatuses = ['Pending', 'Accept', 'Reject'];
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
         itemBuilder: (context, index) {
-          return MyOrdersHousingsListTile(
+          return SalesOrdersHousingsListTile(
             houseImage: 'assets/listed_house_img.png',
             houseName: '2 bedroom house ',
             houseLocation: 'Los Angeles',
@@ -26,6 +29,16 @@ class _PendingHousingsOfSalesOrdersState
             noOfBaths: '2',
             noOfBeds: '2',
             date: '08/08/2023',
+            onSelected: (selectedOffer) {
+              setState(() {
+                offerStatus = selectedOffer;
+              });
+            },
+            initialSelection: offerStatus,
+            dropdownMenuEntries: offerStatuses
+                .map((String value) =>
+                    DropdownMenuEntry(value: value, label: value))
+                .toList(),
           );
         },
         itemCount: 10,

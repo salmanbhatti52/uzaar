@@ -1,4 +1,5 @@
 import 'package:Uzaar/widgets/my_orders_housings_list_tile.dart';
+import 'package:Uzaar/widgets/sales_orders_housings_list_tile.dart';
 import 'package:flutter/material.dart';
 
 class PreviousHousingsOfSalesOrders extends StatefulWidget {
@@ -26,7 +27,6 @@ class _PreviousHousingsOfSalesOrdersState
             noOfBaths: '2',
             noOfBeds: '2',
             date: '08/08/2023',
-            offeredPrice: '\$1200',
           );
         },
         itemCount: 10,

@@ -26,7 +26,7 @@ class _PreviousHousingsOfMyOrdersState
             noOfBaths: '2',
             noOfBeds: '2',
             date: '08/08/2023',
-            offeredPrice: '\$1200',
+            // offeredPrice: '\$1200',
           );
         },
         itemCount: 10,
