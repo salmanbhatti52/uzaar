@@ -39,13 +39,17 @@ class FeaturedProductsWidget extends StatelessWidget {
   final String productDescription;
   final String productLocation;
   final String productPrice;
+  final void Function()? onOptionTap;
+  final void Function()? onImageTap;
   const FeaturedProductsWidget(
       {super.key,
       required this.image,
       required this.productCategory,
       required this.productDescription,
       required this.productLocation,
-      required this.productPrice});
+      required this.productPrice,
+      required this.onOptionTap,
+      required this.onImageTap});
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +66,11 @@ class FeaturedProductsWidget extends StatelessWidget {
                   topRight: Radius.circular(10),
                   topLeft: Radius.circular(10),
                 ),
-                child: Image.asset(
-                  image,
+                child: GestureDetector(
+                  onTap: onImageTap,
+                  child: Image.asset(
+                    image,
+                  ),
                 ),
               ),
               Positioned(
@@ -78,9 +85,12 @@ class FeaturedProductsWidget extends StatelessWidget {
               Positioned(
                 right: 3,
                 top: 5,
-                child: Icon(
-                  Icons.more_vert,
-                  color: Colors.white,
+                child: GestureDetector(
+                  onTap: onOptionTap,
+                  child: Icon(
+                    Icons.more_vert,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               Positioned(

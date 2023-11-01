@@ -68,9 +68,11 @@ class _CustomSplashState extends State<CustomSplash> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, BottomNavBar.id
-                      // OnBoardingScreen.id,
-                      );
+                  Navigator.pushReplacementNamed(
+                    context,
+                    // BottomNavBar.id
+                    OnBoardingScreen.id,
+                  );
                 },
                 child: SizedBox(
                   height: 70,

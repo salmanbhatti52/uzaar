@@ -302,13 +302,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 187,
                     child: ListView.builder(
                       itemBuilder: (context, index) {
-                        return GestureDetector(
-                          // onTap: () => Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (context) => ProductDetailsPage(),
-                          //   ),
-                          // ),
-                          onTap: () {
+                        return FeaturedProductsWidget(
+                          image: 'assets/product-ph.png',
+                          productCategory: 'Electronics',
+                          productDescription: 'Iphone 14',
+                          productLocation: 'Los Angeles',
+                          productPrice: '120',
+                          onImageTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ProductDetailsPage(),
+                              ),
+                            );
+                          },
+                          onOptionTap: () {
                             showDialog(
                               context: context,
                               builder: (context) => StatefulBuilder(
@@ -437,13 +444,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             );
                           },
-                          child: FeaturedProductsWidget(
-                            image: 'assets/product-ph.png',
-                            productCategory: 'Electronics',
-                            productDescription: 'Iphone 14',
-                            productLocation: 'Los Angeles',
-                            productPrice: '120',
-                          ),
                         );
                       },
                       itemCount: 6,

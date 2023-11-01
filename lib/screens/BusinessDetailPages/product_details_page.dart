@@ -9,12 +9,15 @@ import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/widgets/featured_products_widget.dart';
 
 import '../../widgets/BottomNaviBar.dart';
+import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/carousel_builder.dart';
 import '../ProfileScreens/SellerProfileScreens/seller_profile_screen.dart';
 import '../home_screen.dart';
 import 'BottomSheetForSendOffer.dart';
 import 'paymnet_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+
+enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 
 class ProductDetailsPage extends StatefulWidget {
   const ProductDetailsPage({super.key});
@@ -24,11 +27,22 @@ class ProductDetailsPage extends StatefulWidget {
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  late Set<ReportReason> selectedReasons = {};
+
   Widget HorizontalPadding({required Widget child}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 22.w),
       child: child,
     );
+  }
+
+  handleOptionSelection(ReportReason reason) {
+    if (selectedReasons.contains(reason)) {
+      selectedReasons.remove(reason);
+    } else {
+      selectedReasons.add(reason);
+    }
+    print(selectedReasons);
   }
 
   String? selectedValue;
@@ -378,6 +392,142 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           productDescription: 'Iphone 14',
                           productLocation: 'Los Angeles',
                           productPrice: '120',
+                          onImageTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ProductDetailsPage(),
+                              ),
+                            );
+                          },
+                          onOptionTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => StatefulBuilder(
+                                builder: (BuildContext context,
+                                    StateSetter stateSetterObject) {
+                                  return AlertDialogReusable(
+                                    description:
+                                        'Select any reason to report. We will show you less listings like this next time.',
+                                    title: 'Report Listing',
+                                    itemsList: [
+                                      SizedBox(
+                                        height: 35,
+                                        child: ListTile(
+                                          title: Text(
+                                            'Not Interested',
+                                            style: kTextFieldInputStyle,
+                                          ),
+                                          leading: GestureDetector(
+                                            onTap: () {
+                                              stateSetterObject(() {
+                                                handleOptionSelection(
+                                                    ReportReason.notInterested);
+                                              });
+                                            },
+                                            child: SvgPicture.asset(selectedReasons
+                                                    .contains(ReportReason
+                                                        .notInterested)
+                                                ? 'assets/selected_check.svg'
+                                                : 'assets/default_check.svg'),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 35,
+                                        child: ListTile(
+                                          title: Text(
+                                            'Not Authentic',
+                                            style: kTextFieldInputStyle,
+                                          ),
+                                          leading: GestureDetector(
+                                            onTap: () {
+                                              stateSetterObject(() {
+                                                handleOptionSelection(
+                                                    ReportReason.notAuthentic);
+                                              });
+                                            },
+                                            child: SvgPicture.asset(selectedReasons
+                                                    .contains(ReportReason
+                                                        .notAuthentic)
+                                                ? 'assets/selected_check.svg'
+                                                : 'assets/default_check.svg'),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 35,
+                                        child: ListTile(
+                                          title: Text(
+                                            'Inappropriate',
+                                            style: kTextFieldInputStyle,
+                                          ),
+                                          leading: GestureDetector(
+                                            onTap: () {
+                                              stateSetterObject(() {
+                                                handleOptionSelection(
+                                                    ReportReason.inappropriate);
+                                              });
+                                            },
+                                            child: SvgPicture.asset(selectedReasons
+                                                    .contains(ReportReason
+                                                        .inappropriate)
+                                                ? 'assets/selected_check.svg'
+                                                : 'assets/default_check.svg'),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 35,
+                                        child: ListTile(
+                                          title: Text(
+                                            'Violent or prohibited content',
+                                            style: kTextFieldInputStyle,
+                                          ),
+                                          leading: GestureDetector(
+                                            onTap: () {
+                                              stateSetterObject(() {
+                                                handleOptionSelection(
+                                                    ReportReason.violent);
+                                              });
+                                            },
+                                            child: SvgPicture.asset(
+                                                selectedReasons.contains(
+                                                        ReportReason.violent)
+                                                    ? 'assets/selected_check.svg'
+                                                    : 'assets/default_check.svg'),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 35,
+                                        child: ListTile(
+                                          title: Text(
+                                            'Other',
+                                            style: kTextFieldInputStyle,
+                                          ),
+                                          leading: GestureDetector(
+                                            onTap: () {
+                                              stateSetterObject(() {
+                                                handleOptionSelection(
+                                                    ReportReason.other);
+                                              });
+                                            },
+                                            child: SvgPicture.asset(
+                                                selectedReasons.contains(
+                                                        ReportReason.other)
+                                                    ? 'assets/selected_check.svg'
+                                                    : 'assets/default_check.svg'),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                    button: primaryButton(context, 'Send',
+                                        () => Navigator.of(context).pop()),
+                                  );
+                                },
+                              ),
+                            );
+                          },
                         );
                       },
                     ),

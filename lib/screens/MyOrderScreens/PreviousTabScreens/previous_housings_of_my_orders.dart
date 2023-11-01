@@ -1,6 +1,9 @@
 import 'package:Uzaar/widgets/my_orders_housings_list_tile.dart';
 import 'package:flutter/material.dart';
 
+import '../../../widgets/add_review_dialog.dart';
+import '../../../widgets/get_stars_tile.dart';
+import '../../../widgets/message_text_field.dart';
 import '../my_order_detail.dart';
 
 class PreviousHousingsOfMyOrders extends StatefulWidget {
@@ -13,6 +16,7 @@ class PreviousHousingsOfMyOrders extends StatefulWidget {
 
 class _PreviousHousingsOfMyOrdersState
     extends State<PreviousHousingsOfMyOrders> {
+  final msgTextFieldController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -20,9 +24,23 @@ class _PreviousHousingsOfMyOrdersState
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => MyOrderDetailScreen(),
-              ));
+              // Navigator.of(context).push(MaterialPageRoute(
+              //   builder: (context) => MyOrderDetailScreen(),
+              // ));
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AddReviewDialog(
+                    content: StarsTile(
+                        noOfStars: 5, alignment: MainAxisAlignment.center),
+                    title: Image.asset('assets/order_complete.png'),
+                    textField: MessageTextField(
+                      msgTextFieldController: msgTextFieldController,
+                      sendButtonTap: () {},
+                    ),
+                  );
+                },
+              );
             },
             child: MyOrdersHousingsListTile(
               houseImage: 'assets/listed_house_img.png',
