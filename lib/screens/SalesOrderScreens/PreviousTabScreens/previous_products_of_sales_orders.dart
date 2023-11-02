@@ -41,7 +41,9 @@ class _PreviousProductsOfSalesOrdersState
                     title: Image.asset('assets/order_complete.png'),
                     textField: MessageTextField(
                       msgTextFieldController: msgTextFieldController,
-                      sendButtonTap: () {},
+                      sendButtonTap: () {
+                        Navigator.pop(context);
+                      },
                     ),
                   );
                 },
