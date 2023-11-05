@@ -51,6 +51,12 @@ final kBodyHeadingTextStyle = GoogleFonts.outfit(
   color: black,
 );
 
+final kToastTextStyle = GoogleFonts.outfit(
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+  color: Colors.white,
+);
+
 final kBodyPrimaryBoldTextStyle = GoogleFonts.outfit(
   fontWeight: FontWeight.w600,
   fontSize: 20,

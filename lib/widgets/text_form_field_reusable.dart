@@ -64,16 +64,23 @@ class TextFormFieldWidget extends StatelessWidget {
         obscureText: obscureText ?? false,
         autofillHints: [autofillHints ?? ''],
         decoration: InputDecoration(
+          constraints: BoxConstraints(minHeight: 46),
           filled: true,
-
           fillColor: white,
           suffixIcon: suffixIcon,
           // contentPadding: contentPadding,
           border: kRoundedWhiteBorderStyle,
+          // enabledBorder: kRoundedWhiteBorderStyle,
+
           hintText: hintText,
           hintStyle: kTextFieldHintStyle,
           focusedBorder: kRoundedActiveBorderStyle,
-          enabledBorder: kRoundedWhiteBorderStyle,
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(40),
+              borderSide: BorderSide(
+                width: 1.5,
+                color: Color.fromRGBO(0, 0, 0, 0.14),
+              )),
           prefixIcon: prefixIcon,
           contentPadding:
               EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
