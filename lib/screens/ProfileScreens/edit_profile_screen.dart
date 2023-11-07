@@ -216,7 +216,10 @@ class EditProfileScreen extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(bottom: 20),
                 child: primaryButton(
-                    context, 'Save Changes', () => Navigator.of(context).pop()),
+                    context: context,
+                    buttonText: 'Save Changes',
+                    onTap: () => Navigator.of(context).pop(),
+                    showLoader: false),
               )
             ],
           ),

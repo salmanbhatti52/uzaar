@@ -337,18 +337,20 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 14.0),
                     child: primaryButton(
-                      context,
-                      widget.editDetails == true ? 'Save Changes' : 'Publish',
-                      () => Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return BottomNavBar();
-                          },
-                        ),
-                        (route) => false,
-                      ),
-                    ),
+                        context: context,
+                        buttonText: widget.editDetails == true
+                            ? 'Save Changes'
+                            : 'Publish',
+                        onTap: () => Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return BottomNavBar();
+                                },
+                              ),
+                              (route) => false,
+                            ),
+                        showLoader: false),
                   ),
                 ],
               ),

@@ -82,7 +82,10 @@ class _ApplyForVerificationScreenState
             Container(
                 margin: EdgeInsets.only(bottom: 25),
                 child: primaryButton(
-                    context, 'Submit', () => Navigator.of(context).pop()))
+                    context: context,
+                    buttonText: 'Submit',
+                    onTap: () => Navigator.of(context).pop(),
+                    showLoader: false))
           ],
         ),
       ),

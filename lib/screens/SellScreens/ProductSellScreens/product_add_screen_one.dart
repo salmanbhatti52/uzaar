@@ -232,19 +232,19 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 14.0),
                     child: primaryButton(
-                      context,
-                      'Next',
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return ProductAddScreenTwo(
-                              editDetails: widget.editDetails,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
+                        context: context,
+                        buttonText: 'Next',
+                        onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ProductAddScreenTwo(
+                                    editDetails: widget.editDetails,
+                                  );
+                                },
+                              ),
+                            ),
+                        showLoader: false),
                   ),
                 ],
               ),

@@ -521,8 +521,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                         ),
                                       ),
                                     ],
-                                    button: primaryButton(context, 'Send',
-                                        () => Navigator.of(context).pop()),
+                                    button: primaryButton(
+                                        context: context,
+                                        buttonText: 'Send',
+                                        onTap: () =>
+                                            Navigator.of(context).pop(),
+                                        showLoader: false),
                                   );
                                 },
                               ),
@@ -543,14 +547,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     horizontal: 22,
                   ),
                   child: primaryButton(
-                    context,
-                    'Buy Now',
-                    () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => PaymentScreen(),
-                      ),
-                    ),
-                  ),
+                      context: context,
+                      buttonText: 'Buy Now',
+                      onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => PaymentScreen(),
+                            ),
+                          ),
+                      showLoader: false),
                 ),
               ],
             ),

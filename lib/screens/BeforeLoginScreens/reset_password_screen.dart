@@ -138,17 +138,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 20.0.h),
                     child: primaryButton(
-                      context,
-                      'Save',
-                      () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LogInScreen(),
-                            ));
-                        // Navigator.pushNamed(context, LogInScreen.id);
-                      },
-                    ),
+                        context: context,
+                        buttonText: 'Save',
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LogInScreen(),
+                              ));
+                          // Navigator.pushNamed(context, LogInScreen.id);
+                        },
+                        showLoader: false),
                   ),
                 ],
               ),

@@ -207,27 +207,27 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ),
 
                   primaryButton(
-                    context,
-                    'Continue',
-                    () async {
-                      final prefs = await SharedPreferences.getInstance();
-                      prefs.setBool(
-                        'showSignUp',
-                        true,
-                      );
-                      lastPage
-                          ? Navigator.pushReplacementNamed(
-                              context,
-                              SignUpScreen.id,
-                            )
-                          : controller.nextPage(
-                              duration: const Duration(
-                                microseconds: 900,
-                              ),
-                              curve: Curves.easeInCubic,
-                            );
-                    },
-                  ),
+                      context: context,
+                      buttonText: 'Continue',
+                      onTap: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        prefs.setBool(
+                          'showSignUp',
+                          true,
+                        );
+                        lastPage
+                            ? Navigator.pushReplacementNamed(
+                                context,
+                                SignUpScreen.id,
+                              )
+                            : controller.nextPage(
+                                duration: const Duration(
+                                  microseconds: 900,
+                                ),
+                                curve: Curves.easeInCubic,
+                              );
+                      },
+                      showLoader: false),
                 ],
               ),
             ),

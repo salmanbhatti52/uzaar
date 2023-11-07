@@ -229,20 +229,24 @@ class _SellScreenState extends State<SellScreen> {
               Spacer(),
               Padding(
                 padding: EdgeInsets.only(bottom: 20.0),
-                child: primaryButton(context, 'Next', () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return selectedCategory == 1
-                            ? ProductAddScreenOne()
-                            : selectedCategory == 2
-                                ? ServiceAddScreen()
-                                : HouseAddScreen();
-                      },
-                    ),
-                  );
-                }),
+                child: primaryButton(
+                    context: context,
+                    buttonText: 'Next',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return selectedCategory == 1
+                                ? ProductAddScreenOne()
+                                : selectedCategory == 2
+                                    ? ServiceAddScreen()
+                                    : HouseAddScreen();
+                          },
+                        ),
+                      );
+                    },
+                    showLoader: false),
               ),
             ],
           ),

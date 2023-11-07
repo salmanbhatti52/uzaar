@@ -1,3 +1,4 @@
+import 'package:Uzaar/screens/BeforeLoginScreens/add_image_screen.dart';
 import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:Uzaar/widgets/text.dart';
 
@@ -10,6 +11,7 @@ import 'package:Uzaar/screens/beforeLoginScreens/login_screen.dart';
 
 import '../../utils/Buttons.dart';
 import '../../widgets/read_only_container.dart';
+import '../BusinessDetailPages/BottomSheetForSendOffer.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
   static const String id = 'complete_profile_screen';
@@ -83,7 +85,29 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           Positioned(
                             right: -10,
                             child: GestureDetector(
-                              onTap: null,
+                              onTap: () => showModalBottomSheet(
+                                // shape: RoundedRectangleBorder(
+                                //   borderRadius: BorderRadius.vertical(
+                                //       top: Radius.circular(20)),
+                                // ),
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) => SingleChildScrollView(
+                                  child: Container(
+                                      padding: EdgeInsets.only(
+                                          bottom: MediaQuery.of(context)
+                                              .viewInsets
+                                              .bottom),
+                                      child: AddImageScreen(
+                                        fromCamera: () {
+                                          Navigator.pop(context);
+                                        },
+                                        fromGallery: () {
+                                          Navigator.pop(context);
+                                        },
+                                      )),
+                                ),
+                              ),
                               child: SvgIcon(
                                   imageName: 'assets/add-pic-button.svg'),
                             ),
@@ -173,14 +197,14 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       Padding(
                         padding: EdgeInsets.only(bottom: 25.0.h),
                         child: primaryButton(
-                          context,
-                          'Continue',
-                          () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LogInScreen(),
-                              )),
-                        ),
+                            context: context,
+                            buttonText: 'Continue',
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LogInScreen(),
+                                )),
+                            showLoader: false),
                       ),
                     ],
                   ),

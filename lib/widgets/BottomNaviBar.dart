@@ -209,13 +209,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
               description:
                   'You can not sell anything on platform in guest mode. Signup now if you want to list any item.',
               button: primaryButton(
-                context,
-                'Signup',
-                () => Navigator.pushReplacement(context, MaterialPageRoute(
+                context: context,
+                buttonText: 'Signup',
+                onTap: () =>
+                    Navigator.pushReplacement(context, MaterialPageRoute(
                   builder: (context) {
                     return SignUpScreen();
                   },
                 )),
+                showLoader: false,
               ),
             )
           : _pages[_currentIndex],

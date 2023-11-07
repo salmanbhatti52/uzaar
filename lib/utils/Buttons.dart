@@ -3,7 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'colors.dart';
 
-Widget primaryButton(context, String buttonText, Function()? onTap) {
+Widget primaryButton(
+    {context,
+    required String buttonText,
+    Function()? onTap,
+    required bool showLoader}) {
   return GestureDetector(
     onTap: onTap,
     child: Container(
@@ -15,8 +19,19 @@ Widget primaryButton(context, String buttonText, Function()? onTap) {
         color: primaryBlue,
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Center(
-        child: Text(buttonText, style: kPrimaryButtonTextStyle),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(buttonText, style: kPrimaryButtonTextStyle),
+          showLoader
+              ? Container(
+                  padding: EdgeInsets.only(left: 10),
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                )
+              : SizedBox()
+        ],
       ),
     ),
   );

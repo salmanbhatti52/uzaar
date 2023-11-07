@@ -192,15 +192,15 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     height: 50,
                   ),
                   primaryButton(
-                    context,
-                    'Send',
-                    // () => Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) => VerifyEmail(),
-                    //   ),
-                    // ),
-                    () => null,
-                  ),
+                      context: context,
+                      buttonText: 'Send',
+                      // () => Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => VerifyEmail(),
+                      //   ),
+                      // ),
+                      onTap: () => null,
+                      showLoader: false),
                   SizedBox(
                     height: 20,
                   ),

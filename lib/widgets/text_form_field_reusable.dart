@@ -70,17 +70,17 @@ class TextFormFieldWidget extends StatelessWidget {
           suffixIcon: suffixIcon,
           // contentPadding: contentPadding,
           border: kRoundedWhiteBorderStyle,
-          // enabledBorder: kRoundedWhiteBorderStyle,
+          enabledBorder: kRoundedWhiteBorderStyle,
 
           hintText: hintText,
           hintStyle: kTextFieldHintStyle,
           focusedBorder: kRoundedActiveBorderStyle,
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(40),
-              borderSide: BorderSide(
-                width: 1.5,
-                color: Color.fromRGBO(0, 0, 0, 0.14),
-              )),
+          // enabledBorder: OutlineInputBorder(
+          //     borderRadius: BorderRadius.circular(40),
+          //     borderSide: BorderSide(
+          //       width: 1.5,
+          //       color: Color.fromRGBO(0, 0, 0, 0.14),
+          //     )),
           prefixIcon: prefixIcon,
           contentPadding:
               EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),

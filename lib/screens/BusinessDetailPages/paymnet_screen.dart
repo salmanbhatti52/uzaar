@@ -203,14 +203,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           bottom: 20,
                         ),
                         child: primaryButton(
-                          context,
-                          'Continue',
-                          () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => OrderPlacedScreen(),
-                            ),
-                          ),
-                        ),
+                            context: context,
+                            buttonText: 'Continue',
+                            onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => OrderPlacedScreen(),
+                                  ),
+                                ),
+                            showLoader: false),
                       ),
                     ],
                   ),

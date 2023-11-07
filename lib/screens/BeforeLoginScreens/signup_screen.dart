@@ -39,7 +39,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool isHidden = true;
-
+  bool setLoader = false;
+  String setButtonStatus = 'Signup';
   @override
   void initState() {
     // TODO: implement initState
@@ -182,94 +183,118 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 70.h,
                       ),
                       primaryButton(
-                        context,
-                        'Signup',
-                        () async {
-                          String emailRegex =
-                              r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
-                          RegExp regex = RegExp(emailRegex);
-                          if (firstNameController.text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(
-                                  'Please enter first name',
-                                  style: kToastTextStyle,
-                                )));
-                          } else if (lastNameController.text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(
-                                  'Please enter last name',
-                                  style: kToastTextStyle,
-                                )));
-                          } else if (emailController.text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(
-                                  'Please enter an email',
-                                  style: kToastTextStyle,
-                                )));
-                          } else if (!regex.hasMatch(emailController.text)) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(
-                                  'Enter a valid email',
-                                  style: kToastTextStyle,
-                                )));
-                          } else if (passwordController.text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(
-                                  'Please enter a password',
-                                  style: kToastTextStyle,
-                                )));
-                          } else {
-                            Response response = await sendPostRequest(
-                                action: 'signup_with_app',
-                                data: {
-                                  'one_signal_id': '12345',
-                                  'first_name':
-                                      firstNameController.text.toString(),
-                                  'last_name':
-                                      lastNameController.text.toString(),
-                                  'email': emailController.text.toString(),
-                                  'password': passwordController.text.toString()
-                                });
-
-                            print(response.statusCode);
-                            print(response.body);
-                            var decodedResponse = jsonDecode(response.body);
-                            String status = decodedResponse['status'];
-                            String message = decodedResponse['message'];
-
-                            if (status == 'success') {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                      backgroundColor: primaryBlue,
-                                      content: Text(
-                                        'Success',
-                                        style: kToastTextStyle,
-                                      )));
-                              // ignore: use_build_context_synchronously
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => VerifyEmail(),
-                                ),
-                              );
-                            }
-                            if (status == 'error') {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                      backgroundColor: Colors.red,
-                                      content: Text(
-                                        message,
-                                        style: kToastTextStyle,
-                                      )));
-                            }
-                          }
-                        },
-                      ),
+                          context: context,
+                          buttonText: setButtonStatus,
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) {
+                                return VerifyEmail(
+                                    userEmail: emailController.text.toString());
+                              },
+                            ));
+                          },
+                          // onTap: () async {
+                          //   String emailRegex =
+                          //       r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
+                          //   RegExp regex = RegExp(emailRegex);
+                          //   if (firstNameController.text.isEmpty) {
+                          //     ScaffoldMessenger.of(context)
+                          //         .showSnackBar(SnackBar(
+                          //             backgroundColor: Colors.red,
+                          //             content: Text(
+                          //               'Please enter first name',
+                          //               style: kToastTextStyle,
+                          //             )));
+                          //   } else if (lastNameController.text.isEmpty) {
+                          //     ScaffoldMessenger.of(context)
+                          //         .showSnackBar(SnackBar(
+                          //             backgroundColor: Colors.red,
+                          //             content: Text(
+                          //               'Please enter last name',
+                          //               style: kToastTextStyle,
+                          //             )));
+                          //   } else if (emailController.text.isEmpty) {
+                          //     ScaffoldMessenger.of(context)
+                          //         .showSnackBar(SnackBar(
+                          //             backgroundColor: Colors.red,
+                          //             content: Text(
+                          //               'Please enter an email',
+                          //               style: kToastTextStyle,
+                          //             )));
+                          //   } else if (!regex.hasMatch(emailController.text)) {
+                          //     ScaffoldMessenger.of(context)
+                          //         .showSnackBar(SnackBar(
+                          //             backgroundColor: Colors.red,
+                          //             content: Text(
+                          //               'Enter a valid email',
+                          //               style: kToastTextStyle,
+                          //             )));
+                          //   } else if (passwordController.text.isEmpty) {
+                          //     ScaffoldMessenger.of(context)
+                          //         .showSnackBar(SnackBar(
+                          //             backgroundColor: Colors.red,
+                          //             content: Text(
+                          //               'Please enter a password',
+                          //               style: kToastTextStyle,
+                          //             )));
+                          //   } else {
+                          //     setState(() {
+                          //       setLoader = true;
+                          //       setButtonStatus = 'Please wait..';
+                          //     });
+                          //     Response response = await sendPostRequest(
+                          //         action: 'signup_with_app',
+                          //         data: {
+                          //           'one_signal_id': '12345',
+                          //           'first_name':
+                          //               firstNameController.text.toString(),
+                          //           'last_name':
+                          //               lastNameController.text.toString(),
+                          //           'email': emailController.text.toString(),
+                          //           'password':
+                          //               passwordController.text.toString()
+                          //         });
+                          //
+                          //     setState(() {
+                          //       setLoader = false;
+                          //       setButtonStatus = 'Signup';
+                          //     });
+                          //     print(response.statusCode);
+                          //     print(response.body);
+                          //     var decodedResponse = jsonDecode(response.body);
+                          //     String status = decodedResponse['status'];
+                          //     String message = decodedResponse['message'];
+                          //
+                          //     if (status == 'success') {
+                          //       ScaffoldMessenger.of(context)
+                          //           .showSnackBar(SnackBar(
+                          //               backgroundColor: primaryBlue,
+                          //               content: Text(
+                          //                 'Success',
+                          //                 style: kToastTextStyle,
+                          //               )));
+                          //       // ignore: use_build_context_synchronously
+                          //       Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //           builder: (context) => VerifyEmail(
+                          //               userEmail:
+                          //                   emailController.text.toString()),
+                          //         ),
+                          //       );
+                          //     }
+                          //     if (status == 'error') {
+                          //       ScaffoldMessenger.of(context)
+                          //           .showSnackBar(SnackBar(
+                          //               backgroundColor: Colors.red,
+                          //               content: Text(
+                          //                 message,
+                          //                 style: kToastTextStyle,
+                          //               )));
+                          //     }
+                          //   }
+                          // },
+                          showLoader: setLoader),
                       SizedBox(
                         height: 30.h,
                       ),

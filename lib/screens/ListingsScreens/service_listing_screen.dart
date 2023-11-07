@@ -128,8 +128,11 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                                 ),
                               ),
                             ],
-                            button: primaryButton(context, 'Boost Now',
-                                () => Navigator.of(context).pop()),
+                            button: primaryButton(
+                                context: context,
+                                buttonText: 'Boost Now',
+                                onTap: () => Navigator.of(context).pop(),
+                                showLoader: false),
                           );
                         },
                       );

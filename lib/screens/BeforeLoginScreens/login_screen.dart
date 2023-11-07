@@ -164,17 +164,17 @@ class _LogInScreenState extends State<LogInScreen> {
                         height: 50.h,
                       ),
                       primaryButton(
-                        context,
-                        'Login',
-                        () {
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => BottomNavBar(
-                                        loginAsGuest: false,
-                                      )),
-                              (Route<dynamic> route) => false);
-                        },
-                      ),
+                          context: context,
+                          buttonText: 'Login',
+                          onTap: () {
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => BottomNavBar(
+                                          loginAsGuest: false,
+                                        )),
+                                (Route<dynamic> route) => false);
+                          },
+                          showLoader: false),
                       SizedBox(
                         height: 20.h,
                       ),

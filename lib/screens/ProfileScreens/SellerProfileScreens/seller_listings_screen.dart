@@ -194,8 +194,11 @@ class _SellerListingsScreenState extends State<SellerListingsScreen> {
                                     ),
                                   ),
                                 ],
-                                button: primaryButton(context, 'Send',
-                                    () => Navigator.of(context).pop()),
+                                button: primaryButton(
+                                    context: context,
+                                    buttonText: 'Send',
+                                    onTap: () => Navigator.of(context).pop(),
+                                    showLoader: false),
                               );
                             },
                           ),

@@ -172,26 +172,30 @@ class _EditListingScreenState extends State<EditListingScreen> {
               Spacer(),
               Padding(
                 padding: EdgeInsets.only(bottom: 20.0),
-                child: primaryButton(context, 'Next', () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return selectedCategory == 1
-                            ? ProductAddScreenOne(
-                                editDetails: true,
-                              )
-                            : selectedCategory == 2
-                                ? ServiceAddScreen(
+                child: primaryButton(
+                    context: context,
+                    buttonText: 'Next',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return selectedCategory == 1
+                                ? ProductAddScreenOne(
                                     editDetails: true,
                                   )
-                                : HouseAddScreen(
-                                    editDetails: true,
-                                  );
-                      },
-                    ),
-                  );
-                }),
+                                : selectedCategory == 2
+                                    ? ServiceAddScreen(
+                                        editDetails: true,
+                                      )
+                                    : HouseAddScreen(
+                                        editDetails: true,
+                                      );
+                          },
+                        ),
+                      );
+                    },
+                    showLoader: false),
               ),
             ],
           ),

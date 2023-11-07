@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
           CustomSplash.id: (context) => CustomSplash(),
           OnBoardingScreen.id: (context) => OnBoardingScreen(),
           SignUpScreen.id: (context) => SignUpScreen(),
-          VerifyEmail.id: (context) => VerifyEmail(),
+          // VerifyEmail.id: (context) => VerifyEmail(),
           CompleteProfileScreen.id: (context) => CompleteProfileScreen(),
           LogInScreen.id: (context) => LogInScreen(),
           HomeScreen.id: (context) => HomeScreen(),

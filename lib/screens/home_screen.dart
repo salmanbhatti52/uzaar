@@ -437,8 +437,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                     ],
-                                    button: primaryButton(context, 'Send',
-                                        () => Navigator.of(context).pop()),
+                                    button: primaryButton(
+                                        context: context,
+                                        buttonText: 'Send',
+                                        onTap: () =>
+                                            Navigator.of(context).pop(),
+                                        showLoader: false),
                                   );
                                 },
                               ),

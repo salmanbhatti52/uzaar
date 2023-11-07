@@ -368,14 +368,14 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                     horizontal: 22,
                   ),
                   child: primaryButton(
-                    context,
-                    'Buy Now',
-                    () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => PaymentScreen(),
-                      ),
-                    ),
-                  ),
+                      context: context,
+                      buttonText: 'Buy Now',
+                      onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => PaymentScreen(),
+                            ),
+                          ),
+                      showLoader: false),
                 ),
               ],
             ),
