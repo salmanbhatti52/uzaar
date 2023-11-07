@@ -1,6 +1,15 @@
+import 'dart:io';
+
 import 'package:Uzaar/screens/BeforeLoginScreens/add_image_screen.dart';
+import 'package:Uzaar/services/location.dart';
+import 'package:Uzaar/services/restService.dart';
+import 'package:Uzaar/services/xFiletoBase64.dart';
 import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:Uzaar/widgets/text.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../widgets/text_form_field_reusable.dart';
 import 'package:flutter/material.dart';
@@ -25,11 +34,57 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   final addressController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey();
+  XFile? _selectedImage;
+  late SharedPreferences preferences;
+  String firstName = '';
+  String lastName = '';
+  String email = '';
+  late Position position;
+  late String selectedImageInBase64;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    setPreferences();
+  }
+
+  setPreferences() async {
+    preferences = await SharedPreferences.getInstance();
+    firstName = preferences.getString('firstName')!;
+    lastName = preferences.getString('lastName')!;
+    email = preferences.getString('email')!;
+    setState(() {
+      print(firstName);
+      print(lastName);
+      print(email);
+    });
+  }
+
+  Future _selectImageFromGallery() async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (returnedImage == null) {
+      return;
+    }
+    setState(() async {
+      _selectedImage = returnedImage;
+      selectedImageInBase64 = await convertXFileToBase64(_selectedImage!);
+      print(selectedImageInBase64);
+    });
+  }
+
+  Future _takeImageFromCamera() async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+    if (returnedImage == null) {
+      return;
+    }
+    setState(() async {
+      _selectedImage = returnedImage;
+      selectedImageInBase64 = await convertXFileToBase64(_selectedImage!);
+      print(selectedImageInBase64);
+    });
   }
 
   @override
@@ -65,21 +120,27 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: 47.h,
+                        height: 30.h,
                       ),
                       Stack(
                         clipBehavior: Clip.none,
                         alignment: Alignment.bottomRight,
                         children: [
                           Container(
-                            width: 100.w,
-                            height: 100.h,
+                            width: 100,
+                            height: 100,
                             decoration: BoxDecoration(
                               color: Color(0xFFD9D9D9),
                               shape: BoxShape.circle,
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(100),
+                              child: _selectedImage != null
+                                  ? Image.file(
+                                      File(_selectedImage!.path),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : SizedBox(),
                             ),
                           ),
                           Positioned(
@@ -101,9 +162,11 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                       child: AddImageScreen(
                                         fromCamera: () {
                                           Navigator.pop(context);
+                                          _takeImageFromCamera();
                                         },
                                         fromGallery: () {
                                           Navigator.pop(context);
+                                          _selectImageFromGallery();
                                         },
                                       )),
                                 ),
@@ -124,7 +187,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 7.h,
                       ),
-                      readOnlyContainer('assets/person-icon.svg', 'First Name'),
+                      readOnlyContainer('assets/person-icon.svg', firstName),
                       SizedBox(
                         height: 20.h,
                       ),
@@ -134,7 +197,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 7.h,
                       ),
-                      readOnlyContainer('assets/person-icon.svg', 'Last Name'),
+                      readOnlyContainer('assets/person-icon.svg', lastName),
                       SizedBox(
                         height: 20.h,
                       ),
@@ -144,8 +207,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 7.h,
                       ),
-                      readOnlyContainer(
-                          'assets/email-icon.svg', 'username@gmail.com'),
+                      readOnlyContainer('assets/email-icon.svg', email),
                       SizedBox(
                         height: 20.h,
                       ),
@@ -182,10 +244,25 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           textInputType: TextInputType.streetAddress,
                           prefixIcon:
                               SvgIcon(imageName: 'assets/address-icon.svg'),
-                          suffixIcon: SvgIcon(
-                            imageName: 'assets/address-icon.svg',
-                            colorFilter:
-                                ColorFilter.mode(primaryBlue, BlendMode.srcIn),
+                          suffixIcon: GestureDetector(
+                            onTap: () async {
+                              position = await getLocationCoordinates();
+                              print(position);
+                              List<Placemark> placemarks =
+                                  await getLocationFromCoordinates(
+                                      position.latitude, position.longitude);
+                              print(
+                                  '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}');
+                              setState(() {
+                                addressController.text =
+                                    '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}';
+                              });
+                            },
+                            child: SvgIcon(
+                              imageName: 'assets/address-icon.svg',
+                              colorFilter: ColorFilter.mode(
+                                  primaryBlue, BlendMode.srcIn),
+                            ),
                           ),
                           hintText: 'Your Address Here',
                           obscureText: null,
@@ -199,11 +276,26 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         child: primaryButton(
                             context: context,
                             buttonText: 'Continue',
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LogInScreen(),
-                                )),
+                            onTap: () {
+                              sendPostRequest(
+                                  action: 'complete_profile',
+                                  data: {
+                                    'users_customers_id': '1',
+                                    'phone':
+                                        phoneNumberController.text.toString(),
+                                    'address':
+                                        addressController.text.toString(),
+                                    'latitude': position.latitude.toString(),
+                                    'longitude': position.longitude.toString(),
+                                    'profile_pic': selectedImageInBase64,
+                                  });
+
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (context) => LogInScreen(),
+                              //     ));
+                            },
                             showLoader: false),
                       ),
                     ],

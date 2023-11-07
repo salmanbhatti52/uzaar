@@ -14,7 +14,7 @@ import '../../widgets/suffix_svg_icon.dart';
 import 'login_screen.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/utils/colors.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   BoxDecoration? passwordFieldBoxDecoration;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  late SharedPreferences preferences;
   bool isHidden = true;
   bool setLoader = false;
   String setButtonStatus = 'Signup';
@@ -45,6 +45,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    setPreferences();
+  }
+
+  setPreferences() async {
+    preferences = await SharedPreferences.getInstance();
   }
 
   @override
@@ -273,6 +278,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           //                 'Success',
                           //                 style: kToastTextStyle,
                           //               )));
+                          //       preferences.setString('firstName',
+                          //           firstNameController.text.toString());
+                          //       preferences.setString('lastName',
+                          //           lastNameController.text.toString());
+                          //       preferences.setString(
+                          //           'email', emailController.text.toString());
+                          //
                           //       // ignore: use_build_context_synchronously
                           //       Navigator.push(
                           //         context,

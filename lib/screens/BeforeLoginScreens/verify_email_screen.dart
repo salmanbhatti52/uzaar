@@ -227,61 +227,61 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   primaryButton(
                       context: context,
                       buttonText: 'Continue',
-                      onTap: () {},
-                      // onTap: () async {
-                      //   if (otpValue.characters.length < 4) {
-                      //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      //         backgroundColor: Colors.red,
-                      //         content: Text(
-                      //           'OTP is incomplete',
-                      //           style: kToastTextStyle,
-                      //         )));
-                      //     print(otpValue);
-                      //     print('Otp is incomplete');
-                      //   } else {
-                      //     print('success');
-                      //     setState(() {
-                      //       showSpinner = true;
-                      //     });
-                      //     Response response = await sendPostRequest(
-                      //         action: 'verify_email_verification_otp',
-                      //         data: {
-                      //           // 'email': widget.userEmail,
-                      //           'email': 'testing123@gmail.com',
-                      //           'otp': otpValue
-                      //         });
-                      //     setState(() {
-                      //       showSpinner = false;
-                      //     });
-                      //     print(response.statusCode);
-                      //     print(response.body);
-                      //     var decodedResponse = jsonDecode(response.body);
-                      //     String status = decodedResponse['status'];
-                      //     String message = decodedResponse['message'];
-                      //     if (status == 'success') {
-                      //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      //           backgroundColor: primaryBlue,
-                      //           content: Text(
-                      //             message,
-                      //             style: kToastTextStyle,
-                      //           )));
-                      //       Navigator.of(context).push(MaterialPageRoute(
-                      //         builder: (context) {
-                      //           return CompleteProfileScreen();
-                      //         },
-                      //       ));
-                      //       // ignore: use_build_context_synchronously
-                      //     }
-                      //     if (status == 'error') {
-                      //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      //           backgroundColor: Colors.red,
-                      //           content: Text(
-                      //             message,
-                      //             style: kToastTextStyle,
-                      //           )));
-                      //     }
-                      //   }
-                      // },
+                      // onTap: () {},
+                      onTap: () async {
+                        if (otpValue.characters.length < 4) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text(
+                                'OTP is incomplete',
+                                style: kToastTextStyle,
+                              )));
+                          print(otpValue);
+                          print('Otp is incomplete');
+                        } else {
+                          print('success');
+                          setState(() {
+                            showSpinner = true;
+                          });
+                          Response response = await sendPostRequest(
+                              action: 'verify_email_verification_otp',
+                              data: {
+                                // 'email': widget.userEmail,
+                                'email': 'testing123@gmail.com',
+                                'otp': otpValue
+                              });
+                          setState(() {
+                            showSpinner = false;
+                          });
+                          print(response.statusCode);
+                          print(response.body);
+                          var decodedResponse = jsonDecode(response.body);
+                          String status = decodedResponse['status'];
+                          String message = decodedResponse['message'];
+                          if (status == 'success') {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                backgroundColor: primaryBlue,
+                                content: Text(
+                                  message,
+                                  style: kToastTextStyle,
+                                )));
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) {
+                                return CompleteProfileScreen();
+                              },
+                            ));
+                            // ignore: use_build_context_synchronously
+                          }
+                          if (status == 'error') {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text(
+                                  message,
+                                  style: kToastTextStyle,
+                                )));
+                          }
+                        }
+                      },
                       showLoader: false)
                 ],
               ),
