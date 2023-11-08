@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:Uzaar/screens/BeforeLoginScreens/add_image_screen.dart';
@@ -8,6 +9,7 @@ import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:Uzaar/widgets/text.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,8 +41,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   String firstName = '';
   String lastName = '';
   String email = '';
+  late double latitude;
+  late double longitude;
   late Position position;
-  late String selectedImageInBase64;
+  String selectedImageInBase64 = '';
+  bool setLoader = false;
+  String setButtonStatus = 'Continue';
 
   @override
   void initState() {
@@ -67,11 +73,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     if (returnedImage == null) {
       return;
     }
-    setState(() async {
+
+    setState(() {
       _selectedImage = returnedImage;
-      selectedImageInBase64 = await convertXFileToBase64(_selectedImage!);
-      print(selectedImageInBase64);
     });
+    selectedImageInBase64 = await convertXFileToBase64(_selectedImage!);
+    print(selectedImageInBase64);
   }
 
   Future _takeImageFromCamera() async {
@@ -80,11 +87,11 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     if (returnedImage == null) {
       return;
     }
-    setState(() async {
+    setState(() {
       _selectedImage = returnedImage;
-      selectedImageInBase64 = await convertXFileToBase64(_selectedImage!);
-      print(selectedImageInBase64);
     });
+    selectedImageInBase64 = await convertXFileToBase64(_selectedImage!);
+    print(selectedImageInBase64);
   }
 
   @override
@@ -275,28 +282,95 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         padding: EdgeInsets.only(bottom: 25.0.h),
                         child: primaryButton(
                             context: context,
-                            buttonText: 'Continue',
-                            onTap: () {
-                              sendPostRequest(
-                                  action: 'complete_profile',
-                                  data: {
-                                    'users_customers_id': '1',
-                                    'phone':
-                                        phoneNumberController.text.toString(),
-                                    'address':
-                                        addressController.text.toString(),
-                                    'latitude': position.latitude.toString(),
-                                    'longitude': position.longitude.toString(),
-                                    'profile_pic': selectedImageInBase64,
-                                  });
-
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) => LogInScreen(),
-                              //     ));
+                            buttonText: setButtonStatus,
+                            onTap: () async {
+                              if (selectedImageInBase64.isEmpty) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Text(
+                                          'Please add your profile pic',
+                                          style: kToastTextStyle,
+                                        )));
+                              } else if (phoneNumberController.text.isEmpty) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Text(
+                                          'Please enter your phone number',
+                                          style: kToastTextStyle,
+                                        )));
+                              } else if (addressController.text.isEmpty) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Text(
+                                          'Please add your address',
+                                          style: kToastTextStyle,
+                                        )));
+                              } else {
+                                print(
+                                    'address: ${addressController.text.toString()}');
+                                List<Location> locations =
+                                    await locationFromAddress(
+                                        addressController.text.toString());
+                                print(locations);
+                                print(locations[0].longitude);
+                                print(locations[0].latitude);
+                                latitude = locations[0].latitude;
+                                longitude = locations[0].longitude;
+                                setState(() {
+                                  setLoader = true;
+                                  setButtonStatus = 'Please wait..';
+                                });
+                                Response response = await sendPostRequest(
+                                    action: 'complete_profile',
+                                    data: {
+                                      'users_customers_id': '1',
+                                      'phone':
+                                          phoneNumberController.text.toString(),
+                                      'address':
+                                          addressController.text.toString(),
+                                      'latitude': latitude.toString(),
+                                      'longitude': longitude.toString(),
+                                      'profile_pic': selectedImageInBase64,
+                                    });
+                                setState(() {
+                                  setLoader = false;
+                                  setButtonStatus = 'Continue';
+                                });
+                                print(response.statusCode);
+                                print(response.body);
+                                var decodedResponse = jsonDecode(response.body);
+                                String status = decodedResponse['status'];
+                                // String message = decodedResponse?['message'];
+                                if (status == 'success') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                          backgroundColor: primaryBlue,
+                                          content: Text(
+                                            'Success',
+                                            style: kToastTextStyle,
+                                          )));
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) => LogInScreen(),
+                                  //     ));
+                                  // ignore: use_build_context_synchronously
+                                }
+                                if (status == 'error') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                          backgroundColor: Colors.red,
+                                          content: Text(
+                                            'API Error',
+                                            style: kToastTextStyle,
+                                          )));
+                                }
+                              }
                             },
-                            showLoader: false),
+                            showLoader: setLoader),
                       ),
                     ],
                   ),
