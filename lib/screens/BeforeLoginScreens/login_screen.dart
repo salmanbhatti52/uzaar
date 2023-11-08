@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:Uzaar/services/restService.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +13,7 @@ import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/widgets/text_form_field_reusable.dart';
 import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:Uzaar/widgets/text.dart';
+import 'package:http/http.dart';
 
 import 'signup_screen.dart';
 
@@ -28,7 +32,8 @@ class _LogInScreenState extends State<LogInScreen> {
   final GlobalKey<FormState> _key = GlobalKey();
 
   bool isHidden = true;
-
+  bool setLoader = false;
+  String setButtonStatus = 'Login';
   @override
   void initState() {
     // TODO: implement initState
@@ -165,16 +170,85 @@ class _LogInScreenState extends State<LogInScreen> {
                       ),
                       primaryButton(
                           context: context,
-                          buttonText: 'Login',
-                          onTap: () {
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                    builder: (context) => BottomNavBar(
-                                          loginAsGuest: false,
-                                        )),
-                                (Route<dynamic> route) => false);
+                          buttonText: setButtonStatus,
+                          onTap: () async {
+                            String emailRegex =
+                                r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
+                            RegExp regex = RegExp(emailRegex);
+                            if (emailController.text.isEmpty) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                        'Please enter your email',
+                                        style: kToastTextStyle,
+                                      )));
+                            } else if (!regex.hasMatch(emailController.text)) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                        'Enter a valid email',
+                                        style: kToastTextStyle,
+                                      )));
+                            } else if (passwordController.text.isEmpty) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                        'Please enter your password',
+                                        style: kToastTextStyle,
+                                      )));
+                            } else {
+                              setState(() {
+                                setLoader = true;
+                                setButtonStatus = 'Please wait..';
+                              });
+                              Response response = await sendPostRequest(
+                                  action: 'login_with_app',
+                                  data: {
+                                    'one_signal_id': '12345',
+                                    'email': emailController.text.toString(),
+                                    'password':
+                                        passwordController.text.toString()
+                                  });
+                              setState(() {
+                                setLoader = false;
+                                setButtonStatus = 'Login';
+                              });
+                              print(response.statusCode);
+                              print(response.body);
+                              var decodedResponse = jsonDecode(response.body);
+                              String status = decodedResponse['status'];
+                              if (status == 'success') {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: primaryBlue,
+                                        content: Text(
+                                          'Success',
+                                          style: kToastTextStyle,
+                                        )));
+                                // Navigator.of(context).pushAndRemoveUntil(
+                                //     MaterialPageRoute(
+                                //         builder: (context) => BottomNavBar(
+                                //               loginAsGuest: false,
+                                //             )),
+                                //     (Route<dynamic> route) => false);
+                                // ignore: use_build_context_synchronously
+                              }
+                              if (status == 'error') {
+                                String message = decodedResponse?['message'];
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Text(
+                                          message,
+                                          style: kToastTextStyle,
+                                        )));
+                              }
+                            }
                           },
-                          showLoader: false),
+                          showLoader: setLoader),
                       SizedBox(
                         height: 20.h,
                       ),

@@ -326,7 +326,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                 Response response = await sendPostRequest(
                                     action: 'complete_profile',
                                     data: {
-                                      'users_customers_id': '1',
+                                      'users_customers_id': '25',
                                       'phone':
                                           phoneNumberController.text.toString(),
                                       'address':
@@ -343,7 +343,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                 print(response.body);
                                 var decodedResponse = jsonDecode(response.body);
                                 String status = decodedResponse['status'];
-                                // String message = decodedResponse?['message'];
+
                                 if (status == 'success') {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
@@ -360,11 +360,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                   // ignore: use_build_context_synchronously
                                 }
                                 if (status == 'error') {
+                                  String message = decodedResponse?['message'];
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
                                           backgroundColor: Colors.red,
                                           content: Text(
-                                            'API Error',
+                                            message,
                                             style: kToastTextStyle,
                                           )));
                                 }
