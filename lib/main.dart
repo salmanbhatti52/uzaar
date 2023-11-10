@@ -9,11 +9,13 @@ import 'package:Uzaar/screens/beforeLoginScreens/reset_password_screen.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/signup_screen.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/verify_email_screen.dart';
 import 'package:Uzaar/widgets/BottomNaviBar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/custom_splash.dart';
 import 'package:device_preview/device_preview.dart';
 
 void main() {
   runApp(const MyApp());
+
   // runApp(
   //   DevicePreview(
   //     enabled: true,
@@ -48,10 +50,10 @@ class _MyAppState extends State<MyApp> {
           OnBoardingScreen.id: (context) => OnBoardingScreen(),
           SignUpScreen.id: (context) => SignUpScreen(),
           // VerifyEmail.id: (context) => VerifyEmail(),
-          CompleteProfileScreen.id: (context) => CompleteProfileScreen(),
+          // CompleteProfileScreen.id: (context) => CompleteProfileScreen(),
           LogInScreen.id: (context) => LogInScreen(),
           HomeScreen.id: (context) => HomeScreen(),
-          ResetPasswordScreen.id: (context) => ResetPasswordScreen(),
+          // ResetPasswordScreen.id: (context) => ResetPasswordScreen(),
           BottomNavBar.id: (context) => BottomNavBar(
                 loginAsGuest: false,
               ),

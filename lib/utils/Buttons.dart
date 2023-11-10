@@ -11,8 +11,7 @@ Widget primaryButton(
   return GestureDetector(
     onTap: onTap,
     child: Container(
-      // margin:  EdgeInsets.only(
-      //     bottom: 25),
+      margin: EdgeInsets.only(bottom: 20),
       width: MediaQuery.sizeOf(context).width,
       height: 54,
       decoration: BoxDecoration(

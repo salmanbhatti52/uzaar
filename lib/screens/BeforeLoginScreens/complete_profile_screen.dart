@@ -5,6 +5,7 @@ import 'package:Uzaar/screens/BeforeLoginScreens/add_image_screen.dart';
 import 'package:Uzaar/services/location.dart';
 import 'package:Uzaar/services/restService.dart';
 import 'package:Uzaar/services/xFiletoBase64.dart';
+import 'package:Uzaar/widgets/BottomNaviBar.dart';
 import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:Uzaar/widgets/text.dart';
 import 'package:geocoding/geocoding.dart';
@@ -26,7 +27,8 @@ import '../BusinessDetailPages/BottomSheetForSendOffer.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
   static const String id = 'complete_profile_screen';
-  const CompleteProfileScreen({super.key});
+  dynamic userData;
+  CompleteProfileScreen({super.key, required this.userData});
 
   @override
   State<CompleteProfileScreen> createState() => _CompleteProfileScreenState();
@@ -47,24 +49,21 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   String selectedImageInBase64 = '';
   bool setLoader = false;
   String setButtonStatus = 'Continue';
+  late int userId;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     setPreferences();
+    userId = widget.userData['users_customers_id'];
+    firstName = widget.userData['first_name'];
+    lastName = widget.userData['last_name'];
+    email = widget.userData['email'];
   }
 
   setPreferences() async {
     preferences = await SharedPreferences.getInstance();
-    firstName = preferences.getString('firstName')!;
-    lastName = preferences.getString('lastName')!;
-    email = preferences.getString('email')!;
-    setState(() {
-      print(firstName);
-      print(lastName);
-      print(email);
-    });
   }
 
   Future _selectImageFromGallery() async {
@@ -278,101 +277,128 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 60.h,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 25.0.h),
-                        child: primaryButton(
-                            context: context,
-                            buttonText: setButtonStatus,
-                            onTap: () async {
-                              if (selectedImageInBase64.isEmpty) {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                        backgroundColor: Colors.red,
-                                        content: Text(
-                                          'Please add your profile pic',
-                                          style: kToastTextStyle,
-                                        )));
-                              } else if (phoneNumberController.text.isEmpty) {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                        backgroundColor: Colors.red,
-                                        content: Text(
-                                          'Please enter your phone number',
-                                          style: kToastTextStyle,
-                                        )));
-                              } else if (addressController.text.isEmpty) {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                        backgroundColor: Colors.red,
-                                        content: Text(
-                                          'Please add your address',
-                                          style: kToastTextStyle,
-                                        )));
-                              } else {
-                                print(
-                                    'address: ${addressController.text.toString()}');
-                                List<Location> locations =
-                                    await locationFromAddress(
-                                        addressController.text.toString());
-                                print(locations);
-                                print(locations[0].longitude);
-                                print(locations[0].latitude);
-                                latitude = locations[0].latitude;
-                                longitude = locations[0].longitude;
-                                setState(() {
-                                  setLoader = true;
-                                  setButtonStatus = 'Please wait..';
-                                });
-                                Response response = await sendPostRequest(
-                                    action: 'complete_profile',
-                                    data: {
-                                      'users_customers_id': '25',
-                                      'phone':
-                                          phoneNumberController.text.toString(),
-                                      'address':
-                                          addressController.text.toString(),
-                                      'latitude': latitude.toString(),
-                                      'longitude': longitude.toString(),
-                                      'profile_pic': selectedImageInBase64,
-                                    });
-                                setState(() {
-                                  setLoader = false;
-                                  setButtonStatus = 'Continue';
-                                });
-                                print(response.statusCode);
-                                print(response.body);
-                                var decodedResponse = jsonDecode(response.body);
-                                String status = decodedResponse['status'];
+                      primaryButton(
+                          context: context,
+                          buttonText: setButtonStatus,
+                          onTap: () async {
+                            if (selectedImageInBase64.isEmpty) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                        'Please add your profile pic',
+                                        style: kToastTextStyle,
+                                      )));
+                            } else if (phoneNumberController.text.isEmpty) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                        'Please enter your phone number',
+                                        style: kToastTextStyle,
+                                      )));
+                            } else if (addressController.text.isEmpty) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                        'Please add your address',
+                                        style: kToastTextStyle,
+                                      )));
+                            } else {
+                              print(
+                                  'address: ${addressController.text.toString()}');
+                              List<Location> locations =
+                                  await locationFromAddress(
+                                      addressController.text.toString());
+                              print(locations);
+                              print(locations[0].longitude);
+                              print(locations[0].latitude);
+                              latitude = locations[0].latitude;
+                              longitude = locations[0].longitude;
+                              setState(() {
+                                setLoader = true;
+                                setButtonStatus = 'Please wait..';
+                              });
+                              Response response = await sendPostRequest(
+                                  action: 'complete_profile',
+                                  data: {
+                                    'users_customers_id': userId.toString(),
+                                    'phone':
+                                        phoneNumberController.text.toString(),
+                                    'address':
+                                        addressController.text.toString(),
+                                    'latitude': latitude.toString(),
+                                    'longitude': longitude.toString(),
+                                    'profile_pic': selectedImageInBase64,
+                                  });
+                              setState(() {
+                                setLoader = false;
+                                setButtonStatus = 'Continue';
+                              });
+                              print(response.statusCode);
+                              print(response.body);
+                              var decodedResponse = jsonDecode(response.body);
+                              String status = decodedResponse['status'];
 
-                                if (status == 'success') {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: primaryBlue,
-                                          content: Text(
-                                            'Success',
-                                            style: kToastTextStyle,
-                                          )));
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) => LogInScreen(),
-                                  //     ));
-                                  // ignore: use_build_context_synchronously
-                                }
-                                if (status == 'error') {
-                                  String message = decodedResponse?['message'];
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.red,
-                                          content: Text(
-                                            message,
-                                            style: kToastTextStyle,
-                                          )));
-                                }
+                              if (status == 'success') {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: primaryBlue,
+                                        content: Text(
+                                          'Success',
+                                          style: kToastTextStyle,
+                                        )));
+                                dynamic data = decodedResponse['data'];
+
+                                await preferences.setInt(
+                                    'userId', data['users_customers_id']);
+                                await preferences.setString(
+                                    'first_name', data['first_name']);
+                                await preferences.setString(
+                                    'last_name', data['last_name']);
+                                await preferences.setString(
+                                    'email', data['email']);
+                                await preferences.setString('profile_pic',
+                                    imgBaseUrl + data['profile_pic']);
+                                await preferences.setString(
+                                    'phone_number', data['phone']);
+                                await preferences.setString(
+                                    'address', data['address']);
+                                await preferences.setString(
+                                    'latitude', data['latitude']);
+                                await preferences.setString(
+                                    'longitude', data['longitude']);
+
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                  builder: (context) {
+                                    return BottomNavBar(
+                                      loginAsGuest: false,
+                                    );
+                                  },
+                                ), (route) => false);
+                                // Navigator.of(context).pushAndRemoveUntil(
+                                //     MaterialPageRoute(
+                                //         builder: (context) => BottomNavBar(
+                                //           loginAsGuest: false,
+                                //         )),
+                                //         (Route<dynamic> route) => false);
+                                // ignore: use_build_context_synchronously
                               }
-                            },
-                            showLoader: setLoader),
-                      ),
+                              if (status == 'error') {
+                                String message = decodedResponse?['message'];
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Text(
+                                          message,
+                                          style: kToastTextStyle,
+                                        )));
+                              }
+                            }
+                          },
+                          showLoader: setLoader),
                     ],
                   ),
                 ),

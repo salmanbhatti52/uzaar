@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Uzaar/screens/BeforeLoginScreens/forgot_password_screen.dart';
 import 'package:Uzaar/services/restService.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import 'package:Uzaar/widgets/text_form_field_reusable.dart';
 import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:Uzaar/widgets/text.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'signup_screen.dart';
 
@@ -34,10 +36,16 @@ class _LogInScreenState extends State<LogInScreen> {
   bool isHidden = true;
   bool setLoader = false;
   String setButtonStatus = 'Login';
+  late SharedPreferences preferences;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    setPreferences();
+  }
+
+  setPreferences() async {
+    preferences = await SharedPreferences.getInstance();
   }
 
   @override
@@ -151,7 +159,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              ResetPasswordScreen(),
+                                              ForgotPasswordScreen(),
                                         ));
                                     // Navigator.pushNamed(
                                     //     context, ResetPasswordScreen.id);
@@ -228,12 +236,32 @@ class _LogInScreenState extends State<LogInScreen> {
                                           'Success',
                                           style: kToastTextStyle,
                                         )));
-                                // Navigator.of(context).pushAndRemoveUntil(
-                                //     MaterialPageRoute(
-                                //         builder: (context) => BottomNavBar(
-                                //               loginAsGuest: false,
-                                //             )),
-                                //     (Route<dynamic> route) => false);
+                                dynamic data = decodedResponse['data'];
+
+                                await preferences.setInt(
+                                    'userId', data['users_customers_id']);
+                                await preferences.setString(
+                                    'first_name', data['first_name']);
+                                await preferences.setString(
+                                    'last_name', data['last_name']);
+                                await preferences.setString(
+                                    'email', data['email']);
+                                await preferences.setString('profile_pic',
+                                    imgBaseUrl + data['profile_pic']);
+                                await preferences.setString(
+                                    'phone_number', data['phone']);
+                                await preferences.setString(
+                                    'address', data['address']);
+                                await preferences.setString(
+                                    'latitude', data['latitude']);
+                                await preferences.setString(
+                                    'longitude', data['longitude']);
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => BottomNavBar(
+                                              loginAsGuest: false,
+                                            )),
+                                    (Route<dynamic> route) => false);
                                 // ignore: use_build_context_synchronously
                               }
                               if (status == 'error') {
@@ -249,9 +277,6 @@ class _LogInScreenState extends State<LogInScreen> {
                             }
                           },
                           showLoader: setLoader),
-                      SizedBox(
-                        height: 20.h,
-                      ),
                       googleButton(context),
                       SizedBox(
                         height: 20.h,

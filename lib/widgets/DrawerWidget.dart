@@ -4,6 +4,7 @@ import 'package:Uzaar/screens/SideMenuScreens/privacy_policy_screen.dart';
 import 'package:Uzaar/screens/SideMenuScreens/terms_of_use_screen.dart';
 
 import 'package:Uzaar/screens/SideMenuScreens/settings_screen.dart';
+import 'package:Uzaar/services/restService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -24,10 +25,26 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> {
+  late SharedPreferences sharedPref;
+  late String imageUrl;
   removeDataFormSharedPreferences() async {
-    SharedPreferences sharedPref = await SharedPreferences.getInstance();
     await sharedPref.clear();
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getProfile();
+  }
+
+  Future<String>? getProfile() async {
+    imageUrl = '';
+    sharedPref = await SharedPreferences.getInstance();
+    imageUrl = sharedPref.getString('profile_pic')!;
+    print(imageUrl);
+    return imageUrl;
   }
 
   @override
@@ -62,10 +79,37 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                     ),
-                    child: Image.asset(
-                      'assets/dummy_profile.png',
-                      fit: BoxFit.scaleDown,
+                    // child: CircleAvatar(
+                    //   backgroundColor: f5f5f5,
+                    // ),
+                    child: FutureBuilder<String>(
+                      future: getProfile(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          // Show a loading indicator or placeholder while waiting for the image URL
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          // Handle error, e.g., display a placeholder or error message
+                          return Image.asset('assets/error_image.png');
+                        } else {
+                          // Load the image using the retrieved URL
+                          return CircleAvatar(
+                            radius: 5.0, // Adjust the radius as needed
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: snapshot.data == null
+                                ? AssetImage('assets/dummy_profile.png')
+                                : NetworkImage(
+                                    snapshot.data.toString(),
+                                  ) as ImageProvider<Object>?,
+                          );
+                        }
+                      },
                     ),
+                    // child: Image.asset(
+                    //   'assets/dummy_profile.png',
+                    //   fit: BoxFit.scaleDown,
+                    // ),
                   ),
                 ),
               ),
@@ -248,6 +292,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     ListTile(
                       style: ListTileStyle.drawer,
                       onTap: () {
+                        removeDataFormSharedPreferences();
                         Navigator.pushReplacement(context, MaterialPageRoute(
                           builder: (context) {
                             return LogInScreen();

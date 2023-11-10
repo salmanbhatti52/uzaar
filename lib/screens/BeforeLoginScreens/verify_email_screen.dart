@@ -6,7 +6,6 @@ import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:http/http.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../widgets/custom_otp_field.dart';
 import 'complete_profile_screen.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -24,6 +23,8 @@ class VerifyEmail extends StatefulWidget {
 class _VerifyEmailState extends State<VerifyEmail> {
   bool showSpinner = false;
   String otpValue = '';
+  bool setLoader = false;
+  String setButtonStatus = 'Continue';
 
   String onSubmitted(String value) {
     otpValue = '';
@@ -209,24 +210,24 @@ class _VerifyEmailState extends State<VerifyEmail> {
                       ),
                     ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      // Navigator.pushNamed(context, CompleteProfileScreen.id);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CompleteProfileScreen(),
-                          ));
-                    },
-                    child: Text(
-                      'Skip for now',
-                      style: kColoredBodyTextStyle.copyWith(
-                          decoration: TextDecoration.underline),
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     // Navigator.pushNamed(context, CompleteProfileScreen.id);
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (context) => CompleteProfileScreen(),
+                  //         ));
+                  //   },
+                  //   child: Text(
+                  //     'Skip for now',
+                  //     style: kColoredBodyTextStyle.copyWith(
+                  //         decoration: TextDecoration.underline),
+                  //   ),
+                  // ),
                   primaryButton(
                       context: context,
-                      buttonText: 'Continue',
+                      buttonText: setButtonStatus,
                       // onTap: () {},
                       onTap: () async {
                         if (otpValue.characters.length < 4) {
@@ -241,38 +242,44 @@ class _VerifyEmailState extends State<VerifyEmail> {
                         } else {
                           print('success');
                           setState(() {
-                            showSpinner = true;
+                            setLoader = true;
+                            setButtonStatus = 'Please wait..';
                           });
                           Response response = await sendPostRequest(
                               action: 'verify_email_verification_otp',
                               data: {
-                                // 'email': widget.userEmail,
-                                'email': 'testing123@gmail.com',
+                                'email': widget.userEmail,
                                 'otp': otpValue
                               });
                           setState(() {
-                            showSpinner = false;
+                            setLoader = false;
+                            setButtonStatus = 'Continue';
                           });
                           print(response.statusCode);
                           print(response.body);
                           var decodedResponse = jsonDecode(response.body);
                           String status = decodedResponse['status'];
-                          String message = decodedResponse['message'];
+
                           if (status == 'success') {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 backgroundColor: primaryBlue,
                                 content: Text(
-                                  message,
+                                  'Email verified',
                                   style: kToastTextStyle,
                                 )));
+                            dynamic userData = decodedResponse['data'];
+                            print('userData: $userData');
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) {
-                                return CompleteProfileScreen();
+                                return CompleteProfileScreen(
+                                  userData: userData,
+                                );
                               },
                             ));
                             // ignore: use_build_context_synchronously
                           }
                           if (status == 'error') {
+                            String message = decodedResponse['message'];
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 backgroundColor: Colors.red,
                                 content: Text(
@@ -282,7 +289,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                           }
                         }
                       },
-                      showLoader: false)
+                      showLoader: setLoader)
                 ],
               ),
             ),

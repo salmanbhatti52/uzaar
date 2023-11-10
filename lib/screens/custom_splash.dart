@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/OnboardingScreen.dart';
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/widgets/suffix_svg_icon.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomSplash extends StatefulWidget {
   static const String id = 'custom_splash';
@@ -16,7 +17,7 @@ class CustomSplash extends StatefulWidget {
 }
 
 class _CustomSplashState extends State<CustomSplash> {
-  // late SecureSharedPref secureSharedPref;
+  late SharedPreferences preferences;
   // String isLogin = 'false';
 
   @override
@@ -26,18 +27,20 @@ class _CustomSplashState extends State<CustomSplash> {
   }
 
   init() async {
-    // secureSharedPref = await SecureSharedPref.getInstance();
+    preferences = await SharedPreferences.getInstance();
+    int? userId = await preferences.getInt('userId');
+    print('userid: $userId');
     // isLogin = (await secureSharedPref.getString('isLogin')) ?? 'false';
 
-    // Future.delayed(
-    //   const Duration(seconds: 1),
-    //   () async {
-    //     Navigator.pushReplacementNamed(
-    //       context,
-    //       OnBoardingScreen.id,
-    //     );
-    //   },
-    // );
+    Future.delayed(
+      const Duration(seconds: 2),
+      () async {
+        Navigator.pushReplacementNamed(
+          context,
+          userId != null ? BottomNavBar.id : OnBoardingScreen.id,
+        );
+      },
+    );
   }
 
   @override
