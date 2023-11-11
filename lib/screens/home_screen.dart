@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:Uzaar/screens/BusinessDetailPages/housing_details_page.dart';
 import 'package:Uzaar/services/restService.dart';
 import 'package:Uzaar/widgets/featured_housing_widget.dart';
@@ -49,29 +51,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
   getUserData() async {
     preferences = await SharedPreferences.getInstance();
-    int? userId = preferences.getInt('userId');
-    String? firstName = preferences.getString('first_name');
-    String? lastName = preferences.getString('last_name');
-    String? email = preferences.getString('email');
-    String? profilePic = preferences.getString('profile_pic');
-    String? phoneNumber = preferences.getString('phone_number');
-    String? address = preferences.getString('address');
-    String? latitude = preferences.getString('latitude');
-    String? longitude = preferences.getString('longitude');
+    loginAsGuestGV = preferences.getBool('loginAsGuest')!;
+    print('Login as Guest Status: $loginAsGuestGV');
 
-    userData = {
-      'userId': userId,
-      'firstName': firstName,
-      'lastName': lastName,
-      'email': email,
-      'profilePic': profilePic,
-      'phoneNumber': phoneNumber,
-      'address': address,
-      'latitude': latitude,
-      'longitude': longitude,
-    };
+    if (loginAsGuestGV == false) {
+      int? userId = preferences.getInt('userId');
+      String? firstName = preferences.getString('first_name');
+      String? lastName = preferences.getString('last_name');
+      String? email = preferences.getString('email');
+      String? profilePic = preferences.getString('profile_pic');
+      String? phoneNumber = preferences.getString('phone_number');
+      String? address = preferences.getString('address');
+      String? latitude = preferences.getString('latitude');
+      String? longitude = preferences.getString('longitude');
 
-    print(userData['profilePic']);
+      userDataGV = {
+        'userId': userId,
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'profilePic': profilePic,
+        'phoneNumber': phoneNumber,
+        'address': address,
+        'latitude': latitude,
+        'longitude': longitude,
+      };
+
+      print(userDataGV['profilePic']);
+    }
   }
 
   handleOptionSelection(ReportReason reason) {

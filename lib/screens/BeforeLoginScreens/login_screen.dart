@@ -238,6 +238,8 @@ class _LogInScreenState extends State<LogInScreen> {
                                         )));
                                 dynamic data = decodedResponse['data'];
 
+                                await preferences.setBool(
+                                    'loginAsGuest', false);
                                 await preferences.setInt(
                                     'userId', data['users_customers_id']);
                                 await preferences.setString(
@@ -287,7 +289,8 @@ class _LogInScreenState extends State<LogInScreen> {
                       ),
                       outlinedButton(
                         context,
-                        () {
+                        () async {
+                          await preferences.setBool('loginAsGuest', true);
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => BottomNavBar(

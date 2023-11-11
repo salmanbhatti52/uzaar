@@ -3,7 +3,9 @@ import 'dart:convert';
 
 const apiBaseUrl = 'https://uzaar.eigix.net/api/';
 const imgBaseUrl = 'https://uzaar.eigix.net/public/';
-Map<String, dynamic> userData = {};
+
+Map<String, dynamic> userDataGV = {}; //GV : GlobalVariable
+bool loginAsGuestGV = false; //GV : GlobalVariable
 
 Future<http.Response> sendGetRequest(String action) {
   return http.get(Uri.parse(apiBaseUrl + action));

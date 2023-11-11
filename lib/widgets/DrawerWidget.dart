@@ -54,19 +54,23 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DrawerHeader(
-                padding: EdgeInsets.zero,
-                margin: EdgeInsets.only(top: 16),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white, width: 0),
-                ),
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    userData['profilePic'],
-                  ),
-                  backgroundColor: Color(0xFFD9D9D9),
-                ),
-              ),
+              loginAsGuestGV == true
+                  ? SizedBox(
+                      height: 50,
+                    )
+                  : DrawerHeader(
+                      padding: EdgeInsets.zero,
+                      margin: EdgeInsets.only(top: 16),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white, width: 0),
+                      ),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          userDataGV['profilePic'],
+                        ),
+                        backgroundColor: Color(0xFFD9D9D9),
+                      ),
+                    ),
               Container(
                 margin: EdgeInsets.only(left: 40, top: 15),
                 color: white,

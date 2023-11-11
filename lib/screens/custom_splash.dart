@@ -28,17 +28,27 @@ class _CustomSplashState extends State<CustomSplash> {
 
   init() async {
     preferences = await SharedPreferences.getInstance();
-    int? userId = await preferences.getInt('userId');
+    int? userId = preferences.getInt('userId');
+    bool? loginAsGuest = preferences.getBool('loginAsGuest');
     print('userid: $userId');
-    // isLogin = (await secureSharedPref.getString('isLogin')) ?? 'false';
+    print('loginAsGuest: $loginAsGuest');
 
     Future.delayed(
       const Duration(seconds: 2),
       () async {
-        Navigator.pushReplacementNamed(
-          context,
-          userId != null ? BottomNavBar.id : OnBoardingScreen.id,
-        );
+        Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) {
+            return userId != null && loginAsGuest == false
+                ? BottomNavBar(
+                    loginAsGuest: false,
+                  )
+                : loginAsGuest == true
+                    ? BottomNavBar(
+                        loginAsGuest: true,
+                      )
+                    : OnBoardingScreen();
+          },
+        ));
       },
     );
   }

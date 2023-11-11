@@ -350,7 +350,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                           style: kToastTextStyle,
                                         )));
                                 dynamic data = decodedResponse['data'];
-
+                                await preferences.setBool(
+                                    'loginAsGuest', false);
                                 await preferences.setInt(
                                     'userId', data['users_customers_id']);
                                 await preferences.setString(
