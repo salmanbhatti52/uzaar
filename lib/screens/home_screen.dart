@@ -1,4 +1,5 @@
 import 'package:Uzaar/screens/BusinessDetailPages/housing_details_page.dart';
+import 'package:Uzaar/services/restService.dart';
 import 'package:Uzaar/widgets/featured_housing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +14,7 @@ import 'package:Uzaar/widgets/featured_services_widget.dart';
 import 'package:Uzaar/models/ProductCategoryModel.dart';
 import 'package:Uzaar/models/ServicesCategoryModel.dart';
 import 'package:Uzaar/widgets/search_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/Buttons.dart';
 import '../widgets/DrawerWidget.dart';
@@ -37,11 +39,39 @@ class _HomeScreenState extends State<HomeScreen> {
   final searchController = TextEditingController();
   late Set<ReportReason> selectedReasons = {};
   // final GlobalKey<FormState> _key = GlobalKey();
-
+  late SharedPreferences preferences;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getUserData();
+  }
+
+  getUserData() async {
+    preferences = await SharedPreferences.getInstance();
+    int? userId = preferences.getInt('userId');
+    String? firstName = preferences.getString('first_name');
+    String? lastName = preferences.getString('last_name');
+    String? email = preferences.getString('email');
+    String? profilePic = preferences.getString('profile_pic');
+    String? phoneNumber = preferences.getString('phone_number');
+    String? address = preferences.getString('address');
+    String? latitude = preferences.getString('latitude');
+    String? longitude = preferences.getString('longitude');
+
+    userData = {
+      'userId': userId,
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+      'profilePic': profilePic,
+      'phoneNumber': phoneNumber,
+      'address': address,
+      'latitude': latitude,
+      'longitude': longitude,
+    };
+
+    print(userData['profilePic']);
   }
 
   handleOptionSelection(ReportReason reason) {

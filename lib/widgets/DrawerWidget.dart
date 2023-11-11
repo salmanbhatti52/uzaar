@@ -15,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/SideMenuScreens/my_orders_screen.dart';
 import '../screens/SideMenuScreens/sales_orders_screen.dart';
+import 'drawer_list_tile.dart';
 
 class DrawerWidget extends StatefulWidget {
   final BuildContext buildContext;
@@ -26,8 +27,9 @@ class DrawerWidget extends StatefulWidget {
 
 class _DrawerWidgetState extends State<DrawerWidget> {
   late SharedPreferences sharedPref;
-  late String imageUrl;
+
   removeDataFormSharedPreferences() async {
+    sharedPref = await SharedPreferences.getInstance();
     await sharedPref.clear();
     setState(() {});
   }
@@ -36,15 +38,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getProfile();
-  }
-
-  Future<String>? getProfile() async {
-    imageUrl = '';
-    sharedPref = await SharedPreferences.getInstance();
-    imageUrl = sharedPref.getString('profile_pic')!;
-    print(imageUrl);
-    return imageUrl;
   }
 
   @override
@@ -55,278 +48,140 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
         ),
-        backgroundColor: white,
+        backgroundColor: Colors.white,
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            // mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                color: Colors.white,
-                // height: 220,
-                width: MediaQuery.sizeOf(context).width,
-                child: DrawerHeader(
-                  padding: EdgeInsets.zero,
-                  margin: EdgeInsets.zero,
-                  decoration: BoxDecoration(
-                    color: white,
+              DrawerHeader(
+                padding: EdgeInsets.zero,
+                margin: EdgeInsets.only(top: 16),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white, width: 0),
+                ),
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    userData['profilePic'],
                   ),
-                  child: Container(
-                    margin: EdgeInsets.only(top: 30),
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    // child: CircleAvatar(
-                    //   backgroundColor: f5f5f5,
-                    // ),
-                    child: FutureBuilder<String>(
-                      future: getProfile(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          // Show a loading indicator or placeholder while waiting for the image URL
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          // Handle error, e.g., display a placeholder or error message
-                          return Image.asset('assets/error_image.png');
-                        } else {
-                          // Load the image using the retrieved URL
-                          return CircleAvatar(
-                            radius: 5.0, // Adjust the radius as needed
-                            backgroundColor: Colors.transparent,
-                            backgroundImage: snapshot.data == null
-                                ? AssetImage('assets/dummy_profile.png')
-                                : NetworkImage(
-                                    snapshot.data.toString(),
-                                  ) as ImageProvider<Object>?,
-                          );
-                        }
-                      },
-                    ),
-                    // child: Image.asset(
-                    //   'assets/dummy_profile.png',
-                    //   fit: BoxFit.scaleDown,
-                    // ),
-                  ),
+                  backgroundColor: Color(0xFFD9D9D9),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 40, top: 10),
+                margin: EdgeInsets.only(left: 40, top: 15),
                 color: white,
                 // width: MediaQuery.sizeOf(context).width,
                 height: MediaQuery.sizeOf(context).height * 0.79,
                 child: Column(
                   children: [
                     // profile list
+                    DrawerListTile(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => MyOrdersScreen()
+                              // SalesProfileMain(),
+                              ));
+                        },
+                        tileImageName: 'order-icon.svg',
+                        tileTitle: 'My Orders'),
 
-                    ListTile(
-                      style: ListTileStyle.drawer,
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => MyOrdersScreen()
-                            // SalesProfileMain(),
-                            ));
-                      },
-                      leading: SvgPicture.asset(
-                        'assets/order-icon.svg',
-                        colorFilter:
-                            ColorFilter.mode(primaryBlue, BlendMode.srcIn),
-                      ),
-                      title: Text(
-                        'My Orders',
-                        style: kBodyTextStyle,
-                      ),
-                      visualDensity: VisualDensity.compact,
-                      contentPadding: EdgeInsets.zero,
-                      dense: true,
-                    ),
                     SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
-                    ListTile(
+                    DrawerListTile(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => SalesOrdersScreen(),
                         ));
                       },
-                      style: ListTileStyle.drawer,
-                      leading: SvgPicture.asset(
-                        'assets/order-icon.svg',
-                        colorFilter:
-                            ColorFilter.mode(primaryBlue, BlendMode.srcIn),
-                      ),
-                      title: Text(
-                        'Sales Orders',
-                        style: kBodyTextStyle,
-                      ),
-                      visualDensity: VisualDensity.compact,
-                      contentPadding: EdgeInsets.zero,
-                      dense: true,
+                      tileImageName: 'order-icon.svg',
+                      tileTitle: 'Sales Orders',
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
-                    ListTile(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SettingScreen(),
-                        ));
-                      },
-                      style: ListTileStyle.drawer,
-                      leading: SvgPicture.asset(
-                        'assets/settings-icon.svg',
-                        colorFilter:
-                            ColorFilter.mode(primaryBlue, BlendMode.srcIn),
-                      ),
-                      title: Text(
-                        'Settings',
-                        style: kBodyTextStyle,
-                      ),
-                      visualDensity: VisualDensity.compact,
-                      contentPadding: EdgeInsets.zero,
-                      dense: true,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    DrawerListTile(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => SettingScreen(),
+                          ));
+                        },
+                        tileImageName: 'settings-icon.svg',
+                        tileTitle: 'Settings'),
 
-                    ListTile(
+                    SizedBox(
+                      height: 15,
+                    ),
+                    DrawerListTile(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => TermsOfUseScreen(),
                         ));
                       },
-                      style: ListTileStyle.drawer,
-                      leading: SvgPicture.asset(
-                        'assets/terms_of_use_icon.svg',
-                        colorFilter:
-                            ColorFilter.mode(primaryBlue, BlendMode.srcIn),
-                      ),
-                      title: Text(
-                        'Terms of Use',
-                        style: kBodyTextStyle,
-                      ),
-                      visualDensity: VisualDensity.compact,
-                      contentPadding: EdgeInsets.zero,
-                      dense: true,
-                    ),
-                    SizedBox(
-                      height: 10,
+                      tileImageName: 'terms_of_use_icon.svg',
+                      tileTitle: 'Terms of Use',
                     ),
 
-                    ListTile(
+                    SizedBox(
+                      height: 15,
+                    ),
+                    DrawerListTile(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => PrivacyPolicyScreen(),
                         ));
                       },
-                      style: ListTileStyle.drawer,
-                      leading: SvgPicture.asset(
-                        'assets/safety_and_privacy_icon.svg',
-                        colorFilter:
-                            ColorFilter.mode(primaryBlue, BlendMode.srcIn),
-                      ),
-                      title: Text(
-                        'Safety & Privacy',
-                        style: kBodyTextStyle,
-                      ),
-                      visualDensity: VisualDensity.compact,
-                      contentPadding: EdgeInsets.zero,
-                      dense: true,
-                    ),
-                    SizedBox(
-                      height: 10,
+                      tileImageName: 'safety_and_privacy_icon.svg',
+                      tileTitle: 'Safety & Privacy',
                     ),
 
-                    ListTile(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ContactUsScreen(),
-                        ));
-                      },
-                      style: ListTileStyle.drawer,
-                      leading: SvgPicture.asset(
-                        'assets/contact_us_icon.svg',
-                        colorFilter:
-                            ColorFilter.mode(primaryBlue, BlendMode.srcIn),
-                      ),
-                      title: Text(
-                        'Contact Us',
-                        style: kBodyTextStyle,
-                      ),
-                      visualDensity: VisualDensity.compact,
-                      contentPadding: EdgeInsets.zero,
-                      dense: true,
-                    ),
                     SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
+                    DrawerListTile(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ContactUsScreen(),
+                          ));
+                        },
+                        tileImageName: 'contact_us_icon.svg',
+                        tileTitle: 'Contact Us'),
 
-                    ListTile(
+                    SizedBox(
+                      height: 15,
+                    ),
+                    DrawerListTile(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => AboutUsScreen(),
                         ));
                       },
-                      style: ListTileStyle.drawer,
-                      leading: SvgPicture.asset(
-                        'assets/about_us_icon.svg',
-                        colorFilter:
-                            ColorFilter.mode(primaryBlue, BlendMode.srcIn),
-                      ),
-                      title: Text(
-                        'About Us',
-                        style: kBodyTextStyle,
-                      ),
-                      visualDensity: VisualDensity.compact,
-                      contentPadding: EdgeInsets.zero,
-                      dense: true,
+                      tileImageName: 'about_us_icon.svg',
+                      tileTitle: 'About Us',
                     ),
+
                     SizedBox(
-                      height: 12,
+                      height: 35,
                     ),
+                    DrawerListTile(
+                        onTap: () {
+                          removeDataFormSharedPreferences();
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context) {
+                              return LogInScreen();
+                            },
+                          ));
+                        },
+                        tileImageName: 'logout-icon.svg',
+                        tileTitle: 'Logout'),
 
-                    ListTile(
-                      style: ListTileStyle.drawer,
-                      onTap: () {
-                        removeDataFormSharedPreferences();
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                          builder: (context) {
-                            return LogInScreen();
-                          },
-                        ));
-
-                        // removeDataFormSharedPreferences();
-                        // Navigator.of(context).pushAndRemoveUntil(
-                        //   MaterialPageRoute(
-                        //       builder: (context) => const LogInScreen()),
-                        //   (Route<dynamic> route) => false,
-                        // );
-                      },
-                      leading: SvgPicture.asset(
-                        'assets/logout-icon.svg',
-                        colorFilter:
-                            ColorFilter.mode(primaryBlue, BlendMode.srcIn),
-                      ),
-                      title: Text(
-                        'Logout',
-                        style: kBodyTextStyle,
-                      ),
-                      visualDensity: VisualDensity.compact,
-                      contentPadding: EdgeInsets.zero,
-                      dense: true,
-                    ),
                     // SizedBox(
-                    //   height: 12,
+                    //   height: 40,
                     // ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    // log out tile
+                    Spacer(),
+
                     ListTile(
+                      onTap: null,
                       leading: SvgPicture.asset('assets/dlt-icon.svg'),
                       title: Text(
                         'Delete Account',

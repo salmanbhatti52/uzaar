@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../utils/Colors.dart';
-
 const apiBaseUrl = 'https://uzaar.eigix.net/api/';
 const imgBaseUrl = 'https://uzaar.eigix.net/public/';
+Map<String, dynamic> userData = {};
 
 Future<http.Response> sendGetRequest(String action) {
   return http.get(Uri.parse(apiBaseUrl + action));
