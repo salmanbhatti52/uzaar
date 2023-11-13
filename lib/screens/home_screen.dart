@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
         'longitude': longitude,
       };
 
-      print(userDataGV['profilePic']);
+      print(userDataGV);
     }
   }
 

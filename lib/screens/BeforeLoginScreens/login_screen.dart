@@ -248,16 +248,19 @@ class _LogInScreenState extends State<LogInScreen> {
                                     'last_name', data['last_name']);
                                 await preferences.setString(
                                     'email', data['email']);
-                                await preferences.setString('profile_pic',
-                                    imgBaseUrl + data['profile_pic']);
-                                await preferences.setString(
-                                    'phone_number', data['phone']);
-                                await preferences.setString(
-                                    'address', data['address']);
-                                await preferences.setString(
-                                    'latitude', data['latitude']);
-                                await preferences.setString(
-                                    'longitude', data['longitude']);
+                                if (data['profile_pic'] != null) {
+                                  await preferences.setString('profile_pic',
+                                      imgBaseUrl + data['profile_pic']);
+                                  await preferences.setString(
+                                      'phone_number', data['phone']);
+                                  await preferences.setString(
+                                      'address', data['address']);
+                                  await preferences.setString(
+                                      'latitude', data['latitude']);
+                                  await preferences.setString(
+                                      'longitude', data['longitude']);
+                                }
+
                                 Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
                                         builder: (context) => BottomNavBar(

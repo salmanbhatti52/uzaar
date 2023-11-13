@@ -228,7 +228,16 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   primaryButton(
                       context: context,
                       buttonText: setButtonStatus,
-                      // onTap: () {},
+                      // onTap: () {
+                      //   dynamic userData;
+                      //   Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) {
+                      //       return CompleteProfileScreen(
+                      //         userData: userData,
+                      //       );
+                      //     },
+                      //   ));
+                      // },
                       onTap: () async {
                         if (otpValue.characters.length < 4) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(

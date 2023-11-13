@@ -11,6 +11,8 @@ import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
 
+enum FurnishedConditions { yes, no }
+
 class HouseAddScreen extends StatefulWidget {
   HouseAddScreen({super.key, this.editDetails});
   bool? editDetails;
@@ -34,6 +36,13 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
   List<String> boostingOptions = ['Free', 'Paid'];
   List<int> bedrooms = [1, 2, 3, 4, 5];
   List<int> bathrooms = [1, 2, 3, 4, 5];
+
+  FurnishedConditions? _selectedCondition = FurnishedConditions.no;
+
+  updateSelectedCondition(value) {
+    _selectedCondition = value;
+    print(_selectedCondition);
+  }
 
   @override
   void initState() {

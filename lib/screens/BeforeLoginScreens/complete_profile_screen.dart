@@ -56,10 +56,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     // TODO: implement initState
     super.initState();
     setPreferences();
-    userId = widget.userData['users_customers_id'];
-    firstName = widget.userData['first_name'];
-    lastName = widget.userData['last_name'];
-    email = widget.userData['email'];
+    if (widget.userData != null) {
+      userId = widget.userData['users_customers_id'];
+      firstName = widget.userData['first_name'];
+      lastName = widget.userData['last_name'];
+      email = widget.userData['email'];
+    }
   }
 
   setPreferences() async {
@@ -275,7 +277,36 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 60.h,
+                        height: 40,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          await preferences.setBool('loginAsGuest', false);
+                          await preferences.setInt(
+                              'userId', widget.userData['users_customers_id']);
+                          await preferences.setString(
+                              'first_name', widget.userData['first_name']);
+                          await preferences.setString(
+                              'last_name', widget.userData['last_name']);
+                          await preferences.setString(
+                              'email', widget.userData['email']);
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                            builder: (context) {
+                              return BottomNavBar(
+                                loginAsGuest: false,
+                              );
+                            },
+                          ), (route) => false);
+                        },
+                        child: Text(
+                          'Skip for now',
+                          style: kColoredBodyTextStyle.copyWith(
+                              decoration: TextDecoration.underline),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
                       ),
                       primaryButton(
                           context: context,

@@ -21,6 +21,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
   String? selectedCategory;
   String? selectedPrice;
   String? selectedLocation;
+  String? furnishedVal;
 
   final List<String> categories = [
     'Electronics',
@@ -36,6 +37,11 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
     'Multan',
     'Lahore',
     'Karachi',
+  ];
+
+  final List<String> furnished = [
+    'Yes',
+    'No',
   ];
 
   final List<String> prices = [
@@ -200,6 +206,27 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                     });
                   },
                   dropdownMenuEntries: locations
+                      .map(
+                        (String value) => DropdownMenuEntry<String>(
+                            value: value, label: value),
+                      )
+                      .toList(),
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+                RoundedSmallDropdownMenu(
+                  // trailingIconName: 'blue_address_icon',
+                  width: 170,
+                  leadingIconName:
+                      furnishedVal != null ? 'cat-selected' : 'cat-unselected',
+                  hintText: 'Location',
+                  onSelected: (value) {
+                    setState(() {
+                      furnishedVal = value;
+                    });
+                  },
+                  dropdownMenuEntries: furnished
                       .map(
                         (String value) => DropdownMenuEntry<String>(
                             value: value, label: value),

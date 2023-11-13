@@ -64,12 +64,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.white, width: 0),
                       ),
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          userDataGV['profilePic'],
-                        ),
-                        backgroundColor: Color(0xFFD9D9D9),
-                      ),
+                      child: userDataGV['profilePic'] != null
+                          ? CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                userDataGV['profilePic'],
+                              ),
+                              backgroundColor: Color(0xFFD9D9D9),
+                            )
+                          : CircleAvatar(
+                              backgroundColor: Color(0xFFD9D9D9),
+                            ),
                     ),
               Container(
                 margin: EdgeInsets.only(left: 40, top: 15),
