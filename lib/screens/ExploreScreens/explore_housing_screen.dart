@@ -220,7 +220,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                   width: 170,
                   leadingIconName:
                       furnishedVal != null ? 'cat-selected' : 'cat-unselected',
-                  hintText: 'Location',
+                  hintText: 'Furnished',
                   onSelected: (value) {
                     setState(() {
                       furnishedVal = value;

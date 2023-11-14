@@ -65,6 +65,8 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                   ),
                                   leading: Radio(
                                     activeColor: primaryBlue,
+                                    fillColor:
+                                        MaterialStatePropertyAll(primaryBlue),
                                     value: BoostingPackages.pkg1,
                                     groupValue: _selectedPackage,
                                     onChanged: (value) {
@@ -84,6 +86,8 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                   ),
                                   leading: Radio(
                                     activeColor: primaryBlue,
+                                    fillColor:
+                                        MaterialStatePropertyAll(primaryBlue),
                                     value: BoostingPackages.pkg2,
                                     groupValue: _selectedPackage,
                                     onChanged: (value) {
@@ -103,6 +107,8 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                   ),
                                   leading: Radio(
                                     activeColor: primaryBlue,
+                                    fillColor:
+                                        MaterialStatePropertyAll(primaryBlue),
                                     value: BoostingPackages.pkg3,
                                     groupValue: _selectedPackage,
                                     onChanged: (value) {
@@ -122,6 +128,8 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                   ),
                                   leading: Radio(
                                     activeColor: primaryBlue,
+                                    fillColor:
+                                        MaterialStatePropertyAll(primaryBlue),
                                     value: BoostingPackages.pkg4,
                                     groupValue: _selectedPackage,
                                     onChanged: (value) {

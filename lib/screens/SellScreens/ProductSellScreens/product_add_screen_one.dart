@@ -14,7 +14,7 @@ import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
 
-enum Condition { fresh, used }
+enum ProductConditions { fresh, used }
 
 class ProductAddScreenOne extends StatefulWidget {
   static const String id = 'product_add_screen_one';
@@ -40,7 +40,11 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
   ];
   late String? dropDownValue;
 
-  Condition selectedProductCondition = Condition.fresh;
+  ProductConditions _selectedProductCondition = ProductConditions.fresh;
+  updateSelectedCondition(value) {
+    _selectedProductCondition = value;
+    print(_selectedProductCondition);
+  }
 
   @override
   void initState() {
@@ -151,39 +155,64 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                       SizedBox(
                         height: 7.h,
                       ),
-                      Row(
-                        children: [
-                          ImageWithText(
-                            onTap: () {
-                              setState(() {
-                                selectedProductCondition = Condition.fresh;
-                              });
-                            },
-                            text: 'New',
-                            imageName:
-                                selectedProductCondition == Condition.fresh
-                                    ? 'radio_filled'
-                                    : 'radio_blank',
-                          ),
-                          SizedBox(
-                            width: 30.w,
-                          ),
-                          ImageWithText(
-                            onTap: () {
-                              setState(() {
-                                selectedProductCondition = Condition.used;
-                              });
-                            },
-                            text: 'Used',
-                            imageName:
-                                selectedProductCondition == Condition.used
-                                    ? 'radio_filled'
-                                    : 'radio_blank',
-                          ),
-                        ],
+                      SizedBox(
+                        height: 35,
+                        child: Row(
+                          children: [
+                            Row(
+                              children: [
+                                Radio(
+                                  activeColor: primaryBlue,
+                                  fillColor:
+                                      MaterialStatePropertyAll(primaryBlue),
+                                  value: ProductConditions.fresh,
+                                  groupValue: _selectedProductCondition,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      updateSelectedCondition(value);
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                Text(
+                                  'New',
+                                  style: kTextFieldInputStyle,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                  activeColor: primaryBlue,
+                                  fillColor:
+                                      MaterialStatePropertyAll(primaryBlue),
+                                  value: ProductConditions.used,
+                                  groupValue: _selectedProductCondition,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      updateSelectedCondition(value);
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                Text(
+                                  'Used',
+                                  style: kTextFieldInputStyle,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(
-                        height: 14.h,
+                        height: 10.h,
                       ),
                       Align(
                         alignment: Alignment.centerLeft,

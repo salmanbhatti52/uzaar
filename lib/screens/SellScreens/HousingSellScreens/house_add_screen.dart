@@ -146,6 +146,72 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Furnished'),
+                      ),
+                      SizedBox(
+                        height: 7.h,
+                      ),
+                      SizedBox(
+                        height: 35,
+                        child: Row(
+                          children: [
+                            Row(
+                              children: [
+                                Radio(
+                                  activeColor: primaryBlue,
+                                  fillColor:
+                                      MaterialStatePropertyAll(primaryBlue),
+                                  value: FurnishedConditions.yes,
+                                  groupValue: _selectedCondition,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      updateSelectedCondition(value);
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                Text(
+                                  'Yes',
+                                  style: kTextFieldInputStyle,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                  activeColor: primaryBlue,
+                                  fillColor:
+                                      MaterialStatePropertyAll(primaryBlue),
+                                  value: FurnishedConditions.no,
+                                  groupValue: _selectedCondition,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      updateSelectedCondition(value);
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                Text(
+                                  'No',
+                                  style: kTextFieldInputStyle,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Location'),
                       ),
                       SizedBox(
