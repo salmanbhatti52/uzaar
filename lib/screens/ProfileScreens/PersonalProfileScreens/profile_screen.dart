@@ -1,4 +1,3 @@
-import 'package:Uzaar/screens/ProfileScreens/PersonalProfileScreens/personal_info_screen.dart';
 import 'package:Uzaar/screens/ProfileScreens/PersonalProfileScreens/profile_reviews_screen.dart';
 import 'package:Uzaar/screens/ProfileScreens/edit_profile_screen.dart';
 import 'package:Uzaar/screens/ProfileScreens/apply_for_verification_screen.dart';
@@ -11,8 +10,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:Uzaar/utils/colors.dart';
 
+import '../../../services/restService.dart';
 import '../../../widgets/DrawerWidget.dart';
 import '../../../widgets/business_type_button.dart';
+import '../../../widgets/suffix_svg_icon.dart';
+import '../../../widgets/text.dart';
+import '../../../widgets/text_form_field_reusable.dart';
 import '../../chat_list_screen.dart';
 import '../../notifications_screen.dart';
 
@@ -24,6 +27,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final addressController = TextEditingController();
+  final phoneNumberController = TextEditingController();
   int selectedCategory = 1;
   // final GlobalKey<FormState> _key = GlobalKey();
 
@@ -31,6 +39,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    firstNameController.text = userDataGV['firstName'];
+    lastNameController.text = userDataGV['lastName'];
+    emailController.text = userDataGV['email'];
+    phoneNumberController.text = userDataGV['phoneNumber'] ?? '';
+    addressController.text = userDataGV['address'] ?? '';
   }
 
   @override
@@ -122,10 +135,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Container(
                       alignment: AlignmentDirectional.topEnd,
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
+                        onTap: () async {
+                          var data = await Navigator.of(context)
+                              .push(MaterialPageRoute(
                             builder: (context) => EditProfileScreen(),
                           ));
+                          print('Data Recieved: $data');
+
+                          firstNameController.text = userDataGV['firstName'];
+                          lastNameController.text = userDataGV['lastName'];
+                          emailController.text = userDataGV['email'];
+                          phoneNumberController.text =
+                              userDataGV['phoneNumber'] ?? '';
+                          addressController.text = userDataGV['address'] ?? '';
                         },
                         child: SvgPicture.asset(
                           'assets/edit_profile.svg',
@@ -239,7 +261,130 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 20,
                     ),
                     selectedCategory == 1
-                        ? PersonalInfoScreen()
+                        ? Container(
+                            margin: EdgeInsets.only(bottom: 22),
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ReusableText(text: 'First Name'),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                SizedBox(
+                                  height: 46,
+                                  child: TextFormFieldWidget(
+                                    readOnly: true,
+                                    controller: firstNameController,
+                                    textInputType: TextInputType.name,
+                                    prefixIcon: SvgPicture.asset(
+                                      'assets/person-icon.svg',
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                    hintText: 'First Name',
+                                    obscureText: null,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 14,
+                                ),
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: ReusableText(text: 'Last Name')),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                SizedBox(
+                                  height: 46,
+                                  child: TextFormFieldWidget(
+                                    readOnly: true,
+                                    controller: lastNameController,
+                                    textInputType: TextInputType.name,
+                                    prefixIcon: SvgPicture.asset(
+                                      'assets/person-icon.svg',
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                    hintText: 'Last Name',
+                                    obscureText: null,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 14,
+                                ),
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: ReusableText(text: 'Email')),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                SizedBox(
+                                  height: 46,
+                                  child: TextFormFieldWidget(
+                                    readOnly: true,
+                                    controller: emailController,
+                                    textInputType: TextInputType.emailAddress,
+                                    prefixIcon: SvgPicture.asset(
+                                      'assets/email-icon.svg',
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                    hintText: 'username@gmail.com',
+                                    obscureText: null,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 14,
+                                ),
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: ReusableText(text: 'Phone Number')),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                SizedBox(
+                                  height: 46,
+                                  child: TextFormFieldWidget(
+                                    readOnly: true,
+                                    controller: phoneNumberController,
+                                    textInputType: TextInputType.phone,
+                                    prefixIcon: SvgIcon(
+                                        imageName: 'assets/phone-fill.svg'),
+                                    hintText: '+4156565662',
+                                    obscureText: null,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 14,
+                                ),
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: ReusableText(text: 'Address')),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                SizedBox(
+                                  height: 46,
+                                  child: TextFormFieldWidget(
+                                    readOnly: true,
+                                    controller: addressController,
+                                    textInputType: TextInputType.streetAddress,
+                                    prefixIcon: SvgPicture.asset(
+                                      'assets/address-icon.svg',
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                    suffixIcon: SvgPicture.asset(
+                                      'assets/address-icon.svg',
+                                      fit: BoxFit.scaleDown,
+                                      colorFilter: ColorFilter.mode(
+                                          primaryBlue, BlendMode.srcIn),
+                                    ),
+                                    hintText: 'Address',
+                                    obscureText: null,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
                         : ProfileReviewsScreen()
                   ],
                 ),

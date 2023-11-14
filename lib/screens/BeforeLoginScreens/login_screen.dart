@@ -241,25 +241,27 @@ class _LogInScreenState extends State<LogInScreen> {
                                 await preferences.setBool(
                                     'loginAsGuest', false);
                                 await preferences.setInt(
-                                    'userId', data['users_customers_id']);
+                                    'user_id', data['users_customers_id']);
                                 await preferences.setString(
                                     'first_name', data['first_name']);
                                 await preferences.setString(
                                     'last_name', data['last_name']);
                                 await preferences.setString(
                                     'email', data['email']);
-                                if (data['profile_pic'] != null) {
-                                  await preferences.setString('profile_pic',
-                                      imgBaseUrl + data['profile_pic']);
-                                  await preferences.setString(
-                                      'phone_number', data['phone']);
-                                  await preferences.setString(
-                                      'address', data['address']);
-                                  await preferences.setString(
-                                      'latitude', data['latitude']);
-                                  await preferences.setString(
-                                      'longitude', data['longitude']);
-                                }
+
+                                await preferences.setString(
+                                    'profile_pic',
+                                    data['profile_pic'] != null
+                                        ? imgBaseUrl + data['profile_pic']
+                                        : '');
+                                await preferences.setString(
+                                    'phone_number', data['phone'] ?? '');
+                                await preferences.setString(
+                                    'address', data['address'] ?? '');
+                                await preferences.setString(
+                                    'latitude', data['latitude'] ?? '');
+                                await preferences.setString(
+                                    'longitude', data['longitude'] ?? '');
 
                                 Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(

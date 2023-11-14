@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
     print('Login as Guest Status: $loginAsGuestGV');
 
     if (loginAsGuestGV == false) {
-      int? userId = preferences.getInt('userId');
+      int? userId = preferences.getInt('user_id');
       String? firstName = preferences.getString('first_name');
       String? lastName = preferences.getString('last_name');
       String? email = preferences.getString('email');

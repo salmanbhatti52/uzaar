@@ -21,7 +21,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final bool? obscureText;
   final Widget? suffixIcon;
   final bool? readOnly;
-
+  final void Function(String)? onSubmitted;
   const TextFormFieldWidget({
     super.key,
     required this.controller,
@@ -37,6 +37,7 @@ class TextFormFieldWidget extends StatelessWidget {
     this.validator,
     this.onTap,
     this.autofillHints,
+    this.onSubmitted,
     required this.obscureText,
     this.suffixIcon,
     // required this.enableBorder,
@@ -48,6 +49,7 @@ class TextFormFieldWidget extends StatelessWidget {
     return Container(
       decoration: kTextFieldBoxDecoration,
       child: TextFormField(
+        onFieldSubmitted: onSubmitted,
         onSaved: onSaved,
         onTap: onTap,
         readOnly: readOnly ?? false,

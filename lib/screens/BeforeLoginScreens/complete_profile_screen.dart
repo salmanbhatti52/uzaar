@@ -248,6 +248,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          // onSubmitted: (value) {
+                          //   print('address: $value');
+                          // },
                           controller: addressController,
                           textInputType: TextInputType.streetAddress,
                           prefixIcon:
@@ -283,13 +286,14 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         onTap: () async {
                           await preferences.setBool('loginAsGuest', false);
                           await preferences.setInt(
-                              'userId', widget.userData['users_customers_id']);
+                              'user_id', widget.userData['users_customers_id']);
                           await preferences.setString(
                               'first_name', widget.userData['first_name']);
                           await preferences.setString(
                               'last_name', widget.userData['last_name']);
                           await preferences.setString(
                               'email', widget.userData['email']);
+                          await preferences.setString('profile_pic', '');
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                             builder: (context) {
@@ -337,94 +341,108 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                         style: kToastTextStyle,
                                       )));
                             } else {
+                              // i get latitude and longitude here because user can type address we need latitude and longitude accordingly,
+                              // if i set it onChange then as user types as functionality called i think it is not very good way,
+
                               print(
                                   'address: ${addressController.text.toString()}');
-                              List<Location> locations =
-                                  await locationFromAddress(
-                                      addressController.text.toString());
-                              print(locations);
-                              print(locations[0].longitude);
-                              print(locations[0].latitude);
-                              latitude = locations[0].latitude;
-                              longitude = locations[0].longitude;
                               setState(() {
                                 setLoader = true;
                                 setButtonStatus = 'Please wait..';
                               });
-                              Response response = await sendPostRequest(
-                                  action: 'complete_profile',
-                                  data: {
-                                    'users_customers_id': userId.toString(),
-                                    'phone':
-                                        phoneNumberController.text.toString(),
-                                    'address':
-                                        addressController.text.toString(),
-                                    'latitude': latitude.toString(),
-                                    'longitude': longitude.toString(),
-                                    'profile_pic': selectedImageInBase64,
-                                  });
-                              setState(() {
-                                setLoader = false;
-                                setButtonStatus = 'Continue';
-                              });
-                              print(response.statusCode);
-                              print(response.body);
-                              var decodedResponse = jsonDecode(response.body);
-                              String status = decodedResponse['status'];
+                              try {
+                                List<Location> locations =
+                                    await locationFromAddress(
+                                        addressController.text.toString());
+                                print(locations);
+                                print(locations[0].longitude);
+                                print(locations[0].latitude);
+                                latitude = locations[0].latitude;
+                                longitude = locations[0].longitude;
 
-                              if (status == 'success') {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                        backgroundColor: primaryBlue,
-                                        content: Text(
-                                          'Success',
-                                          style: kToastTextStyle,
-                                        )));
-                                dynamic data = decodedResponse['data'];
-                                await preferences.setBool(
-                                    'loginAsGuest', false);
-                                await preferences.setInt(
-                                    'userId', data['users_customers_id']);
-                                await preferences.setString(
-                                    'first_name', data['first_name']);
-                                await preferences.setString(
-                                    'last_name', data['last_name']);
-                                await preferences.setString(
-                                    'email', data['email']);
-                                await preferences.setString('profile_pic',
-                                    imgBaseUrl + data['profile_pic']);
-                                await preferences.setString(
-                                    'phone_number', data['phone']);
-                                await preferences.setString(
-                                    'address', data['address']);
-                                await preferences.setString(
-                                    'latitude', data['latitude']);
-                                await preferences.setString(
-                                    'longitude', data['longitude']);
+                                Response response = await sendPostRequest(
+                                    action: 'complete_profile',
+                                    data: {
+                                      'users_customers_id': userId.toString(),
+                                      'phone':
+                                          phoneNumberController.text.toString(),
+                                      'address':
+                                          addressController.text.toString(),
+                                      'latitude': latitude.toString(),
+                                      'longitude': longitude.toString(),
+                                      'profile_pic': selectedImageInBase64,
+                                    });
+                                setState(() {
+                                  setLoader = false;
+                                  setButtonStatus = 'Continue';
+                                });
+                                print(response.statusCode);
+                                print(response.body);
+                                var decodedResponse = jsonDecode(response.body);
+                                String status = decodedResponse['status'];
 
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                  builder: (context) {
-                                    return BottomNavBar(
-                                      loginAsGuest: false,
-                                    );
-                                  },
-                                ), (route) => false);
-                                // Navigator.of(context).pushAndRemoveUntil(
-                                //     MaterialPageRoute(
-                                //         builder: (context) => BottomNavBar(
-                                //           loginAsGuest: false,
-                                //         )),
-                                //         (Route<dynamic> route) => false);
-                                // ignore: use_build_context_synchronously
-                              }
-                              if (status == 'error') {
-                                String message = decodedResponse?['message'];
+                                if (status == 'success') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                          backgroundColor: primaryBlue,
+                                          content: Text(
+                                            'Success',
+                                            style: kToastTextStyle,
+                                          )));
+                                  dynamic data = decodedResponse['data'];
+                                  await preferences.setBool(
+                                      'loginAsGuest', false);
+                                  await preferences.setInt(
+                                      'user_id', data['users_customers_id']);
+                                  await preferences.setString(
+                                      'first_name', data['first_name']);
+                                  await preferences.setString(
+                                      'last_name', data['last_name']);
+                                  await preferences.setString(
+                                      'email', data['email']);
+                                  await preferences.setString('profile_pic',
+                                      imgBaseUrl + data['profile_pic']);
+                                  await preferences.setString(
+                                      'phone_number', data['phone']);
+                                  await preferences.setString(
+                                      'address', data['address']);
+                                  await preferences.setString(
+                                      'latitude', data['latitude']);
+                                  await preferences.setString(
+                                      'longitude', data['longitude']);
+
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                    builder: (context) {
+                                      return BottomNavBar(
+                                        loginAsGuest: false,
+                                      );
+                                    },
+                                  ), (route) => false);
+
+                                  // ignore: use_build_context_synchronously
+                                }
+                                if (status == 'error') {
+                                  String message = decodedResponse?['message'];
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                          backgroundColor: Colors.red,
+                                          content: Text(
+                                            message,
+                                            style: kToastTextStyle,
+                                          )));
+                                }
+                              } catch (e) {
+                                print(e);
+                                setState(() {
+                                  setLoader = false;
+                                  setButtonStatus = 'Continue';
+                                });
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
                                         backgroundColor: Colors.red,
                                         content: Text(
-                                          message,
+                                          'Plz enter a valid address',
                                           style: kToastTextStyle,
                                         )));
                               }

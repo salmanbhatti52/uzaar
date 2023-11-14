@@ -89,56 +89,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                       SizedBox(
                         height: 35,
                       ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     OtpInputField(
-                      //       padding:
-                      //           const EdgeInsets.only(right: 14.0, left: 14.0),
-                      //       onChanged: (value) {
-                      //         print(value);
-                      //         otpValue = value;
-                      //         // if (value.length == 1) {
-                      //         FocusScope.of(context).nextFocus();
-                      //         // }
-                      //       },
-                      //       onEditingComplete: () {},
-                      //     ),
-                      //     OtpInputField(
-                      //       padding: const EdgeInsets.only(right: 14.0),
-                      //       onChanged: (value) {
-                      //         otpValue = otpValue + value.toString();
-                      //
-                      //         print(otpValue);
-                      //         FocusScope.of(context).nextFocus();
-                      //       },
-                      //     ),
-                      //     OtpInputField(
-                      //       padding: const EdgeInsets.only(right: 14.0),
-                      //       onChanged: (value) {
-                      //         otpValue = otpValue + value.toString();
-                      //
-                      //         print(otpValue);
-                      //
-                      //         FocusScope.of(context).nextFocus();
-                      //       },
-                      //     ),
-                      //     OtpInputField(
-                      //       padding: const EdgeInsets.only(right: 14.0),
-                      //       onChanged: (value) {
-                      //         otpValue = otpValue + value.toString();
-                      //
-                      //         print(otpValue);
-                      //
-                      //         FocusScope.of(context).unfocus();
-                      //       },
-                      //     ),
-                      //   ],
-                      // ),
-                      // SizedBox(
-                      //   height: 3,
-                      // ),
+
                       CustomOTPField(
                         length: 4, // Adjust the length as needed
                         onSubmitted: onSubmitted,

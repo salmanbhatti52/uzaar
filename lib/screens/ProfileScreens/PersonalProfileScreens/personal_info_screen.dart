@@ -1,3 +1,4 @@
+import 'package:Uzaar/services/restService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,7 +23,23 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   final phoneNumberController = TextEditingController();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  getData() {
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
+    firstNameController.text = userDataGV['firstName'];
+    lastNameController.text = userDataGV['lastName'];
+    emailController.text = userDataGV['email'];
+    phoneNumberController.text = userDataGV['phoneNumber'] ?? '';
+    addressController.text = userDataGV['address'] ?? '';
     return Padding(
       padding: const EdgeInsets.only(bottom: 25.0),
       child: Column(
@@ -37,6 +54,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           SizedBox(
             height: 46,
             child: TextFormFieldWidget(
+              readOnly: true,
               controller: firstNameController,
               textInputType: TextInputType.name,
               prefixIcon: SvgPicture.asset(
@@ -59,6 +77,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           SizedBox(
             height: 46,
             child: TextFormFieldWidget(
+              readOnly: true,
               controller: lastNameController,
               textInputType: TextInputType.name,
               prefixIcon: SvgPicture.asset(
@@ -81,6 +100,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           SizedBox(
             height: 46,
             child: TextFormFieldWidget(
+              readOnly: true,
               controller: emailController,
               textInputType: TextInputType.emailAddress,
               prefixIcon: SvgPicture.asset(
@@ -103,6 +123,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           SizedBox(
             height: 46,
             child: TextFormFieldWidget(
+              readOnly: true,
               controller: phoneNumberController,
               textInputType: TextInputType.phone,
               prefixIcon: SvgIcon(imageName: 'assets/phone-fill.svg'),
@@ -122,6 +143,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           SizedBox(
             height: 46,
             child: TextFormFieldWidget(
+              readOnly: true,
               controller: addressController,
               textInputType: TextInputType.streetAddress,
               prefixIcon: SvgPicture.asset(
