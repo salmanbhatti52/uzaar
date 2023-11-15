@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:Uzaar/screens/BusinessDetailPages/housing_details_page.dart';
@@ -16,6 +17,7 @@ import 'package:Uzaar/widgets/featured_services_widget.dart';
 import 'package:Uzaar/models/ProductCategoryModel.dart';
 import 'package:Uzaar/models/ServicesCategoryModel.dart';
 import 'package:Uzaar/widgets/search_field.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/Buttons.dart';
@@ -40,13 +42,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final searchController = TextEditingController();
   late Set<ReportReason> selectedReasons = {};
-  // final GlobalKey<FormState> _key = GlobalKey();
+
   late SharedPreferences preferences;
+  late String selectedListingType;
+  bool showSpinner = false;
+  dynamic listingTypes;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getUserData();
+    getListingTypes();
   }
 
   getUserData() async {
@@ -85,6 +92,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
       print(userDataGV);
     }
+  }
+
+  getListingTypes() async {
+    // setState(() {
+    //   showSpinner = true;
+    // });
+    Response response = await sendGetRequest('get_listings_types');
+
+    print(response.statusCode);
+    print(response.body);
+    listingTypes = jsonDecode(response.body);
+    setState(() {
+      selectedListingType = listingTypes?['data'][0]['name'];
+      // showSpinner = false;
+    });
   }
 
   handleOptionSelection(ReportReason reason) {
