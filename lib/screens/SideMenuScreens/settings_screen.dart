@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../services/restService.dart';
 import '../../utils/Colors.dart';
@@ -19,11 +20,28 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   bool showSpinner = false;
-  bool orderStatus = true;
-  bool reviews = false;
-  bool offers = false;
+  bool orderStatus = false;
+  bool reviewsToggleVal = false;
+  bool offersToggleVal = false;
+  late SharedPreferences preferences;
 
-  updateOrderStatus() async {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initPrefs();
+  }
+
+  initPrefs() async {
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      orderStatus = userDataGV['orderStatus'] ?? false;
+      reviewsToggleVal = userDataGV['reviewsToggleVal'] ?? false;
+      offersToggleVal = userDataGV['offersToggleVal'] ?? false;
+    });
+  }
+
+  toggleOrderStatus() async {
     setState(() {
       showSpinner = true;
     });
@@ -43,6 +61,85 @@ class _SettingScreenState extends State<SettingScreen> {
     if (status == 'success') {
       ScaffoldMessenger.of(context)
           .showSnackBar(SuccessSnackBar(message: null));
+      // update for sharedPreferences
+      await preferences.setBool('order_status', orderStatus);
+      print('orderStatus: $orderStatus');
+      print(
+          'orderStatus from preferences:  ${preferences.getBool('order_status')}');
+      // update for Global variable
+      userDataGV['orderStatus'] = orderStatus;
+      // ignore: use_build_context_synchronously
+    }
+    if (status == 'error') {
+      String message = decodedResponse['message'];
+      ScaffoldMessenger.of(context)
+          .showSnackBar(ErrorSnackBar(message: message));
+    }
+  }
+
+  toggleReviews() async {
+    setState(() {
+      showSpinner = true;
+    });
+    Response response =
+        await sendPostRequest(action: 'update_switch_reviews', data: {
+      'users_customers_id': userDataGV['userId'].toString(),
+      'reviews': reviewsToggleVal ? 'ON' : 'OFF'
+    });
+    setState(() {
+      showSpinner = false;
+    });
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+
+    if (status == 'success') {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SuccessSnackBar(message: null));
+      // update for sharedPreferences
+      await preferences.setBool('reviews_status', reviewsToggleVal);
+      print('reviewsToggleVal: $reviewsToggleVal');
+      print(
+          'reviewsToggleVal from preferences:  ${preferences.getBool('reviews_status')}');
+      // update for Global variable
+      userDataGV['reviewsToggleVal'] = reviewsToggleVal;
+      // ignore: use_build_context_synchronously
+    }
+    if (status == 'error') {
+      String message = decodedResponse['message'];
+      ScaffoldMessenger.of(context)
+          .showSnackBar(ErrorSnackBar(message: message));
+    }
+  }
+
+  toggleOffers() async {
+    setState(() {
+      showSpinner = true;
+    });
+    Response response =
+        await sendPostRequest(action: 'update_switch_offers', data: {
+      'users_customers_id': userDataGV['userId'].toString(),
+      'offers': offersToggleVal ? 'ON' : 'OFF'
+    });
+    setState(() {
+      showSpinner = false;
+    });
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+
+    if (status == 'success') {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SuccessSnackBar(message: null));
+      // update for sharedPreferences
+      await preferences.setBool('offers_status', offersToggleVal);
+      print('offersToggleVal: $offersToggleVal');
+      print(
+          'offersToggleVal from preferences:  ${preferences.getBool('offers_status')}');
+      // update for Global variable
+      userDataGV['offersToggleVal'] = offersToggleVal;
       // ignore: use_build_context_synchronously
     }
     if (status == 'error') {
@@ -88,29 +185,31 @@ class _SettingScreenState extends State<SettingScreen> {
                       orderStatus = value;
                     });
                     print('orderStatus: $orderStatus');
-                    updateOrderStatus();
+                    toggleOrderStatus();
                   },
                   title: 'Order Status',
                   detail: 'Get to know when your order status change',
                 ),
                 SettingsListTile(
-                  toggleValue: reviews,
+                  toggleValue: reviewsToggleVal,
                   onChanged: (bool value) {
                     setState(() {
-                      reviews = value;
+                      reviewsToggleVal = value;
                     });
-                    print('reviews: $reviews');
+                    print('reviews: $reviewsToggleVal');
+                    toggleReviews();
                   },
                   title: 'Reviews',
                   detail: 'Get to know when someone add review',
                 ),
                 SettingsListTile(
-                  toggleValue: offers,
+                  toggleValue: offersToggleVal,
                   onChanged: (bool value) {
                     setState(() {
-                      offers = value;
+                      offersToggleVal = value;
                     });
-                    print('offers: $offers');
+                    print('offers: $offersToggleVal');
+                    toggleOffers();
                   },
                   title: 'Offers',
                   detail: 'Get to know when someone send offer',

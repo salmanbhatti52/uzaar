@@ -2,6 +2,7 @@ import 'package:Uzaar/screens/EditListingScreens/edit_listing_screen.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/utils/Colors.dart';
 import 'package:Uzaar/widgets/alert_dialog_reusable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/reusable_data.dart';
@@ -10,8 +11,12 @@ import '../../widgets/product_list_tile.dart';
 enum BoostingPackages { pkg1, pkg2, pkg3, pkg4 }
 
 class ProductListingScreen extends StatefulWidget {
-  ProductListingScreen({super.key, required this.selectedCategory});
+  ProductListingScreen(
+      {super.key,
+      required this.selectedCategory,
+      required this.boostingPackages});
   int selectedCategory;
+  dynamic boostingPackages;
 
   @override
   State<ProductListingScreen> createState() => _ProductListingScreenState();
@@ -20,6 +25,13 @@ class ProductListingScreen extends StatefulWidget {
 class _ProductListingScreenState extends State<ProductListingScreen> {
   BoostingPackages? _selectedPackage = BoostingPackages.pkg1;
   dynamic selectedOption;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   updateSelectedPackage(value) {
     _selectedPackage = value;
     print(_selectedPackage);
@@ -57,7 +69,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                                 height: 35,
                                 child: ListTile(
                                   title: Text(
-                                    '\$1 Per Day for 1 Item',
+                                    '\$${widget.boostingPackages?['data'][0]['price']} ${widget.boostingPackages?['data'][0]['name']}',
                                     style: kTextFieldInputStyle,
                                   ),
                                   leading: Radio(
@@ -76,7 +88,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                                 height: 35,
                                 child: ListTile(
                                   title: Text(
-                                    '\$5 Per Week for 1 Item',
+                                    '\$${widget.boostingPackages?['data'][1]['price']} ${widget.boostingPackages?['data'][1]['name']}',
                                     style: kTextFieldInputStyle,
                                   ),
                                   leading: Radio(
@@ -95,7 +107,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                                 height: 35,
                                 child: ListTile(
                                   title: Text(
-                                    '\$10 Per Month for 1 Item',
+                                    '\$${widget.boostingPackages?['data'][2]['price']} ${widget.boostingPackages?['data'][2]['name']}',
                                     style: kTextFieldInputStyle,
                                   ),
                                   leading: Radio(
@@ -114,7 +126,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                                 height: 35,
                                 child: ListTile(
                                   title: Text(
-                                    '\$20 Per Month for Unlimited Items',
+                                    '\$${widget.boostingPackages?['data'][3]['price']} ${widget.boostingPackages?['data'][3]['name']}',
                                     style: kTextFieldInputStyle,
                                   ),
                                   leading: Radio(

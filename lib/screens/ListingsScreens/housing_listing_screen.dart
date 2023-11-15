@@ -10,8 +10,12 @@ import '../EditListingScreens/edit_listing_screen.dart';
 enum BoostingPackages { pkg1, pkg2, pkg3, pkg4 }
 
 class HousingListingScreen extends StatefulWidget {
-  HousingListingScreen({super.key, required this.selectedCategory});
+  HousingListingScreen(
+      {super.key,
+      required this.selectedCategory,
+      required this.boostingPackages});
   int selectedCategory;
+  dynamic boostingPackages;
 
   @override
   State<HousingListingScreen> createState() => _HousingListingScreenState();

@@ -1,12 +1,17 @@
+import 'dart:convert';
+
 import 'package:Uzaar/screens/ListingsScreens/housing_listing_screen.dart';
 import 'package:Uzaar/screens/ListingsScreens/product_listing_screen.dart';
 import 'package:Uzaar/screens/ListingsScreens/service_listing_screen.dart';
+import 'package:Uzaar/services/restService.dart';
 import 'package:Uzaar/widgets/business_type_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/utils/colors.dart';
+import 'package:http/http.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../widgets/DrawerWidget.dart';
 import '../../widgets/product_list_tile.dart';
@@ -22,10 +27,27 @@ class ListingsScreen extends StatefulWidget {
 
 class _ListingsScreenState extends State<ListingsScreen> {
   int selectedCategory = 1;
+  dynamic boostingPackages;
+  bool showSpinner = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getBoostingPackages();
+  }
+
+  getBoostingPackages() async {
+    setState(() {
+      showSpinner = true;
+    });
+    Response response = await sendGetRequest('get_packages');
+
+    print(response.statusCode);
+    print(response.body);
+    boostingPackages = jsonDecode(response.body);
+    setState(() {
+      showSpinner = false;
+    });
   }
 
   @override
@@ -106,81 +128,91 @@ class _ListingsScreenState extends State<ListingsScreen> {
         buildContext: context,
       ),
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 20.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedCategory = 1;
-                    });
-                  },
-                  child: BusinessTypeButton(
-                      businessName: 'Products',
-                      gradient: selectedCategory == 1 ? gradient : null,
-                      buttonBackground:
-                          selectedCategory != 1 ? grey.withOpacity(0.3) : null,
-                      textColor: selectedCategory == 1 ? white : grey),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedCategory = 2;
-                    });
-                  },
-                  child: BusinessTypeButton(
-                      businessName: 'Services',
-                      gradient: selectedCategory == 2 ? gradient : null,
-                      buttonBackground:
-                          selectedCategory != 2 ? grey.withOpacity(0.3) : null,
-                      textColor: selectedCategory == 2 ? white : grey),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedCategory = 3;
-                    });
-                  },
-                  child: BusinessTypeButton(
-                      businessName: 'Housing',
-                      gradient: selectedCategory == 3 ? gradient : null,
-                      buttonBackground:
-                          selectedCategory != 3 ? grey.withOpacity(0.3) : null,
-                      textColor: selectedCategory == 3 ? white : grey),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            selectedCategory == 1
-                ? ProductListingScreen(
-                    selectedCategory: selectedCategory,
-                  )
-                : selectedCategory == 2
-                    ? ServiceListingScreen(
-                        selectedCategory: selectedCategory,
-                      )
-                    : HousingListingScreen(
-                        selectedCategory: selectedCategory,
-                      ),
-            // SizedBox(
-            //   height: 10,
-            // )
-          ],
+      body: ModalProgressHUD(
+        color: Colors.white,
+        inAsyncCall: showSpinner,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedCategory = 1;
+                      });
+                    },
+                    child: BusinessTypeButton(
+                        businessName: 'Products',
+                        gradient: selectedCategory == 1 ? gradient : null,
+                        buttonBackground: selectedCategory != 1
+                            ? grey.withOpacity(0.3)
+                            : null,
+                        textColor: selectedCategory == 1 ? white : grey),
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedCategory = 2;
+                      });
+                    },
+                    child: BusinessTypeButton(
+                        businessName: 'Services',
+                        gradient: selectedCategory == 2 ? gradient : null,
+                        buttonBackground: selectedCategory != 2
+                            ? grey.withOpacity(0.3)
+                            : null,
+                        textColor: selectedCategory == 2 ? white : grey),
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedCategory = 3;
+                      });
+                    },
+                    child: BusinessTypeButton(
+                        businessName: 'Housing',
+                        gradient: selectedCategory == 3 ? gradient : null,
+                        buttonBackground: selectedCategory != 3
+                            ? grey.withOpacity(0.3)
+                            : null,
+                        textColor: selectedCategory == 3 ? white : grey),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              selectedCategory == 1
+                  ? ProductListingScreen(
+                      selectedCategory: selectedCategory,
+                      boostingPackages: boostingPackages,
+                    )
+                  : selectedCategory == 2
+                      ? ServiceListingScreen(
+                          selectedCategory: selectedCategory,
+                          boostingPackages: boostingPackages,
+                        )
+                      : HousingListingScreen(
+                          selectedCategory: selectedCategory,
+                          boostingPackages: boostingPackages,
+                        ),
+              // SizedBox(
+              //   height: 10,
+              // )
+            ],
+          ),
         ),
       ),
     );

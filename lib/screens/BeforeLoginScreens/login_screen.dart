@@ -262,6 +262,15 @@ class _LogInScreenState extends State<LogInScreen> {
                                     'latitude', data['latitude'] ?? '');
                                 await preferences.setString(
                                     'longitude', data['longitude'] ?? '');
+                                await preferences.setBool(
+                                    'order_status',
+                                    data['order_status'] == 'ON'
+                                        ? true
+                                        : false);
+                                await preferences.setBool('reviews_status',
+                                    data['reviews'] == 'ON' ? true : false);
+                                await preferences.setBool('offers_status',
+                                    data['offers'] == 'ON' ? true : false);
 
                                 Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(

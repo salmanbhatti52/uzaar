@@ -64,6 +64,9 @@ class _HomeScreenState extends State<HomeScreen> {
       String? address = preferences.getString('address');
       String? latitude = preferences.getString('latitude');
       String? longitude = preferences.getString('longitude');
+      bool? orderStatus = preferences.getBool('order_status');
+      bool? reviewsToggleVal = preferences.getBool('reviews_status');
+      bool? offersToggleVal = preferences.getBool('offers_status');
 
       userDataGV = {
         'userId': userId,
@@ -75,6 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
         'address': address,
         'latitude': latitude,
         'longitude': longitude,
+        'orderStatus': orderStatus,
+        'reviewsToggleVal': reviewsToggleVal,
+        'offersToggleVal': offersToggleVal
       };
 
       print(userDataGV);
