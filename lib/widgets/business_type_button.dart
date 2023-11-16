@@ -11,6 +11,7 @@ class BusinessTypeButton extends StatelessWidget {
   final Color? buttonBackground;
   final Color textColor;
   double? width;
+  EdgeInsetsGeometry? margin;
   // final int catSelected;
 
   BusinessTypeButton(
@@ -18,11 +19,13 @@ class BusinessTypeButton extends StatelessWidget {
       required this.gradient,
       required this.buttonBackground,
       required this.textColor,
-      this.width});
+      this.width,
+      this.margin});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: margin,
       width: width ?? 94,
       height: height,
       decoration: BoxDecoration(

@@ -19,6 +19,7 @@ import 'package:Uzaar/models/ServicesCategoryModel.dart';
 import 'package:Uzaar/widgets/search_field.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../utils/Buttons.dart';
 import '../widgets/DrawerWidget.dart';
@@ -52,8 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    selectedListingType = '';
     getUserData();
     getListingTypes();
+    getListingSubCategories();
   }
 
   getUserData() async {
@@ -107,6 +110,15 @@ class _HomeScreenState extends State<HomeScreen> {
       selectedListingType = listingTypes?['data'][0]['name'];
       // showSpinner = false;
     });
+  }
+
+  getListingSubCategories() async {
+    Response response = await sendGetRequest('get_listings_categories');
+
+    print(response.statusCode);
+    print(response.body);
+    dynamic allListingSubCategories = jsonDecode(response.body);
+    setState(() {});
   }
 
   handleOptionSelection(ReportReason reason) {
@@ -248,67 +260,129 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: 20.h,
                   ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedCategory = 1;
-                          });
-                        },
-                        child: BusinessTypeButton(
-                            businessName: 'Products',
-                            gradient: selectedCategory == 1 ? gradient : null,
-                            buttonBackground: selectedCategory != 1
-                                ? grey.withOpacity(0.3)
-                                : null,
-                            textColor: selectedCategory == 1 ? white : grey),
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedCategory = 2;
-                          });
-                        },
-                        child: BusinessTypeButton(
-                            businessName: 'Services',
-                            gradient: selectedCategory == 2 ? gradient : null,
-                            buttonBackground: selectedCategory != 2
-                                ? grey.withOpacity(0.3)
-                                : null,
-                            textColor: selectedCategory == 2 ? white : grey),
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedCategory = 3;
-                          });
-                        },
-                        child: BusinessTypeButton(
-                            businessName: 'Housing',
-                            gradient: selectedCategory == 3 ? gradient : null,
-                            buttonBackground: selectedCategory != 3
-                                ? grey.withOpacity(0.3)
-                                : null,
-                            textColor: selectedCategory == 3 ? white : grey),
-                      ),
-                    ],
+                    children: listingTypes != null
+                        ? List.generate(
+                            listingTypes?['data'].length,
+                            (index) => GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedListingType =
+                                      listingTypes?['data'][index]['name'];
+                                });
+                              },
+                              child: BusinessTypeButton(
+                                  margin:
+                                      index < listingTypes?['data'].length - 1
+                                          ? EdgeInsets.only(right: 10)
+                                          : null,
+                                  businessName: listingTypes?['data'][index]
+                                      ['name'],
+                                  gradient: selectedListingType ==
+                                          listingTypes?['data'][index]['name']
+                                      ? gradient
+                                      : null,
+                                  buttonBackground: selectedListingType !=
+                                          listingTypes?['data'][index]['name']
+                                      ? grey.withOpacity(0.3)
+                                      : null,
+                                  textColor: selectedListingType ==
+                                          listingTypes?['data'][index]['name']
+                                      ? white
+                                      : grey),
+                            ),
+                          )
+                        : [
+                            Shimmer.fromColors(
+                                child: BusinessTypeButton(
+                                    margin: EdgeInsets.only(right: 10),
+                                    businessName: '',
+                                    gradient: null,
+                                    buttonBackground: grey.withOpacity(0.3),
+                                    textColor: grey),
+                                baseColor: Colors.grey[500]!,
+                                highlightColor: Colors.grey[100]!),
+                            Shimmer.fromColors(
+                                child: BusinessTypeButton(
+                                    margin: EdgeInsets.only(right: 10),
+                                    businessName: '',
+                                    gradient: null,
+                                    buttonBackground: grey.withOpacity(0.3),
+                                    textColor: grey),
+                                baseColor: Colors.grey[500]!,
+                                highlightColor: Colors.grey[100]!),
+                            Shimmer.fromColors(
+                                child: BusinessTypeButton(
+                                    margin: EdgeInsets.only(right: 10),
+                                    businessName: ' ',
+                                    gradient: null,
+                                    buttonBackground: grey.withOpacity(0.3),
+                                    textColor: grey),
+                                baseColor: Colors.grey[500]!,
+                                highlightColor: Colors.grey[100]!),
+                          ],
                   ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         setState(() {
+                  //           selectedCategory = 1;
+                  //         });
+                  //       },
+                  //       child: BusinessTypeButton(
+                  //           businessName: 'Products',
+                  //           gradient: selectedCategory == 1 ? gradient : null,
+                  //           buttonBackground: selectedCategory != 1
+                  //               ? grey.withOpacity(0.3)
+                  //               : null,
+                  //           textColor: selectedCategory == 1 ? white : grey),
+                  //     ),
+                  //     SizedBox(
+                  //       width: 10.w,
+                  //     ),
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         setState(() {
+                  //           selectedCategory = 2;
+                  //         });
+                  //       },
+                  //       child: BusinessTypeButton(
+                  //           businessName: 'Services',
+                  //           gradient: selectedCategory == 2 ? gradient : null,
+                  //           buttonBackground: selectedCategory != 2
+                  //               ? grey.withOpacity(0.3)
+                  //               : null,
+                  //           textColor: selectedCategory == 2 ? white : grey),
+                  //     ),
+                  //     SizedBox(
+                  //       width: 10.w,
+                  //     ),
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         setState(() {
+                  //           selectedCategory = 3;
+                  //         });
+                  //       },
+                  //       child: BusinessTypeButton(
+                  //           businessName: 'Housing',
+                  //           gradient: selectedCategory == 3 ? gradient : null,
+                  //           buttonBackground: selectedCategory != 3
+                  //               ? grey.withOpacity(0.3)
+                  //               : null,
+                  //           textColor: selectedCategory == 3 ? white : grey),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 30.h,
                   ),
 
                   SizedBox(
                     height: 98,
-                    child: selectedCategory == 1
+                    child: selectedListingType == 'Products'
                         ? ListView.builder(
                             itemCount: productCategoryModel.length,
                             shrinkWrap: true,
@@ -323,7 +397,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               );
                             },
                           )
-                        : selectedCategory == 2
+                        : selectedListingType == 'Services'
                             ? ListView.builder(
                                 itemCount: servicesCategoryModel.length,
                                 shrinkWrap: true,
@@ -338,19 +412,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                           servicesCategoryModel[index].image);
                                 },
                               )
-                            : ListView.builder(
-                                itemCount: housingCategoryModel.length,
-                                shrinkWrap: true,
-                                physics: BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  return BusinessListTile(
-                                      businessTileName:
-                                          housingCategoryModel[index].houseName,
-                                      businessTileImageName:
-                                          housingCategoryModel[index].image);
-                                },
-                              ),
+                            : selectedListingType == 'Housing'
+                                ? ListView.builder(
+                                    itemCount: housingCategoryModel.length,
+                                    shrinkWrap: true,
+                                    physics: BouncingScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      return BusinessListTile(
+                                          businessTileName:
+                                              housingCategoryModel[index]
+                                                  .houseName,
+                                          businessTileImageName:
+                                              housingCategoryModel[index]
+                                                  .image);
+                                    },
+                                  )
+                                : Shimmer.fromColors(
+                                    child: ListView.builder(
+                                      itemCount: 5,
+                                      shrinkWrap: true,
+                                      physics: BouncingScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        return CircleAvatar(
+                                          backgroundColor: f5f5f5,
+                                        );
+                                      },
+                                    ),
+                                    baseColor: Colors.grey[500]!,
+                                    highlightColor: Colors.grey[100]!),
                   ),
                   SizedBox(
                     height: 30.h,

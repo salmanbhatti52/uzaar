@@ -24,6 +24,7 @@ import 'package:Uzaar/screens/beforeLoginScreens/login_screen.dart';
 import '../../utils/Buttons.dart';
 import '../../widgets/read_only_container.dart';
 import '../BusinessDetailPages/BottomSheetForSendOffer.dart';
+import 'package:Uzaar/services/getImage.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
   static const String id = 'complete_profile_screen';
@@ -50,6 +51,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   bool setLoader = false;
   String setButtonStatus = 'Continue';
   late int userId;
+  late Map<String, dynamic> images;
 
   @override
   void initState() {
@@ -68,32 +70,32 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     preferences = await SharedPreferences.getInstance();
   }
 
-  Future _selectImageFromGallery() async {
-    final returnedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (returnedImage == null) {
-      return;
-    }
-
-    setState(() {
-      _selectedImage = returnedImage;
-    });
-    selectedImageInBase64 = await convertXFileToBase64(_selectedImage!);
-    print(selectedImageInBase64);
-  }
-
-  Future _takeImageFromCamera() async {
-    final returnedImage =
-        await ImagePicker().pickImage(source: ImageSource.camera);
-    if (returnedImage == null) {
-      return;
-    }
-    setState(() {
-      _selectedImage = returnedImage;
-    });
-    selectedImageInBase64 = await convertXFileToBase64(_selectedImage!);
-    print(selectedImageInBase64);
-  }
+  // Future _selectImageFromGallery() async {
+  //   final returnedImage =
+  //       await ImagePicker().pickImage(source: ImageSource.gallery);
+  //   if (returnedImage == null) {
+  //     return;
+  //   }
+  //
+  //   setState(() {
+  //     _selectedImage = returnedImage;
+  //   });
+  //   selectedImageInBase64 = await convertXFileToBase64(_selectedImage!);
+  //   print(selectedImageInBase64);
+  // }
+  //
+  // Future _takeImageFromCamera() async {
+  //   final returnedImage =
+  //       await ImagePicker().pickImage(source: ImageSource.camera);
+  //   if (returnedImage == null) {
+  //     return;
+  //   }
+  //   setState(() {
+  //     _selectedImage = returnedImage;
+  //   });
+  //   selectedImageInBase64 = await convertXFileToBase64(_selectedImage!);
+  //   print(selectedImageInBase64);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -168,13 +170,27 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                               .viewInsets
                                               .bottom),
                                       child: AddImageScreen(
-                                        fromCamera: () {
+                                        fromCamera: () async {
                                           Navigator.pop(context);
-                                          _takeImageFromCamera();
+                                          images =
+                                              await getImage(from: 'camera');
+                                          setState(() {
+                                            _selectedImage =
+                                                images['selectedImage'];
+                                          });
+                                          selectedImageInBase64 =
+                                              images['selectedImageInBase64'];
                                         },
-                                        fromGallery: () {
+                                        fromGallery: () async {
                                           Navigator.pop(context);
-                                          _selectImageFromGallery();
+                                          images =
+                                              await getImage(from: 'gallery');
+                                          setState(() {
+                                            _selectedImage =
+                                                images['selectedImage'];
+                                          });
+                                          selectedImageInBase64 =
+                                              images['selectedImageInBase64'];
                                         },
                                       )),
                                 ),
