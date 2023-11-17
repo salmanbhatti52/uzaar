@@ -39,7 +39,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   final addressController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey();
-  XFile? _selectedImage;
+
   late SharedPreferences preferences;
   String firstName = '';
   String lastName = '';
@@ -47,10 +47,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   late double latitude;
   late double longitude;
   late Position position;
-  String selectedImageInBase64 = '';
+
   bool setLoader = false;
   String setButtonStatus = 'Continue';
   late int userId;
+  XFile? _selectedImage;
+  String selectedImageInBase64 = '';
   late Map<String, dynamic> images;
 
   @override
@@ -156,45 +158,38 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           Positioned(
                             right: -10,
                             child: GestureDetector(
-                              onTap: () => showModalBottomSheet(
-                                // shape: RoundedRectangleBorder(
-                                //   borderRadius: BorderRadius.vertical(
-                                //       top: Radius.circular(20)),
-                                // ),
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) => SingleChildScrollView(
-                                  child: Container(
+                              onTap: () async {
+                                var result = await showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) => SingleChildScrollView(
+                                    child: Container(
                                       padding: EdgeInsets.only(
                                           bottom: MediaQuery.of(context)
                                               .viewInsets
                                               .bottom),
-                                      child: AddImageScreen(
-                                        fromCamera: () async {
-                                          Navigator.pop(context);
-                                          images =
-                                              await getImage(from: 'camera');
-                                          setState(() {
-                                            _selectedImage =
-                                                images['selectedImage'];
-                                          });
-                                          selectedImageInBase64 =
-                                              images['selectedImageInBase64'];
-                                        },
-                                        fromGallery: () async {
-                                          Navigator.pop(context);
-                                          images =
-                                              await getImage(from: 'gallery');
-                                          setState(() {
-                                            _selectedImage =
-                                                images['selectedImage'];
-                                          });
-                                          selectedImageInBase64 =
-                                              images['selectedImageInBase64'];
-                                        },
-                                      )),
-                                ),
-                              ),
+                                      child: const AddImageScreen(),
+                                    ),
+                                  ),
+                                );
+                                print(result);
+                                if (result == 'camera') {
+                                  images = await getImage(from: 'camera');
+                                  setState(() {
+                                    _selectedImage = images['selectedImage'];
+                                  });
+                                  selectedImageInBase64 =
+                                      images['selectedImageInBase64'];
+                                }
+                                if (result == 'gallery') {
+                                  images = await getImage(from: 'gallery');
+                                  setState(() {
+                                    _selectedImage = images['selectedImage'];
+                                  });
+                                  selectedImageInBase64 =
+                                      images['selectedImageInBase64'];
+                                }
+                              },
                               child: SvgIcon(
                                   imageName: 'assets/add-pic-button.svg'),
                             ),

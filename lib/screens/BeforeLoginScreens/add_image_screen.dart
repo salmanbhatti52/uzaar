@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddImageScreen extends StatelessWidget {
-  final void Function()? fromCamera;
-  final void Function()? fromGallery;
-  const AddImageScreen(
-      {super.key, required this.fromCamera, required this.fromGallery});
+  const AddImageScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,9 @@ class AddImageScreen extends StatelessWidget {
             height: 20,
           ),
           GestureDetector(
-            onTap: fromGallery,
+            onTap: () {
+              Navigator.pop(context, 'gallery');
+            },
             child: Text(
               'From Photos',
               style: kTextFieldInputStyle,
@@ -33,7 +34,9 @@ class AddImageScreen extends StatelessWidget {
             height: 20,
           ),
           GestureDetector(
-            onTap: fromCamera,
+            onTap: () {
+              Navigator.pop(context, 'camera');
+            },
             child: Text(
               'Take Picture',
               style: kTextFieldInputStyle,

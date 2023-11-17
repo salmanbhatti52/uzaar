@@ -46,6 +46,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     setState(() {
       _currentIndex = index;
     });
+    print(_currentIndex);
   }
 
   bool get isIos =>

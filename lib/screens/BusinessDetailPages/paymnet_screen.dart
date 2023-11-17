@@ -140,15 +140,24 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 )
                               : [
                                   Shimmer.fromColors(
-                                      child: paymentWidget(
-                                          image: 'assets/paypal_logo.png',
-                                          text: 'PayPal'),
-                                      baseColor: Colors.grey[500]!,
-                                      highlightColor: Colors.grey[100]!),
-                                  Shimmer.fromColors(
-                                      child: paymentWidget(
-                                          image: 'assets/zelle_logo.png',
-                                          text: 'Zelle'),
+                                      child: ListView.builder(
+                                        itemCount: 3,
+                                        shrinkWrap: true,
+                                        physics: BouncingScrollPhysics(),
+                                        scrollDirection: Axis.horizontal,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Container(
+                                            margin: EdgeInsets.only(right: 10),
+                                            width: 146,
+                                            height: 54,
+                                            decoration:
+                                                kCardBoxDecoration.copyWith(
+                                                    color:
+                                                        grey.withOpacity(0.3)),
+                                          );
+                                        },
+                                      ),
                                       baseColor: Colors.grey[500]!,
                                       highlightColor: Colors.grey[100]!),
                                 ],

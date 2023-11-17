@@ -1,21 +1,29 @@
+import 'dart:convert';
+
 import 'package:Uzaar/screens/ProfileScreens/PersonalProfileScreens/profile_reviews_screen.dart';
 import 'package:Uzaar/screens/ProfileScreens/edit_profile_screen.dart';
 import 'package:Uzaar/screens/ProfileScreens/apply_for_verification_screen.dart';
 
 import 'package:Uzaar/widgets/get_stars_tile.dart';
+import 'package:Uzaar/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'dart:io';
 import 'package:Uzaar/utils/colors.dart';
+import 'package:http/http.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../services/getImage.dart';
 import '../../../services/restService.dart';
 import '../../../widgets/DrawerWidget.dart';
 import '../../../widgets/business_type_button.dart';
 import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/text.dart';
 import '../../../widgets/text_form_field_reusable.dart';
+import '../../BeforeLoginScreens/add_image_screen.dart';
 import '../../chat_list_screen.dart';
 import '../../notifications_screen.dart';
 
@@ -27,13 +35,38 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final emailController = TextEditingController();
   final addressController = TextEditingController();
   final phoneNumberController = TextEditingController();
   int selectedCategory = 1;
-  // final GlobalKey<FormState> _key = GlobalKey();
+  late SharedPreferences preferences;
+  XFile? _selectedImage;
+  String selectedImageInBase64 = '';
+  late Map<String, dynamic> images;
+
+  Future<String> updateProfile() async {
+    Response response =
+        await sendPostRequest(action: 'update_profile_image', data: {
+      'users_customers_id': userDataGV['userId'].toString(),
+      'profile_pic': selectedImageInBase64
+    });
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    dynamic data = decodedResponse['data'];
+
+    if (status == 'success') {
+      // update for Global Var
+      userDataGV['profilePic'] = imgBaseUrl + data['profile_pic'];
+      // update for shared  preferences
+      await preferences.setString('profile_pic', userDataGV['profilePic']);
+    }
+    return status;
+  }
 
   @override
   void initState() {
@@ -44,6 +77,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     emailController.text = userDataGV['email'];
     phoneNumberController.text = userDataGV['phoneNumber'] ?? '';
     addressController.text = userDataGV['address'] ?? '';
+    initPrefs();
+  }
+
+  initPrefs() async {
+    preferences = await SharedPreferences.getInstance();
   }
 
   @override
@@ -56,6 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
       },
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           iconTheme: IconThemeData(color: black),
           elevation: 0.0,
@@ -158,10 +197,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       clipBehavior: Clip.none,
                       // alignment: Alignment.bottomRight,
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.asset(
-                            'assets/dummy_profile.png',
+                        Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFD9D9D9),
+                            shape: BoxShape.circle,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: userDataGV['profilePic'] != ''
+                                ? Image.network(
+                                    userDataGV['profilePic'],
+                                    fit: BoxFit.cover,
+                                  )
+                                : SizedBox(),
                           ),
                         ),
                         Positioned(
@@ -178,7 +228,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           right: -7,
                           bottom: -1,
                           child: GestureDetector(
-                            onTap: null,
+                            onTap: () async {
+                              var result = await showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) => SingleChildScrollView(
+                                  child: Container(
+                                      padding: EdgeInsets.only(
+                                          bottom: MediaQuery.of(context)
+                                              .viewInsets
+                                              .bottom),
+                                      child: AddImageScreen()),
+                                ),
+                              );
+                              print(result);
+                              if (result == 'camera') {
+                                images = await getImage(from: 'camera');
+                                setState(() {
+                                  _selectedImage = images['selectedImage'];
+                                });
+                                selectedImageInBase64 =
+                                    images['selectedImageInBase64'];
+                                if (selectedImageInBase64 != '') {
+                                  updateProfile();
+                                }
+                              }
+                              if (result == 'gallery') {
+                                images = await getImage(from: 'gallery');
+                                setState(() {
+                                  _selectedImage = images['selectedImage'];
+                                });
+                                selectedImageInBase64 =
+                                    images['selectedImageInBase64'];
+                                if (selectedImageInBase64 != '') {
+                                  updateProfile();
+                                }
+                              }
+                            },
                             child: SvgPicture.asset(
                               'assets/add-pic-button.svg',
                               // fit: BoxFit.scaleDown,

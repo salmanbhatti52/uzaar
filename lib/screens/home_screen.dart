@@ -323,59 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 highlightColor: Colors.grey[100]!),
                           ],
                   ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     GestureDetector(
-                  //       onTap: () {
-                  //         setState(() {
-                  //           selectedCategory = 1;
-                  //         });
-                  //       },
-                  //       child: BusinessTypeButton(
-                  //           businessName: 'Products',
-                  //           gradient: selectedCategory == 1 ? gradient : null,
-                  //           buttonBackground: selectedCategory != 1
-                  //               ? grey.withOpacity(0.3)
-                  //               : null,
-                  //           textColor: selectedCategory == 1 ? white : grey),
-                  //     ),
-                  //     SizedBox(
-                  //       width: 10.w,
-                  //     ),
-                  //     GestureDetector(
-                  //       onTap: () {
-                  //         setState(() {
-                  //           selectedCategory = 2;
-                  //         });
-                  //       },
-                  //       child: BusinessTypeButton(
-                  //           businessName: 'Services',
-                  //           gradient: selectedCategory == 2 ? gradient : null,
-                  //           buttonBackground: selectedCategory != 2
-                  //               ? grey.withOpacity(0.3)
-                  //               : null,
-                  //           textColor: selectedCategory == 2 ? white : grey),
-                  //     ),
-                  //     SizedBox(
-                  //       width: 10.w,
-                  //     ),
-                  //     GestureDetector(
-                  //       onTap: () {
-                  //         setState(() {
-                  //           selectedCategory = 3;
-                  //         });
-                  //       },
-                  //       child: BusinessTypeButton(
-                  //           businessName: 'Housing',
-                  //           gradient: selectedCategory == 3 ? gradient : null,
-                  //           buttonBackground: selectedCategory != 3
-                  //               ? grey.withOpacity(0.3)
-                  //               : null,
-                  //           textColor: selectedCategory == 3 ? white : grey),
-                  //     ),
-                  //   ],
-                  // ),
+
                   SizedBox(
                     height: 30.h,
                   ),
@@ -435,8 +383,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                       physics: BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder: (context, index) {
-                                        return CircleAvatar(
-                                          backgroundColor: f5f5f5,
+                                        return Container(
+                                          margin: EdgeInsets.only(right: 20),
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                height: 60,
+                                                width: 60,
+                                                // margin: EdgeInsets.only(right: 10),
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        grey.withOpacity(0.3),
+                                                    shape: BoxShape.circle),
+                                              ),
+                                              SizedBox(
+                                                height: 15,
+                                              ),
+                                              Container(
+                                                height: 10,
+                                                width: 60,
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        grey.withOpacity(0.3),
+                                                    shape: BoxShape.rectangle),
+                                              )
+                                            ],
+                                          ),
                                         );
                                       },
                                     ),

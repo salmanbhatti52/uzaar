@@ -12,6 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/utils/colors.dart';
 import 'package:http/http.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../widgets/DrawerWidget.dart';
 import '../../widgets/product_list_tile.dart';
@@ -37,16 +38,16 @@ class _ListingsScreenState extends State<ListingsScreen> {
   }
 
   getBoostingPackages() async {
-    setState(() {
-      showSpinner = true;
-    });
+    // setState(() {
+    //   showSpinner = true;
+    // });
     Response response = await sendGetRequest('get_packages');
 
     print(response.statusCode);
     print(response.body);
     boostingPackages = jsonDecode(response.body);
     setState(() {
-      showSpinner = false;
+      // showSpinner = false;
     });
   }
 
@@ -194,20 +195,47 @@ class _ListingsScreenState extends State<ListingsScreen> {
               SizedBox(
                 height: 20,
               ),
-              selectedCategory == 1
+              selectedCategory == 1 && boostingPackages != null
                   ? ProductListingScreen(
                       selectedCategory: selectedCategory,
                       boostingPackages: boostingPackages,
                     )
-                  : selectedCategory == 2
+                  : selectedCategory == 2 && boostingPackages != null
                       ? ServiceListingScreen(
                           selectedCategory: selectedCategory,
                           boostingPackages: boostingPackages,
                         )
-                      : HousingListingScreen(
-                          selectedCategory: selectedCategory,
-                          boostingPackages: boostingPackages,
-                        ),
+                      : selectedCategory == 3 && boostingPackages != null
+                          ? HousingListingScreen(
+                              selectedCategory: selectedCategory,
+                              boostingPackages: boostingPackages,
+                            )
+                          : Expanded(
+                              child: Shimmer.fromColors(
+                                  child: ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        height: 80,
+                                        margin: EdgeInsets.only(
+                                            top: 2,
+                                            left: 5,
+                                            right: 5,
+                                            bottom: 14),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          color: Colors.grey.withOpacity(0.3),
+                                        ),
+                                      );
+                                    },
+                                    itemCount: 8,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    physics: BouncingScrollPhysics(),
+                                  ),
+                                  baseColor: Colors.grey[500]!,
+                                  highlightColor: Colors.grey[100]!),
+                            ),
               // SizedBox(
               //   height: 10,
               // )
