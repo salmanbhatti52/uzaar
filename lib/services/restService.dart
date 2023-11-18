@@ -12,7 +12,7 @@ Future<http.Response> sendGetRequest(String action) {
 }
 
 Future<http.Response> sendPostRequest(
-    {required String action, required Map<String, String> data}) {
+    {required String action, required Map<String, dynamic> data}) {
   print('action: $action');
   print('Map Payloads: $data');
 

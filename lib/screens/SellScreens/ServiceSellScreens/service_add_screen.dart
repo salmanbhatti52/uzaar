@@ -12,9 +12,10 @@ import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
 
 class ServiceAddScreen extends StatefulWidget {
-  ServiceAddScreen({super.key, this.editDetails});
-  bool? editDetails;
-
+  const ServiceAddScreen(
+      {super.key, this.editDetails, required this.serviceBase64Image});
+  final bool? editDetails;
+  final String? serviceBase64Image;
   @override
   State<ServiceAddScreen> createState() => _ServiceAddScreenState();
 }

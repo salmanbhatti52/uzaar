@@ -14,8 +14,10 @@ import '../../../widgets/text.dart';
 enum FurnishedConditions { yes, no }
 
 class HouseAddScreen extends StatefulWidget {
-  HouseAddScreen({super.key, this.editDetails});
-  bool? editDetails;
+  const HouseAddScreen(
+      {super.key, this.editDetails, required this.housingBase64Image});
+  final bool? editDetails;
+  final String? housingBase64Image;
 
   @override
   State<HouseAddScreen> createState() => _HouseAddScreenState();

@@ -1,18 +1,22 @@
+import 'package:Uzaar/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:Uzaar/screens/SellScreens/HousingSellScreens/house_add_screen.dart';
 import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_one.dart';
 import 'package:Uzaar/screens/SellScreens/ServiceSellScreens/service_add_screen.dart';
-
+import 'dart:io';
 import 'package:Uzaar/utils/colors.dart';
 
+import '../../services/getImage.dart';
 import '../../utils/Buttons.dart';
 import '../../widgets/DrawerWidget.dart';
 import '../../widgets/business_type_button.dart';
 import '../../widgets/tab_indicator.dart';
+import '../BeforeLoginScreens/add_image_screen.dart';
 import '../chat_list_screen.dart';
 import '../notifications_screen.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SellScreen extends StatefulWidget {
   const SellScreen({super.key});
@@ -25,6 +29,9 @@ class _SellScreenState extends State<SellScreen> {
   int selectedPage = 0;
   int selectedCategory = 1;
   int noOfTabs = 3;
+  XFile? _selectedImage;
+  String? selectedImageInBase64 = '';
+  late Map<String, dynamic> images;
 
   List<Widget> getPageIndicators() {
     List<Widget> tabs = [];
@@ -118,137 +125,180 @@ class _SellScreenState extends State<SellScreen> {
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Row(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: getPageIndicators(),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Text(
+                  'What do you want to sell?',
+                  style: kBodySubHeadingTextStyle,
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: getPageIndicators(),
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedCategory = 1;
+                          getPageIndicators();
+                        });
+                      },
+                      child: BusinessTypeButton(
+                          businessName: 'Products',
+                          gradient: selectedCategory == 1 ? gradient : null,
+                          buttonBackground: selectedCategory != 1
+                              ? grey.withOpacity(0.3)
+                              : null,
+                          textColor: selectedCategory == 1 ? white : grey),
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedCategory = 2;
+                          getPageIndicators();
+                        });
+                      },
+                      child: BusinessTypeButton(
+                          businessName: 'Services',
+                          gradient: selectedCategory == 2 ? gradient : null,
+                          buttonBackground: selectedCategory != 2
+                              ? grey.withOpacity(0.3)
+                              : null,
+                          textColor: selectedCategory == 2 ? white : grey),
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedCategory = 3;
+                          getPageIndicators();
+                        });
+                      },
+                      child: BusinessTypeButton(
+                          businessName: 'Housing',
+                          gradient: selectedCategory == 3 ? gradient : null,
+                          buttonBackground: selectedCategory != 3
+                              ? grey.withOpacity(0.3)
+                              : null,
+                          textColor: selectedCategory == 3 ? white : grey),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Text(
-                'What do you want to sell?',
-                style: kBodySubHeadingTextStyle,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = 1;
-                        getPageIndicators();
-                      });
-                    },
-                    child: BusinessTypeButton(
-                        businessName: 'Products',
-                        gradient: selectedCategory == 1 ? gradient : null,
-                        buttonBackground: selectedCategory != 1
-                            ? grey.withOpacity(0.3)
-                            : null,
-                        textColor: selectedCategory == 1 ? white : grey),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = 2;
-                        getPageIndicators();
-                      });
-                    },
-                    child: BusinessTypeButton(
-                        businessName: 'Services',
-                        gradient: selectedCategory == 2 ? gradient : null,
-                        buttonBackground: selectedCategory != 2
-                            ? grey.withOpacity(0.3)
-                            : null,
-                        textColor: selectedCategory == 2 ? white : grey),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = 3;
-                        getPageIndicators();
-                      });
-                    },
-                    child: BusinessTypeButton(
-                        businessName: 'Housing',
-                        gradient: selectedCategory == 3 ? gradient : null,
-                        buttonBackground: selectedCategory != 3
-                            ? grey.withOpacity(0.3)
-                            : null,
-                        textColor: selectedCategory == 3 ? white : grey),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Upload or Take Picture',
-                    style: kBodyTextStyle,
-                  ),
-                  GestureDetector(
-                    onTap: null,
-                    child: SvgPicture.asset('assets/add-pic-button.svg'),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 30.h,
-              ),
-              Container(
-                height: 165,
-                width: double.infinity,
-                decoration: kUploadImageBoxBorderShadow,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: SvgPicture.asset(
-                    'assets/upload-pic.svg',
-                    fit: BoxFit.scaleDown,
+                SizedBox(
+                  height: 20.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Upload or Take Picture',
+                      style: kBodyTextStyle,
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        images = await getImage(from: 'camera');
+                        setState(() {
+                          _selectedImage = images['selectedImage'];
+                        });
+                        selectedImageInBase64 = images['selectedImageInBase64'];
+                      },
+                      child: SvgPicture.asset('assets/add-pic-button.svg'),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: 140,
+                  width: double.infinity,
+                  decoration: kUploadImageBoxBorderShadow,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: GestureDetector(
+                      onTap: () async {
+                        images = await getImage(from: 'gallery');
+                        setState(() {
+                          _selectedImage = images['selectedImage'];
+                        });
+                        selectedImageInBase64 = images['selectedImageInBase64'];
+                      },
+                      child: SvgPicture.asset(
+                        'assets/upload-pic.svg',
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Spacer(),
-              Padding(
-                padding: EdgeInsets.only(bottom: 20.0),
-                child: primaryButton(
+                _selectedImage != null
+                    ? Container(
+                        height: 200,
+                        width: MediaQuery.sizeOf(context).width,
+                        margin: EdgeInsets.only(top: 15, bottom: 15),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            shape: BoxShape.rectangle),
+                        child: Image.file(
+                          File(_selectedImage!.path),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.25,
+                      ),
+                primaryButton(
                     context: context,
                     buttonText: 'Next',
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return selectedCategory == 1
-                                ? ProductAddScreenOne()
-                                : selectedCategory == 2
-                                    ? ServiceAddScreen()
-                                    : HouseAddScreen();
-                          },
-                        ),
-                      );
+                      if (selectedImageInBase64 == '') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            ErrorSnackBar(message: 'Plz select an image'));
+                      } else {
+                        print('selectedImageInBase64: $selectedImageInBase64');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return selectedCategory == 1
+                                  ? ProductAddScreenOne(
+                                      productBase64Image: selectedImageInBase64,
+                                    )
+                                  : selectedCategory == 2
+                                      ? ServiceAddScreen(
+                                          serviceBase64Image:
+                                              selectedImageInBase64,
+                                        )
+                                      : HouseAddScreen(
+                                          housingBase64Image:
+                                              selectedImageInBase64,
+                                        );
+                            },
+                          ),
+                        );
+                      }
                     },
                     showLoader: false),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -42,6 +42,7 @@ class RoundedDropdownMenu extends StatelessWidget {
     return Container(
       decoration: kTextFieldBoxDecoration,
       child: DropdownMenu(
+        menuHeight: 150,
         textStyle: kTextFieldInputStyle,
         hintText: hintText,
         trailingIcon: SvgIcon(imageName: 'assets/dropdown_icon.svg'),

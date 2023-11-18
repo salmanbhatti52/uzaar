@@ -1,4 +1,5 @@
 import 'package:Uzaar/widgets/navigate_back_icon.dart';
+import 'package:Uzaar/widgets/snackbars.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,8 +19,10 @@ enum ProductConditions { fresh, used }
 
 class ProductAddScreenOne extends StatefulWidget {
   static const String id = 'product_add_screen_one';
-  ProductAddScreenOne({super.key, this.editDetails});
-  bool? editDetails;
+  const ProductAddScreenOne(
+      {super.key, this.editDetails, required this.productBase64Image});
+  final bool? editDetails;
+  final String? productBase64Image;
 
   @override
   State<ProductAddScreenOne> createState() => _ProductAddScreenOneState();
@@ -31,14 +34,18 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
   final nameEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final priceEditingController = TextEditingController();
-
-  List<String> productCategories = [
-    'Electronic',
-    'Vehicle',
-    'Fashion',
-    'Books'
+  late Map<String, dynamic> formData;
+  List<Map<String, String>> productCategories = [
+    {'categoryName': 'Electronics', 'categoryId': '1'},
+    {'categoryName': 'Vehicles', 'categoryId': '2'},
+    {'categoryName': 'Fashion', 'categoryId': '3'},
+    {'categoryName': 'Books', 'categoryId': '4'},
+    {'categoryName': 'Furniture', 'categoryId': '5'},
+    {'categoryName': 'Sports', 'categoryId': '6'},
+    {'categoryName': 'Accessories', 'categoryId': '7'},
   ];
-  late String? dropDownValue;
+  late String? selectedCategoryName = '';
+  late String? selectedCategoryId = '';
 
   ProductConditions _selectedProductCondition = ProductConditions.fresh;
   updateSelectedCondition(value) {
@@ -50,7 +57,7 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    dropDownValue = productCategories.first;
+    // selectedCategoryName = productCategories.first;
   }
 
   List<Widget> getPageIndicators() {
@@ -136,13 +143,18 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                           hintText: 'Category',
                           onSelected: (value) {
                             setState(() {
-                              dropDownValue = value;
+                              selectedCategoryName = value['categoryName'];
                             });
+                            selectedCategoryId = value['categoryId'];
+                            print(selectedCategoryName);
+                            print(selectedCategoryId);
                           },
                           dropdownMenuEntries: productCategories
                               .map(
-                                (String value) => DropdownMenuEntry<String>(
-                                    value: value, label: value),
+                                (Map<String, String> value) =>
+                                    DropdownMenuEntry<Object?>(
+                                        value: value,
+                                        label: value['categoryName'] ?? ''),
                               )
                               .toList()),
                       SizedBox(
@@ -263,16 +275,58 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                     child: primaryButton(
                         context: context,
                         buttonText: 'Next',
-                        onTap: () => Navigator.push(
+                        onTap: () {
+                          if (nameEditingController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz enter your product name'));
+                          } else if (selectedCategoryName == '') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message:
+                                        'Plz select your product category'));
+                          } else if (descriptionEditingController
+                              .text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message:
+                                        'Plz enter your product description'));
+                          } else if (priceEditingController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz enter your product price'));
+                          } else {
+                            formData = {
+                              'productName':
+                                  nameEditingController.text.toString(),
+                              'productCategory': selectedCategoryName,
+                              'categoryId': selectedCategoryId,
+                              'productCondition': _selectedProductCondition ==
+                                      ProductConditions.fresh
+                                  ? 'New'
+                                  : 'Used',
+                              'productDescription':
+                                  descriptionEditingController.text.toString(),
+                              'productPrice':
+                                  priceEditingController.text.toString(),
+                              'image': widget.productBase64Image,
+                            };
+
+                            print('formData: $formData');
+
+                            return Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
                                   return ProductAddScreenTwo(
                                     editDetails: widget.editDetails,
+                                    formData: formData,
                                   );
                                 },
                               ),
-                            ),
+                            );
+                          }
+                        },
                         showLoader: false),
                   ),
                 ],
@@ -285,36 +339,36 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
   }
 }
 
-class ImageWithText extends StatelessWidget {
-  const ImageWithText({
-    super.key,
-    required this.text,
-    required this.onTap,
-    required this.imageName,
-  });
-  // final String imageName;
-  final String text;
-
-  final void Function()? onTap;
-  final String imageName;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Row(
-        children: [
-          SvgIcon(imageName: 'assets/$imageName.svg'),
-          // SvgIcon(imageName: 'assets/radio_blank.svg'),
-          SizedBox(
-            width: 15.w,
-          ),
-          Text(
-            text,
-            style: kTextFieldInputStyle,
-          )
-        ],
-      ),
-    );
-  }
-}
+// class ImageWithText extends StatelessWidget {
+//   const ImageWithText({
+//     super.key,
+//     required this.text,
+//     required this.onTap,
+//     required this.imageName,
+//   });
+//   // final String imageName;
+//   final String text;
+//
+//   final void Function()? onTap;
+//   final String imageName;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: onTap,
+//       child: Row(
+//         children: [
+//           SvgIcon(imageName: 'assets/$imageName.svg'),
+//           // SvgIcon(imageName: 'assets/radio_blank.svg'),
+//           SizedBox(
+//             width: 15.w,
+//           ),
+//           Text(
+//             text,
+//             style: kTextFieldInputStyle,
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }

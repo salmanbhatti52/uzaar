@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import '../../services/getImage.dart';
 import '../../utils/Buttons.dart';
 import '../../utils/Colors.dart';
 
@@ -26,6 +28,9 @@ class EditListingScreen extends StatefulWidget {
 class _EditListingScreenState extends State<EditListingScreen> {
   int selectedCategory = 1;
   int noOfTabs = 3;
+  XFile? _selectedImage;
+  String selectedImageInBase64 = '';
+  late Map<String, dynamic> images;
 
   List<Widget> getPageIndicators() {
     List<Widget> tabs = [];
@@ -68,20 +73,6 @@ class _EditListingScreenState extends State<EditListingScreen> {
             fit: BoxFit.scaleDown,
           ),
         ),
-        // leading: Builder(
-        //   builder: (context) {
-        //     return Padding(
-        //       padding: const EdgeInsets.only(top: 8.0, left: 20),
-        //       child: GestureDetector(
-        //         onTap: () => Scaffold.of(context).openDrawer(),
-        //         child: SvgPicture.asset(
-        //           'assets/drawer-button.svg',
-        //           fit: BoxFit.scaleDown,
-        //         ),
-        //       ),
-        //     );
-        //   },
-        // ),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 15.w),
@@ -122,9 +113,6 @@ class _EditListingScreenState extends State<EditListingScreen> {
           style: kAppBarTitleStyle,
         ),
       ),
-      // drawer: DrawerWidget(
-      //   buildContext: context,
-      // ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
@@ -149,7 +137,13 @@ class _EditListingScreenState extends State<EditListingScreen> {
                     style: kBodyTextStyle,
                   ),
                   GestureDetector(
-                    onTap: null,
+                    onTap: () async {
+                      images = await getImage(from: 'camera');
+                      setState(() {
+                        _selectedImage = images['selectedImage'];
+                      });
+                      selectedImageInBase64 = images['selectedImageInBase64'];
+                    },
                     child: SvgPicture.asset('assets/add-pic-button.svg'),
                   ),
                 ],
@@ -163,13 +157,33 @@ class _EditListingScreenState extends State<EditListingScreen> {
                 decoration: kUploadImageBoxBorderShadow,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: SvgPicture.asset(
-                    'assets/upload-pic.svg',
-                    fit: BoxFit.scaleDown,
+                  child: GestureDetector(
+                    onTap: () async {
+                      images = await getImage(from: 'gallery');
+                      setState(() {
+                        _selectedImage = images['selectedImage'];
+                      });
+                      selectedImageInBase64 = images['selectedImageInBase64'];
+                    },
+                    child: SvgPicture.asset(
+                      'assets/upload-pic.svg',
+                      fit: BoxFit.scaleDown,
+                    ),
                   ),
                 ),
               ),
-              Spacer(),
+              _selectedImage != null
+                  ? Container(
+                      height: MediaQuery.sizeOf(context).height * 0.30,
+                      width: MediaQuery.sizeOf(context).width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16)),
+                      child: Image.file(
+                        File(_selectedImage!.path),
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : Spacer(),
               Padding(
                 padding: EdgeInsets.only(bottom: 20.0),
                 child: primaryButton(
@@ -182,13 +196,18 @@ class _EditListingScreenState extends State<EditListingScreen> {
                           builder: (context) {
                             return selectedCategory == 1
                                 ? ProductAddScreenOne(
+                                    productBase64Image: selectedImageInBase64,
                                     editDetails: true,
                                   )
                                 : selectedCategory == 2
                                     ? ServiceAddScreen(
+                                        serviceBase64Image:
+                                            selectedImageInBase64,
                                         editDetails: true,
                                       )
                                     : HouseAddScreen(
+                                        housingBase64Image:
+                                            selectedImageInBase64,
                                         editDetails: true,
                                       );
                           },
