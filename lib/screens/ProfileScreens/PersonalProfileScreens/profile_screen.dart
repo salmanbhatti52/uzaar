@@ -41,13 +41,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final emailController = TextEditingController();
   final addressController = TextEditingController();
   final phoneNumberController = TextEditingController();
+  String userProfile = '';
   int selectedCategory = 1;
   late SharedPreferences preferences;
   XFile? _selectedImage;
   String selectedImageInBase64 = '';
   late Map<String, dynamic> images;
 
-  Future<String> updateProfile() async {
+  Future<Map<String, dynamic>> updateProfile() async {
     Response response =
         await sendPostRequest(action: 'update_profile_image', data: {
       'users_customers_id': userDataGV['userId'].toString(),
@@ -62,10 +63,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (status == 'success') {
       // update for Global Var
       userDataGV['profilePic'] = imgBaseUrl + data['profile_pic'];
+      setState(() {
+        userProfile = userDataGV['profilePic'];
+      });
       // update for shared  preferences
       await preferences.setString('profile_pic', userDataGV['profilePic']);
+
+      return {'status': status};
     }
-    return status;
+    setState(() {
+      userProfile = userDataGV['profilePic'];
+    });
+    String message = decodedResponse['message'];
+    return {'status': status, 'message': message};
   }
 
   @override
@@ -77,6 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     emailController.text = userDataGV['email'];
     phoneNumberController.text = userDataGV['phoneNumber'] ?? '';
     addressController.text = userDataGV['address'] ?? '';
+    userProfile = userDataGV['profilePic'];
     initPrefs();
   }
 
@@ -206,9 +217,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
-                            child: userDataGV['profilePic'] != ''
+                            child: userProfile != ''
                                 ? Image.network(
-                                    userDataGV['profilePic'],
+                                    userProfile,
                                     fit: BoxFit.cover,
                                   )
                                 : SizedBox(),
@@ -244,24 +255,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               print(result);
                               if (result == 'camera') {
                                 images = await getImage(from: 'camera');
-                                setState(() {
-                                  _selectedImage = images['selectedImage'];
-                                });
+
                                 selectedImageInBase64 =
                                     images['selectedImageInBase64'];
                                 if (selectedImageInBase64 != '') {
-                                  updateProfile();
+                                  setState(() {
+                                    userProfile = '';
+                                  });
+                                  Map<String, dynamic> result =
+                                      await updateProfile();
+                                  if (result['status'] == 'success') {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SuccessSnackBar(message: null));
+                                  }
+                                  if (result['status'] == 'error') {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        ErrorSnackBar(
+                                            message: result['message']));
+                                  }
                                 }
                               }
                               if (result == 'gallery') {
                                 images = await getImage(from: 'gallery');
-                                setState(() {
-                                  _selectedImage = images['selectedImage'];
-                                });
+
                                 selectedImageInBase64 =
                                     images['selectedImageInBase64'];
                                 if (selectedImageInBase64 != '') {
-                                  updateProfile();
+                                  setState(() {
+                                    userProfile = '';
+                                  });
+                                  Map<String, dynamic> result =
+                                      await updateProfile();
+                                  if (result['status'] == 'success') {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SuccessSnackBar(message: null));
+                                  }
+                                  if (result['status'] == 'error') {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        ErrorSnackBar(
+                                            message: result['message']));
+                                  }
                                 }
                               }
                             },

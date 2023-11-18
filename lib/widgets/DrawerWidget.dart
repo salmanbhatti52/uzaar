@@ -59,25 +59,44 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       height: 50,
                     )
                   : DrawerHeader(
-                      padding: EdgeInsets.zero,
+                      // padding: EdgeInsets.zero,
                       margin: EdgeInsets.only(top: 16),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white, width: 0),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 0,
+                        ),
                       ),
                       child: userDataGV['profilePic'] != ''
-                          ? CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                userDataGV['profilePic'],
+                          ? Container(
+                              decoration: BoxDecoration(
+                                color: Color(0xFFD9D9D9),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image:
+                                        NetworkImage(userDataGV['profilePic'])),
+                                shape: BoxShape.circle,
                               ),
-                              backgroundColor: Color(0xFFD9D9D9),
                             )
-                          : CircleAvatar(
-                              backgroundColor: Color(0xFFD9D9D9),
+                          : Container(
+                              height: 120,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFD9D9D9),
+                                shape: BoxShape.circle,
+                              ),
                             ),
                     ),
               Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 0,
+                    ),
+                    color: white),
                 margin: EdgeInsets.only(left: 40, top: 15),
-                color: white,
+                // color: white,
                 // width: MediaQuery.sizeOf(context).width,
                 height: MediaQuery.sizeOf(context).height * 0.79,
                 child: Column(
