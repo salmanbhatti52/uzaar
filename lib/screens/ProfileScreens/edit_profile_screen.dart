@@ -237,17 +237,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () async {
-                            position = await getLocationCoordinates();
-                            print(position);
-                            List<Placemark> placemarks =
-                                await getLocationFromCoordinates(
-                                    position.latitude, position.longitude);
-                            print(
-                                '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}');
-                            setState(() {
-                              addressController.text =
-                                  '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}';
-                            });
+                            try {
+                              position = await getLocationCoordinates();
+                              print(position);
+
+                              List<Placemark> placemarks =
+                                  await getLocationFromCoordinates(
+                                      position.latitude, position.longitude);
+                              print(placemarks);
+                              print(
+                                  '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}');
+                              setState(() {
+                                addressController.text =
+                                    '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}';
+                              });
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  ErrorSnackBar(message: e.toString()));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  ErrorSnackBar(
+                                      message:
+                                          'Plz check your device location is on'));
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //     AlertSnackBar(
+                              //         message:
+                              //             'we need permission to access your location'));
+                            }
                           },
                           child: SvgPicture.asset(
                             'assets/address-icon.svg',

@@ -39,6 +39,7 @@ class FeaturedProductsWidget extends StatelessWidget {
   final String productDescription;
   final String productLocation;
   final String productPrice;
+  final String productConditon;
   final void Function()? onOptionTap;
   final void Function()? onImageTap;
   const FeaturedProductsWidget(
@@ -49,7 +50,8 @@ class FeaturedProductsWidget extends StatelessWidget {
       required this.productLocation,
       required this.productPrice,
       required this.onOptionTap,
-      required this.onImageTap});
+      required this.onImageTap,
+      required this.productConditon});
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +62,7 @@ class FeaturedProductsWidget extends StatelessWidget {
       child: Column(
         children: [
           Stack(
+            fit: StackFit.passthrough,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.only(
@@ -68,8 +71,11 @@ class FeaturedProductsWidget extends StatelessWidget {
                 ),
                 child: GestureDetector(
                   onTap: onImageTap,
-                  child: Image.asset(
+                  child: Image.network(
+                    width: 154,
+                    height: 124,
                     image,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -131,7 +137,7 @@ class FeaturedProductsWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'New',
+                  productConditon,
                   style: kNewTagTextStyle,
                 ),
                 SizedBox(
@@ -175,6 +181,44 @@ class FeaturedProductsWidget extends StatelessWidget {
                   ],
                 ),
               ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class FeaturedProductsDummy extends StatelessWidget {
+  const FeaturedProductsDummy({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 10, top: 2, bottom: 2, left: 1),
+      width: 154,
+      decoration: kCardBoxDecoration,
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              const ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(10),
+                ),
+                child: null,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 6,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 7.0, right: 7.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [],
             ),
           )
         ],

@@ -14,6 +14,7 @@ import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../widgets/snackbars.dart';
 import '../../widgets/text_form_field_reusable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -238,17 +239,32 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                               SvgIcon(imageName: 'assets/address-icon.svg'),
                           suffixIcon: GestureDetector(
                             onTap: () async {
-                              position = await getLocationCoordinates();
-                              print(position);
-                              List<Placemark> placemarks =
-                                  await getLocationFromCoordinates(
-                                      position.latitude, position.longitude);
-                              print(
-                                  '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}');
-                              setState(() {
-                                addressController.text =
-                                    '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}';
-                              });
+                              try {
+                                position = await getLocationCoordinates();
+                                print(position);
+
+                                List<Placemark> placemarks =
+                                    await getLocationFromCoordinates(
+                                        position.latitude, position.longitude);
+                                print(placemarks);
+                                print(
+                                    '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}');
+                                setState(() {
+                                  addressController.text =
+                                      '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}';
+                                });
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    ErrorSnackBar(message: e.toString()));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    ErrorSnackBar(
+                                        message:
+                                            'Plz check your device location is on'));
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //     AlertSnackBar(
+                                //         message:
+                                //             'we need permission to access your location'));
+                              }
                             },
                             child: SvgIcon(
                               imageName: 'assets/address-icon.svg',

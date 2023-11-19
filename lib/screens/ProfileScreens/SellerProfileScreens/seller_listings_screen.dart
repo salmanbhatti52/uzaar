@@ -62,6 +62,7 @@ class _SellerListingsScreenState extends State<SellerListingsScreen> {
                 child: ListView.builder(
                   itemBuilder: (context, index) {
                     return FeaturedProductsWidget(
+                      productConditon: 'New',
                       image: 'assets/product-ph.png',
                       productCategory: 'Electronics',
                       productDescription: 'Iphone 14',

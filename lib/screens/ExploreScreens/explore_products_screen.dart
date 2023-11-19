@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/widgets/featured_products_widget.dart';
 
+import '../../services/restService.dart';
 import '../../utils/Buttons.dart';
 import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/rounded_dropdown_menu.dart';
@@ -244,24 +245,27 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
             axisDirection: AxisDirection.down,
             color: primaryBlue,
             child: GridView.builder(
-              padding: EdgeInsets.only(bottom: 33, left: 8),
+              // padding: EdgeInsets.only(bottom: 33, left: 8),
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 10,
+                // crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                mainAxisExtent: 185,
+                mainAxisExtent: 187,----------------------------------------
               ),
-              itemCount: 15,
+              itemCount: featuredProductsGV.length,
               itemBuilder: (context, index) {
                 return FeaturedProductsWidget(
-                  image: 'assets/product-ph.png',
-                  productCategory: 'Electronics',
-                  productDescription: 'Iphone 14',
-                  productLocation: 'Los Angeles',
-                  productPrice: '120',
+                  productConditon: featuredProductsGV[index]['condition'],
+                  image: imgBaseUrl +
+                      featuredProductsGV[index]['listings_images'][0]['image'],
+                  productCategory: featuredProductsGV[index]
+                      ['listings_categories']['name'],
+                  productDescription: featuredProductsGV[index]['name'],
+                  productLocation: 'California',
+                  productPrice: featuredProductsGV[index]['price'],
                   onImageTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(

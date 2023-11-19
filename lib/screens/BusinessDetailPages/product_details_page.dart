@@ -387,6 +387,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return FeaturedProductsWidget(
+                          productConditon: 'New',
                           image: 'assets/product-ph.png',
                           productCategory: 'Electronics',
                           productDescription: 'Iphone 14',

@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/widgets/BottomNaviBar.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart';
 
 import '../../../services/location.dart';
+import '../../../services/restService.dart';
 import '../../../utils/Buttons.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/snackbars.dart';
@@ -295,8 +299,8 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                         context: context,
                         buttonText: widget.editDetails == true
                             ? 'Save Changes'
-                            : 'Publish',
-                        onTap: () {
+                            : setButtonStatus,
+                        onTap: () async {
                           if (nameEditingController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
@@ -315,23 +319,113 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           } else if (locationEditingController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
-                                    message: 'Plz add your description'));
+                                    message: 'Plz add your location'));
                           } else if (priceEditingController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
                                     message: 'Plz enter your service price'));
-                          } else {}
-                          // return Navigator.pushAndRemoveUntil(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) {
-                          //         return BottomNavBar();
-                          //       },
-                          //     ),
-                          //     (route) => false,
-                          //   );
+                          } else {
+                            FocusScopeNode currentFocus =
+                                FocusScope.of(context);
+                            if (!currentFocus.hasPrimaryFocus) {
+                              currentFocus.unfocus();
+                            }
+                            print(
+                                'address: ${locationEditingController.text.toString()}');
+                            setState(() {
+                              setLoader = true;
+                              setButtonStatus = 'Please wait..';
+                            });
+                            try {
+                              List<Location> locations =
+                                  await locationFromAddress(
+                                      locationEditingController.text
+                                          .toString());
+                              print(locations);
+                              print(locations[0].longitude);
+                              print(locations[0].latitude);
+                              latitude = locations[0].latitude;
+                              longitude = locations[0].longitude;
+
+                              Response response = await sendPostRequest(
+                                  action: 'add_listings_services',
+                                  data: {
+                                    'users_customers_id':
+                                        userDataGV['userId'].toString(),
+                                    'listings_types_id': '2',
+                                    'listings_categories_id':
+                                        selectedCategoryId,
+                                    'name':
+                                        nameEditingController.text.toString(),
+                                    'description': descriptionEditingController
+                                        .text
+                                        .toString(),
+                                    'price':
+                                        priceEditingController.text.toString(),
+                                    'location': locationEditingController.text
+                                        .toString(),
+                                    'latitude': latitude.toString(),
+                                    'longitude': longitude.toString(),
+                                    'packages_id': '',
+                                    'payment_gateways_id': '',
+                                    'payment_status': '',
+                                    'listings_images': [
+                                      {'image': widget.serviceBase64Image}
+                                    ]
+                                  });
+                              setState(() {
+                                setLoader = false;
+                                setButtonStatus = 'Publish';
+                              });
+                              print(response.statusCode);
+                              print(response.body);
+                              var decodedResponse = jsonDecode(response.body);
+                              String status = decodedResponse['status'];
+                              if (status == 'success') {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: primaryBlue,
+                                        content: Text(
+                                          'Success',
+                                          style: kToastTextStyle,
+                                        )));
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return BottomNavBar();
+                                    },
+                                  ),
+                                  (route) => false,
+                                );
+                              }
+                              if (status == 'error') {
+                                String message = decodedResponse?['message'];
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Text(
+                                          message,
+                                          style: kToastTextStyle,
+                                        )));
+                              }
+                            } catch (e) {
+                              print(e);
+                              setState(() {
+                                setLoader = false;
+                                setButtonStatus = 'Publish';
+                              });
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                        'Plz enter a valid address',
+                                        style: kToastTextStyle,
+                                      )));
+                            }
+                          }
                         },
-                        showLoader: false),
+                        showLoader: setLoader),
                   ),
                 ],
               ),

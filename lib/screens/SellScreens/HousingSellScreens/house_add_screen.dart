@@ -1,10 +1,18 @@
+import 'dart:convert';
+
 import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart';
 
+import '../../../services/location.dart';
+import '../../../services/restService.dart';
 import '../../../utils/Buttons.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/BottomNaviBar.dart';
+import '../../../widgets/snackbars.dart';
 import '../../../widgets/text_form_field_reusable.dart';
 import '../../../widgets/rounded_dropdown_menu.dart';
 import '../../../widgets/suffix_svg_icon.dart';
@@ -25,19 +33,30 @@ class HouseAddScreen extends StatefulWidget {
 
 class _HouseAddScreenState extends State<HouseAddScreen> {
   int noOfTabs = 2;
-  late String housingDropdownValue;
-  late String boostingDropdownValue;
-  late int bedroomsDropdownValue;
-  late int bathroomsDropdownValue;
+  late String? selectedCategoryName = '';
+  late String? selectedCategoryId = '';
+  late String? selectedBoostingOption = '';
+  late int? selectedBedroomOption = 0;
+  late int? selectedBathroomOption = 0;
   final nameEditingController = TextEditingController();
   final locationEditingController = TextEditingController();
   final priceEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final areaEditingController = TextEditingController();
-  List<String> housingCategories = ['Rental', 'For Sale', 'Lease'];
+  List<Map<String, String>> housingCategories = [
+    {'categoryName': 'Rental', 'categoryId': '13'},
+    {'categoryName': 'For Sale', 'categoryId': '14'},
+    {'categoryName': 'Lease', 'categoryId': '15'},
+  ];
   List<String> boostingOptions = ['Free', 'Paid'];
   List<int> bedrooms = [1, 2, 3, 4, 5];
   List<int> bathrooms = [1, 2, 3, 4, 5];
+
+  late double latitude;
+  late double longitude;
+  late Position position;
+  bool setLoader = false;
+  String setButtonStatus = 'Publish';
 
   FurnishedConditions? _selectedCondition = FurnishedConditions.no;
 
@@ -134,13 +153,18 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                           hintText: 'Rental',
                           onSelected: (value) {
                             setState(() {
-                              housingDropdownValue = value;
+                              selectedCategoryName = value['categoryName'];
                             });
+                            selectedCategoryId = value['categoryId'];
+                            print(selectedCategoryName);
+                            print(selectedCategoryId);
                           },
                           dropdownMenuEntries: housingCategories
                               .map(
-                                (String value) => DropdownMenuEntry<String>(
-                                    value: value, label: value),
+                                (Map<String, String> value) =>
+                                    DropdownMenuEntry<Object?>(
+                                        value: value,
+                                        label: value['categoryName'] ?? ''),
                               )
                               .toList()),
                       SizedBox(
@@ -226,10 +250,40 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                           textInputType: TextInputType.streetAddress,
                           prefixIcon:
                               SvgIcon(imageName: 'assets/address-icon.svg'),
-                          suffixIcon: SvgIcon(
-                            imageName: 'assets/address-icon.svg',
-                            colorFilter:
-                                ColorFilter.mode(primaryBlue, BlendMode.srcIn),
+                          suffixIcon: GestureDetector(
+                            onTap: () async {
+                              try {
+                                position = await getLocationCoordinates();
+                                print(position);
+
+                                List<Placemark> placemarks =
+                                    await getLocationFromCoordinates(
+                                        position.latitude, position.longitude);
+                                print(placemarks);
+                                print(
+                                    '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}');
+                                setState(() {
+                                  locationEditingController.text =
+                                      '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}';
+                                });
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    ErrorSnackBar(message: e.toString()));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    ErrorSnackBar(
+                                        message:
+                                            'Plz check your device location is on'));
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //     AlertSnackBar(
+                                //         message:
+                                //             'we need permission to access your location'));
+                              }
+                            },
+                            child: SvgIcon(
+                              imageName: 'assets/address-icon.svg',
+                              colorFilter: ColorFilter.mode(
+                                  primaryBlue, BlendMode.srcIn),
+                            ),
                           ),
                           hintText: 'Location here',
                           obscureText: null,
@@ -291,7 +345,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                         height: 46,
                         child: TextFormFieldWidget(
                           controller: areaEditingController,
-                          textInputType: TextInputType.text,
+                          textInputType: TextInputType.number,
                           prefixIcon:
                               SvgIcon(imageName: 'assets/area_icon.svg'),
                           hintText: 'Area ( Sq.ft)',
@@ -321,7 +375,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                     hintText: '2',
                                     onSelected: (value) {
                                       setState(() {
-                                        bedroomsDropdownValue = value;
+                                        selectedBedroomOption = value;
                                       });
                                     },
                                     dropdownMenuEntries: bedrooms
@@ -355,7 +409,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                     hintText: '2',
                                     onSelected: (value) {
                                       setState(() {
-                                        bathroomsDropdownValue = value;
+                                        selectedBathroomOption = value;
                                       });
                                     },
                                     dropdownMenuEntries: bathrooms
@@ -394,7 +448,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                           hintText: 'Select Option',
                           onSelected: (value) {
                             setState(() {
-                              boostingDropdownValue = value;
+                              selectedBoostingOption = value;
                             });
                           },
                           dropdownMenuEntries: boostingOptions
@@ -417,17 +471,149 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                         context: context,
                         buttonText: widget.editDetails == true
                             ? 'Save Changes'
-                            : 'Publish',
-                        onTap: () => Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return BottomNavBar();
-                                },
-                              ),
-                              (route) => false,
-                            ),
-                        showLoader: false),
+                            : setButtonStatus,
+                        onTap: () async {
+                          if (nameEditingController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz enter your house name'));
+                          } else if (selectedCategoryName == '') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz select your house category'));
+                          } else if (locationEditingController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz add your location'));
+                          } else if (priceEditingController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz enter your house price'));
+                          } else if (descriptionEditingController
+                              .text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message:
+                                        'Plz enter your service description'));
+                          } else if (areaEditingController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz add your house area'));
+                          } else if (selectedBedroomOption == 0) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz select no. of bedrooms'));
+                          } else if (selectedBathroomOption == 0) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz select no. of bathrooms'));
+                          } else {
+                            FocusScopeNode currentFocus =
+                                FocusScope.of(context);
+                            if (!currentFocus.hasPrimaryFocus) {
+                              currentFocus.unfocus();
+                            }
+                            print(
+                                'address: ${locationEditingController.text.toString()}');
+                            setState(() {
+                              setLoader = true;
+                              setButtonStatus = 'Please wait..';
+                            });
+                            try {
+                              List<Location> locations =
+                                  await locationFromAddress(
+                                      locationEditingController.text
+                                          .toString());
+                              print(locations);
+                              print(locations[0].longitude);
+                              print(locations[0].latitude);
+                              latitude = locations[0].latitude;
+                              longitude = locations[0].longitude;
+
+                              Response response = await sendPostRequest(
+                                  action: 'add_listings_housings',
+                                  data: {
+                                    'users_customers_id':
+                                        userDataGV['userId'].toString(),
+                                    'listings_types_id': '3',
+                                    'listings_categories_id':
+                                        selectedCategoryId,
+                                    'name':
+                                        nameEditingController.text.toString(),
+                                    'description': descriptionEditingController
+                                        .text
+                                        .toString(),
+                                    'price':
+                                        priceEditingController.text.toString(),
+                                    'location': locationEditingController.text
+                                        .toString(),
+                                    'latitude': latitude.toString(),
+                                    'longitude': longitude.toString(),
+                                    'area':
+                                        areaEditingController.text.toString(),
+                                    'bedroom': selectedBedroomOption.toString(),
+                                    'bathroom':
+                                        selectedBathroomOption.toString(),
+                                    'packages_id': '',
+                                    'payment_gateways_id': '',
+                                    'payment_status': '',
+                                    'listings_images': [
+                                      {'image': widget.housingBase64Image}
+                                    ]
+                                  });
+                              setState(() {
+                                setLoader = false;
+                                setButtonStatus = 'Publish';
+                              });
+                              print(response.statusCode);
+                              print(response.body);
+                              var decodedResponse = jsonDecode(response.body);
+                              String status = decodedResponse['status'];
+                              if (status == 'success') {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: primaryBlue,
+                                        content: Text(
+                                          'Success',
+                                          style: kToastTextStyle,
+                                        )));
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return BottomNavBar();
+                                    },
+                                  ),
+                                  (route) => false,
+                                );
+                              }
+                              if (status == 'error') {
+                                String message = decodedResponse?['message'];
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Text(
+                                          message,
+                                          style: kToastTextStyle,
+                                        )));
+                              }
+                            } catch (e) {
+                              print(e);
+                              setState(() {
+                                setLoader = false;
+                                setButtonStatus = 'Publish';
+                              });
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                        'Plz enter a valid address',
+                                        style: kToastTextStyle,
+                                      )));
+                            }
+                          }
+                        },
+                        showLoader: setLoader),
                   ),
                 ],
               ),

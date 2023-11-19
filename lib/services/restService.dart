@@ -3,6 +3,9 @@ import 'dart:convert';
 
 const apiBaseUrl = 'https://uzaar.eigix.net/api/';
 const imgBaseUrl = 'https://uzaar.eigix.net/public/';
+dynamic featuredProductsGV;
+dynamic featuredServicesGV;
+dynamic featuredHousingGV;
 
 Map<String, dynamic> userDataGV = {}; //GV : GlobalVariable
 bool loginAsGuestGV = false; //GV : GlobalVariable
