@@ -23,3 +23,14 @@ SnackBar ErrorSnackBar({String? message}) {
     backgroundColor: Colors.red,
   );
 }
+
+SnackBar AlertSnackBar({String? message}) {
+  return SnackBar(
+    content: Text(
+      message ?? 'API Error',
+      style: kToastTextStyle,
+    ),
+    duration: Duration(seconds: 2),
+    backgroundColor: Colors.green,
+  );
+}

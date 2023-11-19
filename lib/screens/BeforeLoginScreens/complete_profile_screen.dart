@@ -72,33 +72,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     preferences = await SharedPreferences.getInstance();
   }
 
-  // Future _selectImageFromGallery() async {
-  //   final returnedImage =
-  //       await ImagePicker().pickImage(source: ImageSource.gallery);
-  //   if (returnedImage == null) {
-  //     return;
-  //   }
-  //
-  //   setState(() {
-  //     _selectedImage = returnedImage;
-  //   });
-  //   selectedImageInBase64 = await convertXFileToBase64(_selectedImage!);
-  //   print(selectedImageInBase64);
-  // }
-  //
-  // Future _takeImageFromCamera() async {
-  //   final returnedImage =
-  //       await ImagePicker().pickImage(source: ImageSource.camera);
-  //   if (returnedImage == null) {
-  //     return;
-  //   }
-  //   setState(() {
-  //     _selectedImage = returnedImage;
-  //   });
-  //   selectedImageInBase64 = await convertXFileToBase64(_selectedImage!);
-  //   print(selectedImageInBase64);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -259,9 +232,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
-                          // onSubmitted: (value) {
-                          //   print('address: $value');
-                          // },
                           controller: addressController,
                           textInputType: TextInputType.streetAddress,
                           prefixIcon:

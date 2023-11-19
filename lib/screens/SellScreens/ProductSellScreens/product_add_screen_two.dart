@@ -29,6 +29,9 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
   final minPriceEditingController = TextEditingController();
   late String? selectedBoostingOption = '';
   List<String> boostingOptions = ['Free', 'Paid'];
+  bool setLoader = false;
+  String setButtonStatus = 'Publish';
+
   @override
   void initState() {
     // TODO: implement initState

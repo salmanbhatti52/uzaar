@@ -2,9 +2,13 @@ import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/widgets/BottomNaviBar.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
+import '../../../services/location.dart';
 import '../../../utils/Buttons.dart';
 import '../../../utils/colors.dart';
+import '../../../widgets/snackbars.dart';
 import '../../../widgets/text_form_field_reusable.dart';
 import '../../../widgets/rounded_dropdown_menu.dart';
 import '../../../widgets/suffix_svg_icon.dart';
@@ -22,16 +26,28 @@ class ServiceAddScreen extends StatefulWidget {
 
 class _ServiceAddScreenState extends State<ServiceAddScreen> {
   int noOfTabs = 2;
-  late String serviceDropDownValue;
-  late String boostingDropDownValue;
-
+  late String? selectedCategoryName = '';
+  late String? selectedCategoryId = '';
+  late String? selectedBoostingOption = '';
   final nameEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final locationEditingController = TextEditingController();
   final priceEditingController = TextEditingController();
 
-  List<String> serviceCategories = ['Tech', 'Designing', 'Beauty', 'Medical'];
+  List<Map<String, String>> serviceCategories = [
+    {'categoryName': 'Technology', 'categoryId': '8'},
+    {'categoryName': 'Designing', 'categoryId': '9'},
+    {'categoryName': 'Beauty', 'categoryId': '10'},
+    {'categoryName': 'Medical', 'categoryId': '11'},
+    {'categoryName': 'Printing', 'categoryId': '12'},
+  ];
   List<String> boostingOptions = ['Free', 'Paid'];
+
+  late double latitude;
+  late double longitude;
+  late Position position;
+  bool setLoader = false;
+  String setButtonStatus = 'Publish';
   @override
   void initState() {
     // TODO: implement initState
@@ -120,13 +136,18 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           hintText: 'Category',
                           onSelected: (value) {
                             setState(() {
-                              serviceDropDownValue = value;
+                              selectedCategoryName = value['categoryName'];
                             });
+                            selectedCategoryId = value['categoryId'];
+                            print(selectedCategoryName);
+                            print(selectedCategoryId);
                           },
                           dropdownMenuEntries: serviceCategories
                               .map(
-                                (String value) => DropdownMenuEntry<String>(
-                                    value: value, label: value),
+                                (Map<String, String> value) =>
+                                    DropdownMenuEntry<Object?>(
+                                        value: value,
+                                        label: value['categoryName'] ?? ''),
                               )
                               .toList()),
                       SizedBox(
@@ -167,10 +188,40 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           textInputType: TextInputType.streetAddress,
                           prefixIcon:
                               SvgIcon(imageName: 'assets/address-icon.svg'),
-                          suffixIcon: SvgIcon(
-                            imageName: 'assets/address-icon.svg',
-                            colorFilter:
-                                ColorFilter.mode(primaryBlue, BlendMode.srcIn),
+                          suffixIcon: GestureDetector(
+                            onTap: () async {
+                              try {
+                                position = await getLocationCoordinates();
+                                print(position);
+
+                                List<Placemark> placemarks =
+                                    await getLocationFromCoordinates(
+                                        position.latitude, position.longitude);
+                                print(placemarks);
+                                print(
+                                    '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}');
+                                setState(() {
+                                  locationEditingController.text =
+                                      '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}';
+                                });
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    ErrorSnackBar(message: e.toString()));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    ErrorSnackBar(
+                                        message:
+                                            'Plz check your device location is on'));
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //     AlertSnackBar(
+                                //         message:
+                                //             'we need permission to access your location'));
+                              }
+                            },
+                            child: SvgIcon(
+                              imageName: 'assets/address-icon.svg',
+                              colorFilter: ColorFilter.mode(
+                                  primaryBlue, BlendMode.srcIn),
+                            ),
                           ),
                           hintText: 'Your Location here',
                           obscureText: null,
@@ -221,7 +272,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           hintText: 'Select Option',
                           onSelected: (value) {
                             setState(() {
-                              boostingDropDownValue = value;
+                              selectedBoostingOption = value;
                             });
                           },
                           dropdownMenuEntries: boostingOptions
@@ -245,15 +296,41 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                         buttonText: widget.editDetails == true
                             ? 'Save Changes'
                             : 'Publish',
-                        onTap: () => Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return BottomNavBar();
-                                },
-                              ),
-                              (route) => false,
-                            ),
+                        onTap: () {
+                          if (nameEditingController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz enter your service name'));
+                          } else if (selectedCategoryName == '') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message:
+                                        'Plz select your service category'));
+                          } else if (descriptionEditingController
+                              .text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message:
+                                        'Plz enter your service description'));
+                          } else if (locationEditingController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz add your description'));
+                          } else if (priceEditingController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz enter your service price'));
+                          } else {}
+                          // return Navigator.pushAndRemoveUntil(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) {
+                          //         return BottomNavBar();
+                          //       },
+                          //     ),
+                          //     (route) => false,
+                          //   );
+                        },
                         showLoader: false),
                   ),
                 ],
