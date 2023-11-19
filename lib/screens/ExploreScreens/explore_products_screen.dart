@@ -253,7 +253,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                 crossAxisCount: 2,
                 // crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                mainAxisExtent: 187,----------------------------------------
+                mainAxisExtent: 187,
               ),
               itemCount: featuredProductsGV.length,
               itemBuilder: (context, index) {
