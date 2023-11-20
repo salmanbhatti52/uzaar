@@ -6,7 +6,10 @@ const imgBaseUrl = 'https://uzaar.eigix.net/public/';
 dynamic featuredProductsGV;
 dynamic featuredServicesGV;
 dynamic featuredHousingGV;
-
+dynamic listingTypesGV;
+dynamic allListingsProductsGV;
+dynamic allListingsServicesGV;
+dynamic allListingsHousingsGV;
 Map<String, dynamic> userDataGV = {}; //GV : GlobalVariable
 bool loginAsGuestGV = false; //GV : GlobalVariable
 

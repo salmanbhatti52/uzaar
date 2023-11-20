@@ -47,8 +47,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   // To get other featured products of a user. Not confirm now
   getASellerOtherFeaturedProducts() async {
     Response response =
-        await sendPostRequest(action: 'get_all_listings_products', data: {
-      'users_customers_id': userDataGV['userId'],
+        await sendPostRequest(action: 'get_listings_products', data: {
+      'users_customers_id': widget.productData['users_customers_id'],
     });
     print(response.statusCode);
     print(response.body);
@@ -445,9 +445,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 onImageTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ProductDetailsPage(
-                                        productData: null,
+                                      builder: (context) => ProductDetailsPage(
+                                        productData:
+                                            aSellerOtherFeaturedProducts[index],
                                       ),
                                     ),
                                   );

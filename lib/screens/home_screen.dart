@@ -56,29 +56,25 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    selectedListingType = '';
+
     init();
-    getListingTypes();
-    getListingSubCategories();
   }
 
   init() async {
-    if (userDataGV.isEmpty) {
-      await getUserData();
+    if (listingTypesGV != null) {
+      selectedListingType = listingTypesGV?['data'][0]['name'];
+    } else {
+      selectedListingType = '';
     }
+    await getUserData();
+    getListingTypes();
+    getListingSubCategories();
 
-    if (featuredProductsGV == null) {
-      await getFeaturedProducts();
-      setState(() {});
-    }
-    if (featuredServicesGV == null) {
-      await getFeaturedServices();
-      setState(() {});
-    }
-    if (featuredHousingGV == null) {
-      await getFeaturedHousings();
-      setState(() {});
-    }
+    getFeaturedProducts();
+
+    getFeaturedServices();
+
+    getFeaturedHousings();
   }
 
   getUserData() async {
@@ -127,9 +123,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     print(response.statusCode);
     print(response.body);
-    listingTypes = jsonDecode(response.body);
+    listingTypesGV = jsonDecode(response.body);
     setState(() {
-      selectedListingType = listingTypes?['data'][0]['name'];
+      selectedListingType = listingTypesGV?['data'][0]['name'];
       // showSpinner = false;
     });
   }
@@ -153,6 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var decodedResponse = jsonDecode(response.body);
     featuredProductsGV = decodedResponse['data'];
     print('featuredProductsGV: $featuredProductsGV');
+    setState(() {});
   }
 
   getFeaturedServices() async {
@@ -165,6 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var decodedResponse = jsonDecode(response.body);
     featuredServicesGV = decodedResponse['data'];
     print('featuredServicesGV: $featuredServicesGV');
+    setState(() {});
   }
 
   getFeaturedHousings() async {
@@ -177,6 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var decodedResponse = jsonDecode(response.body);
     featuredHousingGV = decodedResponse['data'];
     print('featuredHousingGV: $featuredHousingGV');
+    setState(() {});
   }
 
   handleOptionSelection(ReportReason reason) {
@@ -320,35 +319,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: listingTypes != null
+                    children: listingTypesGV != null
                         ? List.generate(
-                            listingTypes?['data'].length,
+                            listingTypesGV?['data'].length,
                             (index) => GestureDetector(
                               onTap: () {
                                 setState(() {
                                   selectedListingType =
-                                      listingTypes?['data'][index]['name'];
+                                      listingTypesGV?['data'][index]['name'];
                                 });
                                 print(
                                     'selectedListingType: $selectedListingType');
                               },
                               child: BusinessTypeButton(
                                   margin:
-                                      index < listingTypes?['data'].length - 1
+                                      index < listingTypesGV?['data'].length - 1
                                           ? EdgeInsets.only(right: 10)
                                           : null,
-                                  businessName: listingTypes?['data'][index]
+                                  businessName: listingTypesGV?['data'][index]
                                       ['name'],
                                   gradient: selectedListingType ==
-                                          listingTypes?['data'][index]['name']
+                                          listingTypesGV?['data'][index]['name']
                                       ? gradient
                                       : null,
                                   buttonBackground: selectedListingType !=
-                                          listingTypes?['data'][index]['name']
+                                          listingTypesGV?['data'][index]['name']
                                       ? grey.withOpacity(0.3)
                                       : null,
                                   textColor: selectedListingType ==
-                                          listingTypes?['data'][index]['name']
+                                          listingTypesGV?['data'][index]['name']
                                       ? white
                                       : grey),
                             ),

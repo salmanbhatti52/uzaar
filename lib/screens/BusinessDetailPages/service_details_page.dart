@@ -41,8 +41,8 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
   dynamic aSellerOtherFeaturedServices;
   getASellerOtherFeaturedServices() async {
     Response response =
-        await sendPostRequest(action: 'get_all_listings_services', data: {
-      'users_customers_id': userDataGV['userId'],
+        await sendPostRequest(action: 'get_listings_services', data: {
+      'users_customers_id': widget.serviceData['users_customers_id'],
     });
     print(response.statusCode);
     print(response.body);
@@ -419,7 +419,8 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                                 onImageTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => ServiceDetailsPage(
-                                      serviceData: featuredServicesGV[index],
+                                      serviceData:
+                                          aSellerOtherFeaturedServices[index],
                                     ),
                                   ));
                                 },

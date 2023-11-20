@@ -45,7 +45,7 @@ class ServiceListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
+      margin: EdgeInsets.only(top: 2, bottom: 14),
       padding: EdgeInsets.only(left: 9, top: 9, bottom: 9),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -62,16 +62,32 @@ class ServiceListTile extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.asset(serviceImage),
+              Container(
+                width: 74,
+                height: 60,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(
+                    serviceImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
               SizedBox(
                 width: 8.0,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    serviceName,
-                    style: productNameTextStyle,
+                  SizedBox(
+                    width: 150,
+                    child: Text(
+                      serviceName,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: productNameTextStyle,
+                    ),
                   ),
                   SizedBox(
                     height: 4,
@@ -86,9 +102,15 @@ class ServiceListTile extends StatelessWidget {
                       SizedBox(
                         width: 4,
                       ),
-                      Text(
-                        serviceLocation,
-                        style: locationNameTextStyle,
+                      SizedBox(
+                        width: 130,
+                        child: Text(
+                          serviceLocation,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          softWrap: true,
+                          style: locationNameTextStyle,
+                        ),
                       )
                     ],
                   ),
@@ -117,9 +139,9 @@ class ServiceListTile extends StatelessWidget {
           ),
           Row(
             children: [
-              SvgIcon(imageName: 'assets/edit_list_tile.svg'),
-              SizedBox(width: 6),
-              SvgIcon(imageName: 'assets/del_list_tile.svg'),
+              // SvgIcon(imageName: 'assets/edit_list_tile.svg'),
+              // SizedBox(width: 6),
+              // SvgIcon(imageName: 'assets/del_list_tile.svg'),
             ],
           ),
           PopupMenuButtonReusable(

@@ -35,7 +35,7 @@ class HousingListTile extends StatelessWidget {
   final String houseName;
   final String houseLocation;
   final String housePrice;
-  final String houseType;
+  final String furnishingStatus;
   final String houseArea;
   final String noOfBeds;
   final String noOfBaths;
@@ -44,12 +44,13 @@ class HousingListTile extends StatelessWidget {
   final dynamic initialValue;
 
   const HousingListTile({
+    super.key,
     required this.houseImage,
     required this.houseName,
     required this.houseLocation,
     required this.housePrice,
     required this.houseArea,
-    required this.houseType,
+    required this.furnishingStatus,
     required this.noOfBaths,
     required this.noOfBeds,
     required this.onSelected,
@@ -79,7 +80,17 @@ class HousingListTile extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(houseImage),
+              Container(
+                width: 86,
+                height: 94,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(
+                    houseImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
               SizedBox(
                 width: 8.0,
               ),
@@ -87,15 +98,21 @@ class HousingListTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    houseName,
-                    style: productNameTextStyle,
+                  SizedBox(
+                    width: 150,
+                    child: Text(
+                      houseName,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: productNameTextStyle,
+                    ),
                   ),
                   SizedBox(
                     height: 4,
                   ),
                   Text(
-                    houseType,
+                    furnishingStatus,
                     style: houseTypeTextStyle,
                   ),
                   SizedBox(
@@ -111,9 +128,15 @@ class HousingListTile extends StatelessWidget {
                       SizedBox(
                         width: 4,
                       ),
-                      Text(
-                        houseLocation,
-                        style: locationNameTextStyle,
+                      SizedBox(
+                        width: 130,
+                        child: Text(
+                          houseLocation,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          softWrap: true,
+                          style: locationNameTextStyle,
+                        ),
                       )
                     ],
                   ),

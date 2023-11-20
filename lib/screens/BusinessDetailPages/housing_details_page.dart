@@ -51,8 +51,8 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
   dynamic aSellerOtherFeaturedHouses;
   getASellerOtherFeaturedHouses() async {
     Response response =
-        await sendPostRequest(action: 'get_all_listings_housings', data: {
-      'users_customers_id': userDataGV['userId'],
+        await sendPostRequest(action: 'get_listings_housings', data: {
+      'users_customers_id': widget.houseData['users_customers_id'],
     });
     print(response.statusCode);
     print(response.body);
@@ -457,7 +457,8 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                                 onImageTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => HousingDetailsPage(
-                                      houseData: featuredHousingGV[index],
+                                      houseData:
+                                          aSellerOtherFeaturedHouses[index],
                                     ),
                                   ));
                                 },

@@ -30,11 +30,18 @@ class _ListingsScreenState extends State<ListingsScreen> {
   int selectedCategory = 1;
   dynamic boostingPackages;
   bool showSpinner = false;
+
+  dynamic listedProducts;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    init();
+  }
+
+  init() {
     getBoostingPackages();
+    getSellerProductsListing();
   }
 
   getBoostingPackages() async {
@@ -49,6 +56,19 @@ class _ListingsScreenState extends State<ListingsScreen> {
     setState(() {
       // showSpinner = false;
     });
+  }
+
+  getSellerProductsListing() async {
+    Response response =
+        await sendPostRequest(action: 'get_listings_products', data: {
+      'users_customers_id': userDataGV['userId'],
+    });
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    listedProducts = decodedResponse['data'];
+    print('listedProducts: $listedProducts');
+    setState(() {});
   }
 
   @override
@@ -195,10 +215,12 @@ class _ListingsScreenState extends State<ListingsScreen> {
               SizedBox(
                 height: 20,
               ),
-              selectedCategory == 1 && boostingPackages != null
+              selectedCategory == 1 &&
+                      (boostingPackages != null && listedProducts != null)
                   ? ProductListingScreen(
                       selectedCategory: selectedCategory,
                       boostingPackages: boostingPackages,
+                      listedProducts: listedProducts,
                     )
                   : selectedCategory == 2 && boostingPackages != null
                       ? ServiceListingScreen(

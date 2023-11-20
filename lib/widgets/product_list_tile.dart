@@ -60,16 +60,32 @@ class ProductListTile extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.asset(productImage),
+              Container(
+                width: 74,
+                height: 60,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(
+                    productImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
               SizedBox(
                 width: 8.0,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    productName,
-                    style: productNameTextStyle,
+                  SizedBox(
+                    width: 150,
+                    child: Text(
+                      productName,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: productNameTextStyle,
+                    ),
                   ),
                   SizedBox(
                     height: 4,
@@ -84,9 +100,15 @@ class ProductListTile extends StatelessWidget {
                       SizedBox(
                         width: 4,
                       ),
-                      Text(
-                        productLocation,
-                        style: locationNameTextStyle,
+                      SizedBox(
+                        width: 130,
+                        child: Text(
+                          productLocation,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          softWrap: true,
+                          style: locationNameTextStyle,
+                        ),
                       )
                     ],
                   ),
