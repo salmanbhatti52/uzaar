@@ -37,17 +37,29 @@ final kPriceTextStyle = GoogleFonts.outfit(
 
 class FeaturedHousingWidget extends StatelessWidget {
   final String image;
-  final String productCategory;
-  final String productDescription;
-  final String productLocation;
-  final String productPrice;
-  const FeaturedHousingWidget(
-      {super.key,
-      required this.image,
-      required this.productCategory,
-      required this.productDescription,
-      required this.productLocation,
-      required this.productPrice});
+  final String housingCategory;
+  final String housingName;
+  final String housingLocation;
+  final String housingPrice;
+  final String area;
+  final String bedrooms;
+  final String bathrooms;
+  final void Function()? onOptionTap;
+  final void Function()? onImageTap;
+
+  const FeaturedHousingWidget({
+    super.key,
+    required this.image,
+    required this.housingCategory,
+    required this.housingName,
+    required this.housingLocation,
+    required this.housingPrice,
+    required this.area,
+    required this.bedrooms,
+    required this.bathrooms,
+    required this.onOptionTap,
+    required this.onImageTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +76,14 @@ class FeaturedHousingWidget extends StatelessWidget {
                   topRight: Radius.circular(10),
                   topLeft: Radius.circular(10),
                 ),
-                child: Image.asset(
-                  image,
+                child: GestureDetector(
+                  onTap: onImageTap,
+                  child: Image.network(
+                    width: 154,
+                    height: 124,
+                    image,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Positioned(
@@ -80,9 +98,12 @@ class FeaturedHousingWidget extends StatelessWidget {
               Positioned(
                 right: 3,
                 top: 5,
-                child: Icon(
-                  Icons.more_vert,
-                  color: Colors.white,
+                child: GestureDetector(
+                  onTap: onOptionTap,
+                  child: Icon(
+                    Icons.more_vert,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               Positioned(
@@ -97,7 +118,7 @@ class FeaturedHousingWidget extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      productCategory,
+                      housingCategory,
                       style: kCardTagTextStyle,
                     ),
                   ),
@@ -115,7 +136,7 @@ class FeaturedHousingWidget extends StatelessWidget {
               children: [
                 SizedBox(
                   child: Text(
-                    productDescription,
+                    housingName,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     softWrap: true,
@@ -138,12 +159,15 @@ class FeaturedHousingWidget extends StatelessWidget {
                         SizedBox(
                           width: 2,
                         ),
-                        Text(
-                          productLocation,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          softWrap: true,
-                          style: kLocationTexStyle,
+                        SizedBox(
+                          width: 48,
+                          child: Text(
+                            housingLocation,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            softWrap: true,
+                            style: kLocationTexStyle,
+                          ),
                         ),
                       ],
                     ),
@@ -157,28 +181,43 @@ class FeaturedHousingWidget extends StatelessWidget {
                         SizedBox(
                           width: 3,
                         ),
-                        Text('\$$productPrice', style: kPriceTextStyle),
+                        SizedBox(
+                            width: 50,
+                            child: Text(
+                              '\$$housingPrice',
+                              style: kPriceTextStyle,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              softWrap: true,
+                            )),
                       ],
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: 10.h,
+                  height: 3,
+                ),
+                Text(
+                  'Furnished',
+                  style: kFontEightFiveHPB,
+                ),
+                SizedBox(
+                  height: 4,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconTextReusable(
                       imageName: 'area_icon',
-                      text: '4500 sq.mt',
+                      text: '$area sq.mt',
                     ),
                     IconTextReusable(
                       imageName: 'bath_icon',
-                      text: '2',
+                      text: bathrooms,
                     ),
                     IconTextReusable(
                       imageName: 'bed_icon',
-                      text: '2',
+                      text: bedrooms,
                     ),
                   ],
                 )

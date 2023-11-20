@@ -36,22 +36,22 @@ final kPriceTextStyle = GoogleFonts.outfit(
 class FeaturedProductsWidget extends StatelessWidget {
   final String image;
   final String productCategory;
-  final String productDescription;
+  final String productName;
   final String productLocation;
   final String productPrice;
-  final String productConditon;
+  final String productCondition;
   final void Function()? onOptionTap;
   final void Function()? onImageTap;
   const FeaturedProductsWidget(
       {super.key,
       required this.image,
       required this.productCategory,
-      required this.productDescription,
+      required this.productName,
       required this.productLocation,
       required this.productPrice,
       required this.onOptionTap,
       required this.onImageTap,
-      required this.productConditon});
+      required this.productCondition});
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +129,7 @@ class FeaturedProductsWidget extends StatelessWidget {
               children: [
                 SizedBox(
                   child: Text(
-                    productDescription,
+                    productName,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     softWrap: true,
@@ -137,7 +137,7 @@ class FeaturedProductsWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  productConditon,
+                  productCondition,
                   style: kNewTagTextStyle,
                 ),
                 SizedBox(
@@ -156,12 +156,15 @@ class FeaturedProductsWidget extends StatelessWidget {
                         SizedBox(
                           width: 2.w,
                         ),
-                        Text(
-                          productLocation,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          softWrap: true,
-                          style: kLocationTexStyle,
+                        SizedBox(
+                          width: 48,
+                          child: Text(
+                            productLocation,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            softWrap: true,
+                            style: kLocationTexStyle,
+                          ),
                         ),
                       ],
                     ),
@@ -175,7 +178,14 @@ class FeaturedProductsWidget extends StatelessWidget {
                         SizedBox(
                           width: 3,
                         ),
-                        Text('\$$productPrice', style: kPriceTextStyle),
+                        SizedBox(
+                          width: 48,
+                          child: Text('\$$productPrice',
+                              style: kPriceTextStyle,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
+                              maxLines: 1),
+                        ),
                       ],
                     ),
                   ],

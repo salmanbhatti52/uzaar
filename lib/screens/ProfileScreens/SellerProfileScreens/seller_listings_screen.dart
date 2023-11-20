@@ -62,16 +62,18 @@ class _SellerListingsScreenState extends State<SellerListingsScreen> {
                 child: ListView.builder(
                   itemBuilder: (context, index) {
                     return FeaturedProductsWidget(
-                      productConditon: 'New',
+                      productCondition: 'New',
                       image: 'assets/product-ph.png',
                       productCategory: 'Electronics',
-                      productDescription: 'Iphone 14',
+                      productName: 'Iphone 14',
                       productLocation: 'Los Angeles',
                       productPrice: '120',
                       onImageTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => ProductDetailsPage(),
+                            builder: (context) => const ProductDetailsPage(
+                              productData: null,
+                            ),
                           ),
                         );
                       },
@@ -226,19 +228,23 @@ class _SellerListingsScreenState extends State<SellerListingsScreen> {
               SizedBox(
                 height: 187,
                 child: GestureDetector(
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ServiceDetailsPage(),
-                    ),
-                  ),
+                  // onTap: () => Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const ServiceDetailsPage(
+                  //       serviceData: null,
+                  //     ),
+                  //   ),
+                  // ),
                   child: ListView.builder(
                     itemBuilder: (context, index) {
                       return FeaturedServicesWidget(
                         image: 'assets/service-ph.png',
-                        productCategory: 'Designing',
-                        productDescription: 'Graphic Design',
-                        productLocation: 'Los Angeles',
-                        productPrice: '20',
+                        serviceCategory: 'Designing',
+                        serviceName: 'Graphic Design',
+                        serviceLocation: 'Los Angeles',
+                        servicePrice: '20',
+                        onOptionTap: null,
+                        onImageTap: null,
                       );
                     },
                     itemCount: 6,

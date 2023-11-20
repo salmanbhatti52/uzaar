@@ -49,8 +49,7 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
               SizedBox(
                 height: 20.h,
               ),
-              CarouselBuilder(
-                  categoryName: 'Electronics', imageName: 'product_detail_img'),
+              CarouselBuilder(categoryName: 'Electronics', image: ''),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(

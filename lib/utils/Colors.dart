@@ -75,6 +75,12 @@ final kFontEightFiveHG = GoogleFonts.outfit(
   color: grey,
 );
 
+final kFontEightFiveHPB = GoogleFonts.outfit(
+  fontSize: 8,
+  fontWeight: FontWeight.w500,
+  color: primaryBlue,
+);
+
 final kSimpleTextStyle = GoogleFonts.outfit(
   fontSize: 14,
   fontWeight: FontWeight.w400,

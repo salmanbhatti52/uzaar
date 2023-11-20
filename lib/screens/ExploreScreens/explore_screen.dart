@@ -118,86 +118,90 @@ class _ExploreScreenState extends State<ExploreScreen> {
         ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 20.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedCategory = 1;
-                        });
-                      },
-                      child: BusinessTypeButton(
-                        businessName: 'Products',
-                        gradient: selectedCategory == 1 ? gradient : null,
-                        buttonBackground: selectedCategory != 1
-                            ? grey.withOpacity(0.3)
-                            : null,
-                        textColor: selectedCategory == 1 ? white : grey,
-                      ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedCategory = 1;
+                            });
+                          },
+                          child: BusinessTypeButton(
+                            businessName: 'Products',
+                            gradient: selectedCategory == 1 ? gradient : null,
+                            buttonBackground: selectedCategory != 1
+                                ? grey.withOpacity(0.3)
+                                : null,
+                            textColor: selectedCategory == 1 ? white : grey,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedCategory = 2;
+                            });
+                          },
+                          child: BusinessTypeButton(
+                            businessName: 'Services',
+                            gradient: selectedCategory == 2 ? gradient : null,
+                            buttonBackground: selectedCategory != 2
+                                ? grey.withOpacity(0.3)
+                                : null,
+                            textColor: selectedCategory == 2 ? white : grey,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedCategory = 3;
+                            });
+                          },
+                          child: BusinessTypeButton(
+                            businessName: 'Housing',
+                            gradient: selectedCategory == 3 ? gradient : null,
+                            buttonBackground: selectedCategory != 3
+                                ? grey.withOpacity(0.3)
+                                : null,
+                            textColor: selectedCategory == 3 ? white : grey,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
-                      width: 10.w,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedCategory = 2;
-                        });
-                      },
-                      child: BusinessTypeButton(
-                        businessName: 'Services',
-                        gradient: selectedCategory == 2 ? gradient : null,
-                        buttonBackground: selectedCategory != 2
-                            ? grey.withOpacity(0.3)
-                            : null,
-                        textColor: selectedCategory == 2 ? white : grey,
-                      ),
+                      height: 20.h,
                     ),
                     SizedBox(
-                      width: 10.w,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedCategory = 3;
-                        });
-                      },
-                      child: BusinessTypeButton(
-                        businessName: 'Housing',
-                        gradient: selectedCategory == 3 ? gradient : null,
-                        buttonBackground: selectedCategory != 3
-                            ? grey.withOpacity(0.3)
-                            : null,
-                        textColor: selectedCategory == 3 ? white : grey,
-                      ),
+                        child: SearchField(searchController: searchController)),
+                    SizedBox(
+                      height: 20.h,
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                SizedBox(
-                    child: SearchField(searchController: searchController)),
-                SizedBox(
-                  height: 20.h,
-                ),
-                selectedCategory == 1
-                    ? ExploreProductsScreen()
-                    : selectedCategory == 2
-                        ? ExploreServicesScreen()
-                        : ExploreHousingScreen()
-                // : Container(),
-              ],
-            ),
+              ),
+              selectedCategory == 1
+                  ? ExploreProductsScreen()
+                  : selectedCategory == 2
+                      ? ExploreServicesScreen()
+                      : ExploreHousingScreen()
+              // : Container(),
+            ],
           ),
         ),
       ),

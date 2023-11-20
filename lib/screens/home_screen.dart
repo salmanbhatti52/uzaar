@@ -69,12 +69,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (featuredProductsGV == null) {
       await getFeaturedProducts();
+      setState(() {});
     }
     if (featuredServicesGV == null) {
       await getFeaturedServices();
+      setState(() {});
     }
     if (featuredHousingGV == null) {
       await getFeaturedHousings();
+      setState(() {});
     }
   }
 
@@ -160,8 +163,8 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    featuredServices = decodedResponse['data'];
-    print('featuredServices: $featuredServices');
+    featuredServicesGV = decodedResponse['data'];
+    print('featuredServicesGV: $featuredServicesGV');
   }
 
   getFeaturedHousings() async {
@@ -172,8 +175,8 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    featuredHousing = decodedResponse['data'];
-    print('featuredHousing: $featuredHousing');
+    featuredHousingGV = decodedResponse['data'];
+    print('featuredHousingGV: $featuredHousingGV');
   }
 
   handleOptionSelection(ReportReason reason) {
@@ -326,6 +329,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   selectedListingType =
                                       listingTypes?['data'][index]['name'];
                                 });
+                                print(
+                                    'selectedListingType: $selectedListingType');
                               },
                               child: BusinessTypeButton(
                                   margin:
@@ -398,7 +403,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           servicesCategoryModel[index].image);
                                 },
                               )
-                            : selectedListingType == 'Housing'
+                            : selectedListingType == 'Housings'
                                 ? ListView.builder(
                                     itemCount: housingCategoryModel.length,
                                     shrinkWrap: true,
@@ -470,23 +475,23 @@ class _HomeScreenState extends State<HomeScreen> {
                         ? ListView.builder(
                             itemBuilder: (context, index) {
                               return FeaturedProductsWidget(
-                                productConditon: featuredProductsGV[index]
+                                productCondition: featuredProductsGV[index]
                                     ['condition'],
                                 image: imgBaseUrl +
                                     featuredProductsGV[index]['listings_images']
                                         [0]['image'],
                                 productCategory: featuredProductsGV[index]
                                     ['listings_categories']['name'],
-                                productDescription: featuredProductsGV[index]
-                                    ['name'],
+                                productName: featuredProductsGV[index]['name'],
                                 productLocation: 'California',
                                 productPrice: featuredProductsGV[index]
                                     ['price'],
                                 onImageTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          ProductDetailsPage(),
+                                      builder: (context) => ProductDetailsPage(
+                                        productData: featuredProductsGV[index],
+                                      ),
                                     ),
                                   );
                                 },
@@ -661,28 +666,188 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(
                     height: 187,
-                    child: GestureDetector(
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ServiceDetailsPage(),
-                        ),
-                      ),
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          return FeaturedServicesWidget(
-                            image: 'assets/service-ph.png',
-                            productCategory: 'Designing',
-                            productDescription: 'Graphic Design',
-                            productLocation: 'Los Angeles',
-                            productPrice: '20',
-                          );
-                        },
-                        itemCount: 6,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        physics: BouncingScrollPhysics(),
-                      ),
-                    ),
+                    child: featuredServicesGV != null
+                        ? ListView.builder(
+                            itemBuilder: (context, index) {
+                              return FeaturedServicesWidget(
+                                image: imgBaseUrl +
+                                    featuredServicesGV[index]['listings_images']
+                                        [0]['image'],
+                                serviceCategory: featuredServicesGV[index]
+                                    ['listings_categories']['name'],
+                                serviceName: featuredServicesGV[index]['name'],
+                                serviceLocation: featuredServicesGV[index]
+                                    ['location'],
+                                servicePrice: featuredServicesGV[index]
+                                    ['price'],
+                                onImageTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ServiceDetailsPage(
+                                      serviceData: featuredServicesGV[index],
+                                    ),
+                                  ),
+                                ),
+                                onOptionTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => StatefulBuilder(
+                                      builder: (BuildContext context,
+                                          StateSetter stateSetterObject) {
+                                        return AlertDialogReusable(
+                                            description:
+                                                'Select any reason to report. We will show you less listings like this next time.',
+                                            title: 'Report Listing',
+                                            itemsList: [
+                                              SizedBox(
+                                                height: 35,
+                                                child: ListTile(
+                                                  title: Text(
+                                                    'Not Interested',
+                                                    style: kTextFieldInputStyle,
+                                                  ),
+                                                  leading: GestureDetector(
+                                                    onTap: () {
+                                                      stateSetterObject(() {
+                                                        handleOptionSelection(
+                                                            ReportReason
+                                                                .notInterested);
+                                                      });
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                        selectedReasons.contains(
+                                                                ReportReason
+                                                                    .notInterested)
+                                                            ? 'assets/selected_check.svg'
+                                                            : 'assets/default_check.svg'),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 35,
+                                                child: ListTile(
+                                                  title: Text(
+                                                    'Not Authentic',
+                                                    style: kTextFieldInputStyle,
+                                                  ),
+                                                  leading: GestureDetector(
+                                                    onTap: () {
+                                                      stateSetterObject(() {
+                                                        handleOptionSelection(
+                                                            ReportReason
+                                                                .notAuthentic);
+                                                      });
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                        selectedReasons.contains(
+                                                                ReportReason
+                                                                    .notAuthentic)
+                                                            ? 'assets/selected_check.svg'
+                                                            : 'assets/default_check.svg'),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 35,
+                                                child: ListTile(
+                                                  title: Text(
+                                                    'Inappropriate',
+                                                    style: kTextFieldInputStyle,
+                                                  ),
+                                                  leading: GestureDetector(
+                                                    onTap: () {
+                                                      stateSetterObject(() {
+                                                        handleOptionSelection(
+                                                            ReportReason
+                                                                .inappropriate);
+                                                      });
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                        selectedReasons.contains(
+                                                                ReportReason
+                                                                    .inappropriate)
+                                                            ? 'assets/selected_check.svg'
+                                                            : 'assets/default_check.svg'),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 35,
+                                                child: ListTile(
+                                                  title: Text(
+                                                    'Violent or prohibited content',
+                                                    style: kTextFieldInputStyle,
+                                                  ),
+                                                  leading: GestureDetector(
+                                                    onTap: () {
+                                                      stateSetterObject(() {
+                                                        handleOptionSelection(
+                                                            ReportReason
+                                                                .violent);
+                                                      });
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                        selectedReasons.contains(
+                                                                ReportReason
+                                                                    .violent)
+                                                            ? 'assets/selected_check.svg'
+                                                            : 'assets/default_check.svg'),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 35,
+                                                child: ListTile(
+                                                  title: Text(
+                                                    'Other',
+                                                    style: kTextFieldInputStyle,
+                                                  ),
+                                                  leading: GestureDetector(
+                                                    onTap: () {
+                                                      stateSetterObject(() {
+                                                        handleOptionSelection(
+                                                            ReportReason.other);
+                                                      });
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                        selectedReasons
+                                                                .contains(
+                                                                    ReportReason
+                                                                        .other)
+                                                            ? 'assets/selected_check.svg'
+                                                            : 'assets/default_check.svg'),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                            button: primaryButton(
+                                                context: context,
+                                                buttonText: 'Send',
+                                                onTap: () =>
+                                                    Navigator.of(context).pop(),
+                                                showLoader: false));
+                                      },
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            itemCount: featuredServicesGV.length,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            physics: BouncingScrollPhysics(),
+                          )
+                        : Shimmer.fromColors(
+                            child: ListView.builder(
+                              itemBuilder: (context, index) {
+                                return const FeaturedProductsDummy();
+                              },
+                              itemCount: 6,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              physics: BouncingScrollPhysics(),
+                            ),
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!),
                   ),
                   SizedBox(
                     height: 20.h,
@@ -695,29 +860,191 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20.h,
                   ),
                   SizedBox(
-                    height: 202,
-                    child: GestureDetector(
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => HousingDetailsPage(),
-                        ),
-                      ),
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          return FeaturedHousingWidget(
-                            image: 'assets/housing-ph.png',
-                            productCategory: 'Rental',
-                            productDescription: '2 Bedroom house',
-                            productLocation: 'Los Angeles',
-                            productPrice: '20',
-                          );
-                        },
-                        itemCount: 6,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        physics: BouncingScrollPhysics(),
-                      ),
-                    ),
+                    height: 206,
+                    child: featuredHousingGV != null
+                        ? ListView.builder(
+                            itemBuilder: (context, index) {
+                              return FeaturedHousingWidget(
+                                image: imgBaseUrl +
+                                    featuredHousingGV[index]['listings_images']
+                                        [0]['image'],
+                                housingCategory: featuredHousingGV[index]
+                                    ['listings_categories']['name'],
+                                housingName: featuredHousingGV[index]['name'],
+                                housingLocation: featuredHousingGV[index]
+                                    ['location'],
+                                housingPrice: featuredHousingGV[index]['price'],
+                                area: featuredHousingGV[index]['area'],
+                                bedrooms: featuredHousingGV[index]['bedroom'],
+                                bathrooms: featuredHousingGV[index]['bathroom'],
+                                onImageTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => HousingDetailsPage(
+                                      houseData: featuredHousingGV[index],
+                                    ),
+                                  ));
+                                },
+                                onOptionTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => StatefulBuilder(
+                                      builder: (BuildContext context,
+                                          StateSetter stateSetterObject) {
+                                        return AlertDialogReusable(
+                                            description:
+                                                'Select any reason to report. We will show you less listings like this next time.',
+                                            title: 'Report Listing',
+                                            itemsList: [
+                                              SizedBox(
+                                                height: 35,
+                                                child: ListTile(
+                                                  title: Text(
+                                                    'Not Interested',
+                                                    style: kTextFieldInputStyle,
+                                                  ),
+                                                  leading: GestureDetector(
+                                                    onTap: () {
+                                                      stateSetterObject(() {
+                                                        handleOptionSelection(
+                                                            ReportReason
+                                                                .notInterested);
+                                                      });
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                        selectedReasons.contains(
+                                                                ReportReason
+                                                                    .notInterested)
+                                                            ? 'assets/selected_check.svg'
+                                                            : 'assets/default_check.svg'),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 35,
+                                                child: ListTile(
+                                                  title: Text(
+                                                    'Not Authentic',
+                                                    style: kTextFieldInputStyle,
+                                                  ),
+                                                  leading: GestureDetector(
+                                                    onTap: () {
+                                                      stateSetterObject(() {
+                                                        handleOptionSelection(
+                                                            ReportReason
+                                                                .notAuthentic);
+                                                      });
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                        selectedReasons.contains(
+                                                                ReportReason
+                                                                    .notAuthentic)
+                                                            ? 'assets/selected_check.svg'
+                                                            : 'assets/default_check.svg'),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 35,
+                                                child: ListTile(
+                                                  title: Text(
+                                                    'Inappropriate',
+                                                    style: kTextFieldInputStyle,
+                                                  ),
+                                                  leading: GestureDetector(
+                                                    onTap: () {
+                                                      stateSetterObject(() {
+                                                        handleOptionSelection(
+                                                            ReportReason
+                                                                .inappropriate);
+                                                      });
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                        selectedReasons.contains(
+                                                                ReportReason
+                                                                    .inappropriate)
+                                                            ? 'assets/selected_check.svg'
+                                                            : 'assets/default_check.svg'),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 35,
+                                                child: ListTile(
+                                                  title: Text(
+                                                    'Violent or prohibited content',
+                                                    style: kTextFieldInputStyle,
+                                                  ),
+                                                  leading: GestureDetector(
+                                                    onTap: () {
+                                                      stateSetterObject(() {
+                                                        handleOptionSelection(
+                                                            ReportReason
+                                                                .violent);
+                                                      });
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                        selectedReasons.contains(
+                                                                ReportReason
+                                                                    .violent)
+                                                            ? 'assets/selected_check.svg'
+                                                            : 'assets/default_check.svg'),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 35,
+                                                child: ListTile(
+                                                  title: Text(
+                                                    'Other',
+                                                    style: kTextFieldInputStyle,
+                                                  ),
+                                                  leading: GestureDetector(
+                                                    onTap: () {
+                                                      stateSetterObject(() {
+                                                        handleOptionSelection(
+                                                            ReportReason.other);
+                                                      });
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                        selectedReasons
+                                                                .contains(
+                                                                    ReportReason
+                                                                        .other)
+                                                            ? 'assets/selected_check.svg'
+                                                            : 'assets/default_check.svg'),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                            button: primaryButton(
+                                                context: context,
+                                                buttonText: 'Send',
+                                                onTap: () =>
+                                                    Navigator.of(context).pop(),
+                                                showLoader: false));
+                                      },
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            itemCount: featuredHousingGV.length,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            physics: BouncingScrollPhysics(),
+                          )
+                        : Shimmer.fromColors(
+                            child: ListView.builder(
+                              itemBuilder: (context, index) {
+                                return const FeaturedProductsDummy();
+                              },
+                              itemCount: 6,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              physics: BouncingScrollPhysics(),
+                            ),
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!),
                   ),
                   SizedBox(
                     height: 20.h,

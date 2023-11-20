@@ -5,8 +5,9 @@ import '../utils/colors.dart';
 import 'featured_housing_widget.dart';
 
 class CarouselBuilder extends StatelessWidget {
-  CarouselBuilder({required this.imageName, required this.categoryName});
-  final String imageName;
+  const CarouselBuilder(
+      {super.key, required this.image, required this.categoryName});
+  final String image;
   final String categoryName;
 
   @override
@@ -16,11 +17,10 @@ class CarouselBuilder extends StatelessWidget {
       itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
           Stack(
         children: [
-          Container(
-            child: Image.asset(
-              'assets/$imageName.png',
-              width: MediaQuery.sizeOf(context).width,
-            ),
+          Image.network(
+            image,
+            width: MediaQuery.sizeOf(context).width,
+            fit: BoxFit.cover,
           ),
           Positioned(
             left: 21,

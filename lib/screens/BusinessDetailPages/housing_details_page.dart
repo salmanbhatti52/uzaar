@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/utils/Buttons.dart';
+import 'package:http/http.dart';
 
+import '../../services/restService.dart';
 import '../../widgets/BottomNaviBar.dart';
+import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/carousel_builder.dart';
 import '../../widgets/featured_housing_widget.dart';
 import '../../widgets/featured_services_widget.dart';
@@ -13,19 +18,57 @@ import '../../widgets/icon_text_combo.dart';
 import '../ProfileScreens/SellerProfileScreens/seller_profile_screen.dart';
 import 'paymnet_screen.dart';
 
-class HousingDetailsPage extends StatefulWidget {
-  const HousingDetailsPage({Key? key}) : super(key: key);
+enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 
+class HousingDetailsPage extends StatefulWidget {
+  const HousingDetailsPage({Key? key, required this.houseData})
+      : super(key: key);
+  final dynamic houseData;
   @override
   State<HousingDetailsPage> createState() => _HousingDetailsPageState();
 }
 
 class _HousingDetailsPageState extends State<HousingDetailsPage> {
+  late Set<ReportReason> selectedReasons = {};
   Widget HorizontalPadding({required Widget child}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 22.w),
       child: child,
     );
+  }
+
+  handleOptionSelection(ReportReason reason) {
+    if (selectedReasons.contains(reason)) {
+      selectedReasons.remove(reason);
+    } else {
+      selectedReasons.add(reason);
+    }
+    print(selectedReasons);
+  }
+
+  dynamic aSellerOtherFeaturedHouses;
+  getASellerOtherFeaturedHouses() async {
+    Response response =
+        await sendPostRequest(action: 'get_all_listings_housings', data: {
+      'users_customers_id': userDataGV['userId'],
+    });
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    aSellerOtherFeaturedHouses = decodedResponse['data'];
+    print('aSellerOtherFeaturedHouses: $aSellerOtherFeaturedHouses');
+  }
+
+  init() async {
+    await getASellerOtherFeaturedHouses();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    init();
   }
 
   String? selectedValue;
@@ -80,8 +123,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                 //     },
                 //   ),
                 // ),
-                CarouselBuilder(
-                    categoryName: 'Rental', imageName: 'housing_detail_img'),
+                CarouselBuilder(categoryName: 'Rental', image: ''),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -383,10 +425,155 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                       itemBuilder: (context, index) {
                         return FeaturedHousingWidget(
                           image: 'assets/housing-ph.png',
-                          productCategory: 'Rental',
-                          productDescription: '2 Bedroom house',
-                          productLocation: 'Los Angeles',
-                          productPrice: '20',
+                          housingCategory: 'Rental',
+                          housingName: '2 Bedroom house',
+                          housingLocation: 'Los Angeles',
+                          housingPrice: '20',
+                          area: '1500',
+                          bedrooms: '2',
+                          bathrooms: '2',
+                          onImageTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => HousingDetailsPage(
+                                houseData: featuredHousingGV[index],
+                              ),
+                            ));
+                          },
+                          onOptionTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => StatefulBuilder(
+                                builder: (BuildContext context,
+                                    StateSetter stateSetterObject) {
+                                  return AlertDialogReusable(
+                                      description:
+                                          'Select any reason to report. We will show you less listings like this next time.',
+                                      title: 'Report Listing',
+                                      itemsList: [
+                                        SizedBox(
+                                          height: 35,
+                                          child: ListTile(
+                                            title: Text(
+                                              'Not Interested',
+                                              style: kTextFieldInputStyle,
+                                            ),
+                                            leading: GestureDetector(
+                                              onTap: () {
+                                                stateSetterObject(() {
+                                                  handleOptionSelection(
+                                                      ReportReason
+                                                          .notInterested);
+                                                });
+                                              },
+                                              child: SvgPicture.asset(selectedReasons
+                                                      .contains(ReportReason
+                                                          .notInterested)
+                                                  ? 'assets/selected_check.svg'
+                                                  : 'assets/default_check.svg'),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 35,
+                                          child: ListTile(
+                                            title: Text(
+                                              'Not Authentic',
+                                              style: kTextFieldInputStyle,
+                                            ),
+                                            leading: GestureDetector(
+                                              onTap: () {
+                                                stateSetterObject(() {
+                                                  handleOptionSelection(
+                                                      ReportReason
+                                                          .notAuthentic);
+                                                });
+                                              },
+                                              child: SvgPicture.asset(selectedReasons
+                                                      .contains(ReportReason
+                                                          .notAuthentic)
+                                                  ? 'assets/selected_check.svg'
+                                                  : 'assets/default_check.svg'),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 35,
+                                          child: ListTile(
+                                            title: Text(
+                                              'Inappropriate',
+                                              style: kTextFieldInputStyle,
+                                            ),
+                                            leading: GestureDetector(
+                                              onTap: () {
+                                                stateSetterObject(() {
+                                                  handleOptionSelection(
+                                                      ReportReason
+                                                          .inappropriate);
+                                                });
+                                              },
+                                              child: SvgPicture.asset(selectedReasons
+                                                      .contains(ReportReason
+                                                          .inappropriate)
+                                                  ? 'assets/selected_check.svg'
+                                                  : 'assets/default_check.svg'),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 35,
+                                          child: ListTile(
+                                            title: Text(
+                                              'Violent or prohibited content',
+                                              style: kTextFieldInputStyle,
+                                            ),
+                                            leading: GestureDetector(
+                                              onTap: () {
+                                                stateSetterObject(() {
+                                                  handleOptionSelection(
+                                                      ReportReason.violent);
+                                                });
+                                              },
+                                              child: SvgPicture.asset(selectedReasons
+                                                      .contains(
+                                                          ReportReason.violent)
+                                                  ? 'assets/selected_check.svg'
+                                                  : 'assets/default_check.svg'),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 35,
+                                          child: ListTile(
+                                            title: Text(
+                                              'Other',
+                                              style: kTextFieldInputStyle,
+                                            ),
+                                            leading: GestureDetector(
+                                              onTap: () {
+                                                stateSetterObject(() {
+                                                  handleOptionSelection(
+                                                      ReportReason.other);
+                                                });
+                                              },
+                                              child: SvgPicture.asset(selectedReasons
+                                                      .contains(
+                                                          ReportReason.other)
+                                                  ? 'assets/selected_check.svg'
+                                                  : 'assets/default_check.svg'),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                      button: primaryButton(
+                                          context: context,
+                                          buttonText: 'Send',
+                                          onTap: () =>
+                                              Navigator.of(context).pop(),
+                                          showLoader: false));
+                                },
+                              ),
+                            );
+                          },
                         );
                       },
                     ),

@@ -41,17 +41,22 @@ final kFromTagTextStyle = GoogleFonts.outfit(
 
 class FeaturedServicesWidget extends StatelessWidget {
   final String image;
-  final String productCategory;
-  final String productDescription;
-  final String productLocation;
-  final String productPrice;
-  const FeaturedServicesWidget(
-      {super.key,
-      required this.image,
-      required this.productCategory,
-      required this.productDescription,
-      required this.productLocation,
-      required this.productPrice});
+  final String serviceCategory;
+  final String serviceName;
+  final String serviceLocation;
+  final String servicePrice;
+  final void Function()? onOptionTap;
+  final void Function()? onImageTap;
+  const FeaturedServicesWidget({
+    super.key,
+    required this.image,
+    required this.serviceCategory,
+    required this.serviceName,
+    required this.serviceLocation,
+    required this.servicePrice,
+    required this.onOptionTap,
+    required this.onImageTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +73,14 @@ class FeaturedServicesWidget extends StatelessWidget {
                   topRight: Radius.circular(10),
                   topLeft: Radius.circular(10),
                 ),
-                child: Image.asset(
-                  image,
+                child: GestureDetector(
+                  onTap: onImageTap,
+                  child: Image.network(
+                    width: 154,
+                    height: 124,
+                    image,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Positioned(
@@ -84,9 +95,12 @@ class FeaturedServicesWidget extends StatelessWidget {
               Positioned(
                 right: 3,
                 top: 5,
-                child: Icon(
-                  Icons.more_vert,
-                  color: Colors.white,
+                child: GestureDetector(
+                  onTap: onOptionTap,
+                  child: Icon(
+                    Icons.more_vert,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               Positioned(
@@ -102,7 +116,7 @@ class FeaturedServicesWidget extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      productCategory,
+                      serviceCategory,
                       style: kCardTagTextStyle,
                     ),
                   ),
@@ -141,7 +155,7 @@ class FeaturedServicesWidget extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: Text(
-                    productDescription,
+                    serviceName,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     softWrap: true,
@@ -155,6 +169,7 @@ class FeaturedServicesWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
                           height: 2,
@@ -167,12 +182,15 @@ class FeaturedServicesWidget extends StatelessWidget {
                         SizedBox(
                           width: 2,
                         ),
-                        Text(
-                          productLocation,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          softWrap: true,
-                          style: kLocationTexStyle,
+                        SizedBox(
+                          width: 50,
+                          child: Text(
+                            serviceLocation,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            softWrap: true,
+                            style: kLocationTexStyle,
+                          ),
                         ),
                       ],
                     ),
@@ -196,9 +214,15 @@ class FeaturedServicesWidget extends StatelessWidget {
                             SizedBox(
                               width: 3,
                             ),
-                            Text(
-                              '\$$productPrice',
-                              style: kPriceTextStyle,
+                            SizedBox(
+                              width: 50,
+                              child: Text(
+                                '\$$servicePrice',
+                                style: kPriceTextStyle,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                softWrap: true,
+                              ),
                             ),
                           ],
                         ),
