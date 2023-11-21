@@ -30,8 +30,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     init();
   }
 
-  late String message = '';
-
   init() async {
     try {
       await enableLocationService();
