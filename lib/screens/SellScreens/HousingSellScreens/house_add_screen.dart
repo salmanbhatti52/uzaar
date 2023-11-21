@@ -129,6 +129,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
                           controller: nameEditingController,
                           textInputType: TextInputType.text,
                           prefixIcon:
@@ -246,6 +247,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
                           controller: locationEditingController,
                           textInputType: TextInputType.streetAddress,
                           prefixIcon:
@@ -253,6 +255,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                           suffixIcon: GestureDetector(
                             onTap: () async {
                               try {
+                                await enableLocationService();
                                 position = await getLocationCoordinates();
                                 print(position);
 
@@ -261,18 +264,18 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                         position.latitude, position.longitude);
                                 print(placemarks);
                                 print(
-                                    '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}');
+                                    '${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}');
                                 setState(() {
                                   locationEditingController.text =
-                                      '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}';
+                                      '${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}';
                                 });
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     ErrorSnackBar(message: e.toString()));
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    ErrorSnackBar(
-                                        message:
-                                            'Plz check your device location is on'));
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //     ErrorSnackBar(
+                                //         message:
+                                //             'Plz check your device location is on'));
                                 // ScaffoldMessenger.of(context).showSnackBar(
                                 //     AlertSnackBar(
                                 //         message:
@@ -302,6 +305,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
                           controller: priceEditingController,
                           textInputType: TextInputType.number,
                           prefixIcon:
@@ -323,6 +327,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
                           controller: descriptionEditingController,
                           textInputType: TextInputType.text,
                           prefixIcon:
@@ -344,6 +349,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
                           controller: areaEditingController,
                           textInputType: TextInputType.number,
                           prefixIcon:

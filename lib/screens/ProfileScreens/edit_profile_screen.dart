@@ -140,6 +140,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     SizedBox(
                       height: 46,
                       child: TextFormFieldWidget(
+                        focusedBorder: kRoundedActiveBorderStyle,
                         controller: firstNameController,
                         textInputType: TextInputType.name,
                         prefixIcon: SvgPicture.asset(
@@ -162,6 +163,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     SizedBox(
                       height: 46,
                       child: TextFormFieldWidget(
+                        focusedBorder: kRoundedActiveBorderStyle,
                         controller: lastNameController,
                         textInputType: TextInputType.name,
                         prefixIcon: SvgPicture.asset(
@@ -184,6 +186,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     SizedBox(
                       height: 46,
                       child: TextFormFieldWidget(
+                        focusedBorder: kRoundedActiveBorderStyle,
                         readOnly: true,
                         controller: emailController,
                         textInputType: TextInputType.emailAddress,
@@ -207,6 +210,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     SizedBox(
                       height: 46,
                       child: TextFormFieldWidget(
+                        focusedBorder: kRoundedActiveBorderStyle,
                         controller: phoneNumberController,
                         textInputType: TextInputType.phone,
                         prefixIcon: SvgIcon(imageName: 'assets/phone-fill.svg'),
@@ -226,6 +230,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     SizedBox(
                       height: 46,
                       child: TextFormFieldWidget(
+                        focusedBorder: kRoundedActiveBorderStyle,
                         // onSubmitted: (value) {
                         //   print('address: $value');
                         // },
@@ -238,6 +243,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         suffixIcon: GestureDetector(
                           onTap: () async {
                             try {
+                              await enableLocationService();
                               position = await getLocationCoordinates();
                               print(position);
 
@@ -245,19 +251,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   await getLocationFromCoordinates(
                                       position.latitude, position.longitude);
                               print(placemarks);
+                              // ${placemarks[0].thoroughfare!},
                               print(
-                                  '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}');
+                                  '${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}');
                               setState(() {
                                 addressController.text =
-                                    '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}';
+                                    '${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}';
                               });
                             } catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   ErrorSnackBar(message: e.toString()));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  ErrorSnackBar(
-                                      message:
-                                          'Plz check your device location is on'));
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //     ErrorSnackBar(
+                              //         message:
+                              //             'Plz check your device location is on'));
                               // ScaffoldMessenger.of(context).showSnackBar(
                               //     AlertSnackBar(
                               //         message:

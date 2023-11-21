@@ -79,6 +79,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   SizedBox(
                     height: 46,
                     child: TextFormFieldWidget(
+                      focusedBorder: kRoundedActiveBorderStyle,
                       controller: newPassController,
                       textInputType: TextInputType.visiblePassword,
                       prefixIcon:
@@ -115,6 +116,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   SizedBox(
                     height: 46,
                     child: TextFormFieldWidget(
+                      focusedBorder: kRoundedActiveBorderStyle,
                       controller: confirmNewPassController,
                       textInputType: TextInputType.visiblePassword,
                       prefixIcon:

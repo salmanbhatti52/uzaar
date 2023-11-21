@@ -49,6 +49,7 @@ class BottomSheetForSendOffer extends StatelessWidget {
             SizedBox(
               height: 46,
               child: TextFormFieldWidget(
+                focusedBorder: kRoundedActiveBorderStyle,
                 controller: nameEditingController,
                 textInputType: TextInputType.text,
                 prefixIcon: SvgIcon(imageName: 'assets/service_icon.svg'),

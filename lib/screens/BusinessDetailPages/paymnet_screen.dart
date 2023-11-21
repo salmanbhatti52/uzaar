@@ -180,6 +180,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             SizedBox(
                               height: 46,
                               child: TextFormFieldWidget(
+                                focusedBorder: kRoundedActiveBorderStyle,
                                 controller: emailController,
                                 textInputType: TextInputType.emailAddress,
                                 prefixIcon: SvgPicture.asset(
@@ -202,6 +203,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             SizedBox(
                               height: 46,
                               child: TextFormFieldWidget(
+                                focusedBorder: kRoundedActiveBorderStyle,
                                 controller: passwordController,
                                 textInputType: TextInputType.visiblePassword,
                                 prefixIcon: SvgIcon(

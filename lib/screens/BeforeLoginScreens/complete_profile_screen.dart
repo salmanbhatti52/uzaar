@@ -213,6 +213,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
                           controller: phoneNumberController,
                           textInputType: TextInputType.phone,
                           prefixIcon:
@@ -233,6 +234,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
                           controller: addressController,
                           textInputType: TextInputType.streetAddress,
                           prefixIcon:
@@ -240,6 +242,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           suffixIcon: GestureDetector(
                             onTap: () async {
                               try {
+                                await enableLocationService();
                                 position = await getLocationCoordinates();
                                 print(position);
 
@@ -248,18 +251,18 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                         position.latitude, position.longitude);
                                 print(placemarks);
                                 print(
-                                    '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}');
+                                    '${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}');
                                 setState(() {
                                   addressController.text =
-                                      '${placemarks[0].thoroughfare!}, ${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}';
+                                      '${placemarks[0].subLocality!}, ${placemarks[0].locality!}, ${placemarks[0].subAdministrativeArea!}, ${placemarks[0].administrativeArea!}, ${placemarks[0].country!}';
                                 });
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     ErrorSnackBar(message: e.toString()));
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    ErrorSnackBar(
-                                        message:
-                                            'Plz check your device location is on'));
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //     ErrorSnackBar(
+                                //         message:
+                                //             'Plz check your device location is on'));
                                 // ScaffoldMessenger.of(context).showSnackBar(
                                 //     AlertSnackBar(
                                 //         message:

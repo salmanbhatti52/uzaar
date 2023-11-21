@@ -210,7 +210,7 @@ final kRoundedBorderStyle = OutlineInputBorder(
 final kRoundedWhiteBorderStyle = OutlineInputBorder(
   borderRadius: BorderRadius.circular(40),
   borderSide: const BorderSide(
-    color: Colors.white,
+    color: white,
     width: 1,
   ),
 );

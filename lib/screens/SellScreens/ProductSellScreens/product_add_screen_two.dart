@@ -97,6 +97,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
                           controller: minPriceEditingController,
                           textInputType: TextInputType.number,
                           prefixIcon:

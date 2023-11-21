@@ -119,6 +119,7 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
                           controller: nameEditingController,
                           textInputType: TextInputType.text,
                           prefixIcon:
@@ -236,6 +237,7 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
                           controller: descriptionEditingController,
                           textInputType: TextInputType.text,
                           prefixIcon:
@@ -257,6 +259,7 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
                           controller: priceEditingController,
                           textInputType: TextInputType.number,
                           prefixIcon:

@@ -90,6 +90,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   SizedBox(
                     height: 46,
                     child: TextFormFieldWidget(
+                      focusedBorder: kRoundedActiveBorderStyle,
                       onTap: () {
                         textareaFocused = false;
                       },
@@ -112,6 +113,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   SizedBox(
                     height: 46,
                     child: TextFormFieldWidget(
+                      focusedBorder: kRoundedActiveBorderStyle,
                       onTap: () {
                         textareaFocused = false;
                       },

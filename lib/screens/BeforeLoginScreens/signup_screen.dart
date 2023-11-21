@@ -97,6 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 7.h,
                       ),
                       TextFormFieldWidget(
+                        focusedBorder: kRoundedActiveBorderStyle,
                         validator: (value) {
                           return null;
                         },
@@ -117,6 +118,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 7.h,
                       ),
                       TextFormFieldWidget(
+                        focusedBorder: kRoundedActiveBorderStyle,
                         validator: (value) {
                           return null;
                         },
@@ -137,6 +139,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 7.h,
                       ),
                       TextFormFieldWidget(
+                        focusedBorder: kRoundedActiveBorderStyle,
                         validator: (value) {
                           return null;
                         },
@@ -156,6 +159,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 7.h,
                       ),
                       TextFormFieldWidget(
+                        focusedBorder: kRoundedActiveBorderStyle,
                         validator: (value) {
                           return null;
                         },

@@ -5,12 +5,13 @@ late bool serviceEnabled;
 late LocationPermission permission;
 // late LocationData _locationData;
 
-void enableLocationService() async {
+Future enableLocationService() async {
   serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
     // Location services are not enabled don't continue
     // accessing the position and request users of the
     // App to enable the location services.
+    // throw Exception('Location services are disabled.');
     return Future.error('Location services are disabled.');
   }
 
@@ -23,13 +24,13 @@ void enableLocationService() async {
       // Android's shouldShowRequestPermissionRationale
       // returned true. According to Android guidelines
       // your App should show an explanatory UI now.
+      // throw Exception('Location permissions are denied');
       return Future.error('Location permissions are denied');
     }
   }
 }
 
 Future<Position> getLocationCoordinates() async {
-  enableLocationService();
   return await Geolocator.getCurrentPosition(
     desiredAccuracy: LocationAccuracy.low,
   );

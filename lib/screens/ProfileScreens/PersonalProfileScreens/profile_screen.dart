@@ -394,6 +394,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(
                                   height: 46,
                                   child: TextFormFieldWidget(
+                                    focusedBorder: kRoundedWhiteBorderStyle,
                                     readOnly: true,
                                     controller: firstNameController,
                                     textInputType: TextInputType.name,
@@ -417,6 +418,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(
                                   height: 46,
                                   child: TextFormFieldWidget(
+                                    focusedBorder: kRoundedWhiteBorderStyle,
                                     readOnly: true,
                                     controller: lastNameController,
                                     textInputType: TextInputType.name,
@@ -440,6 +442,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(
                                   height: 46,
                                   child: TextFormFieldWidget(
+                                    focusedBorder: kRoundedWhiteBorderStyle,
                                     readOnly: true,
                                     controller: emailController,
                                     textInputType: TextInputType.emailAddress,
@@ -463,6 +466,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(
                                   height: 46,
                                   child: TextFormFieldWidget(
+                                    focusedBorder: kRoundedWhiteBorderStyle,
                                     readOnly: true,
                                     controller: phoneNumberController,
                                     textInputType: TextInputType.phone,
@@ -484,6 +488,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(
                                   height: 46,
                                   child: TextFormFieldWidget(
+                                    focusedBorder: kRoundedWhiteBorderStyle,
                                     readOnly: true,
                                     controller: addressController,
                                     textInputType: TextInputType.streetAddress,

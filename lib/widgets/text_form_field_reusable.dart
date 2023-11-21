@@ -11,7 +11,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final VoidCallback? onTap;
   // final InputBorder border;
   // final TextStyle hintStyle;
-  // final InputBorder focusedBorder;
+  final InputBorder focusedBorder;
   //
   // final InputBorder enableBorder;
   final Widget prefixIcon;
@@ -21,6 +21,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final bool? obscureText;
   final Widget? suffixIcon;
   final bool? readOnly;
+
   final void Function(String)? onSubmitted;
   const TextFormFieldWidget({
     super.key,
@@ -32,7 +33,7 @@ class TextFormFieldWidget extends StatelessWidget {
     required this.hintText,
     // required this.border,
     // required this.hintStyle,
-    // required this.focusedBorder,
+    required this.focusedBorder,
     this.onSaved,
     this.validator,
     this.onTap,
@@ -76,7 +77,8 @@ class TextFormFieldWidget extends StatelessWidget {
 
           hintText: hintText,
           hintStyle: kTextFieldHintStyle,
-          focusedBorder: kRoundedActiveBorderStyle,
+
+          focusedBorder: focusedBorder,
           // enabledBorder: OutlineInputBorder(
           //     borderRadius: BorderRadius.circular(40),
           //     borderSide: BorderSide(

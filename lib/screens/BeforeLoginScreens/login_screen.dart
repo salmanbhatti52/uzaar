@@ -95,6 +95,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
                           controller: emailController,
                           textInputType: TextInputType.emailAddress,
                           prefixIcon:
@@ -116,6 +117,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       SizedBox(
                         height: 46,
                         child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
                           controller: passwordController,
                           textInputType: TextInputType.visiblePassword,
                           prefixIcon:

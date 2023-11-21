@@ -72,6 +72,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               SizedBox(
                 height: 46,
                 child: TextFormFieldWidget(
+                  focusedBorder: kRoundedActiveBorderStyle,
                   controller: emailController,
                   textInputType: TextInputType.emailAddress,
                   prefixIcon: SvgIcon(imageName: 'assets/email-icon.svg'),
