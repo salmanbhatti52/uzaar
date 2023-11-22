@@ -625,25 +625,25 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                   height: 14,
                 ),
 
-                Container(
-                  margin: EdgeInsets.only(bottom: 28),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 22,
-                  ),
-                  child: primaryButton(
-                      context: context,
-                      buttonText: widget.houseData['listings_categories']
-                                  ['name'] ==
-                              'For Sale'
-                          ? 'Buy Now'
-                          : 'Reserve Now',
-                      onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => PaymentScreen(),
-                            ),
-                          ),
-                      showLoader: false),
-                ),
+                // Container(
+                //   margin: EdgeInsets.only(bottom: 28),
+                //   padding: const EdgeInsets.symmetric(
+                //     horizontal: 22,
+                //   ),
+                //   child: primaryButton(
+                //       context: context,
+                //       buttonText: widget.houseData['listings_categories']
+                //                   ['name'] ==
+                //               'For Sale'
+                //           ? 'Buy Now'
+                //           : 'Reserve Now',
+                //       onTap: () => Navigator.of(context).push(
+                //             MaterialPageRoute(
+                //               builder: (context) => PaymentScreen(),
+                //             ),
+                //           ),
+                //       showLoader: false),
+                // ),
               ],
             ),
           ),

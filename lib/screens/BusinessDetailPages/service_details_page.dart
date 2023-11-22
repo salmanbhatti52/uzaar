@@ -584,21 +584,21 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                   height: 14,
                 ),
 
-                Container(
-                  margin: EdgeInsets.only(bottom: 28),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 22,
-                  ),
-                  child: primaryButton(
-                      context: context,
-                      buttonText: 'Buy Now',
-                      onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => PaymentScreen(),
-                            ),
-                          ),
-                      showLoader: false),
-                ),
+                // Container(
+                //   margin: EdgeInsets.only(bottom: 28),
+                //   padding: const EdgeInsets.symmetric(
+                //     horizontal: 22,
+                //   ),
+                //   child: primaryButton(
+                //       context: context,
+                //       buttonText: 'Buy Now',
+                //       onTap: () => Navigator.of(context).push(
+                //             MaterialPageRoute(
+                //               builder: (context) => PaymentScreen(),
+                //             ),
+                //           ),
+                //       showLoader: false),
+                // ),
               ],
             ),
           ),

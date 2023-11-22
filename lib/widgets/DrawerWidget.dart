@@ -62,26 +62,25 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       // padding: EdgeInsets.zero,
                       margin: EdgeInsets.only(top: 16),
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
                         border: Border.all(
                           color: Colors.white,
                           width: 0,
                         ),
                       ),
                       child: userDataGV['profilePic'] != ''
-                          ? Container(
-                              decoration: BoxDecoration(
-                                color: Color(0xFFD9D9D9),
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image:
-                                        NetworkImage(userDataGV['profilePic'])),
-                                shape: BoxShape.circle,
+                          ? CircleAvatar(
+                              backgroundColor: Color(0xFFD9D9D9),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Image.network(
+                                  userDataGV['profilePic'],
+                                  fit: BoxFit.cover,
+                                  height: 135,
+                                  width: 135,
+                                ),
                               ),
                             )
                           : Container(
-                              height: 120,
-                              width: 120,
                               decoration: BoxDecoration(
                                 color: Color(0xFFD9D9D9),
                                 shape: BoxShape.circle,

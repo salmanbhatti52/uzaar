@@ -167,7 +167,7 @@ class HousingListTile extends StatelessWidget {
                     children: [
                       IconTextReusable(
                         imageName: 'area_icon',
-                        text: '$houseArea sq.mt',
+                        text: '$houseArea sq.ft',
                       ),
                       SizedBox(
                         width: 18,

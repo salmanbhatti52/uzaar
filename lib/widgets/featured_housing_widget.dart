@@ -209,7 +209,7 @@ class FeaturedHousingWidget extends StatelessWidget {
                   children: [
                     IconTextReusable(
                       imageName: 'area_icon',
-                      text: '$area sq.mt',
+                      text: '$area sq.ft',
                     ),
                     IconTextReusable(
                       imageName: 'bath_icon',
