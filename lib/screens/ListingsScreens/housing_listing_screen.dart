@@ -132,6 +132,7 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                       } else if (selectedOption == 'edit') {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => EditListingScreen(
+                            listingData: listedHousings[index],
                             selectedCategory: widget.selectedCategory,
                           ),
                         ));
@@ -163,7 +164,7 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                     ),
                   );
                 },
-                itemCount: 8,
+                itemCount: 5,
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 physics: BouncingScrollPhysics(),

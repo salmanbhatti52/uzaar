@@ -46,7 +46,9 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
     var decodedResponse = jsonDecode(response.body);
     listedServices = decodedResponse['data'];
     print('listedServices: $listedServices');
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
@@ -127,6 +129,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                       } else if (selectedOption == 'edit') {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => EditListingScreen(
+                            listingData: listedServices[index],
                             selectedCategory: widget.selectedCategory,
                           ),
                         ));
@@ -158,7 +161,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                     ),
                   );
                 },
-                itemCount: 8,
+                itemCount: 5,
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 physics: BouncingScrollPhysics(),

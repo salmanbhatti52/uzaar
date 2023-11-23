@@ -1,3 +1,5 @@
+import 'package:Uzaar/services/restService.dart';
+import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,11 +17,10 @@ import '../chat_list_screen.dart';
 import '../notifications_screen.dart';
 
 class EditListingScreen extends StatefulWidget {
-  EditListingScreen({
-    super.key,
-    required this.selectedCategory,
-  });
-  int selectedCategory;
+  const EditListingScreen(
+      {super.key, required this.selectedCategory, required this.listingData});
+  final int selectedCategory;
+  final dynamic listingData;
 
   @override
   State<EditListingScreen> createState() => _EditListingScreenState();
@@ -31,6 +32,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
   XFile? _selectedImage;
   String selectedImageInBase64 = '';
   late Map<String, dynamic> images;
+  List<Map<String, dynamic>> imageList = [];
 
   List<Widget> getPageIndicators() {
     List<Widget> tabs = [];
@@ -51,11 +53,19 @@ class _EditListingScreenState extends State<EditListingScreen> {
     return tabs;
   }
 
+  late String listedImage = '';
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     selectedCategory = widget.selectedCategory;
+    print(widget.listingData);
+    init();
+  }
+
+  init() async {
+    listedImage = widget.listingData['listings_images'][0]['image'];
+    // listedImages = await widget.listingData['listings_images'];
   }
 
   @override
@@ -115,108 +125,210 @@ class _EditListingScreenState extends State<EditListingScreen> {
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: getPageIndicators(),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: getPageIndicators(),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Upload or Take Picture',
-                    style: kBodyTextStyle,
-                  ),
-                  GestureDetector(
-                    onTap: () async {
-                      images = await getImage(from: 'camera');
-                      setState(() {
-                        _selectedImage = images['selectedImage'];
-                      });
-                      selectedImageInBase64 = images['selectedImageInBase64'];
-                    },
-                    child: SvgPicture.asset('assets/add-pic-button.svg'),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 30.h,
-              ),
-              Container(
-                height: 165,
-                width: double.infinity,
-                decoration: kUploadImageBoxBorderShadow,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: GestureDetector(
-                    onTap: () async {
-                      images = await getImage(from: 'gallery');
-                      setState(() {
-                        _selectedImage = images['selectedImage'];
-                      });
-                      selectedImageInBase64 = images['selectedImageInBase64'];
-                    },
-                    child: SvgPicture.asset(
-                      'assets/upload-pic.svg',
-                      fit: BoxFit.scaleDown,
+                SizedBox(
+                  height: 20.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Upload or Take Picture',
+                      style: kBodyTextStyle,
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        images = await getImage(from: 'camera');
+                        if (images.isNotEmpty) {
+                          setState(() {
+                            _selectedImage = images['selectedImage'];
+                          });
+                          selectedImageInBase64 =
+                              images['selectedImageInBase64'];
+                        }
+                      },
+                      child: SvgPicture.asset('assets/add-pic-button.svg'),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Container(
+                  height: 140,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(bottom: 20),
+                  decoration: kUploadImageBoxBorderShadow,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: GestureDetector(
+                      onTap: () async {
+                        imageList = await pickMultiImage();
+                        print(imageList);
+                        setState(() {});
+                        // images = await getImage(from: 'gallery');
+                        // if (images.isNotEmpty) {
+                        //   setState(() {
+                        //     _selectedImage = images['selectedImage'];
+                        //   });
+                        //   selectedImageInBase64 =
+                        //       images['selectedImageInBase64'];
+                        // }
+                      },
+                      child: SvgPicture.asset(
+                        'assets/upload-pic.svg',
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              _selectedImage != null
-                  ? Container(
-                      height: MediaQuery.sizeOf(context).height * 0.30,
-                      width: MediaQuery.sizeOf(context).width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16)),
-                      child: Image.file(
-                        File(_selectedImage!.path),
-                        fit: BoxFit.cover,
+                Stack(
+                  children: [
+                    imageList != []
+                        ?
+                        // Container(
+                        //         height: 190,
+                        //         width: MediaQuery.sizeOf(context).width,
+                        //         child: ClipRRect(
+                        //           borderRadius: BorderRadius.circular(10),
+                        //           child: Image.file(
+                        //             File(_selectedImage!.path),
+                        //             fit: BoxFit.cover,
+                        //           ),
+                        //         ),
+                        //       )
+                        Column(
+                            children: List.generate(
+                                imageList.length,
+                                (index) => Container(
+                                      height: 190,
+                                      width: MediaQuery.sizeOf(context).width,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.file(
+                                          // File(_selectedImage!.path),
+                                          File(imageList[index]['image$index']
+                                                  ['imageInXFile']
+                                              .path),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    )),
+                          )
+                        : listedImage != ''
+                            ? Container(
+                                height: 190,
+                                width: MediaQuery.sizeOf(context).width,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    imgBaseUrl + listedImage,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              )
+                            : SizedBox(
+                                height: 190,
+                              ),
+                    Positioned(
+                      top: 10,
+                      right: 10,
+                      child: GestureDetector(
+                        onTap: () {
+                          listedImage = '';
+                          _selectedImage = null;
+                          setState(() {});
+                        },
+                        child: SvgIcon(imageName: 'assets/remove.svg'),
                       ),
-                    )
-                  : Spacer(),
-              Padding(
-                padding: EdgeInsets.only(bottom: 20.0),
-                child: primaryButton(
-                    context: context,
-                    buttonText: 'Next',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return selectedCategory == 1
-                                ? ProductAddScreenOne(
-                                    productBase64Image: selectedImageInBase64,
-                                    editDetails: true,
-                                  )
-                                : selectedCategory == 2
-                                    ? ServiceAddScreen(
-                                        serviceBase64Image:
-                                            selectedImageInBase64,
-                                        editDetails: true,
-                                      )
-                                    : HouseAddScreen(
-                                        housingBase64Image:
-                                            selectedImageInBase64,
-                                        editDetails: true,
-                                      );
-                          },
-                        ),
-                      );
-                    },
-                    showLoader: false),
-              ),
-            ],
+                    ),
+                  ],
+                ),
+                // : widget.listingData != null
+                //     ? Stack(
+                //         children: [
+                //
+                //           Container(
+                //             height: 190,
+                //             width: MediaQuery.sizeOf(context).width,
+                //             child: ClipRRect(
+                //               borderRadius: BorderRadius.circular(10),
+                //               child: Image.network(
+                //                 imgBaseUrl +
+                //                     widget.listingData['listings_images'][0]
+                //                         ['image'],
+                //                 fit: BoxFit.cover,
+                //               ),
+                //             ),
+                //           ),
+                //           Positioned(
+                //             top: 10,
+                //             right: 10,
+                //             child: GestureDetector(
+                //               onTap: () {
+                //                 print('on tap called');
+                //                 setState(() {
+                //                   widget.listingData == null;
+                //                   _selectedImage == null;
+                //                 });
+                //                 setState(() {});
+                //               },
+                //               child:
+                //                   SvgIcon(imageName: 'assets/remove.svg'),
+                //             ),
+                //           ),
+                //         ],
+                //       )
+                //     : SizedBox(),
+                SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.11,
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  // padding: EdgeInsets.only(bottom: 20.0),
+                  child: primaryButton(
+                      context: context,
+                      buttonText: 'Next',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return selectedCategory == 1
+                                  ? ProductAddScreenOne(
+                                      productBase64Image: selectedImageInBase64,
+                                      editDetails: true,
+                                    )
+                                  : selectedCategory == 2
+                                      ? ServiceAddScreen(
+                                          serviceBase64Image:
+                                              selectedImageInBase64,
+                                          editDetails: true,
+                                        )
+                                      : HouseAddScreen(
+                                          housingBase64Image:
+                                              selectedImageInBase64,
+                                          editDetails: true,
+                                        );
+                            },
+                          ),
+                        );
+                      },
+                      showLoader: false),
+                ),
+              ],
+            ),
           ),
         ),
       ),

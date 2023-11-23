@@ -250,7 +250,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                                         ),
                                       );
                                     },
-                                    itemCount: 8,
+                                    itemCount: 5,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
                                     physics: BouncingScrollPhysics(),

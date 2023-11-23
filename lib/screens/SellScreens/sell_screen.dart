@@ -251,15 +251,18 @@ class _SellScreenState extends State<SellScreen> {
                 ),
                 _selectedImage != null
                     ? Container(
-                        height: 200,
+                        height: 190,
                         width: MediaQuery.sizeOf(context).width,
                         margin: EdgeInsets.only(top: 15, bottom: 15),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
                             shape: BoxShape.rectangle),
-                        child: Image.file(
-                          File(_selectedImage!.path),
-                          fit: BoxFit.cover,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.file(
+                            File(_selectedImage!.path),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       )
                     : SizedBox(

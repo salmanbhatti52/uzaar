@@ -113,6 +113,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => EditListingScreen(
                             selectedCategory: widget.selectedCategory,
+                            listingData: widget.listedProducts[index],
                           ),
                         ));
                       } else if (selectedOption == 'delete') {
@@ -143,7 +144,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                     ),
                   );
                 },
-                itemCount: 8,
+                itemCount: 5,
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 physics: BouncingScrollPhysics(),
