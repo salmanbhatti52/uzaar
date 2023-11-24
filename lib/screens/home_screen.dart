@@ -149,7 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
     var decodedResponse = jsonDecode(response.body);
     featuredProductsGV = decodedResponse['data'];
     print('featuredProductsGV: $featuredProductsGV');
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   getFeaturedServices() async {

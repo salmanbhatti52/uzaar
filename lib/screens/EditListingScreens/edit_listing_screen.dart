@@ -53,7 +53,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
     return tabs;
   }
 
-  late String listedImage = '';
+  String listedImage = '';
   @override
   void initState() {
     // TODO: implement initState
@@ -65,6 +65,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
 
   init() async {
     listedImage = widget.listingData['listings_images'][0]['image'];
+    print('listedImage: $listedImage');
     // listedImages = await widget.listingData['listings_images'];
   }
 
@@ -193,27 +194,18 @@ class _EditListingScreenState extends State<EditListingScreen> {
                     ),
                   ),
                 ),
-                Stack(
-                  children: [
-                    imageList != []
-                        ?
-                        // Container(
-                        //         height: 190,
-                        //         width: MediaQuery.sizeOf(context).width,
-                        //         child: ClipRRect(
-                        //           borderRadius: BorderRadius.circular(10),
-                        //           child: Image.file(
-                        //             File(_selectedImage!.path),
-                        //             fit: BoxFit.cover,
-                        //           ),
-                        //         ),
-                        //       )
-                        Column(
-                            children: List.generate(
-                                imageList.length,
-                                (index) => Container(
-                                      height: 190,
-                                      width: MediaQuery.sizeOf(context).width,
+                imageList.isNotEmpty
+                    ? Wrap(
+                        spacing: 8,
+                        // alignment: WrapAlignment.spaceBetween,
+                        children: List.generate(
+                            imageList.length,
+                            (index) => Stack(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(top: 16),
+                                      height: 100,
+                                      width: 100,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
                                         child: Image.file(
@@ -224,10 +216,33 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                           fit: BoxFit.cover,
                                         ),
                                       ),
-                                    )),
-                          )
-                        : listedImage != ''
-                            ? Container(
+                                    ),
+                                    Positioned(
+                                      top: 22,
+                                      right: 6,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          print('tapped: $index');
+                                          imageList.removeAt(index);
+
+                                          // listedImage = '';
+                                          // _selectedImage = null;
+                                          setState(() {});
+                                        },
+                                        child: SvgPicture.asset(
+                                          'assets/remove.svg',
+                                          height: 20,
+                                          width: 20,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                )),
+                      )
+                    : listedImage.isNotEmpty
+                        ? Stack(
+                            children: [
+                              Container(
                                 height: 190,
                                 width: MediaQuery.sizeOf(context).width,
                                 child: ClipRRect(
@@ -237,60 +252,28 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                              )
-                            : SizedBox(
-                                height: 190,
                               ),
-                    Positioned(
-                      top: 10,
-                      right: 10,
-                      child: GestureDetector(
-                        onTap: () {
-                          listedImage = '';
-                          _selectedImage = null;
-                          setState(() {});
-                        },
-                        child: SvgIcon(imageName: 'assets/remove.svg'),
-                      ),
-                    ),
-                  ],
-                ),
-                // : widget.listingData != null
-                //     ? Stack(
-                //         children: [
-                //
-                //           Container(
-                //             height: 190,
-                //             width: MediaQuery.sizeOf(context).width,
-                //             child: ClipRRect(
-                //               borderRadius: BorderRadius.circular(10),
-                //               child: Image.network(
-                //                 imgBaseUrl +
-                //                     widget.listingData['listings_images'][0]
-                //                         ['image'],
-                //                 fit: BoxFit.cover,
-                //               ),
-                //             ),
-                //           ),
-                //           Positioned(
-                //             top: 10,
-                //             right: 10,
-                //             child: GestureDetector(
-                //               onTap: () {
-                //                 print('on tap called');
-                //                 setState(() {
-                //                   widget.listingData == null;
-                //                   _selectedImage == null;
-                //                 });
-                //                 setState(() {});
-                //               },
-                //               child:
-                //                   SvgIcon(imageName: 'assets/remove.svg'),
-                //             ),
-                //           ),
-                //         ],
-                //       )
-                //     : SizedBox(),
+                              Positioned(
+                                top: 10,
+                                right: 10,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // listedImage = '';
+                                    // _selectedImage = null;
+                                    setState(() {});
+                                  },
+                                  child: SvgPicture.asset(
+                                    'assets/remove.svg',
+                                    // height: 20,
+                                    // width: 20,
+                                  ),
+                                ),
+                              )
+                            ],
+                          )
+                        : SizedBox(
+                            height: 190,
+                          ),
                 SizedBox(
                   height: MediaQuery.sizeOf(context).height * 0.11,
                 ),

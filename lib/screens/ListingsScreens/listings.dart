@@ -45,17 +45,14 @@ class _ListingsScreenState extends State<ListingsScreen> {
   }
 
   getBoostingPackages() async {
-    // setState(() {
-    //   showSpinner = true;
-    // });
     Response response = await sendGetRequest('get_packages');
 
     print(response.statusCode);
     print(response.body);
     boostingPackages = jsonDecode(response.body);
-    setState(() {
-      // showSpinner = false;
-    });
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   getSellerProductsListing() async {
@@ -68,7 +65,9 @@ class _ListingsScreenState extends State<ListingsScreen> {
     var decodedResponse = jsonDecode(response.body);
     listedProducts = decodedResponse['data'];
     print('listedProducts: $listedProducts');
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
