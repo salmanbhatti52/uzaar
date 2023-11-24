@@ -224,8 +224,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                         onTap: () {
                                           print('tapped: $index');
                                           imageList.removeAt(index);
-
-                                          // listedImage = '';
+                                          listedImage = '';
                                           // _selectedImage = null;
                                           setState(() {});
                                         },
@@ -258,7 +257,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                 right: 10,
                                 child: GestureDetector(
                                   onTap: () {
-                                    // listedImage = '';
+                                    listedImage = '';
                                     // _selectedImage = null;
                                     setState(() {});
                                   },
