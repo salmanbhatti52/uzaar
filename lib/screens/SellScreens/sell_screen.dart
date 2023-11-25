@@ -32,6 +32,7 @@ class _SellScreenState extends State<SellScreen> {
   XFile? _selectedImage;
   String? selectedImageInBase64 = '';
   late Map<String, dynamic> images;
+  List<Map<String, dynamic>> imagesList = [];
 
   List<Widget> getPageIndicators() {
     List<Widget> tabs = [];
@@ -219,7 +220,14 @@ class _SellScreenState extends State<SellScreen> {
                         setState(() {
                           _selectedImage = images['selectedImage'];
                         });
+
                         selectedImageInBase64 = images['selectedImageInBase64'];
+                        imagesList.add({
+                          'image': {
+                            'imageInXFile': _selectedImage,
+                            'imageInBase64': selectedImageInBase64
+                          }
+                        });
                       },
                       child: SvgPicture.asset('assets/add-pic-button.svg'),
                     ),

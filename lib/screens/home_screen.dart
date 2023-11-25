@@ -51,6 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
   dynamic featuredProducts;
   dynamic featuredServices;
   dynamic featuredHousing;
+  dynamic productListingCategories;
+  dynamic serviceListingCategories;
+  dynamic housingListingCategories;
 
   @override
   void initState() {
@@ -68,7 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     await getUserData();
     getListingTypes();
-    getListingSubCategories();
+    getProductListingCategories();
+    getServiceListingCategories();
+    getHousingListingCategories();
 
     getFeaturedProducts();
 
@@ -130,13 +135,49 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  getListingSubCategories() async {
-    Response response = await sendGetRequest('get_listings_categories');
+  getProductListingCategories() async {
+    Response response =
+        await sendPostRequest(action: 'get_listings_categories', data: {
+      'listings_types': 'listings_products'
+      // "listings_products" or "listings_services" or "listings_housings"
+    });
 
     print(response.statusCode);
     print(response.body);
-    dynamic allListingSubCategories = jsonDecode(response.body);
-    setState(() {});
+    productListingCategories = jsonDecode(response.body);
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  getServiceListingCategories() async {
+    Response response =
+        await sendPostRequest(action: 'get_listings_categories', data: {
+      'listings_types': 'listings_services'
+      // "listings_products" or "listings_services" or "listings_housings"
+    });
+
+    print(response.statusCode);
+    print(response.body);
+    serviceListingCategories = jsonDecode(response.body);
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  getHousingListingCategories() async {
+    Response response =
+        await sendPostRequest(action: 'get_listings_categories', data: {
+      'listings_types': 'listings_housings'
+      // "listings_products" or "listings_services" or "listings_housings"
+    });
+
+    print(response.statusCode);
+    print(response.body);
+    housingListingCategories = jsonDecode(response.body);
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   getFeaturedProducts() async {
