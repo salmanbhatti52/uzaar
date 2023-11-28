@@ -19,15 +19,15 @@ import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
 
-class ServiceAddScreen extends StatefulWidget {
-  const ServiceAddScreen({super.key, required this.imagesList});
+class ServiceEditScreen extends StatefulWidget {
+  const ServiceEditScreen({super.key, required this.imagesList});
 
   final List<Map<String, dynamic>> imagesList;
   @override
-  State<ServiceAddScreen> createState() => _ServiceAddScreenState();
+  State<ServiceEditScreen> createState() => _ServiceEditScreenState();
 }
 
-class _ServiceAddScreenState extends State<ServiceAddScreen> {
+class _ServiceEditScreenState extends State<ServiceEditScreen> {
   int noOfTabs = 2;
   late String? selectedCategoryName = '';
   late String? selectedCategoryId = '';
@@ -50,7 +50,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
   late double longitude;
   late Position position;
   bool setLoader = false;
-  String setButtonStatus = 'Publish';
+  String setButtonStatus = 'Save Changes';
   @override
   void initState() {
     // TODO: implement initState
@@ -392,7 +392,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                   });
                               setState(() {
                                 setLoader = false;
-                                setButtonStatus = 'Publish';
+                                setButtonStatus = 'Save Changes';
                               });
                               print(response.statusCode);
                               print(response.body);
@@ -430,7 +430,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                               print(e);
                               setState(() {
                                 setLoader = false;
-                                setButtonStatus = 'Publish';
+                                setButtonStatus = 'Save Changes';
                               });
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(

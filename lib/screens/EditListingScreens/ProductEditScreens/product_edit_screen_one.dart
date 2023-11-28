@@ -1,11 +1,10 @@
+import 'package:Uzaar/screens/EditListingScreens/ProductEditScreens/product_edit_screen_two.dart';
 import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:Uzaar/widgets/snackbars.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_two.dart';
+
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/utils/colors.dart';
 
@@ -17,16 +16,18 @@ import '../../../widgets/text.dart';
 
 enum ProductConditions { fresh, used }
 
-class ProductAddScreenOne extends StatefulWidget {
+class ProductEditScreenOne extends StatefulWidget {
   static const String id = 'product_add_screen_one';
-  const ProductAddScreenOne({super.key, required this.imagesList});
+  const ProductEditScreenOne(
+      {super.key, required this.imagesList, required this.listingData});
+  final dynamic listingData;
   final List<Map<String, dynamic>> imagesList;
 
   @override
-  State<ProductAddScreenOne> createState() => _ProductAddScreenOneState();
+  State<ProductEditScreenOne> createState() => _ProductEditScreenOneState();
 }
 
-class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
+class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
   int noOfTabs = 3;
 
   final nameEditingController = TextEditingController();
@@ -56,6 +57,21 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
     // TODO: implement initState
     super.initState();
     // selectedCategoryName = productCategories.first;
+    print('listing_Data_Product: ${widget.listingData}');
+    addDataToFields();
+  }
+
+  addDataToFields() {
+    nameEditingController.text = widget.listingData['name'];
+    descriptionEditingController.text = widget.listingData['description'];
+    priceEditingController.text = '\$${widget.listingData['price']}';
+    _selectedProductCondition = widget.listingData['condition'] == 'New'
+        ? ProductConditions.fresh
+        : ProductConditions.used;
+    selectedCategoryId = widget.listingData['listings_categories']
+            ['listings_categories_id']
+        .toString();
+    selectedCategoryName = widget.listingData['listings_categories']['name'];
   }
 
   List<Widget> getPageIndicators() {
@@ -319,7 +335,7 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return ProductAddScreenTwo(
+                                  return ProductEditScreenTwo(
                                     formData: formData,
                                   );
                                 },

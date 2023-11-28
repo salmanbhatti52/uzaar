@@ -22,8 +22,8 @@ import '../../../widgets/text.dart';
 enum FurnishedConditions { yes, no }
 
 class HouseAddScreen extends StatefulWidget {
-  const HouseAddScreen({super.key, this.editDetails, required this.imagesList});
-  final bool? editDetails;
+  const HouseAddScreen({super.key, required this.imagesList});
+
   final List<Map<String, dynamic>> imagesList;
   @override
   State<HouseAddScreen> createState() => _HouseAddScreenState();
@@ -54,7 +54,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
   late double longitude;
   late Position position;
   bool setLoader = false;
-  String setButtonStatus = '';
+  String setButtonStatus = 'Publish';
 
   FurnishedConditions? _selectedCondition = FurnishedConditions.no;
 
@@ -67,7 +67,6 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setButtonStatus = widget.editDetails == true ? 'Save Changes' : 'Publish';
   }
 
   List<Widget> getPageIndicators() {
@@ -581,9 +580,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                   });
                               setState(() {
                                 setLoader = false;
-                                setButtonStatus = widget.editDetails == true
-                                    ? 'Save Changes'
-                                    : 'Publish';
+                                setButtonStatus = 'Publish';
                               });
                               print(response.statusCode);
                               print(response.body);
@@ -621,9 +618,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                               print(e);
                               setState(() {
                                 setLoader = false;
-                                setButtonStatus = widget.editDetails == true
-                                    ? 'Save Changes'
-                                    : 'Publish';
+                                setButtonStatus = 'Publish';
                               });
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:Uzaar/widgets/BottomNaviBar.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
@@ -12,6 +11,7 @@ import '../../../services/location.dart';
 import '../../../services/restService.dart';
 import '../../../utils/Buttons.dart';
 import '../../../utils/colors.dart';
+import '../../../widgets/BottomNaviBar.dart';
 import '../../../widgets/snackbars.dart';
 import '../../../widgets/text_form_field_reusable.dart';
 import '../../../widgets/rounded_dropdown_menu.dart';
@@ -19,38 +19,50 @@ import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
 
-class ServiceAddScreen extends StatefulWidget {
-  const ServiceAddScreen({super.key, required this.imagesList});
+enum FurnishedConditions { yes, no }
+
+class HouseEditScreen extends StatefulWidget {
+  const HouseEditScreen({super.key, required this.imagesList});
 
   final List<Map<String, dynamic>> imagesList;
   @override
-  State<ServiceAddScreen> createState() => _ServiceAddScreenState();
+  State<HouseEditScreen> createState() => _HouseEditScreenState();
 }
 
-class _ServiceAddScreenState extends State<ServiceAddScreen> {
+class _HouseEditScreenState extends State<HouseEditScreen> {
   int noOfTabs = 2;
   late String? selectedCategoryName = '';
   late String? selectedCategoryId = '';
   late String? selectedBoostingOption = '';
+  late int? selectedBedroomOption = 0;
+  late int? selectedBathroomOption = 0;
   final nameEditingController = TextEditingController();
-  final descriptionEditingController = TextEditingController();
   final locationEditingController = TextEditingController();
   final priceEditingController = TextEditingController();
-
-  List<Map<String, String>> serviceCategories = [
-    {'categoryName': 'Technology', 'categoryId': '8'},
-    {'categoryName': 'Designing', 'categoryId': '9'},
-    {'categoryName': 'Beauty', 'categoryId': '10'},
-    {'categoryName': 'Medical', 'categoryId': '11'},
-    {'categoryName': 'Printing', 'categoryId': '12'},
+  final descriptionEditingController = TextEditingController();
+  final areaEditingController = TextEditingController();
+  List<Map<String, String>> housingCategories = [
+    {'categoryName': 'Rental', 'categoryId': '13'},
+    {'categoryName': 'For Sale', 'categoryId': '14'},
+    {'categoryName': 'Lease', 'categoryId': '15'},
   ];
   List<String> boostingOptions = ['Free', 'Paid'];
+  List<int> bedrooms = [1, 2, 3, 4, 5];
+  List<int> bathrooms = [1, 2, 3, 4, 5];
 
   late double latitude;
   late double longitude;
   late Position position;
   bool setLoader = false;
-  String setButtonStatus = 'Publish';
+  String setButtonStatus = 'Save Changes';
+
+  FurnishedConditions? _selectedCondition = FurnishedConditions.no;
+
+  updateSelectedCondition(value) {
+    _selectedCondition = value;
+    print(_selectedCondition);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -107,7 +119,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: ReusableText(text: 'Service Name'),
+                        child: ReusableText(text: 'Listing Name'),
                       ),
                       SizedBox(
                         height: 10.h,
@@ -119,8 +131,8 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           controller: nameEditingController,
                           textInputType: TextInputType.text,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/service_icon.svg'),
-                          hintText: 'Service Name',
+                              SvgIcon(imageName: 'assets/list_icon.svg'),
+                          hintText: 'Listing Name',
                           obscureText: null,
                         ),
                       ),
@@ -137,7 +149,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                       RoundedDropdownMenu(
                           width: MediaQuery.sizeOf(context).width * 0.887,
                           leadingIconName: 'category_icon',
-                          hintText: 'Category',
+                          hintText: 'Rental',
                           onSelected: (value) {
                             setState(() {
                               selectedCategoryName = value['categoryName'];
@@ -146,7 +158,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                             print(selectedCategoryName);
                             print(selectedCategoryId);
                           },
-                          dropdownMenuEntries: serviceCategories
+                          dropdownMenuEntries: housingCategories
                               .map(
                                 (Map<String, String> value) =>
                                     DropdownMenuEntry<Object?>(
@@ -159,25 +171,69 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: ReusableText(text: 'Service Description'),
+                        child: ReusableText(text: 'Furnished'),
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 7.h,
                       ),
                       SizedBox(
-                        height: 46,
-                        child: TextFormFieldWidget(
-                          focusedBorder: kRoundedActiveBorderStyle,
-                          controller: descriptionEditingController,
-                          textInputType: TextInputType.text,
-                          prefixIcon:
-                              SvgIcon(imageName: 'assets/description_icon.svg'),
-                          hintText: 'Description here',
-                          obscureText: null,
+                        height: 35,
+                        child: Row(
+                          children: [
+                            Row(
+                              children: [
+                                Radio(
+                                  activeColor: primaryBlue,
+                                  fillColor:
+                                      MaterialStatePropertyAll(primaryBlue),
+                                  value: FurnishedConditions.yes,
+                                  groupValue: _selectedCondition,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      updateSelectedCondition(value);
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                Text(
+                                  'Yes',
+                                  style: kTextFieldInputStyle,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                  activeColor: primaryBlue,
+                                  fillColor:
+                                      MaterialStatePropertyAll(primaryBlue),
+                                  value: FurnishedConditions.no,
+                                  groupValue: _selectedCondition,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      updateSelectedCondition(value);
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                Text(
+                                  'No',
+                                  style: kTextFieldInputStyle,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
-                        height: 14.h,
+                        height: 10.h,
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
@@ -230,7 +286,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                   primaryBlue, BlendMode.srcIn),
                             ),
                           ),
-                          hintText: 'Your Location here',
+                          hintText: 'Location here',
                           obscureText: null,
                         ),
                       ),
@@ -255,6 +311,122 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           hintText: 'Enter Price',
                           obscureText: null,
                         ),
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Description'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      SizedBox(
+                        height: 46,
+                        child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
+                          controller: descriptionEditingController,
+                          textInputType: TextInputType.text,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/description_icon.svg'),
+                          hintText: 'Description here',
+                          obscureText: null,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ReusableText(text: 'Area'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      SizedBox(
+                        height: 46,
+                        child: TextFormFieldWidget(
+                          focusedBorder: kRoundedActiveBorderStyle,
+                          controller: areaEditingController,
+                          textInputType: TextInputType.number,
+                          prefixIcon:
+                              SvgIcon(imageName: 'assets/area_icon.svg'),
+                          hintText: 'Area ( Sq.ft)',
+                          obscureText: null,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 14.h,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ReusableText(text: 'Bedroom'),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                RoundedDropdownMenu(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.42,
+                                    leadingIconName: 'bed_icon',
+                                    hintText: '2',
+                                    onSelected: (value) {
+                                      setState(() {
+                                        selectedBedroomOption = value;
+                                      });
+                                    },
+                                    dropdownMenuEntries: bedrooms
+                                        .map(
+                                          (int value) => DropdownMenuEntry<int>(
+                                              value: value,
+                                              label: value.toString()),
+                                        )
+                                        .toList()),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 16,
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ReusableText(text: 'Bathroom'),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                RoundedDropdownMenu(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.42,
+                                    leadingIconName: 'bath_icon',
+                                    hintText: '2',
+                                    onSelected: (value) {
+                                      setState(() {
+                                        selectedBathroomOption = value;
+                                      });
+                                    },
+                                    dropdownMenuEntries: bathrooms
+                                        .map(
+                                          (int value) => DropdownMenuEntry<int>(
+                                              value: value,
+                                              label: value.toString()),
+                                        )
+                                        .toList()),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
                       SizedBox(
                         height: 14.h,
@@ -306,18 +478,11 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           if (nameEditingController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
-                                    message: 'Plz enter your service name'));
+                                    message: 'Plz enter your house name'));
                           } else if (selectedCategoryName == '') {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
-                                    message:
-                                        'Plz select your service category'));
-                          } else if (descriptionEditingController
-                              .text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                ErrorSnackBar(
-                                    message:
-                                        'Plz enter your service description'));
+                                    message: 'Plz select your house category'));
                           } else if (locationEditingController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
@@ -325,7 +490,25 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           } else if (priceEditingController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
-                                    message: 'Plz enter your service price'));
+                                    message: 'Plz enter your house price'));
+                          } else if (descriptionEditingController
+                              .text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message:
+                                        'Plz enter your service description'));
+                          } else if (areaEditingController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz add your house area'));
+                          } else if (selectedBedroomOption == 0) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz select no. of bedrooms'));
+                          } else if (selectedBathroomOption == 0) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Plz select no. of bathrooms'));
                           } else {
                             FocusScopeNode currentFocus =
                                 FocusScope.of(context);
@@ -367,11 +550,11 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                               }
 
                               Response response = await sendPostRequest(
-                                  action: 'add_listings_services',
+                                  action: 'add_listings_housings',
                                   data: {
                                     'users_customers_id':
                                         userDataGV['userId'].toString(),
-                                    'listings_types_id': '2',
+                                    'listings_types_id': '3',
                                     'listings_categories_id':
                                         selectedCategoryId,
                                     'name':
@@ -385,6 +568,11 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                         .toString(),
                                     'latitude': latitude.toString(),
                                     'longitude': longitude.toString(),
+                                    'area':
+                                        areaEditingController.text.toString(),
+                                    'bedroom': selectedBedroomOption.toString(),
+                                    'bathroom':
+                                        selectedBathroomOption.toString(),
                                     'packages_id': '',
                                     'payment_gateways_id': '',
                                     'payment_status': '',
@@ -392,7 +580,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                   });
                               setState(() {
                                 setLoader = false;
-                                setButtonStatus = 'Publish';
+                                setButtonStatus = 'Save Changes';
                               });
                               print(response.statusCode);
                               print(response.body);
@@ -430,7 +618,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                               print(e);
                               setState(() {
                                 setLoader = false;
-                                setButtonStatus = 'Publish';
+                                setButtonStatus = 'Save Changes';
                               });
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(

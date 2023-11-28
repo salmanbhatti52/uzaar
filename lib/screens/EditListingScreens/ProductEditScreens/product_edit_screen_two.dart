@@ -16,22 +16,22 @@ import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
 
-class ProductAddScreenTwo extends StatefulWidget {
+class ProductEditScreenTwo extends StatefulWidget {
   static const String id = 'product_add_screen_two';
-  const ProductAddScreenTwo({super.key, required this.formData});
+  const ProductEditScreenTwo({super.key, required this.formData});
 
   final Map<String, dynamic> formData;
   @override
-  State<ProductAddScreenTwo> createState() => _ProductAddScreenTwoState();
+  State<ProductEditScreenTwo> createState() => _ProductEditScreenTwoState();
 }
 
-class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
+class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
   int noOfTabs = 3;
   final minPriceEditingController = TextEditingController();
   late String? selectedBoostingOption = '';
   List<String> boostingOptions = ['Free', 'Paid'];
   bool setLoader = false;
-  String setButtonStatus = 'Publish';
+  String setButtonStatus = 'Save Changes';
 
   @override
   void initState() {
@@ -212,7 +212,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
 
                             setState(() {
                               setLoader = false;
-                              setButtonStatus = 'Publish';
+                              setButtonStatus = 'Save Changes';
                             });
 
                             print(response.statusCode);

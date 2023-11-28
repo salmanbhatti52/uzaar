@@ -329,23 +329,7 @@ class _SellScreenState extends State<SellScreen> {
                                   color: Colors.grey,
                                 ))),
                 ),
-                // _selectedImage != null
-                //     ? Container(
-                //         height: 190,
-                //         width: MediaQuery.sizeOf(context).width,
-                //         margin: EdgeInsets.only(top: 15, bottom: 15),
-                //         decoration: BoxDecoration(
-                //             borderRadius: BorderRadius.circular(16),
-                //             shape: BoxShape.rectangle),
-                //         child: ClipRRect(
-                //           borderRadius: BorderRadius.circular(10),
-                //           child: Image.file(
-                //             File(_selectedImage!.path),
-                //             fit: BoxFit.cover,
-                //           ),
-                //         ),
-                //       )
-                //     : SizedBox(
+                // SizedBox(
                 //         height: MediaQuery.sizeOf(context).height * 0.25,
                 //       ),
                 SizedBox(
