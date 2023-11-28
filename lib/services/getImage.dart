@@ -29,9 +29,15 @@ Future<Map<String, dynamic>> collectImages(XFile? returnedImage) async {
 
   selectedImageInBase64 = await convertXFileToBase64(selectedImage);
   images = {
-    'selectedImage': selectedImage,
-    'selectedImageInBase64': selectedImageInBase64
+    'image': {
+      'imageInXFile': selectedImage,
+      'imageInBase64': selectedImageInBase64
+    }
   };
+  // images = {
+  //   'imageInXFile': selectedImage,
+  //   'imageInBase64': selectedImageInBase64
+  // };
   print(selectedImageInBase64);
   return images;
 }
@@ -57,12 +63,11 @@ Future<List<Map<String, dynamic>>> collectMultiImages(
 
   for (int i = 0; i < imageList.length; i++) {
     imageInBase64 = await convertXFileToBase64(imageList[i]);
-    print('image$i : $imageInBase64');
-    print(i);
+    // print('image$i : $imageInBase64');
+    // print(i);
     images.add({
-      'image$i': {'imageInXFile': imageList[i], 'imageInBase64': imageInBase64}
+      'image': {'imageInXFile': imageList[i], 'imageInBase64': imageInBase64}
     });
-    // print(images);
   }
 
   print(images);

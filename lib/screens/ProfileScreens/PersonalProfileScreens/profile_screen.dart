@@ -257,7 +257,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 images = await getImage(from: 'camera');
 
                                 selectedImageInBase64 =
-                                    images['selectedImageInBase64'];
+                                    images['image']['imageInBase64'];
                                 if (selectedImageInBase64 != '') {
                                   setState(() {
                                     userProfile = '';
@@ -279,7 +279,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 images = await getImage(from: 'gallery');
 
                                 selectedImageInBase64 =
-                                    images['selectedImageInBase64'];
+                                    images['image']['imageInBase64'];
                                 if (selectedImageInBase64 != '') {
                                   setState(() {
                                     userProfile = '';

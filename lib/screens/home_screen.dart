@@ -71,14 +71,11 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     await getUserData();
     getListingTypes();
-    getProductListingCategories();
-    getServiceListingCategories();
-    getHousingListingCategories();
-
+    getProductListingsCategories();
+    getServiceListingsCategories();
+    getHousingListingsCategories();
     getFeaturedProducts();
-
     getFeaturedServices();
-
     getFeaturedHousings();
   }
 
@@ -135,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  getProductListingCategories() async {
+  getProductListingsCategories() async {
     Response response =
         await sendPostRequest(action: 'get_listings_categories', data: {
       'listings_types': 'listings_products'
@@ -150,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  getServiceListingCategories() async {
+  getServiceListingsCategories() async {
     Response response =
         await sendPostRequest(action: 'get_listings_categories', data: {
       'listings_types': 'listings_services'
@@ -165,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  getHousingListingCategories() async {
+  getHousingListingsCategories() async {
     Response response =
         await sendPostRequest(action: 'get_listings_categories', data: {
       'listings_types': 'listings_housings'

@@ -150,18 +150,20 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                 if (result == 'camera') {
                                   images = await getImage(from: 'camera');
                                   setState(() {
-                                    _selectedImage = images['selectedImage'];
+                                    _selectedImage =
+                                        images['image']['imageInXFile'];
                                   });
                                   selectedImageInBase64 =
-                                      images['selectedImageInBase64'];
+                                      images['image']['imageInBase64'];
                                 }
                                 if (result == 'gallery') {
                                   images = await getImage(from: 'gallery');
                                   setState(() {
-                                    _selectedImage = images['selectedImage'];
+                                    _selectedImage =
+                                        images['image']['imageInXFile'];
                                   });
                                   selectedImageInBase64 =
-                                      images['selectedImageInBase64'];
+                                      images['image']['imageInBase64'];
                                 }
                               },
                               child: SvgIcon(

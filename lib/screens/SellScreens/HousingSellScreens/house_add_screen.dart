@@ -22,11 +22,9 @@ import '../../../widgets/text.dart';
 enum FurnishedConditions { yes, no }
 
 class HouseAddScreen extends StatefulWidget {
-  const HouseAddScreen(
-      {super.key, this.editDetails, required this.housingBase64Image});
+  const HouseAddScreen({super.key, this.editDetails, required this.imagesList});
   final bool? editDetails;
-  final String? housingBase64Image;
-
+  final List<Map<String, dynamic>> imagesList;
   @override
   State<HouseAddScreen> createState() => _HouseAddScreenState();
 }
@@ -56,7 +54,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
   late double longitude;
   late Position position;
   bool setLoader = false;
-  String setButtonStatus = 'Publish';
+  String setButtonStatus = '';
 
   FurnishedConditions? _selectedCondition = FurnishedConditions.no;
 
@@ -69,6 +67,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    setButtonStatus = widget.editDetails == true ? 'Save Changes' : 'Publish';
   }
 
   List<Widget> getPageIndicators() {
@@ -475,9 +474,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                     padding: const EdgeInsets.only(bottom: 14.0),
                     child: primaryButton(
                         context: context,
-                        buttonText: widget.editDetails == true
-                            ? 'Save Changes'
-                            : setButtonStatus,
+                        buttonText: setButtonStatus,
                         onTap: () async {
                           if (nameEditingController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -536,6 +533,23 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                               latitude = locations[0].latitude;
                               longitude = locations[0].longitude;
 
+                              // listings_images Required format for API call
+                              // [
+                              //   {'image': 'base64Image']}
+                              // ]
+
+                              // Fulfilling the requirements.
+                              List<Map<String, dynamic>> images = [];
+
+                              for (int i = 0;
+                                  i < widget.imagesList.length;
+                                  i++) {
+                                images.add({
+                                  'image': widget.imagesList[i]['image']
+                                      ['imageInBase64']
+                                });
+                              }
+
                               Response response = await sendPostRequest(
                                   action: 'add_listings_housings',
                                   data: {
@@ -563,13 +577,13 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                     'packages_id': '',
                                     'payment_gateways_id': '',
                                     'payment_status': '',
-                                    'listings_images': [
-                                      {'image': widget.housingBase64Image}
-                                    ]
+                                    'listings_images': images
                                   });
                               setState(() {
                                 setLoader = false;
-                                setButtonStatus = 'Publish';
+                                setButtonStatus = widget.editDetails == true
+                                    ? 'Save Changes'
+                                    : 'Publish';
                               });
                               print(response.statusCode);
                               print(response.body);
@@ -607,7 +621,9 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                               print(e);
                               setState(() {
                                 setLoader = false;
-                                setButtonStatus = 'Publish';
+                                setButtonStatus = widget.editDetails == true
+                                    ? 'Save Changes'
+                                    : 'Publish';
                               });
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(

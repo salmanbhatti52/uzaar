@@ -20,9 +20,10 @@ enum ProductConditions { fresh, used }
 class ProductAddScreenOne extends StatefulWidget {
   static const String id = 'product_add_screen_one';
   const ProductAddScreenOne(
-      {super.key, this.editDetails, required this.productBase64Image});
+      {super.key, this.editDetails, required this.imagesList});
   final bool? editDetails;
-  final String? productBase64Image;
+
+  final List<Map<String, dynamic>> imagesList;
 
   @override
   State<ProductAddScreenOne> createState() => _ProductAddScreenOneState();
@@ -312,7 +313,7 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                                   descriptionEditingController.text.toString(),
                               'productPrice':
                                   priceEditingController.text.toString(),
-                              'image': widget.productBase64Image,
+                              'imagesList': widget.imagesList,
                             };
 
                             print('formData: $formData');

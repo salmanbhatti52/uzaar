@@ -64,10 +64,11 @@ class _CustomSplashState extends State<CustomSplash> {
           height: MediaQuery.sizeOf(context).height,
           constraints: const BoxConstraints.expand(),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.25,
-              ),
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height * 0.25,
+              // ),
               SizedBox(
                 height: 280,
                 width: 180,
@@ -76,26 +77,26 @@ class _CustomSplashState extends State<CustomSplash> {
                   // fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.11,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacementNamed(
-                    context,
-                    // BottomNavBar.id
-                    OnBoardingScreen.id,
-                  );
-                },
-                child: SizedBox(
-                  height: 70,
-                  width: 189,
-                  child: SvgIcon(
-                    imageName: 'assets/splash_button.svg',
-                    // fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height * 0.11,
+              // ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.pushReplacementNamed(
+              //       context,
+              //       // BottomNavBar.id
+              //       OnBoardingScreen.id,
+              //     );
+              //   },
+              //   child: SizedBox(
+              //     height: 70,
+              //     width: 189,
+              //     child: SvgIcon(
+              //       imageName: 'assets/splash_button.svg',
+              //       // fit: BoxFit.cover,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

@@ -76,7 +76,9 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     allListingsProductsGV = decodedResponse['data'];
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
     print('allListingsProductsGV: $allListingsProductsGV');
   }
 

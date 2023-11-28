@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:Uzaar/services/restService.dart';
 import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:flutter/material.dart';
@@ -30,13 +32,14 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
   late String? selectedBoostingOption = '';
   List<String> boostingOptions = ['Free', 'Paid'];
   bool setLoader = false;
-  String setButtonStatus = 'Publish';
+  String setButtonStatus = '';
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     print(widget.formData);
+    setButtonStatus = widget.editDetails == true ? 'Save Changes' : 'Publish';
   }
 
   List<Widget> getPageIndicators() {
@@ -152,9 +155,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                     padding: const EdgeInsets.only(bottom: 14.0),
                     child: primaryButton(
                         context: context,
-                        buttonText: widget.editDetails == true
-                            ? 'Save Changes'
-                            : 'Publish',
+                        buttonText: setButtonStatus,
                         onTap: () async {
                           if (minPriceEditingController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -162,6 +163,33 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                                     message:
                                         'Plz add price you want to offer'));
                           } else {
+                            FocusScopeNode currentFocus =
+                                FocusScope.of(context);
+                            if (!currentFocus.hasPrimaryFocus) {
+                              currentFocus.unfocus();
+                            }
+
+                            setState(() {
+                              setLoader = true;
+                              setButtonStatus = 'Please wait..';
+                            });
+                            // listings_images Required format for API call
+                            // [
+                            //   {'image': 'base64Image']}
+                            // ]
+
+                            // Fulfilling the requirements.
+                            List<Map<String, dynamic>> images = [];
+
+                            for (int i = 0;
+                                i < widget.formData['imagesList'].length;
+                                i++) {
+                              images.add({
+                                'image': widget.formData['imagesList'][i]
+                                    ['image']['imageInBase64']
+                              });
+                            }
+
                             Response response = await sendPostRequest(
                                 action: 'add_listings_products',
                                 data: {
@@ -181,23 +209,46 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                                   'packages_id': "",
                                   'payment_gateways_id': "",
                                   'payment_status': "",
-                                  'listings_images': [
-                                    {'image': widget.formData['image']}
-                                  ],
+                                  'listings_images': images,
                                 });
+
+                            setState(() {
+                              setLoader = false;
+                              setButtonStatus = widget.editDetails == true
+                                  ? 'Save Changes'
+                                  : 'Publish';
+                            });
 
                             print(response.statusCode);
                             print(response.body);
-
-                            return Navigator.pushAndRemoveUntil(context,
+                            var decodedResponse = jsonDecode(response.body);
+                            String status = decodedResponse['status'];
+                            if (status == 'success') {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SuccessSnackBar());
+                              Navigator.pushAndRemoveUntil(
+                                context,
                                 MaterialPageRoute(
-                              builder: (context) {
-                                return BottomNavBar();
-                              },
-                            ), (Route<dynamic> route) => false);
+                                  builder: (context) {
+                                    return BottomNavBar();
+                                  },
+                                ),
+                                (route) => false,
+                              );
+                            }
+                            if (status == 'error') {
+                              String message = decodedResponse?['message'];
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                        message,
+                                        style: kToastTextStyle,
+                                      )));
+                            }
                           }
                         },
-                        showLoader: false),
+                        showLoader: setLoader),
                   ),
                 ],
               ),

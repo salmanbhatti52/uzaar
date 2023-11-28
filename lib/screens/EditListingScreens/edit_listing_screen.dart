@@ -53,20 +53,20 @@ class _EditListingScreenState extends State<EditListingScreen> {
     return tabs;
   }
 
-  String listedImage = '';
+  List<dynamic> listedImages = [];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     selectedCategory = widget.selectedCategory;
-    print(widget.listingData);
+    print('widget.listingData: ${widget.listingData}');
     init();
   }
 
-  init() async {
-    listedImage = widget.listingData['listings_images'][0]['image'];
-    print('listedImage: $listedImage');
-    // listedImages = await widget.listingData['listings_images'];
+  init() {
+    listedImages = [...widget.listingData['listings_images']];
+    setState(() {});
   }
 
   @override
@@ -153,10 +153,10 @@ class _EditListingScreenState extends State<EditListingScreen> {
                         images = await getImage(from: 'camera');
                         if (images.isNotEmpty) {
                           setState(() {
-                            _selectedImage = images['selectedImage'];
+                            _selectedImage = images['image']['imageInXFile'];
                           });
                           selectedImageInBase64 =
-                              images['selectedImageInBase64'];
+                              images['image']['imageInBase64'];
                         }
                       },
                       child: SvgPicture.asset('assets/add-pic-button.svg'),
@@ -210,7 +210,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                         borderRadius: BorderRadius.circular(10),
                                         child: Image.file(
                                           // File(_selectedImage!.path),
-                                          File(imageList[index]['image$index']
+                                          File(imageList[index]['image']
                                                   ['imageInXFile']
                                               .path),
                                           fit: BoxFit.cover,
@@ -224,7 +224,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                         onTap: () {
                                           print('tapped: $index');
                                           imageList.removeAt(index);
-                                          listedImage = '';
+                                          // listedImage = '';
                                           // _selectedImage = null;
                                           setState(() {});
                                         },
@@ -238,37 +238,56 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                   ],
                                 )),
                       )
-                    : listedImage.isNotEmpty
-                        ? Stack(
-                            children: [
-                              Container(
-                                height: 190,
-                                width: MediaQuery.sizeOf(context).width,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(
-                                    imgBaseUrl + listedImage,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                top: 10,
-                                right: 10,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    listedImage = '';
-                                    // _selectedImage = null;
-                                    setState(() {});
-                                  },
-                                  child: SvgPicture.asset(
-                                    'assets/remove.svg',
-                                    // height: 20,
-                                    // width: 20,
-                                  ),
-                                ),
-                              )
-                            ],
+                    : listedImages.isNotEmpty
+                        ? Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: List.generate(
+                                listedImages.length,
+                                (index) => Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                            color: primaryBlue,
+                                            width: 1,
+                                            style: BorderStyle.solid,
+                                          )),
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            height: 94,
+                                            width: 94,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              child: Image.network(
+                                                imgBaseUrl +
+                                                    listedImages[index]
+                                                        ['image'],
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 6,
+                                            right: 6,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                listedImages.removeAt(index);
+                                                // _selectedImage = null;
+                                                setState(() {});
+                                              },
+                                              child: SvgPicture.asset(
+                                                'assets/remove.svg',
+                                                height: 20,
+                                                width: 20,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )),
                           )
                         : SizedBox(
                             height: 190,
@@ -289,18 +308,16 @@ class _EditListingScreenState extends State<EditListingScreen> {
                             builder: (context) {
                               return selectedCategory == 1
                                   ? ProductAddScreenOne(
-                                      productBase64Image: selectedImageInBase64,
+                                      imagesList: [],
                                       editDetails: true,
                                     )
                                   : selectedCategory == 2
                                       ? ServiceAddScreen(
-                                          serviceBase64Image:
-                                              selectedImageInBase64,
+                                          imagesList: [],
                                           editDetails: true,
                                         )
                                       : HouseAddScreen(
-                                          housingBase64Image:
-                                              selectedImageInBase64,
+                                          imagesList: [],
                                           editDetails: true,
                                         );
                             },

@@ -216,18 +216,15 @@ class _SellScreenState extends State<SellScreen> {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        images = await getImage(from: 'camera');
-                        setState(() {
-                          _selectedImage = images['selectedImage'];
-                        });
-
-                        selectedImageInBase64 = images['selectedImageInBase64'];
-                        imagesList.add({
-                          'image': {
-                            'imageInXFile': _selectedImage,
-                            'imageInBase64': selectedImageInBase64
-                          }
-                        });
+                        if (imagesList.length < 6) {
+                          images = await getImage(from: 'camera');
+                          imagesList.add(images);
+                          setState(() {});
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              ErrorSnackBar(
+                                  message: 'You can add maximum six images.'));
+                        }
                       },
                       child: SvgPicture.asset('assets/add-pic-button.svg'),
                     ),
@@ -244,11 +241,25 @@ class _SellScreenState extends State<SellScreen> {
                     borderRadius: BorderRadius.circular(20),
                     child: GestureDetector(
                       onTap: () async {
-                        images = await getImage(from: 'gallery');
-                        setState(() {
-                          _selectedImage = images['selectedImage'];
-                        });
-                        selectedImageInBase64 = images['selectedImageInBase64'];
+                        if (imagesList.length < 6) {
+                          List<Map<String, dynamic>> pickedImages =
+                              await pickMultiImage();
+                          if (pickedImages.isNotEmpty) {
+                            for (int i = 0; i < pickedImages.length; i++) {
+                              imagesList.add(pickedImages[i]);
+                            }
+                          }
+                          print(imagesList.length);
+                          if (imagesList.length > 6) {
+                            imagesList = imagesList.sublist(0, 6);
+                          }
+                          print(imagesList.length);
+                          setState(() {});
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              ErrorSnackBar(
+                                  message: 'You can add maximum six images.'));
+                        }
                       },
                       child: SvgPicture.asset(
                         'assets/upload-pic.svg',
@@ -257,50 +268,111 @@ class _SellScreenState extends State<SellScreen> {
                     ),
                   ),
                 ),
-                _selectedImage != null
-                    ? Container(
-                        height: 190,
-                        width: MediaQuery.sizeOf(context).width,
-                        margin: EdgeInsets.only(top: 15, bottom: 15),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            shape: BoxShape.rectangle),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.file(
-                            File(_selectedImage!.path),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      )
-                    : SizedBox(
-                        height: MediaQuery.sizeOf(context).height * 0.25,
-                      ),
+                SizedBox(
+                  height: 20,
+                ),
+                Wrap(
+                  runSpacing: 8,
+                  spacing: 8,
+                  // alignment: WrapAlignment.center,
+                  direction: Axis.horizontal,
+                  children: List.generate(
+                      6,
+                      (index) => Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                color: primaryBlue,
+                                width: 1,
+                                style: BorderStyle.solid,
+                              )),
+                          child: index < imagesList.length
+                              ? Stack(
+                                  children: [
+                                    Container(
+                                        height: 94,
+                                        width: 94,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          child: Image.file(
+                                            File(imagesList[index]['image']
+                                                    ['imageInXFile']
+                                                .path),
+                                            // File(_selectedImage!.path),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )),
+                                    Positioned(
+                                      top: 6,
+                                      right: 6,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          print('tapped: $index');
+                                          imagesList.removeAt(index);
+                                          // listedImage = '';
+                                          // _selectedImage = null;
+                                          setState(() {});
+                                        },
+                                        child: SvgPicture.asset(
+                                          'assets/remove.svg',
+                                          height: 20,
+                                          width: 20,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              : Icon(
+                                  Icons.image,
+                                  size: 94,
+                                  color: Colors.grey,
+                                ))),
+                ),
+                // _selectedImage != null
+                //     ? Container(
+                //         height: 190,
+                //         width: MediaQuery.sizeOf(context).width,
+                //         margin: EdgeInsets.only(top: 15, bottom: 15),
+                //         decoration: BoxDecoration(
+                //             borderRadius: BorderRadius.circular(16),
+                //             shape: BoxShape.rectangle),
+                //         child: ClipRRect(
+                //           borderRadius: BorderRadius.circular(10),
+                //           child: Image.file(
+                //             File(_selectedImage!.path),
+                //             fit: BoxFit.cover,
+                //           ),
+                //         ),
+                //       )
+                //     : SizedBox(
+                //         height: MediaQuery.sizeOf(context).height * 0.25,
+                //       ),
+                SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.1,
+                ),
                 primaryButton(
                     context: context,
                     buttonText: 'Next',
                     onTap: () {
-                      if (selectedImageInBase64 == '') {
+                      if (imagesList.length < 6) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            ErrorSnackBar(message: 'Plz select an image'));
+                            ErrorSnackBar(message: 'Please add six images'));
                       } else {
-                        print('selectedImageInBase64: $selectedImageInBase64');
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) {
                               return selectedCategory == 1
                                   ? ProductAddScreenOne(
-                                      productBase64Image: selectedImageInBase64,
+                                      imagesList: imagesList,
                                     )
                                   : selectedCategory == 2
                                       ? ServiceAddScreen(
-                                          serviceBase64Image:
-                                              selectedImageInBase64,
+                                          imagesList: imagesList,
                                         )
                                       : HouseAddScreen(
-                                          housingBase64Image:
-                                              selectedImageInBase64,
+                                          imagesList: imagesList,
                                         );
                             },
                           ),
