@@ -10,6 +10,7 @@ import '../../services/restService.dart';
 import '../../utils/Buttons.dart';
 import '../../utils/Colors.dart';
 import '../../widgets/alert_dialog_reusable.dart';
+import '../../widgets/snackbars.dart';
 import '../EditListingScreens/edit_listing_screen.dart';
 
 class ServiceListingScreen extends StatefulWidget {
@@ -51,6 +52,29 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
     }
   }
 
+  Future<String> deleteSelectedService({required int serviceListingId}) async {
+    Response response =
+        await sendPostRequest(action: 'delete_listings_services', data: {
+      'listings_services_id': serviceListingId,
+    });
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    if (status == 'success') {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SuccessSnackBar(message: null));
+      return 'success';
+    }
+    if (status == 'error') {
+      String message = decodedResponse?['message'];
+      ScaffoldMessenger.of(context)
+          .showSnackBar(ErrorSnackBar(message: message));
+      return 'error';
+    }
+    return '';
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -71,71 +95,77 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                   serviceName: listedServices[index]['name'],
                   serviceLocation: listedServices[index]['location'],
                   servicePrice: '\$${listedServices[index]['price']}',
-                  onSelected: (selectedValue) {
+                  onSelected: (selectedValue) async {
                     setState(() {
                       selectedOption = selectedValue;
-                      if (selectedOption == 'boost') {
-                        showDialog(
-                          context: context,
-                          builder: (
-                            context,
-                          ) {
-                            return StatefulBuilder(
-                              builder: (BuildContext context,
-                                  StateSetter stateSetterObject) {
-                                return AlertDialogReusable(
-                                  description:
-                                      'Boost your listings to get more orders',
-                                  title: 'Boost Listings',
-                                  itemsList: List.generate(
-                                    widget.boostingPackages?['data'].length,
-                                    (index) => SizedBox(
-                                      height: 35,
-                                      child: ListTile(
-                                        contentPadding:
-                                            EdgeInsets.symmetric(horizontal: 5),
-                                        horizontalTitleGap: 5,
-                                        title: Text(
-                                          '\$${widget.boostingPackages?['data'][index]['price']} ${widget.boostingPackages?['data'][index]['name']}',
-                                          style: kTextFieldInputStyle,
-                                        ),
-                                        leading: Radio(
-                                          activeColor: primaryBlue,
-                                          fillColor: MaterialStatePropertyAll(
-                                              primaryBlue),
-                                          value:
-                                              widget.boostingPackages?['data']
-                                                  [index]['packages_id'],
-                                          groupValue: _selectedPackage,
-                                          onChanged: (value) {
-                                            stateSetterObject(() {
-                                              updateSelectedPackage(value);
-                                            });
-                                          },
-                                        ),
+                    });
+                    if (selectedOption == 'boost') {
+                      showDialog(
+                        context: context,
+                        builder: (
+                          context,
+                        ) {
+                          return StatefulBuilder(
+                            builder: (BuildContext context,
+                                StateSetter stateSetterObject) {
+                              return AlertDialogReusable(
+                                description:
+                                    'Boost your listings to get more orders',
+                                title: 'Boost Listings',
+                                itemsList: List.generate(
+                                  widget.boostingPackages?['data'].length,
+                                  (index) => SizedBox(
+                                    height: 35,
+                                    child: ListTile(
+                                      contentPadding:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      horizontalTitleGap: 5,
+                                      title: Text(
+                                        '\$${widget.boostingPackages?['data'][index]['price']} ${widget.boostingPackages?['data'][index]['name']}',
+                                        style: kTextFieldInputStyle,
+                                      ),
+                                      leading: Radio(
+                                        activeColor: primaryBlue,
+                                        fillColor: MaterialStatePropertyAll(
+                                            primaryBlue),
+                                        value: widget.boostingPackages?['data']
+                                            [index]['packages_id'],
+                                        groupValue: _selectedPackage,
+                                        onChanged: (value) {
+                                          stateSetterObject(() {
+                                            updateSelectedPackage(value);
+                                          });
+                                        },
                                       ),
                                     ),
                                   ),
-                                  button: primaryButton(
-                                      context: context,
-                                      buttonText: 'Boost Now',
-                                      onTap: () => Navigator.of(context).pop(),
-                                      showLoader: false),
-                                );
-                              },
-                            );
-                          },
-                        );
-                      } else if (selectedOption == 'edit') {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EditListingScreen(
-                            listingData: listedServices[index],
-                            selectedCategory: widget.selectedCategory,
-                          ),
-                        ));
-                      } else if (selectedOption == 'delete') {
-                      } else {}
-                    });
+                                ),
+                                button: primaryButton(
+                                    context: context,
+                                    buttonText: 'Boost Now',
+                                    onTap: () => Navigator.of(context).pop(),
+                                    showLoader: false),
+                              );
+                            },
+                          );
+                        },
+                      );
+                    } else if (selectedOption == 'edit') {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => EditListingScreen(
+                          listingData: listedServices[index],
+                          selectedCategory: widget.selectedCategory,
+                        ),
+                      ));
+                    } else if (selectedOption == 'delete') {
+                      String result = await deleteSelectedService(
+                          serviceListingId: listedServices[index]
+                              ['listings_services_id']);
+                      if (result == 'success') {
+                        listedServices.removeAt(index);
+                        setState(() {});
+                      }
+                    } else {}
                   },
                   itemBuilder: (context) {
                     return popupMenuOptions;

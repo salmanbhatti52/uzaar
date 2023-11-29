@@ -22,8 +22,9 @@ import '../../../widgets/text.dart';
 enum FurnishedConditions { yes, no }
 
 class HouseEditScreen extends StatefulWidget {
-  const HouseEditScreen({super.key, required this.imagesList});
-
+  const HouseEditScreen(
+      {super.key, required this.listingData, required this.imagesList});
+  final dynamic listingData;
   final List<Map<String, dynamic>> imagesList;
   @override
   State<HouseEditScreen> createState() => _HouseEditScreenState();
@@ -55,7 +56,9 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
   late Position position;
   bool setLoader = false;
   String setButtonStatus = 'Save Changes';
-
+  Object? initialCategoryValue;
+  Object? initialBedroomsValue;
+  Object? initialBathroomsValue;
   FurnishedConditions? _selectedCondition = FurnishedConditions.no;
 
   updateSelectedCondition(value) {
@@ -67,6 +70,51 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    addDataToFields();
+  }
+
+  addDataToFields() {
+    nameEditingController.text = widget.listingData['name'];
+    descriptionEditingController.text = widget.listingData['description'];
+    priceEditingController.text = widget.listingData['price'];
+    locationEditingController.text = widget.listingData['location'];
+    areaEditingController.text = widget.listingData['area'];
+
+    // _selectedCondition = widget.listingData['condition'] == 'New'
+    //     ? ProductConditions.fresh
+    //     : ProductConditions.used;
+    int categoryIndex = housingCategories.indexWhere((map) =>
+        map['categoryName'] ==
+        widget.listingData['listings_categories']['name']);
+    initialCategoryValue = housingCategories[categoryIndex];
+    updateSelectedCategory(initialCategoryValue);
+
+    int bedroomsValIndex =
+        bedrooms.indexOf(int.parse(widget.listingData['bedroom']));
+    initialBedroomsValue = bedrooms[bedroomsValIndex];
+    print(initialBedroomsValue);
+    updateBedroomsValue(initialBedroomsValue);
+
+    int bathroomsValIndex =
+        bathrooms.indexOf(int.parse(widget.listingData['bathroom']));
+    initialBathroomsValue = bathrooms[bathroomsValIndex];
+    print(initialBathroomsValue);
+    updateBathroomsValue(initialBathroomsValue);
+  }
+
+  updateSelectedCategory(value) {
+    selectedCategoryName = value['categoryName'];
+    selectedCategoryId = value['categoryId'];
+    print(selectedCategoryName);
+    print(selectedCategoryId);
+  }
+
+  updateBedroomsValue(value) {
+    selectedBedroomOption = value;
+  }
+
+  updateBathroomsValue(value) {
+    selectedBathroomOption = value;
   }
 
   List<Widget> getPageIndicators() {
@@ -119,7 +167,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: ReusableText(text: 'Listing Name'),
+                        child: ReusableText(text: 'House Name'),
                       ),
                       SizedBox(
                         height: 10.h,
@@ -132,7 +180,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                           textInputType: TextInputType.text,
                           prefixIcon:
                               SvgIcon(imageName: 'assets/list_icon.svg'),
-                          hintText: 'Listing Name',
+                          hintText: 'House Name',
                           obscureText: null,
                         ),
                       ),
@@ -150,14 +198,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                           width: MediaQuery.sizeOf(context).width * 0.887,
                           leadingIconName: 'category_icon',
                           hintText: 'Rental',
-                          onSelected: (value) {
-                            setState(() {
-                              selectedCategoryName = value['categoryName'];
-                            });
-                            selectedCategoryId = value['categoryId'];
-                            print(selectedCategoryName);
-                            print(selectedCategoryId);
-                          },
+                          onSelected: updateSelectedCategory,
+                          initialSelection: initialCategoryValue,
                           dropdownMenuEntries: housingCategories
                               .map(
                                 (Map<String, String> value) =>
@@ -377,11 +419,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                         0.42,
                                     leadingIconName: 'bed_icon',
                                     hintText: '2',
-                                    onSelected: (value) {
-                                      setState(() {
-                                        selectedBedroomOption = value;
-                                      });
-                                    },
+                                    initialSelection: initialBedroomsValue,
+                                    onSelected: updateBedroomsValue,
                                     dropdownMenuEntries: bedrooms
                                         .map(
                                           (int value) => DropdownMenuEntry<int>(
@@ -411,11 +450,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                         0.42,
                                     leadingIconName: 'bath_icon',
                                     hintText: '2',
-                                    onSelected: (value) {
-                                      setState(() {
-                                        selectedBathroomOption = value;
-                                      });
-                                    },
+                                    initialSelection: initialBathroomsValue,
+                                    onSelected: updateBathroomsValue,
                                     dropdownMenuEntries: bathrooms
                                         .map(
                                           (int value) => DropdownMenuEntry<int>(
@@ -496,7 +532,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
                                     message:
-                                        'Plz enter your service description'));
+                                        'Plz enter your house description'));
                           } else if (areaEditingController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
@@ -532,29 +568,11 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                               latitude = locations[0].latitude;
                               longitude = locations[0].longitude;
 
-                              // listings_images Required format for API call
-                              // [
-                              //   {'image': 'base64Image']}
-                              // ]
-
-                              // Fulfilling the requirements.
-                              List<Map<String, dynamic>> images = [];
-
-                              for (int i = 0;
-                                  i < widget.imagesList.length;
-                                  i++) {
-                                images.add({
-                                  'image': widget.imagesList[i]['image']
-                                      ['imageInBase64']
-                                });
-                              }
-
                               Response response = await sendPostRequest(
-                                  action: 'add_listings_housings',
+                                  action: 'edit_listings_housings',
                                   data: {
-                                    'users_customers_id':
-                                        userDataGV['userId'].toString(),
-                                    'listings_types_id': '3',
+                                    'listings_housings_id': widget
+                                        .listingData['listings_housings_id'],
                                     'listings_categories_id':
                                         selectedCategoryId,
                                     'name':
@@ -574,9 +592,9 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                     'bathroom':
                                         selectedBathroomOption.toString(),
                                     'packages_id': '',
-                                    'payment_gateways_id': '',
-                                    'payment_status': '',
-                                    'listings_images': images
+                                    // 'payment_gateways_id': '',
+                                    // 'payment_status': '',
+                                    'listings_images': widget.imagesList
                                   });
                               setState(() {
                                 setLoader = false;

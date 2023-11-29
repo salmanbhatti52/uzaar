@@ -10,6 +10,7 @@ import '../../utils/reusable_data.dart';
 import '../../utils/Buttons.dart';
 import '../../utils/Colors.dart';
 import '../../widgets/alert_dialog_reusable.dart';
+import '../../widgets/snackbars.dart';
 import '../EditListingScreens/edit_listing_screen.dart';
 
 class HousingListingScreen extends StatefulWidget {
@@ -46,8 +47,27 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
     setState(() {});
   }
 
-  init() {
-    getSellerHousingListing();
+  Future<String> deleteSelectedHouse({required int houseListingId}) async {
+    Response response =
+        await sendPostRequest(action: 'delete_listings_housings', data: {
+      'listings_housings_id': houseListingId,
+    });
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    if (status == 'success') {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SuccessSnackBar(message: null));
+      return 'success';
+    }
+    if (status == 'error') {
+      String message = decodedResponse?['message'];
+      ScaffoldMessenger.of(context)
+          .showSnackBar(ErrorSnackBar(message: message));
+      return 'error';
+    }
+    return '';
   }
 
   @override
@@ -56,6 +76,10 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
     super.initState();
     _selectedPackage = widget.boostingPackages?['data'][0]['packages_id'];
     init();
+  }
+
+  init() {
+    getSellerHousingListing();
   }
 
   @override
@@ -75,7 +99,7 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                   noOfBaths: listedHousings[index]['bathroom'],
                   noOfBeds: listedHousings[index]['bathroom'],
                   onSelected: (selectedValue) {
-                    setState(() {
+                    setState(() async {
                       selectedOption = selectedValue;
                       if (selectedOption == 'boost') {
                         showDialog(
@@ -137,6 +161,13 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                           ),
                         ));
                       } else if (selectedOption == 'delete') {
+                        String result = await deleteSelectedHouse(
+                            houseListingId: listedHousings[index]
+                                ['listings_housings_id']);
+                        if (result == 'success') {
+                          listedHousings.removeAt(index);
+                          setState(() {});
+                        }
                       } else {}
                     });
                   },

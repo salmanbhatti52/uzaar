@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:Uzaar/screens/EditListingScreens/edit_listing_screen.dart';
 import 'package:Uzaar/services/restService.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/utils/Colors.dart';
 import 'package:Uzaar/widgets/alert_dialog_reusable.dart';
+import 'package:Uzaar/widgets/snackbars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../utils/reusable_data.dart';
@@ -18,7 +22,7 @@ class ProductListingScreen extends StatefulWidget {
       required this.listedProducts});
   final int selectedCategory;
   final dynamic boostingPackages;
-  final dynamic listedProducts;
+  final List listedProducts;
 
   @override
   State<ProductListingScreen> createState() => _ProductListingScreenState();
@@ -40,10 +44,33 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
     print(_selectedPackage);
   }
 
+  Future<String> deleteSelectedProduct({required int productListingId}) async {
+    Response response =
+        await sendPostRequest(action: 'delete_listings_products', data: {
+      'listings_products_id': productListingId,
+    });
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    if (status == 'success') {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SuccessSnackBar(message: null));
+      return 'success';
+    }
+    if (status == 'error') {
+      String message = decodedResponse?['message'];
+      ScaffoldMessenger.of(context)
+          .showSnackBar(ErrorSnackBar(message: message));
+      return 'error';
+    }
+    return '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: widget.listedProducts != null
+      child: widget.listedProducts.isNotEmpty
           ? ListView.builder(
               itemBuilder: (context, index) {
                 return ProductListTile(
@@ -53,72 +80,78 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                   productName: widget.listedProducts[index]['name'],
                   productLocation: 'California',
                   productPrice: '\$${widget.listedProducts[index]['price']}',
-                  onSelected: (selectedValue) {
+                  onSelected: (selectedValue) async {
                     setState(() {
                       selectedOption = selectedValue;
-                      print(selectedOption);
-                      if (selectedOption == 'boost') {
-                        showDialog(
-                          context: context,
-                          builder: (
-                            context,
-                          ) {
-                            return StatefulBuilder(
-                              builder: (BuildContext context,
-                                  StateSetter stateSetterObject) {
-                                return AlertDialogReusable(
-                                  description:
-                                      'Boost your listings to get more orders',
-                                  title: 'Boost Listings',
-                                  itemsList: List.generate(
-                                    widget.boostingPackages?['data'].length,
-                                    (index) => SizedBox(
-                                      height: 35,
-                                      child: ListTile(
-                                        contentPadding:
-                                            EdgeInsets.symmetric(horizontal: 5),
-                                        horizontalTitleGap: 5,
-                                        title: Text(
-                                          '\$${widget.boostingPackages?['data'][index]['price']} ${widget.boostingPackages?['data'][index]['name']}',
-                                          style: kTextFieldInputStyle,
-                                        ),
-                                        leading: Radio(
-                                          activeColor: primaryBlue,
-                                          fillColor: MaterialStatePropertyAll(
-                                              primaryBlue),
-                                          value:
-                                              widget.boostingPackages?['data']
-                                                  [index]['packages_id'],
-                                          groupValue: _selectedPackage,
-                                          onChanged: (value) {
-                                            stateSetterObject(() {
-                                              updateSelectedPackage(value);
-                                            });
-                                          },
-                                        ),
+                    });
+                    print(selectedOption);
+                    if (selectedOption == 'boost') {
+                      showDialog(
+                        context: context,
+                        builder: (
+                          context,
+                        ) {
+                          return StatefulBuilder(
+                            builder: (BuildContext context,
+                                StateSetter stateSetterObject) {
+                              return AlertDialogReusable(
+                                description:
+                                    'Boost your listings to get more orders',
+                                title: 'Boost Listings',
+                                itemsList: List.generate(
+                                  widget.boostingPackages?['data'].length,
+                                  (index) => SizedBox(
+                                    height: 35,
+                                    child: ListTile(
+                                      contentPadding:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      horizontalTitleGap: 5,
+                                      title: Text(
+                                        '\$${widget.boostingPackages?['data'][index]['price']} ${widget.boostingPackages?['data'][index]['name']}',
+                                        style: kTextFieldInputStyle,
+                                      ),
+                                      leading: Radio(
+                                        activeColor: primaryBlue,
+                                        fillColor: MaterialStatePropertyAll(
+                                            primaryBlue),
+                                        value: widget.boostingPackages?['data']
+                                            [index]['packages_id'],
+                                        groupValue: _selectedPackage,
+                                        onChanged: (value) {
+                                          stateSetterObject(() {
+                                            updateSelectedPackage(value);
+                                          });
+                                        },
                                       ),
                                     ),
                                   ),
-                                  button: primaryButton(
-                                      context: context,
-                                      buttonText: 'Boost Now',
-                                      onTap: () => Navigator.of(context).pop(),
-                                      showLoader: false),
-                                );
-                              },
-                            );
-                          },
-                        );
-                      } else if (selectedOption == 'edit') {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EditListingScreen(
-                            selectedCategory: widget.selectedCategory,
-                            listingData: widget.listedProducts[index],
-                          ),
-                        ));
-                      } else if (selectedOption == 'delete') {
-                      } else {}
-                    });
+                                ),
+                                button: primaryButton(
+                                    context: context,
+                                    buttonText: 'Boost Now',
+                                    onTap: () => Navigator.of(context).pop(),
+                                    showLoader: false),
+                              );
+                            },
+                          );
+                        },
+                      );
+                    } else if (selectedOption == 'edit') {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => EditListingScreen(
+                          selectedCategory: widget.selectedCategory,
+                          listingData: widget.listedProducts[index],
+                        ),
+                      ));
+                    } else if (selectedOption == 'delete') {
+                      String result = await deleteSelectedProduct(
+                          productListingId: widget.listedProducts[index]
+                              ['listings_products_id']);
+                      if (result == 'success') {
+                        widget.listedProducts.removeAt(index);
+                        setState(() {});
+                      }
+                    } else {}
                   },
                   itemBuilder: (context) {
                     return popupMenuOptions;

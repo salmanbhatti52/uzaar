@@ -261,10 +261,16 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                           right: 6,
                                           child: GestureDetector(
                                             onTap: () {
-                                              int id = listedImages[index]
-                                                  ['listings_images_id'];
-                                              print(id);
-                                              removedImagesIds.add(id);
+                                              print(index);
+                                              if (listedImages[index]
+                                                      ['listings_images_id'] !=
+                                                  null) {
+                                                int id = listedImages[index]
+                                                    ['listings_images_id'];
+                                                print(id);
+                                                removedImagesIds.add(id);
+                                              }
+
                                               listedImages.removeAt(index);
 
                                               // _selectedImage = null;
@@ -359,6 +365,12 @@ class _EditListingScreenState extends State<EditListingScreen> {
                       context: context,
                       buttonText: 'Next',
                       onTap: () {
+                        // listings_images Required format for API call
+                        // [
+                        //   {'image': 'base64Image']}
+                        // ]
+
+                        // Fulfilling the requirements.
                         List<Map<String, dynamic>> pickedImages = [];
                         for (int i = 0; i < imagesList.length; i++) {
                           pickedImages.add({
@@ -379,9 +391,11 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                   : selectedCategory == 2
                                       ? ServiceEditScreen(
                                           imagesList: pickedImages,
+                                          listingData: widget.listingData,
                                         )
                                       : HouseEditScreen(
                                           imagesList: pickedImages,
+                                          listingData: widget.listingData,
                                         );
                             },
                           ),

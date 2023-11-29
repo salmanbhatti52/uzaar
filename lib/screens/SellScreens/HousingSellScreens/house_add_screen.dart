@@ -119,7 +119,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: ReusableText(text: 'Listing Name'),
+                        child: ReusableText(text: 'House Name'),
                       ),
                       SizedBox(
                         height: 10.h,
@@ -132,7 +132,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                           textInputType: TextInputType.text,
                           prefixIcon:
                               SvgIcon(imageName: 'assets/list_icon.svg'),
-                          hintText: 'Listing Name',
+                          hintText: 'House Name',
                           obscureText: null,
                         ),
                       ),
@@ -496,7 +496,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
                                     message:
-                                        'Plz enter your service description'));
+                                        'Plz enter your house description'));
                           } else if (areaEditingController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(

@@ -45,11 +45,19 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
   ];
   late String? selectedCategoryName = '';
   late String? selectedCategoryId = '';
-
+  Object? initialCategoryValue;
   ProductConditions _selectedProductCondition = ProductConditions.fresh;
+
   updateSelectedCondition(value) {
     _selectedProductCondition = value;
     print(_selectedProductCondition);
+  }
+
+  updateSelectedCategory(value) {
+    selectedCategoryName = value['categoryName'];
+    selectedCategoryId = value['categoryId'];
+    print(selectedCategoryName);
+    print(selectedCategoryId);
   }
 
   @override
@@ -64,14 +72,15 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
   addDataToFields() {
     nameEditingController.text = widget.listingData['name'];
     descriptionEditingController.text = widget.listingData['description'];
-    priceEditingController.text = '\$${widget.listingData['price']}';
+    priceEditingController.text = widget.listingData['price'];
     _selectedProductCondition = widget.listingData['condition'] == 'New'
         ? ProductConditions.fresh
         : ProductConditions.used;
-    selectedCategoryId = widget.listingData['listings_categories']
-            ['listings_categories_id']
-        .toString();
-    selectedCategoryName = widget.listingData['listings_categories']['name'];
+    int index = productCategories.indexWhere((map) =>
+        map['categoryName'] ==
+        widget.listingData['listings_categories']['name']);
+    initialCategoryValue = productCategories[index];
+    updateSelectedCategory(initialCategoryValue);
   }
 
   List<Widget> getPageIndicators() {
@@ -156,14 +165,8 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                           width: MediaQuery.sizeOf(context).width * 0.887,
                           leadingIconName: 'category_icon',
                           hintText: 'Category',
-                          onSelected: (value) {
-                            setState(() {
-                              selectedCategoryName = value['categoryName'];
-                            });
-                            selectedCategoryId = value['categoryId'];
-                            print(selectedCategoryName);
-                            print(selectedCategoryId);
-                          },
+                          onSelected: updateSelectedCategory,
+                          initialSelection: initialCategoryValue,
                           dropdownMenuEntries: productCategories
                               .map(
                                 (Map<String, String> value) =>
@@ -336,6 +339,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                               MaterialPageRoute(
                                 builder: (context) {
                                   return ProductEditScreenTwo(
+                                    listingData: widget.listingData,
                                     formData: formData,
                                   );
                                 },

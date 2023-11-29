@@ -18,8 +18,9 @@ import '../../../widgets/text.dart';
 
 class ProductEditScreenTwo extends StatefulWidget {
   static const String id = 'product_add_screen_two';
-  const ProductEditScreenTwo({super.key, required this.formData});
-
+  const ProductEditScreenTwo(
+      {super.key, required this.formData, required this.listingData});
+  final dynamic listingData;
   final Map<String, dynamic> formData;
   @override
   State<ProductEditScreenTwo> createState() => _ProductEditScreenTwoState();
@@ -38,6 +39,12 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
     // TODO: implement initState
     super.initState();
     print(widget.formData);
+    print(widget.listingData);
+    addDataToFields();
+  }
+
+  addDataToFields() {
+    minPriceEditingController.text = widget.listingData['min_offer_price'];
   }
 
   List<Widget> getPageIndicators() {
@@ -171,29 +178,12 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
                               setLoader = true;
                               setButtonStatus = 'Please wait..';
                             });
-                            // listings_images Required format for API call
-                            // [
-                            //   {'image': 'base64Image']}
-                            // ]
-
-                            // Fulfilling the requirements.
-                            List<Map<String, dynamic>> images = [];
-
-                            for (int i = 0;
-                                i < widget.formData['imagesList'].length;
-                                i++) {
-                              images.add({
-                                'image': widget.formData['imagesList'][i]
-                                    ['image']['imageInBase64']
-                              });
-                            }
 
                             Response response = await sendPostRequest(
-                                action: 'add_listings_products',
+                                action: 'edit_listings_products',
                                 data: {
-                                  'users_customers_id':
-                                      userDataGV['userId'].toString(),
-                                  'listings_types_id': "1",
+                                  'listings_products_id': widget
+                                      .listingData['listings_products_id'],
                                   'listings_categories_id':
                                       widget.formData['categoryId'],
                                   'condition':
@@ -205,9 +195,8 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
                                   'min_offer_price':
                                       minPriceEditingController.text.toString(),
                                   'packages_id': "",
-                                  'payment_gateways_id': "",
-                                  'payment_status': "",
-                                  'listings_images': images,
+                                  'listings_images':
+                                      widget.formData['imagesList'],
                                 });
 
                             setState(() {

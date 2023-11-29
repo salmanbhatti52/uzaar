@@ -31,12 +31,14 @@ class RoundedDropdownMenu extends StatelessWidget {
       required this.dropdownMenuEntries,
       required this.hintText,
       required this.leadingIconName,
+      this.initialSelection,
       this.width});
   final Function(dynamic)? onSelected;
   final List<DropdownMenuEntry<Object?>> dropdownMenuEntries;
   final String leadingIconName;
   final String hintText;
   final double? width;
+  final Object? initialSelection;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,7 +52,7 @@ class RoundedDropdownMenu extends StatelessWidget {
         inputDecorationTheme: kDropDownMenuInputDecoration,
         menuStyle: kDropDownMenuStyle,
         width: width,
-        // initialSelection: null,
+        initialSelection: initialSelection,
         onSelected: onSelected,
         dropdownMenuEntries: dropdownMenuEntries,
       ),

@@ -20,8 +20,9 @@ import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
 
 class ServiceEditScreen extends StatefulWidget {
-  const ServiceEditScreen({super.key, required this.imagesList});
-
+  const ServiceEditScreen(
+      {super.key, required this.listingData, required this.imagesList});
+  final dynamic listingData;
   final List<Map<String, dynamic>> imagesList;
   @override
   State<ServiceEditScreen> createState() => _ServiceEditScreenState();
@@ -51,10 +52,31 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
   late Position position;
   bool setLoader = false;
   String setButtonStatus = 'Save Changes';
+  Object? initialCategoryValue;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    addDataToFields();
+  }
+
+  addDataToFields() {
+    nameEditingController.text = widget.listingData['name'];
+    descriptionEditingController.text = widget.listingData['description'];
+    priceEditingController.text = widget.listingData['price'];
+    locationEditingController.text = widget.listingData['location'];
+    int index = serviceCategories.indexWhere((map) =>
+        map['categoryName'] ==
+        widget.listingData['listings_categories']['name']);
+    initialCategoryValue = serviceCategories[index];
+    updateSelectedCategory(initialCategoryValue);
+  }
+
+  updateSelectedCategory(value) {
+    selectedCategoryName = value['categoryName'];
+    selectedCategoryId = value['categoryId'];
+    print(selectedCategoryName);
+    print(selectedCategoryId);
   }
 
   List<Widget> getPageIndicators() {
@@ -138,14 +160,8 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                           width: MediaQuery.sizeOf(context).width * 0.887,
                           leadingIconName: 'category_icon',
                           hintText: 'Category',
-                          onSelected: (value) {
-                            setState(() {
-                              selectedCategoryName = value['categoryName'];
-                            });
-                            selectedCategoryId = value['categoryId'];
-                            print(selectedCategoryName);
-                            print(selectedCategoryId);
-                          },
+                          onSelected: updateSelectedCategory,
+                          initialSelection: initialCategoryValue,
                           dropdownMenuEntries: serviceCategories
                               .map(
                                 (Map<String, String> value) =>
@@ -349,29 +365,11 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                               latitude = locations[0].latitude;
                               longitude = locations[0].longitude;
 
-                              // listings_images Required format for API call
-                              // [
-                              //   {'image': 'base64Image']}
-                              // ]
-
-                              // Fulfilling the requirements.
-                              List<Map<String, dynamic>> images = [];
-
-                              for (int i = 0;
-                                  i < widget.imagesList.length;
-                                  i++) {
-                                images.add({
-                                  'image': widget.imagesList[i]['image']
-                                      ['imageInBase64']
-                                });
-                              }
-
                               Response response = await sendPostRequest(
-                                  action: 'add_listings_services',
+                                  action: 'edit_listings_services',
                                   data: {
-                                    'users_customers_id':
-                                        userDataGV['userId'].toString(),
-                                    'listings_types_id': '2',
+                                    'listings_services_id': widget
+                                        .listingData['listings_services_id'],
                                     'listings_categories_id':
                                         selectedCategoryId,
                                     'name':
@@ -386,9 +384,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                                     'latitude': latitude.toString(),
                                     'longitude': longitude.toString(),
                                     'packages_id': '',
-                                    'payment_gateways_id': '',
-                                    'payment_status': '',
-                                    'listings_images': images
+                                    'listings_images': widget.imagesList
                                   });
                               setState(() {
                                 setLoader = false;
