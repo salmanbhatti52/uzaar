@@ -29,8 +29,8 @@ class _SellScreenState extends State<SellScreen> {
   int selectedPage = 0;
   int selectedCategory = 1;
   int noOfTabs = 3;
-  XFile? _selectedImage;
-  String? selectedImageInBase64 = '';
+  // XFile? _selectedImage;
+  // String? selectedImageInBase64 = '';
   late Map<String, dynamic> images;
   List<Map<String, dynamic>> imagesList = [];
 
@@ -154,6 +154,7 @@ class _SellScreenState extends State<SellScreen> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
+                          imagesList = [];
                           selectedCategory = 1;
                           getPageIndicators();
                         });
@@ -172,6 +173,7 @@ class _SellScreenState extends State<SellScreen> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
+                          imagesList = [];
                           selectedCategory = 2;
                           getPageIndicators();
                         });
@@ -190,6 +192,7 @@ class _SellScreenState extends State<SellScreen> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
+                          imagesList = [];
                           selectedCategory = 3;
                           getPageIndicators();
                         });
@@ -218,8 +221,10 @@ class _SellScreenState extends State<SellScreen> {
                       onTap: () async {
                         if (imagesList.length < 6) {
                           images = await getImage(from: 'camera');
-                          imagesList.add(images);
-                          setState(() {});
+                          if (images.isNotEmpty) {
+                            imagesList.add(images);
+                            setState(() {});
+                          }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                               ErrorSnackBar(

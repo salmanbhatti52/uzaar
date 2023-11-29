@@ -451,6 +451,10 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                           leadingIconName: 'boost_icon',
                           hintText: 'Select Option',
                           onSelected: (value) {
+                            // FocusScopeNode currentFocus = FocusScope.of(context);
+                            // if(!currentFocus.hasPrimaryFocus){
+                            //   currentFocus.unfocus();
+                            // }
                             setState(() {
                               selectedBoostingOption = value;
                             });

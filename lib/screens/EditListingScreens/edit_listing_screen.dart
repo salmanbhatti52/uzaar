@@ -152,14 +152,26 @@ class _EditListingScreenState extends State<EditListingScreen> {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        images = await getImage(from: 'camera');
-                        if (images.isNotEmpty) {
-                          setState(() {
-                            _selectedImage = images['image']['imageInXFile'];
-                          });
-                          selectedImageInBase64 =
-                              images['image']['imageInBase64'];
+                        if (listedImages.length < 6) {
+                          images = await getImage(from: 'camera');
+                          if (images.isNotEmpty) {
+                            listedImages.add(images);
+                            imagesList.add(images);
+                            setState(() {});
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              ErrorSnackBar(
+                                  message: 'You can add maximum six images.'));
                         }
+                        // images = await getImage(from: 'camera');
+                        // if (images.isNotEmpty) {
+                        //   setState(() {
+                        //     _selectedImage = images['image']['imageInXFile'];
+                        //   });
+                        //   selectedImageInBase64 =
+                        //       images['image']['imageInBase64'];
+                        // }
                       },
                       child: SvgPicture.asset('assets/add-pic-button.svg'),
                     ),
@@ -191,7 +203,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                             imagesList = imagesList.sublist(0, 6);
                           }
                           print(imagesList.length);
-                          // print(listedImages.length);
+
                           setState(() {});
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
