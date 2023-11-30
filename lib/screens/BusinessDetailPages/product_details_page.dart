@@ -1,10 +1,9 @@
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:Uzaar/screens/beforeLoginScreens/signup_screen.dart';
 
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/utils/Buttons.dart';
@@ -17,10 +16,9 @@ import '../../widgets/BottomNaviBar.dart';
 import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/carousel_builder.dart';
 import '../ProfileScreens/SellerProfileScreens/seller_profile_screen.dart';
-import '../home_screen.dart';
+
 import 'BottomSheetForSendOffer.dart';
 import 'paymnet_screen.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 
@@ -130,11 +128,75 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 //     },
                 //   ),
                 // ),
-                CarouselBuilder(
-                    categoryName: widget.productData['listings_categories']
-                        ['name'],
-                    image: imgBaseUrl +
-                        widget.productData['listings_images'][0]['image']),
+                CarouselSlider.builder(
+                  itemCount: widget.productData['listings_images'].length,
+                  itemBuilder: (BuildContext context, int itemIndex,
+                          int pageViewIndex) =>
+                      Stack(
+                    children: [
+                      Image.network(
+                        imgBaseUrl +
+                            widget.productData['listings_images'][itemIndex]
+                                ['image'],
+                        width: MediaQuery.sizeOf(context).width,
+                        fit: BoxFit.cover,
+                      ),
+                      Positioned(
+                        left: 21,
+                        bottom: 21,
+                        child: Container(
+                          width: 70,
+                          height: 24,
+                          decoration: BoxDecoration(
+                            gradient: gradient,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Center(
+                            child: Text(
+                              widget.productData['listings_categories']['name'],
+                              style: kFontTenFiveHW,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  options: carouselOptions,
+                ),
+                // CarouselBuilder(
+                //   slideWidget: Stack(
+                //     children: [
+                //       Image.network(
+                //         imgBaseUrl +
+                //             widget.productData['listings_images'][0]['image'],
+                //         width: MediaQuery.sizeOf(context).width,
+                //         fit: BoxFit.cover,
+                //       ),
+                //       Positioned(
+                //         left: 21,
+                //         bottom: 21,
+                //         child: Container(
+                //           width: 70,
+                //           height: 24,
+                //           decoration: BoxDecoration(
+                //             gradient: gradient,
+                //             borderRadius: BorderRadius.circular(30),
+                //           ),
+                //           child: Center(
+                //             child: Text(
+                //               widget.productData['listings_categories']['name'],
+                //               style: kCardTagTextStyle,
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // categoryName: widget.productData['listings_categories']
+                //     ['name'],
+                // image: imgBaseUrl +
+                //     widget.productData['listings_images'][0]['image']
+                // ),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -144,32 +206,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        widget.productData['name'],
-                        style: kBodyHeadingTextStyle,
-                      ),
-                      SizedBox(
-                        height: 7.h,
-                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                'assets/address-icon.svg',
-                                width: 16,
-                                height: 16,
-                                // fit: BoxFit.scaleDown,
-                              ),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Text(
-                                'California',
-                                style: kSimpleTextStyle,
-                              ),
-                            ],
+                          Text(
+                            widget.productData['name'],
+                            style: kBodyHeadingTextStyle,
                           ),
                           Row(
                             children: [
@@ -190,6 +232,48 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           ),
                         ],
                       ),
+                      // SizedBox(
+                      //   height: 7.h,
+                      // ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     // Row(
+                      //     //   children: [
+                      //     //     SvgPicture.asset(
+                      //     //       'assets/address-icon.svg',
+                      //     //       width: 16,
+                      //     //       height: 16,
+                      //     //       // fit: BoxFit.scaleDown,
+                      //     //     ),
+                      //     //     SizedBox(
+                      //     //       width: 4,
+                      //     //     ),
+                      //     //     Text(
+                      //     //       'California',
+                      //     //       style: kSimpleTextStyle,
+                      //     //     ),
+                      //     //   ],
+                      //     // ),
+                      //     Row(
+                      //       children: [
+                      //         SvgPicture.asset(
+                      //           'assets/price-tag.svg',
+                      //           width: 16,
+                      //           height: 16,
+                      //           // fit: BoxFit.scaleDown,
+                      //         ),
+                      //         SizedBox(
+                      //           width: 4,
+                      //         ),
+                      //         Text(
+                      //           '\$${widget.productData['price']}',
+                      //           style: kBodyPrimaryBoldTextStyle,
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ],
+                      // ),
                       SizedBox(
                         height: 14,
                       ),

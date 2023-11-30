@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -125,11 +126,47 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                 //     },
                 //   ),
                 // ),
-                CarouselBuilder(
-                    categoryName: widget.serviceData['listings_categories']
-                        ['name'],
-                    image: imgBaseUrl +
-                        widget.serviceData['listings_images'][0]['image']),
+                // CarouselBuilder(
+                //     categoryName: widget.serviceData['listings_categories']
+                //         ['name'],
+                //     image: imgBaseUrl +
+                //         widget.serviceData['listings_images'][0]['image']),
+                CarouselSlider.builder(
+                  itemCount: widget.serviceData['listings_images'].length,
+                  itemBuilder: (BuildContext context, int itemIndex,
+                          int pageViewIndex) =>
+                      Stack(
+                    children: [
+                      Image.network(
+                        imgBaseUrl +
+                            widget.serviceData['listings_images'][itemIndex]
+                                ['image'],
+                        width: MediaQuery.sizeOf(context).width,
+                        fit: BoxFit.cover,
+                      ),
+                      Positioned(
+                        left: 21,
+                        bottom: 21,
+                        child: Container(
+                          width: 70,
+                          height: 24,
+                          decoration: BoxDecoration(
+                            gradient: gradient,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Center(
+                            child: Text(
+                              widget.serviceData['listings_categories']['name'],
+                              style: kFontTenFiveHW,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  options: carouselOptions,
+                ),
+
                 SizedBox(
                   height: 20.h,
                 ),

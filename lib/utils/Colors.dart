@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_options.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -110,6 +111,12 @@ final kFontTenFiveHG = GoogleFonts.outfit(
   fontSize: 10,
   fontWeight: FontWeight.w500,
   color: grey,
+);
+
+final kFontTenFiveHW = GoogleFonts.outfit(
+  fontSize: 10,
+  fontWeight: FontWeight.w500,
+  color: white,
 );
 
 final kFontTwelveFourHG = GoogleFonts.outfit(
@@ -334,3 +341,22 @@ final kOptInputDecoration = InputDecoration(
   focusedBorder: kOtpActiveBorderStyle,
   // contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 );
+
+CarouselOptions carouselOptions = CarouselOptions(
+    height: 200,
+
+    // aspectRatio: 16 / 9,
+    viewportFraction: 1,
+    initialPage: 0,
+    enableInfiniteScroll: false,
+    reverse: false,
+    autoPlay: true,
+    autoPlayInterval: Duration(seconds: 3),
+    autoPlayAnimationDuration: Duration(milliseconds: 800),
+    autoPlayCurve: Curves.fastOutSlowIn,
+    enlargeCenterPage: true,
+    enlargeFactor: 0.3,
+    // onPageChanged: callbackFunction,
+    scrollDirection: Axis.horizontal,
+    pageSnapping: true,
+    clipBehavior: Clip.hardEdge);
