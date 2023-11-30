@@ -214,8 +214,8 @@ class FeaturedServicesWidget extends StatelessWidget {
                             SizedBox(
                               width: 3,
                             ),
-                            SizedBox(
-                              width: 50,
+                            Container(
+                              constraints: BoxConstraints(maxWidth: 50),
                               child: Text(
                                 '\$$servicePrice',
                                 style: kPriceTextStyle,

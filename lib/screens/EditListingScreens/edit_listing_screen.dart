@@ -272,7 +272,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                           top: 6,
                                           right: 6,
                                           child: GestureDetector(
-                                            onTap: () {
+                                            onTap: () async {
                                               print(index);
                                               if (listedImages[index]
                                                       ['listings_images_id'] !=
@@ -280,10 +280,15 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                                 int id = listedImages[index]
                                                     ['listings_images_id'];
                                                 print(id);
+                                                listedImages.removeAt(index);
                                                 removedImagesIds.add(id);
+                                              } else {
+                                                dynamic imageToRemove =
+                                                    await listedImages[index];
+                                                listedImages.removeAt(index);
+                                                imagesList
+                                                    .remove(imageToRemove);
                                               }
-
-                                              listedImages.removeAt(index);
 
                                               // _selectedImage = null;
                                               setState(() {});

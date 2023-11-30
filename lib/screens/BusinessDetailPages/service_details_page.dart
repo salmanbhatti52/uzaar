@@ -187,6 +187,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SvgPicture.asset(
                                 'assets/address-icon.svg',
@@ -197,9 +198,15 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                               SizedBox(
                                 width: 4,
                               ),
-                              Text(
-                                widget.serviceData['location'],
-                                style: kSimpleTextStyle,
+                              SizedBox(
+                                width: MediaQuery.sizeOf(context).width * 0.42,
+                                child: Text(
+                                  widget.serviceData['location'],
+                                  style: kSimpleTextStyle,
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: true,
+                                  maxLines: 3,
+                                ),
                               ),
                             ],
                           ),
@@ -618,7 +625,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 14,
+                  height: 25,
                 ),
 
                 // Container(

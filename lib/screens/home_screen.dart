@@ -904,6 +904,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ? ListView.builder(
                             itemBuilder: (context, index) {
                               return FeaturedHousingWidget(
+                                furnishedStatus: featuredHousingGV[index]
+                                            ['furnished'] ==
+                                        'Yes'
+                                    ? 'Furnished'
+                                    : 'Not Furnished',
                                 image: imgBaseUrl +
                                     featuredHousingGV[index]['listings_images']
                                         [0]['image'],

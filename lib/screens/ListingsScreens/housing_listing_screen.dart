@@ -95,81 +95,81 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                   houseLocation: listedHousings[index]['location'],
                   housePrice: '\$${listedHousings[index]['price']}',
                   houseArea: listedHousings[index]['area'],
-                  furnishingStatus: 'Furnished',
+                  furnishedStatus: listedHousings[index]['furnished'] == 'Yes'
+                      ? 'Furnished'
+                      : 'Not Furnished',
                   noOfBaths: listedHousings[index]['bathroom'],
                   noOfBeds: listedHousings[index]['bathroom'],
-                  onSelected: (selectedValue) {
-                    setState(() async {
-                      selectedOption = selectedValue;
-                      if (selectedOption == 'boost') {
-                        showDialog(
-                          context: context,
-                          builder: (
-                            context,
-                          ) {
-                            return StatefulBuilder(
-                              builder: (BuildContext context,
-                                  StateSetter stateSetterObject) {
-                                return AlertDialogReusable(
-                                  description:
-                                      'Boost your listings to get more orders',
-                                  title: 'Boost Listings',
-                                  itemsList: List.generate(
-                                    widget.boostingPackages?['data'].length,
-                                    (index) => SizedBox(
-                                      height: 35,
-                                      child: ListTile(
-                                        contentPadding:
-                                            EdgeInsets.symmetric(horizontal: 5),
-                                        horizontalTitleGap: 5,
-                                        title: Text(
-                                          '\$${widget.boostingPackages?['data'][index]['price']} ${widget.boostingPackages?['data'][index]['name']}',
-                                          style: kTextFieldInputStyle,
-                                        ),
-                                        leading: Radio(
-                                          activeColor: primaryBlue,
-                                          fillColor: MaterialStatePropertyAll(
-                                              primaryBlue),
-                                          value:
-                                              widget.boostingPackages?['data']
-                                                  [index]['packages_id'],
-                                          groupValue: _selectedPackage,
-                                          onChanged: (value) {
-                                            stateSetterObject(() {
-                                              updateSelectedPackage(value);
-                                            });
-                                          },
-                                        ),
+                  onSelected: (selectedValue) async {
+                    setState(() {});
+                    selectedOption = selectedValue;
+                    if (selectedOption == 'boost') {
+                      showDialog(
+                        context: context,
+                        builder: (
+                          context,
+                        ) {
+                          return StatefulBuilder(
+                            builder: (BuildContext context,
+                                StateSetter stateSetterObject) {
+                              return AlertDialogReusable(
+                                description:
+                                    'Boost your listings to get more orders',
+                                title: 'Boost Listings',
+                                itemsList: List.generate(
+                                  widget.boostingPackages?['data'].length,
+                                  (index) => SizedBox(
+                                    height: 35,
+                                    child: ListTile(
+                                      contentPadding:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      horizontalTitleGap: 5,
+                                      title: Text(
+                                        '\$${widget.boostingPackages?['data'][index]['price']} ${widget.boostingPackages?['data'][index]['name']}',
+                                        style: kTextFieldInputStyle,
+                                      ),
+                                      leading: Radio(
+                                        activeColor: primaryBlue,
+                                        fillColor: MaterialStatePropertyAll(
+                                            primaryBlue),
+                                        value: widget.boostingPackages?['data']
+                                            [index]['packages_id'],
+                                        groupValue: _selectedPackage,
+                                        onChanged: (value) {
+                                          stateSetterObject(() {
+                                            updateSelectedPackage(value);
+                                          });
+                                        },
                                       ),
                                     ),
                                   ),
-                                  button: primaryButton(
-                                      context: context,
-                                      buttonText: 'Boost Now',
-                                      onTap: () => Navigator.of(context).pop(),
-                                      showLoader: false),
-                                );
-                              },
-                            );
-                          },
-                        );
-                      } else if (selectedOption == 'edit') {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EditListingScreen(
-                            listingData: listedHousings[index],
-                            selectedCategory: widget.selectedCategory,
-                          ),
-                        ));
-                      } else if (selectedOption == 'delete') {
-                        String result = await deleteSelectedHouse(
-                            houseListingId: listedHousings[index]
-                                ['listings_housings_id']);
-                        if (result == 'success') {
-                          listedHousings.removeAt(index);
-                          setState(() {});
-                        }
-                      } else {}
-                    });
+                                ),
+                                button: primaryButton(
+                                    context: context,
+                                    buttonText: 'Boost Now',
+                                    onTap: () => Navigator.of(context).pop(),
+                                    showLoader: false),
+                              );
+                            },
+                          );
+                        },
+                      );
+                    } else if (selectedOption == 'edit') {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => EditListingScreen(
+                          listingData: listedHousings[index],
+                          selectedCategory: widget.selectedCategory,
+                        ),
+                      ));
+                    } else if (selectedOption == 'delete') {
+                      String result = await deleteSelectedHouse(
+                          houseListingId: listedHousings[index]
+                              ['listings_housings_id']);
+                      if (result == 'success') {
+                        listedHousings.removeAt(index);
+                        setState(() {});
+                      }
+                    } else {}
                   },
                   itemBuilder: (context) {
                     return popupMenuOptions;

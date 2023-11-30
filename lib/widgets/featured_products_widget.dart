@@ -178,8 +178,8 @@ class FeaturedProductsWidget extends StatelessWidget {
                         SizedBox(
                           width: 3,
                         ),
-                        SizedBox(
-                          width: 48,
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 48),
                           child: Text('\$$productPrice',
                               style: kPriceTextStyle,
                               overflow: TextOverflow.ellipsis,

@@ -80,9 +80,9 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
     locationEditingController.text = widget.listingData['location'];
     areaEditingController.text = widget.listingData['area'];
 
-    // _selectedCondition = widget.listingData['condition'] == 'New'
-    //     ? ProductConditions.fresh
-    //     : ProductConditions.used;
+    _selectedCondition = widget.listingData['furnished'] == 'Yes'
+        ? FurnishedConditions.yes
+        : FurnishedConditions.no;
     int categoryIndex = housingCategories.indexWhere((map) =>
         map['categoryName'] ==
         widget.listingData['listings_categories']['name']);
@@ -586,6 +586,10 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                         .toString(),
                                     'latitude': latitude.toString(),
                                     'longitude': longitude.toString(),
+                                    'furnished': _selectedCondition ==
+                                            FurnishedConditions.yes
+                                        ? 'Yes'
+                                        : 'No',
                                     'area':
                                         areaEditingController.text.toString(),
                                     'bedroom': selectedBedroomOption.toString(),

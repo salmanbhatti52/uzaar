@@ -42,24 +42,25 @@ class FeaturedHousingWidget extends StatelessWidget {
   final String housingLocation;
   final String housingPrice;
   final String area;
+  final String furnishedStatus;
   final String bedrooms;
   final String bathrooms;
   final void Function()? onOptionTap;
   final void Function()? onImageTap;
 
-  const FeaturedHousingWidget({
-    super.key,
-    required this.image,
-    required this.housingCategory,
-    required this.housingName,
-    required this.housingLocation,
-    required this.housingPrice,
-    required this.area,
-    required this.bedrooms,
-    required this.bathrooms,
-    required this.onOptionTap,
-    required this.onImageTap,
-  });
+  const FeaturedHousingWidget(
+      {super.key,
+      required this.image,
+      required this.housingCategory,
+      required this.housingName,
+      required this.housingLocation,
+      required this.housingPrice,
+      required this.area,
+      required this.bedrooms,
+      required this.bathrooms,
+      required this.onOptionTap,
+      required this.onImageTap,
+      required this.furnishedStatus});
 
   @override
   Widget build(BuildContext context) {
@@ -181,8 +182,8 @@ class FeaturedHousingWidget extends StatelessWidget {
                         SizedBox(
                           width: 3,
                         ),
-                        SizedBox(
-                            width: 50,
+                        Container(
+                            constraints: BoxConstraints(maxWidth: 50),
                             child: Text(
                               '\$$housingPrice',
                               style: kPriceTextStyle,
@@ -198,7 +199,7 @@ class FeaturedHousingWidget extends StatelessWidget {
                   height: 3,
                 ),
                 Text(
-                  'Furnished',
+                  furnishedStatus,
                   style: kFontEightFiveHPB,
                 ),
                 SizedBox(

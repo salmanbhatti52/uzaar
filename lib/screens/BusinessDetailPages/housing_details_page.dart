@@ -187,6 +187,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SvgPicture.asset(
                                 'assets/address-icon.svg',
@@ -197,9 +198,18 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                               SizedBox(
                                 width: 4,
                               ),
-                              Text(
-                                widget.houseData['location'],
-                                style: kSimpleTextStyle,
+                              SizedBox(
+                                child: SizedBox(
+                                  width:
+                                      MediaQuery.sizeOf(context).width * 0.42,
+                                  child: Text(
+                                    widget.houseData['location'],
+                                    style: kSimpleTextStyle,
+                                    overflow: TextOverflow.ellipsis,
+                                    softWrap: true,
+                                    maxLines: 3,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -230,7 +240,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                         children: [
                           IconTextReusable(
                             imageName: 'area_icon',
-                            text: '${widget.houseData['area']} sq.mt',
+                            text: '${widget.houseData['area']} sq.ft',
                             height: 16,
                             width: 16,
                             style: kSimpleTextStyle,
@@ -474,6 +484,12 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                             physics: BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return FeaturedHousingWidget(
+                                furnishedStatus:
+                                    aSellerOtherFeaturedHouses[index]
+                                                ['furnished'] ==
+                                            'Yes'
+                                        ? 'Furnished'
+                                        : 'Not Furnished',
                                 image: imgBaseUrl +
                                     aSellerOtherFeaturedHouses[index]
                                         ['listings_images'][0]['image'],
@@ -659,7 +675,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 14,
+                  height: 25,
                 ),
 
                 // Container(

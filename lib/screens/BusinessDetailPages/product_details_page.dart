@@ -79,6 +79,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(
+        'listings_images length: ${widget.productData['listings_images'].length}');
     return WillPopScope(
       onWillPop: () async {
         Navigator.of(context).pushAndRemoveUntil(
@@ -693,11 +695,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 14,
+                  height: 20,
                 ),
 
                 Container(
-                  margin: EdgeInsets.only(bottom: 28),
+                  margin: EdgeInsets.only(bottom: 10),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 22,
                   ),

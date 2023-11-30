@@ -231,6 +231,10 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                       itemCount: allListingsHousingsGV.length,
                       itemBuilder: (context, index) {
                         return FeaturedHousingWidget(
+                          furnishedStatus:
+                              allListingsHousingsGV[index]['furnished'] == 'Yes'
+                                  ? 'Furnished'
+                                  : 'Not Furnished',
                           image: imgBaseUrl +
                               allListingsHousingsGV[index]['listings_images'][0]
                                   ['image'],

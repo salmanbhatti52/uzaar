@@ -35,7 +35,7 @@ class HousingListTile extends StatelessWidget {
   final String houseName;
   final String houseLocation;
   final String housePrice;
-  final String furnishingStatus;
+  final String furnishedStatus;
   final String houseArea;
   final String noOfBeds;
   final String noOfBaths;
@@ -50,7 +50,7 @@ class HousingListTile extends StatelessWidget {
     required this.houseLocation,
     required this.housePrice,
     required this.houseArea,
-    required this.furnishingStatus,
+    required this.furnishedStatus,
     required this.noOfBaths,
     required this.noOfBeds,
     required this.onSelected,
@@ -112,7 +112,7 @@ class HousingListTile extends StatelessWidget {
                     height: 4,
                   ),
                   Text(
-                    furnishingStatus,
+                    furnishedStatus,
                     style: houseTypeTextStyle,
                   ),
                   SizedBox(

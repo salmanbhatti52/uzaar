@@ -572,6 +572,10 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                         .toString(),
                                     'latitude': latitude.toString(),
                                     'longitude': longitude.toString(),
+                                    'furnished': _selectedCondition ==
+                                            FurnishedConditions.yes
+                                        ? 'Yes'
+                                        : 'No',
                                     'area':
                                         areaEditingController.text.toString(),
                                     'bedroom': selectedBedroomOption.toString(),
