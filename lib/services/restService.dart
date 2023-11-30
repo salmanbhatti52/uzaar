@@ -11,6 +11,7 @@ dynamic allListingsProductsGV;
 dynamic allListingsServicesGV;
 dynamic allListingsHousingsGV;
 Map<String, dynamic> userDataGV = {}; //GV : GlobalVariable
+Map<String, dynamic> guestUserDataGV = {}; //GV : GlobalVariable
 bool loginAsGuestGV = false; //GV : GlobalVariable
 
 Future<http.Response> sendGetRequest(String action) {
@@ -18,7 +19,7 @@ Future<http.Response> sendGetRequest(String action) {
 }
 
 Future<http.Response> sendPostRequest(
-    {required String action, required Map<String, dynamic> data}) {
+    {required String action, required Map<String, dynamic>? data}) {
   print('action: $action');
   print('Map Payloads: $data');
 

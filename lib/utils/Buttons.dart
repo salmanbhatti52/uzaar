@@ -103,7 +103,11 @@ Widget facebookButton(context) {
   );
 }
 
-Widget outlinedButton(context, Function()? onTap) {
+Widget outlinedButton(
+    {context,
+    Function()? onTap,
+    required String buttonText,
+    required bool showLoader}) {
   return GestureDetector(
     onTap: onTap,
     child: Container(
@@ -124,9 +128,17 @@ Widget outlinedButton(context, Function()? onTap) {
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Continue as Guest',
+              buttonText,
               style: kOutlinedButtonTextStyle,
             ),
+            showLoader
+                ? Container(
+                    padding: EdgeInsets.only(left: 10),
+                    child: CircularProgressIndicator(
+                      color: primaryBlue,
+                    ),
+                  )
+                : SizedBox()
           ],
         ),
       ),

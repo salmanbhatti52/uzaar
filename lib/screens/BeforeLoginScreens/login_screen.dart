@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Uzaar/screens/BeforeLoginScreens/forgot_password_screen.dart';
 import 'package:Uzaar/services/restService.dart';
+import 'package:Uzaar/widgets/snackbars.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,7 +36,9 @@ class _LogInScreenState extends State<LogInScreen> {
 
   bool isHidden = true;
   bool setLoader = false;
+  bool setGuestButtonLoader = false;
   String setButtonStatus = 'Login';
+  String setGuestButtonStatus = 'Continue as Guest';
   late SharedPreferences preferences;
   @override
   void initState() {
@@ -304,15 +307,49 @@ class _LogInScreenState extends State<LogInScreen> {
                         height: 20.h,
                       ),
                       outlinedButton(
-                        context,
-                        () async {
-                          await preferences.setBool('loginAsGuest', true);
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => BottomNavBar(
-                                        loginAsGuest: true,
-                                      )),
-                              (Route<dynamic> route) => false);
+                        buttonText: setGuestButtonStatus,
+                        showLoader: setGuestButtonLoader,
+                        context: context,
+                        onTap: () async {
+                          setState(() {
+                            setGuestButtonLoader = true;
+                            setGuestButtonStatus = 'Please wait..';
+                          });
+                          Response response = await sendPostRequest(
+                              action: 'continue_as_guest', data: null);
+
+                          setState(() {
+                            setGuestButtonLoader = false;
+                            setGuestButtonStatus = 'Continue as Guest';
+                          });
+                          print(response.statusCode);
+                          print(response.body);
+                          var decodedResponse = jsonDecode(response.body);
+                          String status = decodedResponse['status'];
+                          if (status == 'success') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SuccessSnackBar(message: 'Success'));
+                            var data = decodedResponse['data'];
+                            await preferences.setInt(
+                                'user_id', data['users_customers_id']);
+                            await preferences.setString('guest_user_name',
+                                '${data['first_name']} ${data['last_name']}');
+                            await preferences.setString(
+                                'guest_user_email', data['email']);
+
+                            await preferences.setBool('loginAsGuest', true);
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => BottomNavBar(
+                                          loginAsGuest: true,
+                                        )),
+                                (Route<dynamic> route) => false);
+                          }
+                          if (status == 'error') {
+                            String message = decodedResponse?['message'];
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(ErrorSnackBar(message: message));
+                          }
                         },
                       ),
                       SizedBox(

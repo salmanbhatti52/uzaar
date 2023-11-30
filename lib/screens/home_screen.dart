@@ -115,6 +115,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
       print(userDataGV);
     }
+    if (loginAsGuestGV == true) {
+      int? userId = preferences.getInt('user_id');
+      String? guestUserName = preferences.getString('guest_user_name');
+      String? guestUserEmail = preferences.getString('guest_user_email');
+
+      userDataGV = {
+        'userId': userId,
+        'guestUserName': guestUserName,
+        'guestUserEmail': guestUserEmail,
+      };
+
+      print(userDataGV);
+    }
   }
 
   getListingTypes() async {

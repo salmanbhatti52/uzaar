@@ -29,8 +29,10 @@ class _CustomSplashState extends State<CustomSplash> {
   init() async {
     preferences = await SharedPreferences.getInstance();
     int? userId = preferences.getInt('user_id');
+
     bool? loginAsGuest = preferences.getBool('loginAsGuest');
     print('userid: $userId');
+
     print('loginAsGuest: $loginAsGuest');
 
     Future.delayed(
