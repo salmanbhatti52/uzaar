@@ -32,25 +32,12 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
   String? selectedPrice;
   String? selectedLocation;
 
-  final List<String> categories = [...serviceListingCategoriesNames];
+  List<String> categories = [...serviceListingCategoriesNames];
 
   final List<String> locations = [
     'Multan',
     'Lahore',
     'Karachi',
-  ];
-
-  final List<String> prices = [
-    '0-40',
-    '40-80',
-    '80-120',
-    '120-160',
-    '160-200',
-    '200-240',
-    '240-280',
-    '280-320',
-    '320-360',
-    '360-400',
   ];
 
   handleOptionSelection(ReportReason reason) {
@@ -68,12 +55,35 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     allListingsServicesGV = decodedResponse['data'];
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
+
     print('allListingsServicesGV: $allListingsServicesGV');
   }
 
+  getServicesPriceRanges() async {
+    Response response = await sendPostRequest(
+        action: 'listings_types_prices_ranges',
+        data: {'listings_types_id': '2'});
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    dynamic data = decodedResponse['data'];
+    servicesPriceRangesGV = [];
+    for (int i = 0; i < data.length; i++) {
+      servicesPriceRangesGV
+          .add('${data[i]['range_from']} - ${data[i]['range_to']}');
+    }
+    print(servicesPriceRangesGV);
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   init() async {
-    await getAllServices();
+    getAllServices();
+    getServicesPriceRanges();
   }
 
   @override
@@ -95,155 +105,88 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
-              child: Row(
-                children: [
-                  RoundedSmallDropdownMenu(
-                    width: 170,
-                    leadingIconName: selectedCategory != null
-                        ? 'cat-selected'
-                        : 'cat-unselected',
-                    hintText: 'Category',
-                    onSelected: (value) {
-                      setState(() {
-                        selectedCategory = value;
-                      });
-                    },
-                    dropdownMenuEntries: categories
-                        .map(
-                          (String value) => DropdownMenuEntry<String>(
-                              value: value, label: value),
-                        )
-                        .toList(),
-                  ),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     setState(() {
-                  //       selectedCategory = !selectedCategory;
-                  //     });
-                  //   },
-                  //   child: Container(
-                  //     padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  //     width: 140.w,
-                  //     height: 40.h,
-                  //     decoration: BoxDecoration(
-                  //       border: Border.all(
-                  //         color: primaryBlue,
-                  //         width: 2,
-                  //       ),
-                  //       borderRadius: BorderRadius.circular(40),
-                  //     ),
-                  //     child: Row(
-                  //       children: [
-                  //         selectedCategory
-                  //             ? SvgPicture.asset('assets/cat-selcected.svg')
-                  //             : SvgPicture.asset('assets/cat-unselect.svg'),
-                  //         SizedBox(
-                  //           width: 4.w,
-                  //         ),
-                  //         DropdownButtonHideUnderline(
-                  //           child: DropdownButton2<String>(
-                  //             // isExpanded: true,
-                  //             hint: Text(
-                  //               'Category',
-                  //               style: GoogleFonts.outfit(
-                  //                 fontSize: 14,
-                  //                 fontWeight: FontWeight.w500,
-                  //                 color: primaryBlue,
-                  //               ),
-                  //             ),
-                  //             items: items
-                  //                 .map((String item) => DropdownMenuItem<String>(
-                  //                       value: item,
-                  //                       child: Text(
-                  //                         item,
-                  //                         style: GoogleFonts.outfit(
-                  //                           fontSize: 14,
-                  //                           fontWeight: FontWeight.w500,
-                  //                           color: primaryBlue,
-                  //                         ),
-                  //                         overflow: TextOverflow.ellipsis,
-                  //                       ),
-                  //                     ))
-                  //                 .toList(),
-                  //             value: selectedValue,
-                  //             onChanged: (value) {
-                  //               setState(() {
-                  //                 selectedValue = value;
-                  //               });
-                  //             },
-                  //
-                  //             iconStyleData: IconStyleData(
-                  //               icon:
-                  //                   SvgPicture.asset('assets/drop-down-button.svg'),
-                  //               iconEnabledColor: primaryBlue,
-                  //               iconDisabledColor: grey,
-                  //             ),
-                  //             dropdownStyleData: DropdownStyleData(
-                  //               maxHeight: 200.h,
-                  //               width: 140.w,
-                  //               decoration: BoxDecoration(
-                  //                 borderRadius: BorderRadius.circular(14),
-                  //                 color: white,
-                  //               ),
-                  //               offset: const Offset(-20, 0),
-                  //               scrollbarTheme: ScrollbarThemeData(
-                  //                 radius: const Radius.circular(40),
-                  //                 thickness: MaterialStateProperty.all(6),
-                  //                 thumbVisibility: MaterialStateProperty.all(true),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-
-                  RoundedSmallDropdownMenu(
-                    width: 150,
-                    leadingIconName: selectedPrice != null
-                        ? 'cat-selected'
-                        : 'cat-unselected',
-                    hintText: 'Price',
-                    onSelected: (value) {
-                      setState(() {
-                        selectedPrice = value;
-                      });
-                    },
-                    dropdownMenuEntries: prices
-                        .map(
-                          (String value) => DropdownMenuEntry<String>(
-                              value: value, label: value),
-                        )
-                        .toList(),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  RoundedSmallDropdownMenu(
-                    // trailingIconName: 'blue_address_icon',
-                    width: 170,
-                    leadingIconName: selectedLocation != null
-                        ? 'cat-selected'
-                        : 'cat-unselected',
-                    hintText: 'Location',
-                    onSelected: (value) {
-                      setState(() {
-                        selectedLocation = value;
-                      });
-                    },
-                    dropdownMenuEntries: locations
-                        .map(
-                          (String value) => DropdownMenuEntry<String>(
-                              value: value, label: value),
-                        )
-                        .toList(),
-                  ),
-                ],
-              ),
+              child: servicesPriceRangesGV.isNotEmpty
+                  ? Row(
+                      children: [
+                        RoundedSmallDropdownMenu(
+                          width: 170,
+                          leadingIconName: selectedCategory != null
+                              ? 'cat-selected'
+                              : 'cat-unselected',
+                          hintText: 'Category',
+                          onSelected: (value) {
+                            setState(() {
+                              selectedCategory = value;
+                            });
+                          },
+                          dropdownMenuEntries: categories
+                              .map(
+                                (String value) => DropdownMenuEntry<String>(
+                                    value: value, label: value),
+                              )
+                              .toList(),
+                        ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        RoundedSmallDropdownMenu(
+                          width: 160,
+                          leadingIconName: selectedPrice != null
+                              ? 'cat-selected'
+                              : 'cat-unselected',
+                          hintText: 'Price',
+                          onSelected: (value) {
+                            setState(() {
+                              selectedPrice = value;
+                            });
+                          },
+                          dropdownMenuEntries: servicesPriceRangesGV
+                              .map(
+                                (String value) => DropdownMenuEntry<String>(
+                                    value: value, label: value),
+                              )
+                              .toList(),
+                        ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        RoundedSmallDropdownMenu(
+                          // trailingIconName: 'blue_address_icon',
+                          width: 170,
+                          leadingIconName: selectedLocation != null
+                              ? 'cat-selected'
+                              : 'cat-unselected',
+                          hintText: 'Location',
+                          onSelected: (value) {
+                            setState(() {
+                              selectedLocation = value;
+                            });
+                          },
+                          dropdownMenuEntries: locations
+                              .map(
+                                (String value) => DropdownMenuEntry<String>(
+                                    value: value, label: value),
+                              )
+                              .toList(),
+                        ),
+                      ],
+                    )
+                  : Shimmer.fromColors(
+                      child: Row(
+                        children: [
+                          RoundedSmallDropdownMenuDummy(),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          RoundedSmallDropdownMenuDummy(),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          RoundedSmallDropdownMenuDummy(),
+                        ],
+                      ),
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!),
             ),
           ),
           SizedBox(

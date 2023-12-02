@@ -34,24 +34,11 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
 
   List<String> categories = [...productListingCategoriesNames];
 
-  final List<String> locations = [
-    'Multan',
-    'Lahore',
-    'Karachi',
-  ];
-
-  final List<String> prices = [
-    '0-40',
-    '40-80',
-    '80-120',
-    '120-160',
-    '160-200',
-    '200-240',
-    '240-280',
-    '280-320',
-    '320-360',
-    '360-400',
-  ];
+  // final List<String> locations = [
+  //   'Multan',
+  //   'Lahore',
+  //   'Karachi',
+  // ];
 
   handleOptionSelection(ReportReason reason) {
     if (selectedReasons.contains(reason)) {
@@ -74,9 +61,28 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     print('allListingsProductsGV: $allListingsProductsGV');
   }
 
-  init() async {
-    await getAllProducts();
+  getProductsPriceRanges() async {
+    Response response = await sendPostRequest(
+        action: 'listings_types_prices_ranges',
+        data: {'listings_types_id': '1'});
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    dynamic data = decodedResponse['data'];
+    productsPriceRangesGV = [];
+    for (int i = 0; i < data.length; i++) {
+      productsPriceRangesGV
+          .add('${data[i]['range_from']} - ${data[i]['range_to']}');
+    }
+    print(productsPriceRangesGV);
+    if (mounted) {
+      setState(() {});
+    }
+  }
 
+  init() {
+    getAllProducts();
+    getProductsPriceRanges();
     print(categories);
   }
 
@@ -99,71 +105,88 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
             scrollDirection: Axis.horizontal,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5.0),
-              child: Row(
-                children: [
-                  RoundedSmallDropdownMenu(
-                    width: 170,
-                    leadingIconName: selectedCategory != null
-                        ? 'cat-selected'
-                        : 'cat-unselected',
-                    hintText: 'Category',
-                    onSelected: (value) {
-                      setState(() {
-                        selectedCategory = value;
-                      });
-                    },
-                    dropdownMenuEntries: categories
-                        .map(
-                          (String value) => DropdownMenuEntry<String>(
-                              value: value, label: value),
-                        )
-                        .toList(),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  RoundedSmallDropdownMenu(
-                    width: 150,
-                    leadingIconName: selectedPrice != null
-                        ? 'cat-selected'
-                        : 'cat-unselected',
-                    hintText: 'Price',
-                    onSelected: (value) {
-                      setState(() {
-                        selectedPrice = value;
-                      });
-                    },
-                    dropdownMenuEntries: prices
-                        .map(
-                          (String value) => DropdownMenuEntry<String>(
-                              value: value, label: value),
-                        )
-                        .toList(),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  RoundedSmallDropdownMenu(
-                    // trailingIconName: 'blue_address_icon',
-                    width: 170,
-                    leadingIconName: selectedLocation != null
-                        ? 'cat-selected'
-                        : 'cat-unselected',
-                    hintText: 'Location',
-                    onSelected: (value) {
-                      setState(() {
-                        selectedLocation = value;
-                      });
-                    },
-                    dropdownMenuEntries: locations
-                        .map(
-                          (String value) => DropdownMenuEntry<String>(
-                              value: value, label: value),
-                        )
-                        .toList(),
-                  ),
-                ],
-              ),
+              child: productsPriceRangesGV.isNotEmpty
+                  ? Row(
+                      children: [
+                        RoundedSmallDropdownMenu(
+                          width: 170,
+                          leadingIconName: selectedCategory != null
+                              ? 'cat-selected'
+                              : 'cat-unselected',
+                          hintText: 'Category',
+                          onSelected: (value) {
+                            setState(() {
+                              selectedCategory = value;
+                            });
+                          },
+                          dropdownMenuEntries: categories
+                              .map(
+                                (String value) => DropdownMenuEntry<String>(
+                                    value: value, label: value),
+                              )
+                              .toList(),
+                        ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        RoundedSmallDropdownMenu(
+                          width: 160,
+                          leadingIconName: selectedPrice != null
+                              ? 'cat-selected'
+                              : 'cat-unselected',
+                          hintText: 'Price',
+                          onSelected: (value) {
+                            setState(() {
+                              selectedPrice = value;
+                            });
+                          },
+                          dropdownMenuEntries: productsPriceRangesGV
+                              .map(
+                                (String value) => DropdownMenuEntry<String>(
+                                    value: value, label: value),
+                              )
+                              .toList(),
+                        ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        // RoundedSmallDropdownMenu(
+                        //   // trailingIconName: 'blue_address_icon',
+                        //   width: 170,
+                        //   leadingIconName: selectedLocation != null
+                        //       ? 'cat-selected'
+                        //       : 'cat-unselected',
+                        //   hintText: 'Location',
+                        //   onSelected: (value) {
+                        //     setState(() {
+                        //       selectedLocation = value;
+                        //     });
+                        //   },
+                        //   dropdownMenuEntries: locations
+                        //       .map(
+                        //         (String value) => DropdownMenuEntry<String>(
+                        //             value: value, label: value),
+                        //       )
+                        //       .toList(),
+                        // ),
+                      ],
+                    )
+                  : Shimmer.fromColors(
+                      child: Row(
+                        children: [
+                          RoundedSmallDropdownMenuDummy(),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          RoundedSmallDropdownMenuDummy(),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          RoundedSmallDropdownMenuDummy(),
+                        ],
+                      ),
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!),
             ),
           ),
           SizedBox(

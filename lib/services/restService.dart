@@ -16,6 +16,9 @@ dynamic housingListingCategoriesGV;
 List<String> productListingCategoriesNames = [];
 List<String> serviceListingCategoriesNames = [];
 List<String> housingListingCategoriesNames = [];
+List<String> productsPriceRangesGV = [];
+List<String> servicesPriceRangesGV = [];
+List<String> housingsPriceRangesGV = [];
 Map<String, dynamic> userDataGV = {}; //GV : GlobalVariable
 Map<String, dynamic> guestUserDataGV = {}; //GV : GlobalVariable
 bool loginAsGuestGV = false; //GV : GlobalVariable

@@ -129,18 +129,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   getListingTypes() async {
-    // setState(() {
-    //   showSpinner = true;
-    // });
     Response response = await sendGetRequest('get_listings_types');
 
     print(response.statusCode);
     print(response.body);
     listingTypesGV = jsonDecode(response.body);
-    setState(() {
-      selectedListingType = listingTypesGV?['data'][0]['name'];
-      // showSpinner = false;
-    });
+    if (mounted) {
+      setState(() {
+        selectedListingType = listingTypesGV?['data'][0]['name'];
+      });
+    }
   }
 
   getProductListingsCategories() async {
@@ -1194,7 +1192,10 @@ class BusinessListTile extends StatelessWidget {
             Container(
               height: 70,
               width: 70,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: f5f5f5),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: f5f5f5,
+              ),
               child: Image.network(
                 imgBaseUrl + businessTileImageName,
               ),

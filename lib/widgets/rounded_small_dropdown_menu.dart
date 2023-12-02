@@ -77,3 +77,16 @@ class RoundedSmallDropdownMenu extends StatelessWidget {
     );
   }
 }
+
+class RoundedSmallDropdownMenuDummy extends StatelessWidget {
+  const RoundedSmallDropdownMenuDummy();
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownMenu(
+      inputDecorationTheme: kDropDownMenuInputDecoration,
+      width: 170,
+      dropdownMenuEntries: const [],
+    );
+  }
+}
