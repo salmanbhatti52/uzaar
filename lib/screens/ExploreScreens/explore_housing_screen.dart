@@ -33,15 +33,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
   String? selectedLocation;
   String? furnishedVal;
 
-  final List<String> categories = [
-    'Electronics',
-    'Vehicles',
-    'Books',
-    'Accessories',
-    'Furniture',
-    'Fashion',
-    'Sports',
-  ];
+  final List<String> categories = [...housingListingCategoriesNames];
 
   final List<String> locations = [
     'Multan',

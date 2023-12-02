@@ -32,15 +32,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
   String? selectedPrice;
   String? selectedLocation;
 
-  final List<String> categories = [
-    'Electronics',
-    'Vehicles',
-    'Books',
-    'Accessories',
-    'Furniture',
-    'Fashion',
-    'Sports',
-  ];
+  List<String> categories = [...productListingCategoriesNames];
 
   final List<String> locations = [
     'Multan',
@@ -84,6 +76,8 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
 
   init() async {
     await getAllProducts();
+
+    print(categories);
   }
 
   @override

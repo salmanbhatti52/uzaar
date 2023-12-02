@@ -32,15 +32,7 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
   String? selectedPrice;
   String? selectedLocation;
 
-  final List<String> categories = [
-    'Electronics',
-    'Vehicles',
-    'Books',
-    'Accessories',
-    'Furniture',
-    'Fashion',
-    'Sports',
-  ];
+  final List<String> categories = [...serviceListingCategoriesNames];
 
   final List<String> locations = [
     'Multan',

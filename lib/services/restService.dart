@@ -10,6 +10,12 @@ dynamic listingTypesGV;
 dynamic allListingsProductsGV;
 dynamic allListingsServicesGV;
 dynamic allListingsHousingsGV;
+dynamic productListingCategoriesGV;
+dynamic serviceListingCategoriesGV;
+dynamic housingListingCategoriesGV;
+List<String> productListingCategoriesNames = [];
+List<String> serviceListingCategoriesNames = [];
+List<String> housingListingCategoriesNames = [];
 Map<String, dynamic> userDataGV = {}; //GV : GlobalVariable
 Map<String, dynamic> guestUserDataGV = {}; //GV : GlobalVariable
 bool loginAsGuestGV = false; //GV : GlobalVariable

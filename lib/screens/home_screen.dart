@@ -51,9 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
   dynamic featuredProducts;
   dynamic featuredServices;
   dynamic featuredHousing;
-  dynamic productListingCategories;
-  dynamic serviceListingCategories;
-  dynamic housingListingCategories;
 
   @override
   void initState() {
@@ -70,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
       selectedListingType = '';
     }
     await getUserData();
+    print('productListingCategoriesGV: $productListingCategoriesGV');
     getListingTypes();
     getProductListingsCategories();
     getServiceListingsCategories();
@@ -154,7 +152,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
     print(response.statusCode);
     print(response.body);
-    productListingCategories = jsonDecode(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    if (status == 'success') {
+      productListingCategoriesGV = decodedResponse['data'];
+      print('productListingCategoriesGV: $productListingCategoriesGV');
+
+      // fetching and storing data of category Names in  productListingCategoriesNames
+      if (productListingCategoriesNames.isEmpty) {
+        for (int i = 0; i < productListingCategoriesGV.length; i++) {
+          print(productListingCategoriesGV[i]['name']);
+          productListingCategoriesNames
+              .add(productListingCategoriesGV[i]['name']);
+        }
+        print('categories: $productListingCategoriesNames');
+      }
+      // done
+    }
     if (mounted) {
       setState(() {});
     }
@@ -169,7 +183,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
     print(response.statusCode);
     print(response.body);
-    serviceListingCategories = jsonDecode(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    if (status == 'success') {
+      serviceListingCategoriesGV = decodedResponse['data'];
+      print('serviceListingCategoriesGV: $serviceListingCategoriesGV');
+
+      // fetching and storing data of category Names in  serviceListingCategoriesNames
+      if (serviceListingCategoriesNames.isEmpty) {
+        for (int i = 0; i < serviceListingCategoriesGV.length; i++) {
+          print(serviceListingCategoriesGV[i]['name']);
+          serviceListingCategoriesNames
+              .add(serviceListingCategoriesGV[i]['name']);
+        }
+        print('categories: $serviceListingCategoriesNames');
+      }
+      // done
+    }
     if (mounted) {
       setState(() {});
     }
@@ -184,7 +214,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
     print(response.statusCode);
     print(response.body);
-    housingListingCategories = jsonDecode(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    if (status == 'success') {
+      housingListingCategoriesGV = decodedResponse['data'];
+      print('housingListingCategoriesGV: $housingListingCategoriesGV');
+
+      // fetching and storing data of category Names in  housingListingCategoriesNames
+      if (housingListingCategoriesNames.isEmpty) {
+        for (int i = 0; i < housingListingCategoriesGV.length; i++) {
+          print(housingListingCategoriesGV[i]['name']);
+          housingListingCategoriesNames
+              .add(housingListingCategoriesGV[i]['name']);
+        }
+        print('categories: $housingListingCategoriesNames');
+      }
+      // done
+    }
     if (mounted) {
       setState(() {});
     }
@@ -228,7 +274,9 @@ class _HomeScreenState extends State<HomeScreen> {
     var decodedResponse = jsonDecode(response.body);
     featuredHousingGV = decodedResponse['data'];
     print('featuredHousingGV: $featuredHousingGV');
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   handleOptionSelection(ReportReason reason) {
@@ -425,50 +473,59 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   SizedBox(
                     height: 98,
-                    child: selectedListingType == 'Products'
+                    child: selectedListingType == 'Products' &&
+                            productListingCategoriesGV != null
                         ? ListView.builder(
-                            itemCount: productCategoryModel.length,
+                            itemCount: productListingCategoriesGV.length,
                             shrinkWrap: true,
                             physics: BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
                               return BusinessListTile(
-                                businessTileImageName:
-                                    productCategoryModel[index].image,
                                 businessTileName:
-                                    productCategoryModel[index].catName,
+                                    productListingCategoriesGV[index]['name'],
+                                businessTileImageName:
+                                    productListingCategoriesGV[index]['image'],
+                                // businessTileName:
+                                //     productCategoryModel[index].catName,
+                                // businessTileImageName:
+                                //     productCategoryModel[index].image,
                               );
                             },
                           )
-                        : selectedListingType == 'Services'
+                        : selectedListingType == 'Services' &&
+                                serviceListingCategoriesGV != null
                             ? ListView.builder(
-                                itemCount: servicesCategoryModel.length,
+                                itemCount: serviceListingCategoriesGV.length,
                                 shrinkWrap: true,
                                 physics: BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   return BusinessListTile(
                                       businessTileName:
-                                          servicesCategoryModel[index]
-                                              .serviceName,
+                                          serviceListingCategoriesGV[index]
+                                              ['name'],
                                       businessTileImageName:
-                                          servicesCategoryModel[index].image);
+                                          serviceListingCategoriesGV[index]
+                                              ['image']);
                                 },
                               )
-                            : selectedListingType == 'Housings'
+                            : selectedListingType == 'Housings' &&
+                                    housingListingCategoriesGV != null
                                 ? ListView.builder(
-                                    itemCount: housingCategoryModel.length,
+                                    itemCount:
+                                        housingListingCategoriesGV.length,
                                     shrinkWrap: true,
                                     physics: BouncingScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
                                       return BusinessListTile(
                                           businessTileName:
-                                              housingCategoryModel[index]
-                                                  .houseName,
+                                              housingListingCategoriesGV[index]
+                                                  ['name'],
                                           businessTileImageName:
-                                              housingCategoryModel[index]
-                                                  .image);
+                                              housingListingCategoriesGV[index]
+                                                  ['image']);
                                     },
                                   )
                                 : Shimmer.fromColors(
@@ -1130,14 +1187,16 @@ class BusinessListTile extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(right: 7),
       child: SizedBox(
-        width: 74,
+        width: 80,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
+            Container(
               height: 70,
-              child: SvgPicture.asset(
-                businessTileImageName,
+              width: 70,
+              decoration: BoxDecoration(shape: BoxShape.circle, color: f5f5f5),
+              child: Image.network(
+                imgBaseUrl + businessTileImageName,
               ),
             ),
             Center(
