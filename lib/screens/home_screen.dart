@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:Uzaar/screens/BusinessDetailPages/housing_details_page.dart';
 import 'package:Uzaar/services/restService.dart';
@@ -8,14 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:Uzaar/models/HousingCategoryModel.dart';
 
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/widgets/featured_products_widget.dart';
 import 'package:Uzaar/widgets/featured_services_widget.dart';
-import 'package:Uzaar/models/ProductCategoryModel.dart';
-import 'package:Uzaar/models/ServicesCategoryModel.dart';
+
 import 'package:Uzaar/widgets/search_field.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';

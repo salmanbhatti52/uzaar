@@ -4,8 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../utils/Colors.dart';
-import '../../widgets/carousel_builder.dart';
-import '../../widgets/housing_list_tile.dart';
 
 class MyOrderDetailScreen extends StatefulWidget {
   const MyOrderDetailScreen({Key? key}) : super(key: key);
@@ -116,7 +114,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                         Row(
                           children: [
                             Text(
-                              offeredPrice!,
+                              offeredPrice,
                               style: kFontSixteenSixHPB,
                             ),
                             SizedBox(
@@ -143,7 +141,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              offerStatus!,
+                              offerStatus,
                               style: kFontTwelveSixHW,
                             ),
                           ),
@@ -175,7 +173,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                       ),
                       child: Center(
                         child: Text(
-                          offerStatus!,
+                          offerStatus,
                           style: kFontTwelveSixHW,
                         ),
                       ),

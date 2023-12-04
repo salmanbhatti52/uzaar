@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../utils/Colors.dart';
-import '../../widgets/carousel_builder.dart';
+
 import '../../widgets/mini_dropdown_menu.dart';
 import '../../widgets/profile_info_tile.dart';
 
@@ -119,7 +119,7 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                         Row(
                           children: [
                             Text(
-                              offeredPrice!,
+                              offeredPrice,
                               style: kFontSixteenSixHPB,
                             ),
                             SizedBox(

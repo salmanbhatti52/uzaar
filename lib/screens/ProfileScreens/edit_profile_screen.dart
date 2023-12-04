@@ -13,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../services/location.dart';
 import '../../utils/Colors.dart';
-import '../../widgets/BottomNaviBar.dart';
 import '../../widgets/suffix_svg_icon.dart';
 import '../../widgets/text.dart';
 import '../../widgets/text_form_field_reusable.dart';

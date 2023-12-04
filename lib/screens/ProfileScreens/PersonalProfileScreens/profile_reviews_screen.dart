@@ -1,7 +1,7 @@
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/widgets/mini_dropdown_menu.dart';
 import 'package:Uzaar/widgets/review_tile_widget.dart';
-import 'package:Uzaar/widgets/rounded_small_dropdown_menu.dart';
+
 import 'package:flutter/material.dart';
 
 class ProfileReviewsScreen extends StatefulWidget {

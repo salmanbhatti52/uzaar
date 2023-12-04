@@ -7,7 +7,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:Uzaar/screens/beforeLoginScreens/reset_password_screen.dart';
 import 'package:Uzaar/widgets/BottomNaviBar.dart';
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/utils/Buttons.dart';

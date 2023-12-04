@@ -1,13 +1,9 @@
 import 'package:Uzaar/widgets/add_review_dialog.dart';
-import 'package:Uzaar/widgets/alert_dialog_reusable.dart';
 import 'package:Uzaar/widgets/get_stars_tile.dart';
 import 'package:Uzaar/widgets/my_orders_products_list_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../widgets/message_text_field.dart';
-import '../../../widgets/product_list_tile.dart';
-import '../my_order_detail.dart';
 
 class PreviousProductsOfMyOrders extends StatefulWidget {
   const PreviousProductsOfMyOrders({Key? key}) : super(key: key);

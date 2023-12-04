@@ -1,11 +1,8 @@
-import 'package:Uzaar/screens/home_screen.dart';
 import 'package:Uzaar/widgets/BottomNaviBar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/OnboardingScreen.dart';
 import 'package:Uzaar/utils/colors.dart';
-import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomSplash extends StatefulWidget {

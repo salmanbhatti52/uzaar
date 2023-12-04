@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../../widgets/add_review_dialog.dart';
 import '../../../widgets/get_stars_tile.dart';
 import '../../../widgets/message_text_field.dart';
-import '../my_order_detail.dart';
 
 class PreviousHousingsOfMyOrders extends StatefulWidget {
   const PreviousHousingsOfMyOrders({Key? key}) : super(key: key);

@@ -2,8 +2,6 @@ import 'package:Uzaar/screens/MyOrderScreens/my_order_detail.dart';
 import 'package:Uzaar/widgets/my_orders_products_list_tile.dart';
 import 'package:flutter/material.dart';
 
-import '../../../widgets/product_list_tile.dart';
-
 class PendingProductsOfMyOrders extends StatefulWidget {
   const PendingProductsOfMyOrders({Key? key}) : super(key: key);
 

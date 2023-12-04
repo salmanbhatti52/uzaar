@@ -20,8 +20,8 @@ import 'package:Uzaar/utils/colors.dart';
 
 class BottomNavBar extends StatefulWidget {
   static const String id = 'bottom_navbar';
-  bool? loginAsGuest;
-  BottomNavBar({super.key, this.loginAsGuest});
+  final bool? loginAsGuest;
+  const BottomNavBar({super.key, this.loginAsGuest});
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();

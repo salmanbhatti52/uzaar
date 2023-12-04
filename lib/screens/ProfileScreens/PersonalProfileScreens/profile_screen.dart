@@ -9,11 +9,10 @@ import 'package:Uzaar/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'dart:io';
+
 import 'package:Uzaar/utils/colors.dart';
 import 'package:http/http.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../services/getImage.dart';
@@ -44,7 +43,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String userProfile = '';
   int selectedCategory = 1;
   late SharedPreferences preferences;
-  XFile? _selectedImage;
   String selectedImageInBase64 = '';
   late Map<String, dynamic> images;
 

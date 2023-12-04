@@ -1,9 +1,6 @@
 import 'package:Uzaar/screens/SalesOrderScreens/sales_order_detail.dart';
-import 'package:Uzaar/widgets/my_orders_products_list_tile.dart';
 import 'package:Uzaar/widgets/sales_orders_products_list_tile.dart';
 import 'package:flutter/material.dart';
-
-import '../../../widgets/product_list_tile.dart';
 
 class OfferedProductsOfSalesOrders extends StatefulWidget {
   const OfferedProductsOfSalesOrders({Key? key}) : super(key: key);

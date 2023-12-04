@@ -1,15 +1,10 @@
 import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:Uzaar/utils/colors.dart';
-import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/widgets/text_form_field_reusable.dart';
-
-import 'TrackOrderScreen.dart';
 
 class OrderPlacedScreen extends StatefulWidget {
   const OrderPlacedScreen({super.key});

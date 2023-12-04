@@ -1,9 +1,6 @@
-import 'package:Uzaar/screens/ProfileScreens/PersonalProfileScreens/personal_info_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:Uzaar/utils/colors.dart';
 import '../../../widgets/business_type_button.dart';

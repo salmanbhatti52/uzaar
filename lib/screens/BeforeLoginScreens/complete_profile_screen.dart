@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:Uzaar/screens/BeforeLoginScreens/add_image_screen.dart';
 import 'package:Uzaar/services/location.dart';
 import 'package:Uzaar/services/restService.dart';
-import 'package:Uzaar/services/xFiletoBase64.dart';
 import 'package:Uzaar/widgets/BottomNaviBar.dart';
 import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import 'package:Uzaar/widgets/text.dart';
@@ -20,17 +19,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:Uzaar/utils/colors.dart';
-import 'package:Uzaar/screens/beforeLoginScreens/login_screen.dart';
 
 import '../../utils/Buttons.dart';
 import '../../widgets/read_only_container.dart';
-import '../BusinessDetailPages/BottomSheetForSendOffer.dart';
 import 'package:Uzaar/services/getImage.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
   static const String id = 'complete_profile_screen';
-  dynamic userData;
-  CompleteProfileScreen({super.key, required this.userData});
+  final dynamic userData;
+  const CompleteProfileScreen({super.key, required this.userData});
 
   @override
   State<CompleteProfileScreen> createState() => _CompleteProfileScreenState();

@@ -6,7 +6,6 @@ import 'package:Uzaar/services/restService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import '../../services/getImage.dart';
 import '../../utils/Buttons.dart';
@@ -31,7 +30,6 @@ class EditListingScreen extends StatefulWidget {
 class _EditListingScreenState extends State<EditListingScreen> {
   int selectedCategory = 1;
   int noOfTabs = 3;
-  XFile? _selectedImage;
   String selectedImageInBase64 = '';
   late Map<String, dynamic> images;
   List<Map<String, dynamic>> imagesList = [];

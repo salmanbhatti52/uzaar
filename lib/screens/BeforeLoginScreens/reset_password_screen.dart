@@ -16,9 +16,10 @@ import 'package:Uzaar/utils/Buttons.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   static const String id = 'reset_password_screen';
-  String otp;
-  String email;
-  ResetPasswordScreen({super.key, required this.otp, required this.email});
+  final String otp;
+  final String email;
+  const ResetPasswordScreen(
+      {super.key, required this.otp, required this.email});
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();

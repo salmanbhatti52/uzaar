@@ -2,11 +2,9 @@ import 'dart:convert';
 
 import 'package:Uzaar/screens/BusinessDetailPages/housing_details_page.dart';
 import 'package:Uzaar/services/restService.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/widgets/featured_products_widget.dart';
 import 'package:http/http.dart';

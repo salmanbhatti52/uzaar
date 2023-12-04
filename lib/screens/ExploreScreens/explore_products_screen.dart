@@ -2,11 +2,9 @@ import 'dart:convert';
 
 import 'package:Uzaar/screens/BusinessDetailPages/product_details_page.dart';
 import 'package:Uzaar/widgets/rounded_small_dropdown_menu.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/widgets/featured_products_widget.dart';
 import 'package:http/http.dart';
@@ -15,7 +13,6 @@ import 'package:shimmer/shimmer.dart';
 import '../../services/restService.dart';
 import '../../utils/Buttons.dart';
 import '../../widgets/alert_dialog_reusable.dart';
-import '../../widgets/rounded_dropdown_menu.dart';
 
 enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 

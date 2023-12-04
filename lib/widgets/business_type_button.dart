@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../utils/colors.dart';
 
-final double height = 38;
+const double height = 38;
 
 class BusinessTypeButton extends StatelessWidget {
   final String businessName;
   final Gradient? gradient;
   final Color? buttonBackground;
   final Color textColor;
-  double? width;
-  EdgeInsetsGeometry? margin;
+  final double? width;
+  final EdgeInsetsGeometry? margin;
   // final int catSelected;
 
-  BusinessTypeButton(
-      {required this.businessName,
+  const BusinessTypeButton(
+      {super.key,
+      required this.businessName,
       required this.gradient,
       required this.buttonBackground,
       required this.textColor,

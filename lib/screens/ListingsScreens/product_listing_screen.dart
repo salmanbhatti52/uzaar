@@ -6,7 +6,6 @@ import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/utils/Colors.dart';
 import 'package:Uzaar/widgets/alert_dialog_reusable.dart';
 import 'package:Uzaar/widgets/snackbars.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shimmer/shimmer.dart';

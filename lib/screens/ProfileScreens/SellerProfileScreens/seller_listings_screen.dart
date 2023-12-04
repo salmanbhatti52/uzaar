@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/widgets/featured_services_widget.dart';
-import 'package:Uzaar/widgets/AddListingsButtonSales.dart';
 
 import 'package:Uzaar/widgets/featured_products_widget.dart';
 
 import '../../../utils/Buttons.dart';
 import '../../../widgets/alert_dialog_reusable.dart';
 import '../../BusinessDetailPages/product_details_page.dart';
-import '../../BusinessDetailPages/service_details_page.dart';
 
 enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 

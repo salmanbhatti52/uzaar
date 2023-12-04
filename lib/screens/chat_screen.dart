@@ -1,19 +1,65 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:Uzaar/utils/colors.dart';
+import 'package:http/http.dart';
 
+import '../services/restService.dart';
 import '../widgets/message_text_field.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen();
-
+  const ChatScreen({super.key, required this.otherUserId});
+  final int otherUserId;
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
   final msgTextFieldController = TextEditingController();
+  dynamic messages;
+  String chatHistoryStatus = '';
+
+  Future<String> sendMessage() async {
+    Response response = await sendPostRequest(action: 'user_chat', data: {
+      'requestType': 'sendMessage',
+      'users_customers_id': userDataGV['userId'],
+      'other_users_customers_id': widget.otherUserId,
+      'message_type': 'text',
+      'message': msgTextFieldController.text.toString()
+    });
+
+    print(response.statusCode);
+    print(response.body);
+    var decodedData = jsonDecode(response.body);
+    String status = decodedData['status'];
+    return status;
+  }
+
+  getMessages() async {
+    Response response = await sendPostRequest(action: 'user_chat', data: {
+      'requestType': 'getMessages',
+      'users_customers_id': userDataGV['userId'],
+      'other_users_customers_id': widget.otherUserId,
+    });
+    print(response.statusCode);
+    print(response.body);
+    var decodedData = jsonDecode(response.body);
+    String status = decodedData['status'];
+    chatHistoryStatus = status;
+    if (status == 'success') {
+      messages = decodedData['data'];
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getMessages();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +88,9 @@ class _ChatScreenState extends State<ChatScreen> {
             color: primaryBlue,
             child: Column(
               children: [
+                // Expanded(child: ListView.builder(itemBuilder: (context, index) {
+                //   return
+                // },))
                 Expanded(
                   child: ListView(
                     children: [

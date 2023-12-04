@@ -1,8 +1,11 @@
-import 'package:Uzaar/screens/chat_screen.dart';
+import 'dart:convert';
+
+import 'package:Uzaar/services/restService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:Uzaar/utils/colors.dart';
+import 'package:http/http.dart';
 
 import '../widgets/common_list_tile.dart';
 
@@ -14,6 +17,36 @@ class MessagesScreen extends StatefulWidget {
 }
 
 class _MessagesScreenState extends State<MessagesScreen> {
+  dynamic chatList;
+  String errorMessage = '';
+
+  getChatList() async {
+    Response response = await sendPostRequest(
+        action: 'get_chat_list', data: {'users_customers_id': '38'});
+    print(response.statusCode);
+    print(response.body);
+    var decodedData = jsonDecode(response.body);
+    String status = decodedData['status'];
+    if (status == 'success') {
+      chatList = decodedData['data'];
+    }
+    if (status == 'error') {
+      errorMessage = decodedData['message'];
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // init();
+    getChatList();
+  }
+
+  // init() async{
+  //  await getChatList();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,9 +83,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ChatScreen(),
-                    )),
+                    // onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => ChatScreen(
+                    //     otherUserId: 1,
+                    //   ),
+                    // )),
                     child: CommonListTile(
                       imageName: 'assets/chat_image.png',
                       title: 'John Doe',

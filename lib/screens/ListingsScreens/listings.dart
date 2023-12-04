@@ -7,7 +7,6 @@ import 'package:Uzaar/services/restService.dart';
 import 'package:Uzaar/widgets/business_type_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/utils/colors.dart';
 import 'package:http/http.dart';
@@ -15,7 +14,6 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../widgets/DrawerWidget.dart';
-import '../../widgets/product_list_tile.dart';
 import '../chat_list_screen.dart';
 import '../notifications_screen.dart';
 

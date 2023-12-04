@@ -1,10 +1,10 @@
 import 'package:Uzaar/utils/Colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AddReviewDialog extends StatelessWidget {
-  AddReviewDialog(
-      {required this.content,
+  const AddReviewDialog(
+      {super.key,
+      required this.content,
       required this.title,
       required this.textField,
       this.itemsList});
@@ -12,7 +12,7 @@ class AddReviewDialog extends StatelessWidget {
   final Widget content;
   final Widget textField;
 
-  List<Widget>? itemsList;
+  final List<Widget>? itemsList;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

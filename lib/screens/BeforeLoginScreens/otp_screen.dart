@@ -9,7 +9,6 @@ import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:http/http.dart';
 import '../../widgets/custom_otp_field.dart';
-import 'complete_profile_screen.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class OtpScreen extends StatefulWidget {

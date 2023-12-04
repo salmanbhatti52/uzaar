@@ -18,16 +18,16 @@ List<Widget> getStars(int noOfStars, double? width, double? height) {
 }
 
 class StarsTile extends StatelessWidget {
-  StarsTile(
+  const StarsTile(
       {super.key,
       required this.noOfStars,
       this.height,
       this.width,
       required this.alignment});
-  int noOfStars;
-  double? height;
-  double? width;
-  MainAxisAlignment alignment;
+  final int noOfStars;
+  final double? height;
+  final double? width;
+  final MainAxisAlignment alignment;
   @override
   Widget build(BuildContext context) {
     return Row(

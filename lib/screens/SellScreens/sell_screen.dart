@@ -13,10 +13,9 @@ import '../../utils/Buttons.dart';
 import '../../widgets/DrawerWidget.dart';
 import '../../widgets/business_type_button.dart';
 import '../../widgets/tab_indicator.dart';
-import '../BeforeLoginScreens/add_image_screen.dart';
+
 import '../chat_list_screen.dart';
 import '../notifications_screen.dart';
-import 'package:image_picker/image_picker.dart';
 
 class SellScreen extends StatefulWidget {
   const SellScreen({super.key});

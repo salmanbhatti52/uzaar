@@ -5,7 +5,6 @@ import 'package:Uzaar/screens/beforeLoginScreens/verify_email_screen.dart';
 import 'package:Uzaar/widgets/text_form_field_reusable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Uzaar/widgets/text.dart';
 import 'package:http/http.dart';
 
@@ -15,7 +14,6 @@ import 'login_screen.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String id = 'signup_screen';

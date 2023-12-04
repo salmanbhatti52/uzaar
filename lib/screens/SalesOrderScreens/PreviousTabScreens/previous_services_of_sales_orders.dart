@@ -1,11 +1,10 @@
 import 'package:Uzaar/widgets/my_orders_services_list_tile.dart';
-import 'package:Uzaar/widgets/sales_orders_services_list_tile.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../widgets/add_review_dialog.dart';
 import '../../../widgets/get_stars_tile.dart';
 import '../../../widgets/message_text_field.dart';
-import '../sales_order_detail.dart';
 
 class PreviousServicesOfSalesOrders extends StatefulWidget {
   const PreviousServicesOfSalesOrders({Key? key}) : super(key: key);
