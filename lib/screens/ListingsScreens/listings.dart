@@ -78,35 +78,20 @@ class _ListingsScreenState extends State<ListingsScreen> {
         leadingWidth: 70,
         leading: Builder(
           builder: (context) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 20),
-              child: GestureDetector(
-                onTap: () => Scaffold.of(context).openDrawer(),
-                child: SvgPicture.asset(
-                  'assets/drawer-button.svg',
-                  fit: BoxFit.scaleDown,
-                ),
+            return GestureDetector(
+              onTap: () => Scaffold.of(context).openDrawer(),
+              child: SvgPicture.asset(
+                'assets/drawer-button.svg',
+                fit: BoxFit.scaleDown,
               ),
             );
           },
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 15.w),
+            padding: EdgeInsets.only(right: 20),
             child: Row(
               children: [
-                // Column(
-                //   children: [
-                //     Text(
-                //       'Good Morning!',
-                //       style: kAppBarTitleStyle,
-                //     ),
-                //     Text(
-                //       'John',
-                //       style: kAppBarTitleStyle,
-                //     ),
-                //   ],
-                // ),
                 GestureDetector(
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(

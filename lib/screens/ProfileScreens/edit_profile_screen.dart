@@ -80,7 +80,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
           actions: [
             Padding(
-              padding: EdgeInsets.only(right: 15.w),
+              padding: EdgeInsets.only(right: 20),
               child: Row(
                 children: [
                   GestureDetector(

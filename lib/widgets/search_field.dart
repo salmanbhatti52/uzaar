@@ -8,15 +8,21 @@ class SearchField extends StatelessWidget {
   const SearchField({
     super.key,
     required this.searchController,
+    this.onChanged,
+    // this.onSubmitted
   });
 
   final TextEditingController searchController;
-
+  final void Function(String)? onChanged;
+  // final void Function(String)? onSubmitted;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 46,
       child: TextFormFieldWidget(
+        onChanged: onChanged,
+        // onSubmitted: onSubmitted,
+
         focusedBorder: kRoundedActiveBorderStyle,
         controller: searchController,
         textInputType: TextInputType.name,

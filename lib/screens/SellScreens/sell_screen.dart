@@ -68,21 +68,18 @@ class _SellScreenState extends State<SellScreen> {
         leadingWidth: 70,
         leading: Builder(
           builder: (context) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 20),
-              child: GestureDetector(
-                onTap: () => Scaffold.of(context).openDrawer(),
-                child: SvgPicture.asset(
-                  'assets/drawer-button.svg',
-                  fit: BoxFit.scaleDown,
-                ),
+            return GestureDetector(
+              onTap: () => Scaffold.of(context).openDrawer(),
+              child: SvgPicture.asset(
+                'assets/drawer-button.svg',
+                fit: BoxFit.scaleDown,
               ),
             );
           },
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 15.w),
+            padding: EdgeInsets.only(right: 20),
             child: Row(
               children: [
                 GestureDetector(

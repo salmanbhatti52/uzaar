@@ -286,6 +286,48 @@ class _HomeScreenState extends State<HomeScreen> {
     print(selectedReasons);
   }
 
+  searchData(String value) {
+    print(value);
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        print(value);
+        List<dynamic> filteredItems = [];
+        if (selectedListingTypeGV == 'Products') {
+          for (var product in featuredProductsGV) {
+            String productName = product['name'];
+            productName = productName.toLowerCase();
+            if (productName.contains(value.toLowerCase())) {
+              filteredItems.add(product);
+            }
+          }
+          featuredProducts = filteredItems;
+          setState(() {});
+        } else if (selectedListingTypeGV == 'Services') {
+          for (var service in featuredServicesGV) {
+            String serviceName = service['name'];
+            serviceName = serviceName.toLowerCase();
+            if (serviceName.contains(value.toLowerCase())) {
+              filteredItems.add(service);
+            }
+          }
+          featuredServices = filteredItems;
+          setState(() {});
+        } else if (selectedListingTypeGV == 'Housings') {
+          for (var house in featuredHousingGV) {
+            String houseName = house['name'];
+            houseName = houseName.toLowerCase();
+            if (houseName.contains(value.toLowerCase())) {
+              filteredItems.add(house);
+            }
+          }
+          featuredHousings = filteredItems;
+          setState(() {});
+        } else {}
+      },
+    );
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -314,21 +356,18 @@ class _HomeScreenState extends State<HomeScreen> {
           leadingWidth: 70,
           leading: Builder(
             builder: (context) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 8.0, left: 20),
-                child: GestureDetector(
-                  onTap: () => Scaffold.of(context).openDrawer(),
-                  child: SvgPicture.asset(
-                    'assets/drawer-button.svg',
-                    fit: BoxFit.scaleDown,
-                  ),
+              return GestureDetector(
+                onTap: () => Scaffold.of(context).openDrawer(),
+                child: SvgPicture.asset(
+                  'assets/drawer-button.svg',
+                  fit: BoxFit.scaleDown,
                 ),
               );
             },
           ),
           actions: [
             Padding(
-              padding: EdgeInsets.only(right: 15.w),
+              padding: EdgeInsets.only(right: 20),
               child: Row(
                 children: [
                   // Column(
@@ -387,7 +426,7 @@ class _HomeScreenState extends State<HomeScreen> {
           color: primaryBlue,
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+              padding: EdgeInsets.symmetric(horizontal: 22),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -414,7 +453,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: 20.h,
                   ),
-                  SearchField(searchController: searchController),
+                  SearchField(
+                    searchController: searchController,
+                    onChanged: (value) {
+                      searchData(value);
+                    },
+                  ),
                   SizedBox(
                     height: 20.h,
                   ),
@@ -656,9 +700,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Featured Products',
-                              style: kBodyHeadingTextStyle,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Featured Products',
+                                  style: kBodyHeadingTextStyle,
+                                ),
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Text(
+                                    'View All',
+                                    style: kColoredTextStyle,
+                                  ),
+                                )
+                              ],
                             ),
                             SizedBox(
                               height: 20.h,
@@ -890,9 +946,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Featured Services',
-                              style: kBodyHeadingTextStyle,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Featured Services',
+                                  style: kBodyHeadingTextStyle,
+                                ),
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Text(
+                                    'View All',
+                                    style: kColoredTextStyle,
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
                               height: 20.h,
@@ -1120,9 +1188,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Featured Housing',
-                              style: kBodyHeadingTextStyle,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Featured Housing',
+                                  style: kBodyHeadingTextStyle,
+                                ),
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Text(
+                                    'View All',
+                                    style: kColoredTextStyle,
+                                  ),
+                                )
+                              ],
                             ),
                             SizedBox(
                               height: 20.h,

@@ -21,35 +21,36 @@ class TextFormFieldWidget extends StatelessWidget {
   final bool? obscureText;
   final Widget? suffixIcon;
   final bool? readOnly;
-
+  final void Function(String)? onChanged;
   final void Function(String)? onSubmitted;
-  const TextFormFieldWidget({
-    super.key,
-    required this.controller,
-    required this.textInputType,
-    // required this.enterTextStyle,
-    this.readOnly,
-    // required this.cursorColor,
-    required this.hintText,
-    // required this.border,
-    // required this.hintStyle,
-    required this.focusedBorder,
-    this.onSaved,
-    this.validator,
-    this.onTap,
-    this.autofillHints,
-    this.onSubmitted,
-    required this.obscureText,
-    this.suffixIcon,
-    // required this.enableBorder,
-    required this.prefixIcon,
-  });
+  const TextFormFieldWidget(
+      {super.key,
+      required this.controller,
+      required this.textInputType,
+      // required this.enterTextStyle,
+      this.readOnly,
+      // required this.cursorColor,
+      required this.hintText,
+      // required this.border,
+      // required this.hintStyle,
+      required this.focusedBorder,
+      this.onSaved,
+      this.validator,
+      this.onTap,
+      this.autofillHints,
+      this.onSubmitted,
+      required this.obscureText,
+      this.suffixIcon,
+      // required this.enableBorder,
+      required this.prefixIcon,
+      this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: kTextFieldBoxDecoration,
       child: TextFormField(
+        onChanged: onChanged,
         onFieldSubmitted: onSubmitted,
         onSaved: onSaved,
         onTap: onTap,
