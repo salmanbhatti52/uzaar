@@ -30,7 +30,7 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
   String? selectedPrice;
   String? selectedLocation;
 
-  List<String> categories = [...serviceListingCategoriesNames];
+  List<String> categories = [...serviceListingCategoriesNamesGV];
 
   final List<String> locations = [
     'Multan',
@@ -193,7 +193,7 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
           Align(
             alignment: Alignment.topLeft,
             child: Text(
-              'Featured Services',
+              'All Services',
               style: kBodyHeadingTextStyle,
             ),
           ),

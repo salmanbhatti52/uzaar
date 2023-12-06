@@ -3,6 +3,8 @@ import 'dart:convert';
 
 const apiBaseUrl = 'https://uzaar.eigix.net/api/';
 const imgBaseUrl = 'https://uzaar.eigix.net/public/';
+
+//GV : GlobalVariable
 dynamic featuredProductsGV;
 dynamic featuredServicesGV;
 dynamic featuredHousingGV;
@@ -13,15 +15,17 @@ dynamic allListingsHousingsGV;
 dynamic productListingCategoriesGV;
 dynamic serviceListingCategoriesGV;
 dynamic housingListingCategoriesGV;
-List<String> productListingCategoriesNames = [];
-List<String> serviceListingCategoriesNames = [];
-List<String> housingListingCategoriesNames = [];
+List<String> productListingCategoriesNamesGV = [];
+List<String> serviceListingCategoriesNamesGV = [];
+List<String> housingListingCategoriesNamesGV = [];
 List<String> productsPriceRangesGV = [];
 List<String> servicesPriceRangesGV = [];
 List<String> housingsPriceRangesGV = [];
-Map<String, dynamic> userDataGV = {}; //GV : GlobalVariable
-Map<String, dynamic> guestUserDataGV = {}; //GV : GlobalVariable
-bool loginAsGuestGV = false; //GV : GlobalVariable
+Map<String, dynamic> userDataGV = {};
+Map<String, dynamic> guestUserDataGV = {};
+bool loginAsGuestGV = false;
+String selectedListingTypeGV = 'Products';
+String listingSelectedCategoryGV = '';
 
 Future<http.Response> sendGetRequest(String action) {
   return http.get(Uri.parse(apiBaseUrl + action));

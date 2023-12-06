@@ -29,7 +29,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
   String? selectedPrice;
   String? selectedLocation;
 
-  List<String> categories = [...productListingCategoriesNames];
+  List<String> categories = [...productListingCategoriesNamesGV];
 
   // final List<String> locations = [
   //   'Multan',
@@ -192,7 +192,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
           Align(
             alignment: Alignment.topLeft,
             child: Text(
-              'Featured Products',
+              'All Products',
               style: kBodyHeadingTextStyle,
             ),
           ),

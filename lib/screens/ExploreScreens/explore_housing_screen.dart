@@ -31,7 +31,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
   String? selectedLocation;
   String? furnishedVal;
 
-  final List<String> categories = [...housingListingCategoriesNames];
+  final List<String> categories = [...housingListingCategoriesNamesGV];
 
   final List<String> locations = [
     'Multan',
@@ -221,7 +221,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
           Align(
             alignment: Alignment.topLeft,
             child: Text(
-              'Featured Housing',
+              'All Housings',
               style: kBodyHeadingTextStyle,
             ),
           ),
