@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/screens/ExploreScreens/explore_housing_screen.dart';
 
@@ -31,174 +32,188 @@ class _ExploreScreenState extends State<ExploreScreen> {
     super.initState();
   }
 
+  int _tapCount = 0;
   int selectedCategory = 1;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
+    return WillPopScope(
+      onWillPop: () async {
+        _tapCount++;
+        print(_tapCount);
+        if (_tapCount == 1) {
+        } else if (_tapCount >= 2) {
+          // Pop the navigator after the second tap
+          SystemNavigator.pop();
         }
+        return false;
       },
-      child: Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: black),
-          elevation: 0.0,
-          backgroundColor: Colors.white,
-          leadingWidth: 70,
-          leading: Builder(
-            builder: (context) {
-              return GestureDetector(
-                onTap: () => Scaffold.of(context).openDrawer(),
-                child: SvgPicture.asset(
-                  'assets/drawer-button.svg',
-                  fit: BoxFit.scaleDown,
-                ),
-              );
-            },
-          ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Row(
-                children: [
-                  // Column(
-                  //   children: [
-                  //     Text(
-                  //       'Good Morning!',
-                  //       style: kAppBarTitleStyle,
-                  //     ),
-                  //     Text(
-                  //       'John',
-                  //       style: kAppBarTitleStyle,
-                  //     ),
-                  //   ],
-                  // ),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => MessagesScreen(),
-                      ),
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/msg-icon.svg',
-                      fit: BoxFit.scaleDown,
-                    ),
+      child: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            iconTheme: IconThemeData(color: black),
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            leadingWidth: 70,
+            leading: Builder(
+              builder: (context) {
+                return GestureDetector(
+                  onTap: () => Scaffold.of(context).openDrawer(),
+                  child: SvgPicture.asset(
+                    'assets/drawer-button.svg',
+                    fit: BoxFit.scaleDown,
                   ),
-                  SizedBox(
-                    width: 15.w,
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => NotificationScreen(),
-                      ),
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/notification-icon.svg',
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
-          ],
-          centerTitle: false,
-          title: Text(
-            'Explore',
-            style: kAppBarTitleStyle,
-          ),
-        ),
-        drawer: DrawerWidget(
-          buildContext: context,
-        ),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
+            actions: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                padding: EdgeInsets.only(right: 20),
+                child: Row(
                   children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedCategory = 1;
-                            });
-                          },
-                          child: BusinessTypeButton(
-                            businessName: 'Products',
-                            gradient: selectedCategory == 1 ? gradient : null,
-                            buttonBackground: selectedCategory != 1
-                                ? grey.withOpacity(0.3)
-                                : null,
-                            textColor: selectedCategory == 1 ? white : grey,
-                          ),
+                    // Column(
+                    //   children: [
+                    //     Text(
+                    //       'Good Morning!',
+                    //       style: kAppBarTitleStyle,
+                    //     ),
+                    //     Text(
+                    //       'John',
+                    //       style: kAppBarTitleStyle,
+                    //     ),
+                    //   ],
+                    // ),
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => MessagesScreen(),
                         ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedCategory = 2;
-                            });
-                          },
-                          child: BusinessTypeButton(
-                            businessName: 'Services',
-                            gradient: selectedCategory == 2 ? gradient : null,
-                            buttonBackground: selectedCategory != 2
-                                ? grey.withOpacity(0.3)
-                                : null,
-                            textColor: selectedCategory == 2 ? white : grey,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedCategory = 3;
-                            });
-                          },
-                          child: BusinessTypeButton(
-                            businessName: 'Housing',
-                            gradient: selectedCategory == 3 ? gradient : null,
-                            buttonBackground: selectedCategory != 3
-                                ? grey.withOpacity(0.3)
-                                : null,
-                            textColor: selectedCategory == 3 ? white : grey,
-                          ),
-                        ),
-                      ],
+                      ),
+                      child: SvgPicture.asset(
+                        'assets/msg-icon.svg',
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
                     SizedBox(
-                      height: 20.h,
+                      width: 15.w,
                     ),
-                    SizedBox(
-                        child: SearchField(searchController: searchController)),
-                    SizedBox(
-                      height: 20.h,
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => NotificationScreen(),
+                        ),
+                      ),
+                      child: SvgPicture.asset(
+                        'assets/notification-icon.svg',
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
                   ],
                 ),
               ),
-              selectedCategory == 1
-                  ? ExploreProductsScreen()
-                  : selectedCategory == 2
-                      ? ExploreServicesScreen()
-                      : ExploreHousingScreen()
-              // : Container(),
             ],
+            centerTitle: false,
+            title: Text(
+              'Explore',
+              style: kAppBarTitleStyle,
+            ),
+          ),
+          drawer: DrawerWidget(
+            buildContext: context,
+          ),
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedCategory = 1;
+                              });
+                            },
+                            child: BusinessTypeButton(
+                              businessName: 'Products',
+                              gradient: selectedCategory == 1 ? gradient : null,
+                              buttonBackground: selectedCategory != 1
+                                  ? grey.withOpacity(0.3)
+                                  : null,
+                              textColor: selectedCategory == 1 ? white : grey,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedCategory = 2;
+                              });
+                            },
+                            child: BusinessTypeButton(
+                              businessName: 'Services',
+                              gradient: selectedCategory == 2 ? gradient : null,
+                              buttonBackground: selectedCategory != 2
+                                  ? grey.withOpacity(0.3)
+                                  : null,
+                              textColor: selectedCategory == 2 ? white : grey,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedCategory = 3;
+                              });
+                            },
+                            child: BusinessTypeButton(
+                              businessName: 'Housing',
+                              gradient: selectedCategory == 3 ? gradient : null,
+                              buttonBackground: selectedCategory != 3
+                                  ? grey.withOpacity(0.3)
+                                  : null,
+                              textColor: selectedCategory == 3 ? white : grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      SizedBox(
+                          child:
+                              SearchField(searchController: searchController)),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                    ],
+                  ),
+                ),
+                selectedCategory == 1
+                    ? ExploreProductsScreen()
+                    : selectedCategory == 2
+                        ? ExploreServicesScreen()
+                        : ExploreHousingScreen()
+                // : Container(),
+              ],
+            ),
           ),
         ),
       ),

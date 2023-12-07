@@ -19,7 +19,7 @@ class MessagesScreen extends StatefulWidget {
 }
 
 class _MessagesScreenState extends State<MessagesScreen> {
-  dynamic chatList;
+  List<dynamic> chatList = [];
   String errorMessage = '';
 
   getChatList() async {
@@ -31,7 +31,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
     String status = decodedData['status'];
     if (status == 'success') {
       setState(() {
-        chatList = decodedData['data'];
+        if (decodedData['data'] != null) {
+          chatList = decodedData['data'];
+        } else {
+          errorMessage = decodedData['message'];
+        }
       });
     }
     if (status == 'error') {
@@ -80,7 +84,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
             child: RefreshIndicator(
               onRefresh: () async {},
               color: primaryBlue,
-              child: chatList != null
+              child: chatList.isNotEmpty
                   ? ListView.builder(
                       itemCount: chatList.length,
                       shrinkWrap: true,
@@ -108,23 +112,29 @@ class _MessagesScreenState extends State<MessagesScreen> {
                         );
                       },
                     )
-                  : ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Shimmer.fromColors(
-                            child: Column(
-                              children: [
-                                Container(
-                                    margin: EdgeInsets.only(bottom: 15),
-                                    child: CommonListTileDummy()),
-                              ],
-                            ),
-                            baseColor: Colors.grey[500]!,
-                            highlightColor: Colors.grey[100]!);
-                      },
-                      itemCount: 4,
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true),
+                  : chatList.isEmpty && errorMessage == ''
+                      ? ListView.builder(
+                          itemBuilder: (context, index) {
+                            return Shimmer.fromColors(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        margin: EdgeInsets.only(bottom: 15),
+                                        child: CommonListTileDummy()),
+                                  ],
+                                ),
+                                baseColor: Colors.grey[500]!,
+                                highlightColor: Colors.grey[100]!);
+                          },
+                          itemCount: 4,
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true)
+                      : chatList.isEmpty && errorMessage != ''
+                          ? const Center(
+                              child: Text('No chat found.'),
+                            )
+                          : SizedBox(),
             ),
           ),
         ),

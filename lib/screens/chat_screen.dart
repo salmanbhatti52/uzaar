@@ -26,6 +26,7 @@ class _ChatScreenState extends State<ChatScreen> {
   List<dynamic> messages = [];
   String chatHistoryStatus = '';
   late Timer _timer;
+  String errorMessage = '';
 
   Future<String> sendMessage() async {
     String message = msgTextFieldController.text.toString();
@@ -74,6 +75,13 @@ class _ChatScreenState extends State<ChatScreen> {
           if (decodedData['data'].length > messages.length) {
             messages = decodedData['data'];
           }
+        });
+      }
+    }
+    if (status == 'error') {
+      if (mounted) {
+        setState(() {
+          errorMessage = decodedData['message'];
         });
       }
     }
@@ -177,26 +185,32 @@ class _ChatScreenState extends State<ChatScreen> {
                           physics: BouncingScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true)
-                      : ListView.builder(
-                          itemBuilder: (context, index) {
-                            return Shimmer.fromColors(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                        margin: EdgeInsets.only(bottom: 15),
-                                        child: UserMsgWidgetDummy()),
-                                    Container(
-                                        margin: EdgeInsets.only(bottom: 15),
-                                        child: OtherUserMsgWidgetDummy())
-                                  ],
-                                ),
-                                baseColor: Colors.grey[500]!,
-                                highlightColor: Colors.grey[100]!);
-                          },
-                          itemCount: 3,
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true),
+                      : messages.isEmpty && errorMessage == ''
+                          ? ListView.builder(
+                              itemBuilder: (context, index) {
+                                return Shimmer.fromColors(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                            margin: EdgeInsets.only(bottom: 15),
+                                            child: UserMsgWidgetDummy()),
+                                        Container(
+                                            margin: EdgeInsets.only(bottom: 15),
+                                            child: OtherUserMsgWidgetDummy())
+                                      ],
+                                    ),
+                                    baseColor: Colors.grey[500]!,
+                                    highlightColor: Colors.grey[100]!);
+                              },
+                              itemCount: 3,
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true)
+                          : messages.isEmpty && errorMessage != ''
+                              ? const Center(
+                                  child: Text('No message found.'),
+                                )
+                              : SizedBox(),
                 ),
                 SizedBox(
                   height: 20,
