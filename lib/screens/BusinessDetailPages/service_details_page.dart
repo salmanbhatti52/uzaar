@@ -287,6 +287,8 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) {
                                   return ChatScreen(
+                                    otherUserName:
+                                        '${widget.serviceData['users_customers']['first_name']} ${widget.serviceData['users_customers']['last_name']}',
                                     otherUserId: widget
                                         .serviceData['users_customers_id'],
                                   );

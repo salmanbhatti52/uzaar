@@ -324,6 +324,8 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) {
                                   return ChatScreen(
+                                    otherUserName:
+                                        '${widget.houseData['users_customers']['first_name']} ${widget.houseData['users_customers']['last_name']}',
                                     otherUserId:
                                         widget.houseData['users_customers_id'],
                                   );

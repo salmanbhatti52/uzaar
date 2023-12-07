@@ -1,3 +1,4 @@
+import 'package:Uzaar/services/restService.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -43,7 +44,19 @@ class CommonListTile extends StatelessWidget {
       decoration: kCardBoxDecoration,
       child: Row(
         children: [
-          Image.asset(imageName),
+          CircleAvatar(
+            maxRadius: 30,
+            backgroundColor: Color(0xFFD9D9D9),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image.network(
+                imgBaseUrl + imageName,
+                height: 60,
+                width: 60,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
           SizedBox(
             width: 9,
           ),
@@ -82,6 +95,30 @@ class CommonListTile extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CommonListTileDummy extends StatelessWidget {
+  const CommonListTileDummy({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.all(10),
+      width: MediaQuery.sizeOf(context).width,
+      height: 80,
+      // decoration: BoxDecoration(
+      //   border: Border.all(
+      //     color: grey.withOpacity(0.5),
+      //   ),
+      //   borderRadius: BorderRadius.circular(10),
+      // ),
+
+      decoration: kCardBoxDecoration.copyWith(
+        color: Colors.grey.withOpacity(0.3),
       ),
     );
   }

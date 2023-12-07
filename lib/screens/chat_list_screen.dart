@@ -6,8 +6,10 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:Uzaar/utils/colors.dart';
 import 'package:http/http.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../widgets/common_list_tile.dart';
+import 'chat_screen.dart';
 
 class MessagesScreen extends StatefulWidget {
   const MessagesScreen({super.key});
@@ -28,7 +30,9 @@ class _MessagesScreenState extends State<MessagesScreen> {
     var decodedData = jsonDecode(response.body);
     String status = decodedData['status'];
     if (status == 'success') {
-      chatList = decodedData['data'];
+      setState(() {
+        chatList = decodedData['data'];
+      });
     }
     if (status == 'error') {
       errorMessage = decodedData['message'];
@@ -76,27 +80,51 @@ class _MessagesScreenState extends State<MessagesScreen> {
             child: RefreshIndicator(
               onRefresh: () async {},
               color: primaryBlue,
-              child: ListView.builder(
-                itemCount: 6,
-                shrinkWrap: true,
-                // scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    // onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    //   builder: (context) => ChatScreen(
-                    //     otherUserId: 1,
-                    //   ),
-                    // )),
-                    child: CommonListTile(
-                      imageName: 'assets/chat_image.png',
-                      title: 'John Doe',
-                      detail: 'Lorem ipsum dolor sit amet consectetur.',
-                      duration: '2 min ago',
-                    ),
-                  );
-                },
-              ),
+              child: chatList != null
+                  ? ListView.builder(
+                      itemCount: chatList.length,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () =>
+                              Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ChatScreen(
+                              otherUserName:
+                                  '${chatList[index]['users_customers']['first_name']} ${chatList[index]['users_customers']['last_name']}',
+                              otherUserId: chatList[index]['users_customers']
+                                  ['users_customers_id'],
+                            ),
+                          )),
+                          child: CommonListTile(
+                            imageName: chatList[index]['users_customers']
+                                ['profile_pic'],
+                            title:
+                                '${chatList[index]['users_customers']['first_name']} ${chatList[index]['users_customers']['last_name']}',
+                            detail: chatList[index]['last_message']['message'],
+                            duration: chatList[index]['date'],
+                          ),
+                        );
+                      },
+                    )
+                  : ListView.builder(
+                      itemBuilder: (context, index) {
+                        return Shimmer.fromColors(
+                            child: Column(
+                              children: [
+                                Container(
+                                    margin: EdgeInsets.only(bottom: 15),
+                                    child: CommonListTileDummy()),
+                              ],
+                            ),
+                            baseColor: Colors.grey[500]!,
+                            highlightColor: Colors.grey[100]!);
+                      },
+                      itemCount: 4,
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true),
             ),
           ),
         ),

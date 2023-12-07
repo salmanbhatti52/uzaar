@@ -12,8 +12,10 @@ import '../services/restService.dart';
 import '../widgets/message_text_field.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key, required this.otherUserId});
+  const ChatScreen(
+      {super.key, required this.otherUserId, required this.otherUserName});
   final int otherUserId;
+  final String otherUserName;
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -27,17 +29,19 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<String> sendMessage() async {
     String message = msgTextFieldController.text.toString();
-
-    // messages.add({
-    //   'sender_id': userDataGV['userId'],
-    //   'date': messages.last['date'],
-    //   'users_customers': {
-    //     'profile_pic': messages.last['users_customers']['profile_pic']
-    //   },
-    //   'message': message
-    // });
-
     msgTextFieldController.clear();
+
+    setState(() {
+      messages.add({
+        'sender_id': userDataGV['userId'],
+        'date': 'Today',
+        'users_customers': {
+          'profile_pic': userDataGV['profilePathUrl'],
+        },
+        'message': message
+      });
+    });
+
     Response response = await sendPostRequest(action: 'user_chat', data: {
       'requestType': 'sendMessage',
       'users_customers_id': userDataGV['userId'],
@@ -45,7 +49,7 @@ class _ChatScreenState extends State<ChatScreen> {
       'message_type': 'text',
       'message': message
     });
-    setState(() {});
+
     print(response.statusCode);
     print(response.body);
     var decodedData = jsonDecode(response.body);
@@ -65,15 +69,18 @@ class _ChatScreenState extends State<ChatScreen> {
     String status = decodedData['status'];
     chatHistoryStatus = status;
     if (status == 'success') {
-      messages = decodedData['data'];
       if (mounted) {
-        setState(() {});
+        setState(() {
+          if (decodedData['data'].length > messages.length) {
+            messages = decodedData['data'];
+          }
+        });
       }
     }
   }
 
   callRepeatingFunction() {
-    _timer = Timer.periodic(Duration(seconds: 2), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
       getMessages();
     });
   }
@@ -83,13 +90,15 @@ class _ChatScreenState extends State<ChatScreen> {
     // TODO: implement initState
     super.initState();
     getMessages();
-    // callRepeatingFunction();
+    callRepeatingFunction();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
+    // if (_timer.isActive) {
     _timer.cancel();
+    // }
     super.dispose();
   }
 
@@ -108,7 +117,7 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         centerTitle: false,
         title: Text(
-          'John Doe',
+          widget.otherUserName,
           style: kAppBarTitleStyle,
         ),
       ),
@@ -194,8 +203,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 MessageTextField(
                   msgTextFieldController: msgTextFieldController,
-                  sendButtonTap: () async {
-                    await sendMessage();
+                  sendButtonTap: () {
+                    sendMessage();
                   },
                 ),
               ],

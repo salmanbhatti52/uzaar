@@ -78,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
       String? lastName = preferences.getString('last_name');
       String? email = preferences.getString('email');
       String? profilePic = preferences.getString('profile_pic');
+      String? profilePathUrl = preferences.getString('profile_path_url');
       String? phoneNumber = preferences.getString('phone_number');
       String? address = preferences.getString('address');
       String? latitude = preferences.getString('latitude');
@@ -92,6 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
         'lastName': lastName,
         'email': email,
         'profilePic': profilePic,
+        'profilePathUrl': profilePathUrl,
         'phoneNumber': phoneNumber,
         'address': address,
         'latitude': latitude,

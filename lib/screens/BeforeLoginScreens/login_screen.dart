@@ -258,6 +258,9 @@ class _LogInScreenState extends State<LogInScreen> {
                                     data['profile_pic'] != null
                                         ? imgBaseUrl + data['profile_pic']
                                         : '');
+                                await preferences.setString('profile_path_url',
+                                    data['profile_pic'] ?? '');
+
                                 await preferences.setString(
                                     'phone_number', data['phone'] ?? '');
                                 await preferences.setString(

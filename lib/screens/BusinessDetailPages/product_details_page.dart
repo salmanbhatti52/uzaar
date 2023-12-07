@@ -336,6 +336,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) {
                                   return ChatScreen(
+                                    otherUserName:
+                                        '${widget.productData['users_customers']['first_name']} ${widget.productData['users_customers']['last_name']}',
                                     otherUserId: widget
                                         .productData['users_customers_id'],
                                   );
