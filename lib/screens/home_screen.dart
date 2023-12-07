@@ -13,7 +13,7 @@ import 'package:Uzaar/widgets/featured_products_widget.dart';
 import 'package:Uzaar/widgets/featured_services_widget.dart';
 
 import 'package:Uzaar/widgets/search_field.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
