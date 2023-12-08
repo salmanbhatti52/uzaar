@@ -45,7 +45,8 @@ class RoundedMiniDropdownMenu extends StatelessWidget {
       this.textStyle,
       this.fillColor,
       this.colorFilter,
-      this.trailingIconName = 'drop-down-button'});
+      this.trailingIconName = 'drop-down-button',
+      required this.enabled});
   final Function(dynamic)? onSelected;
   final List<DropdownMenuEntry<Object?>> dropdownMenuEntries;
   final String? leadingIconName;
@@ -56,11 +57,13 @@ class RoundedMiniDropdownMenu extends StatelessWidget {
   final TextStyle? textStyle;
   final Color? fillColor;
   final ColorFilter? colorFilter;
+  final bool enabled;
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: kTextFieldBoxDecoration,
       child: DropdownMenu(
+        enabled: enabled,
         textStyle: textStyle ?? dropDownTextStyle,
         hintText: hintText,
         // selectedTrailingIcon: SvgIcon(imageName: 'assets/cat-selected.svg'),

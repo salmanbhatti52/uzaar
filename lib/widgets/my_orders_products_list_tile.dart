@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/utils/colors.dart';
 
+import '../services/restService.dart';
+
 final productNameTextStyle = GoogleFonts.outfit(
   fontSize: 16,
   fontWeight: FontWeight.w600,
@@ -28,7 +30,7 @@ final durationTextStyle = GoogleFonts.outfit(
 class MyOrdersProductsListTile extends StatelessWidget {
   final String productImage;
   final String productName;
-  final String productLocation;
+  // final String productLocation;
   final String productPrice;
   final String date;
   final String? offeredPrice;
@@ -38,7 +40,7 @@ class MyOrdersProductsListTile extends StatelessWidget {
   MyOrdersProductsListTile(
       {required this.productImage,
       required this.productName,
-      required this.productLocation,
+      // required this.productLocation,
       required this.productPrice,
       required this.date,
       this.offeredPrice,
@@ -64,7 +66,15 @@ class MyOrdersProductsListTile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Image.asset(productImage),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.network(
+              imgBaseUrl + productImage,
+              height: 60,
+              width: 74,
+              fit: BoxFit.cover,
+            ),
+          ),
           SizedBox(
             width: 8.0,
           ),
@@ -100,18 +110,18 @@ class MyOrdersProductsListTile extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        SvgPicture.asset(
-                          'assets/address-icon.svg',
-                          width: 14,
-                          height: 14,
-                        ),
+                        // SvgPicture.asset(
+                        //   'assets/address-icon.svg',
+                        //   width: 14,
+                        //   height: 14,
+                        // ),
                         SizedBox(
                           width: 4,
                         ),
-                        Text(
-                          productLocation,
-                          style: locationNameTextStyle,
-                        )
+                        // Text(
+                        //   productLocation,
+                        //   style: locationNameTextStyle,
+                        // )
                       ],
                     ),
                     allowPay == true
@@ -199,6 +209,29 @@ class MyOrdersProductsListTile extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MyOrdersProductsListTileDummy extends StatelessWidget {
+  MyOrdersProductsListTileDummy({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 80,
+      margin: EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
+      // padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: Colors.grey.withOpacity(0.3),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.14),
+            blurRadius: 4.0,
           ),
         ],
       ),

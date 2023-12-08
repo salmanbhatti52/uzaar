@@ -215,6 +215,7 @@ class SalesOrdersHousingsListTile extends StatelessWidget {
                       ],
                     ),
                     RoundedMiniDropdownMenu(
+                      enabled: true,
                       width: 115,
                       onSelected: onSelected,
                       initialSelection: initialSelection,

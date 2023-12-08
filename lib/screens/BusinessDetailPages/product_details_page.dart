@@ -368,7 +368,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     bottom: MediaQuery.of(context)
                                         .viewInsets
                                         .bottom),
-                                child: BottomSheetForSendOffer()),
+                                child: BottomSheetForSendOffer(
+                                  // buildContext: context,
+                                  listingData: widget.productData,
+                                )),
                           ),
                         ),
                         child: Row(

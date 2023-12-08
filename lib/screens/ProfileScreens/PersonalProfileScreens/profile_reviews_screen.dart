@@ -24,6 +24,7 @@ class _ProfileReviewsScreenState extends State<ProfileReviewsScreen> {
         Align(
           alignment: Alignment.topRight,
           child: RoundedMiniDropdownMenu(
+              enabled: true,
               width: 163,
               onSelected: (value) {
                 setState(() {

@@ -15,6 +15,10 @@ class _PendingProductsOfSalesOrdersState
     extends State<PendingProductsOfSalesOrders> {
   String offerStatus = 'Pending';
   List<String> offerStatuses = ['Pending', 'Accept', 'Reject'];
+
+  acceptOffer() async {}
+
+  rejectOffer() {}
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -27,15 +31,18 @@ class _PendingProductsOfSalesOrdersState
               ));
             },
             child: SalesOrdersProductsListTile(
-              productImage: 'assets/listed_pro_img.png',
+              enabled: true,
+              productImage: 'uploads/listings_images/1702018981351262819.jpeg',
               productName: 'Iphone 14',
-              productLocation: 'Los Angeles',
+              // productLocation: 'Los Angeles',
               productPrice: '\$12',
               date: '08/08/2023',
-              onSelected: (selectedOffer) {
+              onSelected: (selectedOffer) async {
                 setState(() {
                   offerStatus = selectedOffer;
                 });
+                if (offerStatus == 'Accept') {}
+                if (offerStatus == 'Reject') {}
               },
               initialSelection: offerStatus,
               dropdownMenuEntries: offerStatuses

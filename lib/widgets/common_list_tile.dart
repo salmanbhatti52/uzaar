@@ -19,6 +19,7 @@ final durationTextStyle = GoogleFonts.outfit(
 
 class CommonListTile extends StatelessWidget {
   final String imageName;
+  final String? notificationImage;
   final String detail;
   final String duration;
   final String title;
@@ -26,12 +27,13 @@ class CommonListTile extends StatelessWidget {
       {required this.imageName,
       required this.title,
       required this.detail,
-      required this.duration});
+      required this.duration,
+      this.notificationImage});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 7),
+      margin: EdgeInsets.symmetric(vertical: 7, horizontal: 2),
       padding: EdgeInsets.all(10),
       width: MediaQuery.sizeOf(context).width,
       // height: 80.h,
@@ -44,19 +46,25 @@ class CommonListTile extends StatelessWidget {
       decoration: kCardBoxDecoration,
       child: Row(
         children: [
-          CircleAvatar(
-            maxRadius: 30,
-            backgroundColor: Color(0xFFD9D9D9),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: Image.network(
-                imgBaseUrl + imageName,
-                height: 60,
-                width: 60,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          notificationImage == null
+              ? CircleAvatar(
+                  maxRadius: 30,
+                  backgroundColor: Color(0xFFD9D9D9),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: Image.network(
+                      imgBaseUrl + imageName,
+                      height: 60,
+                      width: 60,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )
+              : Image.asset(
+                  notificationImage!,
+                  height: 60,
+                  width: 60,
+                ),
           SizedBox(
             width: 9,
           ),

@@ -1,4 +1,5 @@
 import 'package:Uzaar/screens/MyOrderScreens/my_order_detail.dart';
+
 import 'package:Uzaar/widgets/my_orders_products_list_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -23,9 +24,9 @@ class _PendingProductsOfMyOrdersState extends State<PendingProductsOfMyOrders> {
               ));
             },
             child: MyOrdersProductsListTile(
-              productImage: 'assets/listed_pro_img.png',
+              productImage: 'uploads/listings_images/17013232441588376617.jpeg',
               productName: 'Iphone 14',
-              productLocation: 'Los Angeles',
+              // productLocation: 'Los Angeles',
               productPrice: '\$12',
               date: '08/08/2023',
             ),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:Uzaar/screens/SalesOrderScreens/OfferTabScreens/offered_housings_of_sales_orders.dart';
 import 'package:Uzaar/screens/SalesOrderScreens/OfferTabScreens/offered_products_of_sales_orders.dart';
 import 'package:Uzaar/screens/SalesOrderScreens/OfferTabScreens/offered_services_of_sales_orders.dart';
@@ -10,7 +12,9 @@ import 'package:Uzaar/screens/SalesOrderScreens/PreviousTabScreens/previous_serv
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:http/http.dart';
+import 'package:intl/intl.dart';
+import '../../services/restService.dart';
 import '../../utils/Colors.dart';
 import '../../widgets/business_type_button.dart';
 import '../../widgets/mini_dropdown_menu.dart';
@@ -26,6 +30,44 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
   int selectedCategory = 2;
   String selectedBusiness = 'Products';
   final List<String> businessTypes = ['Products', 'Services', 'Housing'];
+  String salesProductOffersErrMsg = '';
+  List<dynamic> salesOrderedProductOffers = [];
+
+  getMyProductSalesOrdersOffers() async {
+    Response response = await sendPostRequest(
+        action: 'get_sales_listings_orders_offers',
+        data: {'users_customers_id': userDataGV['userId']});
+    print(response.statusCode);
+    print(response.body);
+    var decodedData = jsonDecode(response.body);
+    String status = decodedData['status'];
+    if (status == 'success') {
+      if (mounted) {
+        setState(() {
+          salesOrderedProductOffers = decodedData['data'];
+          for (dynamic offer in salesOrderedProductOffers) {
+            DateTime dateTime = DateTime.parse(offer['date_added']);
+            offer['date_added'] = DateFormat('dd/MM/yyyy').format(dateTime);
+          }
+        });
+      }
+    }
+    if (status == 'error') {
+      if (mounted) {
+        setState(() {
+          salesProductOffersErrMsg = decodedData['message'];
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getMyProductSalesOrdersOffers();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,6 +156,7 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
                   style: kBodyHeadingTextStyle,
                 ),
                 RoundedMiniDropdownMenu(
+                    enabled: true,
                     width: 120,
                     onSelected: (value) {
                       setState(() {
@@ -135,7 +178,9 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
               height: 20,
             ),
             if (selectedCategory == 1 && selectedBusiness == 'Products')
-              OfferedProductsOfSalesOrders()
+              OfferedProductsOfSalesOrders(
+                  salesOrderedProductOffers: salesOrderedProductOffers,
+                  salesProductOffersErrMsg: salesProductOffersErrMsg)
             else if (selectedCategory == 1 && selectedBusiness == 'Services')
               OfferedServicesOfSalesOrders()
             else if (selectedCategory == 1 && selectedBusiness == 'Housing')

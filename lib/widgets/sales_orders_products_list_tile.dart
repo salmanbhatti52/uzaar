@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Uzaar/utils/colors.dart';
 
+import '../services/restService.dart';
 import 'mini_dropdown_menu.dart';
 
 final productNameTextStyle = GoogleFonts.outfit(
@@ -30,12 +31,12 @@ final durationTextStyle = GoogleFonts.outfit(
 class SalesOrdersProductsListTile extends StatelessWidget {
   final String productImage;
   final String productName;
-  final String productLocation;
+  // final String productLocation;
   final String productPrice;
   final String date;
   final String? offeredPrice;
   final dynamic Function(dynamic)? onSelected;
-
+  final bool enabled;
   final String? initialSelection;
 
   final List<DropdownMenuEntry<String>> dropdownMenuEntries;
@@ -46,7 +47,7 @@ class SalesOrdersProductsListTile extends StatelessWidget {
   SalesOrdersProductsListTile(
       {required this.productImage,
       required this.productName,
-      required this.productLocation,
+      // required this.productLocation,
       required this.productPrice,
       required this.date,
       this.offeredPrice,
@@ -55,7 +56,8 @@ class SalesOrdersProductsListTile extends StatelessWidget {
       // this.offerStatus,
       this.initialSelection,
       this.onSelected,
-      required this.dropdownMenuEntries});
+      required this.dropdownMenuEntries,
+      required this.enabled});
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +77,15 @@ class SalesOrdersProductsListTile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Image.asset(productImage),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.network(
+              imgBaseUrl + productImage,
+              height: 60,
+              width: 74,
+              fit: BoxFit.cover,
+            ),
+          ),
           SizedBox(
             width: 8.0,
           ),
@@ -106,35 +116,35 @@ class SalesOrdersProductsListTile extends StatelessWidget {
                 SizedBox(
                   height: 4,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/address-icon.svg',
-                          width: 14,
-                          height: 14,
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Text(
-                          productLocation,
-                          style: locationNameTextStyle,
-                        )
-                      ],
-                    ),
-                    // allowPay == true
-                    //     ? GestureDetector(
-                    //         onTap: onTapPayNow,
-                    //         child: Text(
-                    //           'Pay Now',
-                    //           style: kFontTwelveSixHPB,
-                    //         ))
-                    //     : const SizedBox()
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Row(
+                //       children: [
+                //         SvgPicture.asset(
+                //           'assets/address-icon.svg',
+                //           width: 14,
+                //           height: 14,
+                //         ),
+                //         SizedBox(
+                //           width: 4,
+                //         ),
+                //         Text(
+                //           productLocation,
+                //           style: locationNameTextStyle,
+                //         )
+                //       ],
+                //     ),
+                //     allowPay == true
+                //         ? GestureDetector(
+                //             onTap: onTapPayNow,
+                //             child: Text(
+                //               'Pay Now',
+                //               style: kFontTwelveSixHPB,
+                //             ))
+                //         : const SizedBox()
+                //   ],
+                // ),
                 SizedBox(
                   height: 4,
                 ),
@@ -186,6 +196,7 @@ class SalesOrdersProductsListTile extends StatelessWidget {
                     ),
                     // offerStatus != null?
                     RoundedMiniDropdownMenu(
+                      enabled: enabled,
                       width: 115,
                       onSelected: onSelected,
                       initialSelection: initialSelection,

@@ -132,6 +132,7 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                           ],
                         ),
                         RoundedMiniDropdownMenu(
+                          enabled: true,
                           width: 115,
                           onSelected: (selectedOffer) {
                             setState(() {
@@ -163,6 +164,7 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                       height: 10,
                     ),
                     RoundedMiniDropdownMenu(
+                      enabled: true,
                       width: 115,
                       onSelected: (selectedOffer) {
                         setState(() {

@@ -24,22 +24,29 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   getChatList() async {
     Response response = await sendPostRequest(
-        action: 'get_chat_list', data: {'users_customers_id': '38'});
+        action: 'get_chat_list',
+        data: {'users_customers_id': userDataGV['userId']});
     print(response.statusCode);
     print(response.body);
     var decodedData = jsonDecode(response.body);
     String status = decodedData['status'];
     if (status == 'success') {
-      setState(() {
-        if (decodedData['data'] != null) {
-          chatList = decodedData['data'];
-        } else {
-          errorMessage = decodedData['message'];
-        }
-      });
+      if (mounted) {
+        setState(() {
+          if (decodedData['data'] != null) {
+            chatList = decodedData['data'];
+          } else {
+            errorMessage = decodedData['message'];
+          }
+        });
+      }
     }
     if (status == 'error') {
-      errorMessage = decodedData['message'];
+      if (mounted) {
+        setState(() {
+          errorMessage = decodedData['message'];
+        });
+      }
     }
   }
 

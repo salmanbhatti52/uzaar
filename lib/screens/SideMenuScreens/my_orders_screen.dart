@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:Uzaar/screens/MyOrderScreens/OfferTabScreens/offered_housings_of_my_orders.dart';
 import 'package:Uzaar/screens/MyOrderScreens/OfferTabScreens/offered_products_of_my_orders.dart';
 import 'package:Uzaar/screens/MyOrderScreens/OfferTabScreens/offered_services_of_my_orders.dart';
@@ -10,7 +12,10 @@ import 'package:Uzaar/screens/MyOrderScreens/PreviousTabScreens/previous_service
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart';
+import 'package:intl/intl.dart';
 
+import '../../services/restService.dart';
 import '../../utils/Colors.dart';
 import '../../widgets/business_type_button.dart';
 import '../../widgets/mini_dropdown_menu.dart';
@@ -26,6 +31,47 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
   int selectedCategory = 2;
   String selectedBusiness = 'Products';
   final List<String> businessTypes = ['Products', 'Services', 'Housing'];
+  String orderedProductOffersErrMsg = '';
+  List<dynamic> myOrderedProductOffers = [];
+  getMyProductOrdersOffers() async {
+    Response response = await sendPostRequest(
+        action: 'get_listings_orders_offers',
+        data: {'users_customers_id': userDataGV['userId']});
+    print(response.statusCode);
+    print(response.body);
+    var decodedData = jsonDecode(response.body);
+    String status = decodedData['status'];
+    if (status == 'success') {
+      if (mounted) {
+        setState(() {
+          myOrderedProductOffers = decodedData['data'];
+          for (dynamic offer in myOrderedProductOffers) {
+            DateTime dateTime = DateTime.parse(offer['date_added']);
+            offer['date_added'] = DateFormat('dd/MM/yyyy').format(dateTime);
+            if (offer['status'] != 'Pending') {
+              DateTime dateTime = DateTime.parse(offer['date_modified']);
+              offer['date_modified'] =
+                  DateFormat('dd/MM/yyyy').format(dateTime);
+            }
+          }
+        });
+      }
+    }
+    if (status == 'error') {
+      if (mounted) {
+        setState(() {
+          orderedProductOffersErrMsg = decodedData['message'];
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getMyProductOrdersOffers();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +161,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   style: kBodyHeadingTextStyle,
                 ),
                 RoundedMiniDropdownMenu(
+                    enabled: true,
                     width: 120,
                     onSelected: (value) {
                       setState(() {
@@ -136,7 +183,10 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
               height: 20,
             ),
             if (selectedCategory == 1 && selectedBusiness == 'Products')
-              OfferedProductsOfMyOrders()
+              OfferedProductsOfMyOrders(
+                myOrderedProductOffers: myOrderedProductOffers,
+                orderedProductOffersErrMsg: orderedProductOffersErrMsg,
+              )
             else if (selectedCategory == 1 && selectedBusiness == 'Services')
               OfferedServicesOfMyOrders()
             else if (selectedCategory == 1 && selectedBusiness == 'Housing')

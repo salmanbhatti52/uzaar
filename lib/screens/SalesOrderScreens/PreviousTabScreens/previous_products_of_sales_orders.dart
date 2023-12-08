@@ -47,9 +47,9 @@ class _PreviousProductsOfSalesOrdersState
               );
             },
             child: MyOrdersProductsListTile(
-              productImage: 'assets/listed_pro_img.png',
+              productImage: 'uploads/listings_images/17013232441588376617.jpeg',
               productName: 'Iphone 14',
-              productLocation: 'Los Angeles',
+              // productLocation: 'Los Angeles',
               productPrice: '\$12',
               date: '08/08/2023',
             ),
