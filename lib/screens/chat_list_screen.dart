@@ -58,6 +58,18 @@ class _MessagesScreenState extends State<MessagesScreen> {
     getChatList();
   }
 
+  String getMessageDetail(dynamic lastMessage) {
+    if (lastMessage is Map<String, dynamic>) {
+      return lastMessage['message'] ?? 'No message available';
+    } else if (lastMessage is String) {
+      // If last_message is a string, use it directly
+      return lastMessage;
+    }
+
+    // Default message if the format is unexpected
+    return 'Unexpected message format';
+  }
+
   // init() async{
   //  await getChatList();
   // }
@@ -113,7 +125,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                 ['profile_pic'],
                             title:
                                 '${chatList[index]['users_customers']['first_name']} ${chatList[index]['users_customers']['last_name']}',
-                            detail: chatList[index]['last_message']['message'],
+                            detail: getMessageDetail(
+                                chatList[index]['last_message']),
                             duration: chatList[index]['date'],
                           ),
                         );

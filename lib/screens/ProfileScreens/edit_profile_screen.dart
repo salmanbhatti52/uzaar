@@ -331,12 +331,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 data: {
                                   'users_customers_id':
                                       userDataGV['userId'].toString(),
-                                  'first_name':
-                                      firstNameController.text.toString(),
-                                  'last_name':
-                                      lastNameController.text.toString(),
-                                  'phone':
-                                      phoneNumberController.text.toString(),
+                                  'first_name': firstNameController.text.trim(),
+                                  'last_name': lastNameController.text.trim(),
+                                  'phone': phoneNumberController.text.trim(),
                                   'address': addressController.text.toString(),
                                   'latitude': latitude,
                                   'longitude': longitude
