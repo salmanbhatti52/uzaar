@@ -539,7 +539,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     top: 14,
                   ),
                   child: SizedBox(
-                    height: 187,
+                    height: 180,
                     child: aSellerOtherFeaturedProducts != null
                         ? ListView.builder(
                             itemCount: aSellerOtherFeaturedProducts.length,
@@ -559,7 +559,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                         ['listings_categories']['name'],
                                 productName: aSellerOtherFeaturedProducts[index]
                                     ['name'],
-                                productLocation: 'California',
+                                // productLocation: 'California',
                                 productPrice:
                                     aSellerOtherFeaturedProducts[index]
                                         ['price'],

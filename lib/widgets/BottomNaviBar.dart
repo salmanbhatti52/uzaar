@@ -21,7 +21,13 @@ import 'package:Uzaar/utils/colors.dart';
 class BottomNavBar extends StatefulWidget {
   static const String id = 'bottom_navbar';
   final bool? loginAsGuest;
-  const BottomNavBar({super.key, this.loginAsGuest});
+  final int requiredScreenIndex;
+  final int? requiredListingTypeIndex;
+  BottomNavBar(
+      {super.key,
+      this.loginAsGuest,
+      required this.requiredScreenIndex,
+      this.requiredListingTypeIndex});
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -32,7 +38,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   final List _pages = [
     const HomeScreen(),
-    const ExploreScreen(),
+    ExploreScreen(),
     const SellScreen(),
     // const ProductAddScreenOne(),
     // const ProductAddScreenTwo(),
@@ -47,6 +53,22 @@ class _BottomNavBarState extends State<BottomNavBar> {
       _currentIndex = index;
     });
     print(_currentIndex);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    init();
+  }
+
+  init() {
+    setState(() {
+      _currentIndex = widget.requiredScreenIndex;
+      _pages[1] = ExploreScreen(
+        requiredListingIndex: widget.requiredListingTypeIndex,
+      );
+    });
   }
 
   bool get isIos =>

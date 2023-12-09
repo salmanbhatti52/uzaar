@@ -606,7 +606,9 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return BottomNavBar();
+                                      return BottomNavBar(
+                                        requiredScreenIndex: 0,
+                                      );
                                     },
                                   ),
                                   (route) => false,

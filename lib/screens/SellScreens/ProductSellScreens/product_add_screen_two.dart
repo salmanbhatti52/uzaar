@@ -226,7 +226,9 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return BottomNavBar();
+                                    return BottomNavBar(
+                                      requiredScreenIndex: 0,
+                                    );
                                   },
                                 ),
                                 (route) => false,

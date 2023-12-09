@@ -214,7 +214,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                         crossAxisCount: 2,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
-                        mainAxisExtent: 187,
+                        mainAxisExtent: 180,
                       ),
                       itemCount: allListingsProductsGV.length,
                       itemBuilder: (context, index) {
@@ -227,7 +227,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                           productCategory: allListingsProductsGV[index]
                               ['listings_categories']['name'],
                           productName: allListingsProductsGV[index]['name'],
-                          productLocation: 'California',
+                          // productLocation: 'California',
                           productPrice: allListingsProductsGV[index]['price'],
                           onImageTap: () {
                             Navigator.of(context).push(

@@ -406,7 +406,9 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return BottomNavBar();
+                                      return BottomNavBar(
+                                        requiredScreenIndex: 0,
+                                      );
                                     },
                                   ),
                                   (route) => false,

@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:Uzaar/screens/BusinessDetailPages/housing_details_page.dart';
+import 'package:Uzaar/screens/ExploreScreens/explore_screen.dart';
 import 'package:Uzaar/services/restService.dart';
+import 'package:Uzaar/widgets/BottomNaviBar.dart';
 import 'package:Uzaar/widgets/featured_housing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,6 +47,9 @@ class _HomeScreenState extends State<HomeScreen> {
   dynamic featuredProducts;
   dynamic featuredServices;
   dynamic featuredHousings;
+  String featuredProductsErrMsg = '';
+  String featuredServicesErrMsg = '';
+  String featuredHousingsErrMsg = '';
 
   @override
   void initState() {
@@ -336,8 +341,8 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement dispose
     super.dispose();
     selectedListingTypeGV = listingTypesGV?['data'][0]['name'];
-    // listingSelectedCategoryGV = productListingCategoriesGV[0]['name'];
     listingSelectedCategoryGV = '';
+    // selectedListingTypeGV = 'Products';
   }
 
   int selectedCategory = 1;
@@ -748,7 +753,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: kBodyHeadingTextStyle,
                                   ),
                                   GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => BottomNavBar(
+                                          requiredScreenIndex: 1,
+                                          requiredListingTypeIndex: 1,
+                                        ),
+                                      ));
+                                    },
                                     child: Text(
                                       'View All',
                                       style: kColoredTextStyle,
@@ -761,7 +774,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Container(
                                 decoration: BoxDecoration(color: Colors.white),
-                                height: 187,
+                                height: 180,
                                 child: featuredProducts != null
                                     ? ListView.builder(
                                         itemBuilder: (context, index) {
@@ -779,7 +792,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ['name'],
                                             productName: featuredProducts[index]
                                                 ['name'],
-                                            productLocation: 'California',
+                                            // productLocation: 'California',
                                             productPrice:
                                                 featuredProducts[index]
                                                     ['price'],
@@ -997,7 +1010,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: kBodyHeadingTextStyle,
                                   ),
                                   GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => BottomNavBar(
+                                          requiredScreenIndex: 1,
+                                          requiredListingTypeIndex: 2,
+                                        ),
+                                      ));
+                                    },
                                     child: Text(
                                       'View All',
                                       style: kColoredTextStyle,
@@ -1237,7 +1258,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: kBodyHeadingTextStyle,
                                   ),
                                   GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => BottomNavBar(
+                                          requiredScreenIndex: 1,
+                                          requiredListingTypeIndex: 3,
+                                        ),
+                                      ));
+                                    },
                                     child: Text(
                                       'View All',
                                       style: kColoredTextStyle,

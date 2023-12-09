@@ -620,7 +620,9 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return BottomNavBar();
+                                      return BottomNavBar(
+                                        requiredScreenIndex: 0,
+                                      );
                                     },
                                   ),
                                   (route) => false,

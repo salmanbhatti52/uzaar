@@ -15,8 +15,8 @@ import 'explore_products_screen.dart';
 import 'explore_services_screen.dart';
 
 class ExploreScreen extends StatefulWidget {
-  const ExploreScreen({super.key});
-
+  ExploreScreen({super.key, this.requiredListingIndex});
+  int? requiredListingIndex;
   @override
   State<ExploreScreen> createState() => _ExploreScreenState();
 }
@@ -30,10 +30,21 @@ class _ExploreScreenState extends State<ExploreScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    init();
+  }
+
+  init() {
+    print('widget.requiredListingIndex: ${widget.requiredListingIndex}');
+    setState(() {
+      if (widget.requiredListingIndex != null) {
+        selectedListingType = widget.requiredListingIndex!;
+      }
+      widget.requiredListingIndex = null;
+    });
   }
 
   int _tapCount = 0;
-  int selectedCategory = 1;
+  int selectedListingType = 1;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -144,16 +155,18 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                selectedCategory = 1;
+                                selectedListingType = 1;
                               });
                             },
                             child: BusinessTypeButton(
                               businessName: 'Products',
-                              gradient: selectedCategory == 1 ? gradient : null,
-                              buttonBackground: selectedCategory != 1
+                              gradient:
+                                  selectedListingType == 1 ? gradient : null,
+                              buttonBackground: selectedListingType != 1
                                   ? grey.withOpacity(0.3)
                                   : null,
-                              textColor: selectedCategory == 1 ? white : grey,
+                              textColor:
+                                  selectedListingType == 1 ? white : grey,
                             ),
                           ),
                           SizedBox(
@@ -162,16 +175,18 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                selectedCategory = 2;
+                                selectedListingType = 2;
                               });
                             },
                             child: BusinessTypeButton(
                               businessName: 'Services',
-                              gradient: selectedCategory == 2 ? gradient : null,
-                              buttonBackground: selectedCategory != 2
+                              gradient:
+                                  selectedListingType == 2 ? gradient : null,
+                              buttonBackground: selectedListingType != 2
                                   ? grey.withOpacity(0.3)
                                   : null,
-                              textColor: selectedCategory == 2 ? white : grey,
+                              textColor:
+                                  selectedListingType == 2 ? white : grey,
                             ),
                           ),
                           SizedBox(
@@ -180,16 +195,18 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                selectedCategory = 3;
+                                selectedListingType = 3;
                               });
                             },
                             child: BusinessTypeButton(
                               businessName: 'Housing',
-                              gradient: selectedCategory == 3 ? gradient : null,
-                              buttonBackground: selectedCategory != 3
+                              gradient:
+                                  selectedListingType == 3 ? gradient : null,
+                              buttonBackground: selectedListingType != 3
                                   ? grey.withOpacity(0.3)
                                   : null,
-                              textColor: selectedCategory == 3 ? white : grey,
+                              textColor:
+                                  selectedListingType == 3 ? white : grey,
                             ),
                           ),
                         ],
@@ -206,9 +223,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ],
                   ),
                 ),
-                selectedCategory == 1
+                selectedListingType == 1
                     ? ExploreProductsScreen()
-                    : selectedCategory == 2
+                    : selectedListingType == 2
                         ? ExploreServicesScreen()
                         : ExploreHousingScreen()
                 // : Container(),

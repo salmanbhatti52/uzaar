@@ -37,7 +37,7 @@ class FeaturedProductsWidget extends StatelessWidget {
   final String image;
   final String productCategory;
   final String productName;
-  final String productLocation;
+  // final String productLocation;
   final String productPrice;
   final String productCondition;
   final void Function()? onOptionTap;
@@ -47,7 +47,7 @@ class FeaturedProductsWidget extends StatelessWidget {
       required this.image,
       required this.productCategory,
       required this.productName,
-      required this.productLocation,
+      // required this.productLocation,
       required this.productPrice,
       required this.onOptionTap,
       required this.onImageTap,
@@ -136,37 +136,37 @@ class FeaturedProductsWidget extends StatelessWidget {
                     style: kCardHeadingTextStyle,
                   ),
                 ),
-                Text(
-                  productCondition,
-                  style: kNewTagTextStyle,
-                ),
                 SizedBox(
-                  height: 3,
+                  height: 5,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/address-icon.svg',
-                          width: 14,
-                          height: 14,
-                        ),
-                        SizedBox(
-                          width: 2.w,
-                        ),
-                        SizedBox(
-                          width: 48,
-                          child: Text(
-                            productLocation,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            softWrap: true,
-                            style: kLocationTexStyle,
-                          ),
-                        ),
-                      ],
+                    // Row(
+                    //   children: [
+                    //     SvgPicture.asset(
+                    //       'assets/address-icon.svg',
+                    //       width: 14,
+                    //       height: 14,
+                    //     ),
+                    //     SizedBox(
+                    //       width: 2.w,
+                    //     ),
+                    //     SizedBox(
+                    //       width: 48,
+                    //       child: Text(
+                    //         productLocation,
+                    //         overflow: TextOverflow.ellipsis,
+                    //         maxLines: 1,
+                    //         softWrap: true,
+                    //         style: kLocationTexStyle,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    Text(
+                      productCondition,
+                      style: kNewTagTextStyle,
                     ),
                     Row(
                       children: [
@@ -179,7 +179,7 @@ class FeaturedProductsWidget extends StatelessWidget {
                           width: 3,
                         ),
                         Container(
-                          constraints: BoxConstraints(maxWidth: 48),
+                          constraints: BoxConstraints(maxWidth: 54),
                           child: Text('\$$productPrice',
                               style: kPriceTextStyle,
                               overflow: TextOverflow.ellipsis,

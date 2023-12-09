@@ -297,6 +297,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                               MaterialPageRoute(
                             builder: (context) {
                               return BottomNavBar(
+                                requiredScreenIndex: 0,
                                 loginAsGuest: false,
                               );
                             },
@@ -414,6 +415,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                       MaterialPageRoute(
                                     builder: (context) {
                                       return BottomNavBar(
+                                        requiredScreenIndex: 0,
                                         loginAsGuest: false,
                                       );
                                     },

@@ -282,6 +282,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                 Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
                                         builder: (context) => BottomNavBar(
+                                              requiredScreenIndex: 0,
                                               loginAsGuest: false,
                                             )),
                                     (Route<dynamic> route) => false);
@@ -343,6 +344,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
                                     builder: (context) => BottomNavBar(
+                                          requiredScreenIndex: 0,
                                           loginAsGuest: true,
                                         )),
                                 (Route<dynamic> route) => false);

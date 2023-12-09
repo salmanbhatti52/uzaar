@@ -63,7 +63,7 @@ class _SellerListingsScreenState extends State<SellerListingsScreen> {
                       image: 'assets/product-ph.png',
                       productCategory: 'Electronics',
                       productName: 'Iphone 14',
-                      productLocation: 'Los Angeles',
+                      // productLocation: 'Los Angeles',
                       productPrice: '120',
                       onImageTap: () {
                         Navigator.of(context).push(

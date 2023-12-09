@@ -39,10 +39,12 @@ class _CustomSplashState extends State<CustomSplash> {
           builder: (context) {
             return userId != null && loginAsGuest == false
                 ? BottomNavBar(
+                    requiredScreenIndex: 0,
                     loginAsGuest: false,
                   )
                 : loginAsGuest == true
                     ? BottomNavBar(
+                        requiredScreenIndex: 0,
                         loginAsGuest: true,
                       )
                     : OnBoardingScreen();
