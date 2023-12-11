@@ -56,15 +56,45 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     allListingsServicesGV = decodedResponse['data'];
-    if (mounted && allListingsServicesGV.isNotEmpty) {
+    if (mounted) {
       setState(() {
         allListingsServices = allListingsServicesGV;
+        if (allListingsServices.isEmpty) {
+          allListingServicesErrMsg = 'No listing found.';
+        }
       });
-    } else {
-      allListingServicesErrMsg = 'No listing found.';
     }
 
     print('allListingsServices: $allListingsServices');
+  }
+
+  searchData(String value) {
+    print(value);
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        print(value);
+        List<dynamic> filteredItems = [];
+
+        for (var service in allListingsServicesGV) {
+          String serviceName = service['name'];
+          serviceName = serviceName.toLowerCase();
+          if (serviceName.contains(value.toLowerCase())) {
+            filteredItems.add(service);
+          }
+        }
+        if (mounted) {
+          setState(() {
+            allListingsServices = filteredItems;
+            if (allListingsServices.isEmpty) {
+              allListingServicesErrMsg = 'No listing found.';
+            } else {
+              allListingServicesErrMsg = '';
+            }
+          });
+        }
+      },
+    );
   }
 
   getServicesPriceRanges() async {
@@ -84,33 +114,6 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
     if (mounted) {
       setState(() {});
     }
-  }
-
-  searchData(String value) {
-    print(value);
-    Future.delayed(
-      const Duration(seconds: 1),
-      () {
-        print(value);
-        List<dynamic> filteredItems = [];
-
-        for (var service in allListingsServicesGV) {
-          String serviceName = service['name'];
-          serviceName = serviceName.toLowerCase();
-          if (serviceName.contains(value.toLowerCase())) {
-            filteredItems.add(service);
-          }
-        }
-        setState(() {
-          allListingsServices = filteredItems;
-          if (filteredItems.isEmpty) {
-            allListingServicesErrMsg = 'No listing found.';
-          } else {
-            allListingServicesErrMsg = '';
-          }
-        });
-      },
-    );
   }
 
   init() async {

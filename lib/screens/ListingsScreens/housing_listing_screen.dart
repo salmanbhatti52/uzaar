@@ -19,7 +19,7 @@ class HousingListingScreen extends StatefulWidget {
       required this.selectedCategory,
       required this.boostingPackages});
   final int selectedCategory;
-  final dynamic boostingPackages;
+  final List<dynamic> boostingPackages;
 
   @override
   State<HousingListingScreen> createState() => _HousingListingScreenState();
@@ -28,7 +28,8 @@ class HousingListingScreen extends StatefulWidget {
 class _HousingListingScreenState extends State<HousingListingScreen> {
   late int _selectedPackage;
   dynamic selectedOption;
-  dynamic listedHousings;
+  List<dynamic> listedHousings = [...listedHousingsGV];
+  String listedHousingsErrMsg = '';
   updateSelectedPackage(value) {
     _selectedPackage = value;
     print(_selectedPackage);
@@ -42,9 +43,28 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    listedHousings = decodedResponse['data'];
+    String status = decodedResponse['status'];
+    listedHousingsGV = [];
+    if (status == 'success') {
+      listedHousingsGV = decodedResponse['data'];
+      if (mounted) {
+        setState(() {
+          listedHousings = listedHousingsGV;
+        });
+      }
+    }
+
+    if (status == 'error') {
+      if (mounted) {
+        setState(() {
+          if (listedHousings.isEmpty) {
+            listedHousingsErrMsg = 'No listing found.';
+          }
+        });
+      }
+    }
+
     print('listedHousings: $listedHousings');
-    setState(() {});
   }
 
   Future<String> deleteSelectedHouse({required int houseListingId}) async {
@@ -74,7 +94,7 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _selectedPackage = widget.boostingPackages?['data'][0]['packages_id'];
+    _selectedPackage = widget.boostingPackages[0]['packages_id'];
     init();
   }
 
@@ -85,7 +105,7 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: listedHousings != null
+      child: listedHousings.isNotEmpty
           ? ListView.builder(
               itemBuilder: (context, index) {
                 return HousingListTile(
@@ -117,7 +137,7 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                     'Boost your listings to get more orders',
                                 title: 'Boost Listings',
                                 itemsList: List.generate(
-                                  widget.boostingPackages?['data'].length,
+                                  widget.boostingPackages.length,
                                   (index) => SizedBox(
                                     height: 35,
                                     child: ListTile(
@@ -125,15 +145,15 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                           EdgeInsets.symmetric(horizontal: 5),
                                       horizontalTitleGap: 5,
                                       title: Text(
-                                        '\$${widget.boostingPackages?['data'][index]['price']} ${widget.boostingPackages?['data'][index]['name']}',
+                                        '\$${widget.boostingPackages[index]['price']} ${widget.boostingPackages[index]['name']}',
                                         style: kTextFieldInputStyle,
                                       ),
                                       leading: Radio(
                                         activeColor: primaryBlue,
                                         fillColor: MaterialStatePropertyAll(
                                             primaryBlue),
-                                        value: widget.boostingPackages?['data']
-                                            [index]['packages_id'],
+                                        value: widget.boostingPackages[index]
+                                            ['packages_id'],
                                         groupValue: _selectedPackage,
                                         onChanged: (value) {
                                           stateSetterObject(() {
@@ -182,26 +202,30 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
               scrollDirection: Axis.vertical,
               physics: BouncingScrollPhysics(),
             )
-          : Shimmer.fromColors(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: 80,
-                    margin:
-                        EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Colors.grey.withOpacity(0.3),
-                    ),
-                  );
-                },
-                itemCount: 5,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
-              ),
-              baseColor: Colors.grey[500]!,
-              highlightColor: Colors.grey[100]!),
+          : listedHousings.isEmpty && listedHousingsErrMsg.isEmpty
+              ? Shimmer.fromColors(
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Container(
+                        height: 80,
+                        margin: EdgeInsets.only(
+                            top: 2, left: 5, right: 5, bottom: 14),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Colors.grey.withOpacity(0.3),
+                        ),
+                      );
+                    },
+                    itemCount: 5,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: BouncingScrollPhysics(),
+                  ),
+                  baseColor: Colors.grey[500]!,
+                  highlightColor: Colors.grey[100]!)
+              : Center(
+                  child: Text(listedHousingsErrMsg),
+                ),
     );
   }
 }

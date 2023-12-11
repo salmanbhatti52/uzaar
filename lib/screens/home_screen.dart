@@ -51,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String featuredServicesErrMsg = '';
   String featuredHousingsErrMsg = '';
   int selectedListingType = 1;
+  int _tapCount = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -147,9 +148,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (status == 'success') {
       productListingCategoriesGV = decodedResponse['data'];
       print('productListingCategoriesGV: $productListingCategoriesGV');
-      // if (listingSelectedCategoryGV.isEmpty) {
-      //   listingSelectedCategoryGV = productListingCategoriesGV[0]['name'];
-      // }
 
       // fetching and storing data of category Names in  productListingCategoriesNames
       if (productListingCategoriesNamesGV.isEmpty) {
@@ -307,7 +305,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           setState(() {
             featuredProducts = filteredItems;
-            if (filteredItems.isEmpty) {
+            if (featuredProducts.isEmpty) {
               featuredProductsErrMsg = 'No listing found.';
             } else {
               featuredProductsErrMsg = '';
@@ -324,7 +322,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           setState(() {
             featuredServices = filteredItems;
-            if (filteredItems.isEmpty) {
+            if (featuredServices.isEmpty) {
               featuredServicesErrMsg = 'No listing found.';
             } else {
               featuredServicesErrMsg = '';
@@ -341,7 +339,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           setState(() {
             featuredHousings = filteredItems;
-            if (filteredItems.isEmpty) {
+            if (featuredHousings.isEmpty) {
               featuredHousingsErrMsg = 'No listing found.';
             } else {
               featuredHousingsErrMsg = '';
@@ -360,8 +358,6 @@ class _HomeScreenState extends State<HomeScreen> {
     listingSelectedCategoryGV = '';
   }
 
-  int selectedCategory = 1;
-  int _tapCount = 0;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

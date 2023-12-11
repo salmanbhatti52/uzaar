@@ -50,14 +50,45 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     var decodedResponse = jsonDecode(response.body);
     allListingsProductsGV = decodedResponse['data'];
 
-    if (mounted && allListingsProductsGV.isNotEmpty) {
+    if (mounted) {
       setState(() {
         allListingsProducts = allListingsProductsGV;
+        if (allListingsProducts.isEmpty) {
+          allListingProductsErrMsg = 'No listing found.';
+        }
       });
-    } else {
-      allListingProductsErrMsg = 'No listing found.';
     }
+
     print('allListingsProducts: $allListingsProducts');
+  }
+
+  searchData(String value) {
+    print(value);
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        print(value);
+        List<dynamic> filteredItems = [];
+
+        for (var product in allListingsProductsGV) {
+          String productName = product['name'];
+          productName = productName.toLowerCase();
+          if (productName.contains(value.toLowerCase())) {
+            filteredItems.add(product);
+          }
+        }
+        if (mounted) {
+          setState(() {
+            allListingsProducts = filteredItems;
+            if (allListingsProducts.isEmpty) {
+              allListingProductsErrMsg = 'No listing found.';
+            } else {
+              allListingProductsErrMsg = '';
+            }
+          });
+        }
+      },
+    );
   }
 
   getProductsPriceRanges() async {
@@ -82,33 +113,6 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
   init() {
     getAllProducts();
     getProductsPriceRanges();
-  }
-
-  searchData(String value) {
-    print(value);
-    Future.delayed(
-      const Duration(seconds: 1),
-      () {
-        print(value);
-        List<dynamic> filteredItems = [];
-
-        for (var product in allListingsProductsGV) {
-          String productName = product['name'];
-          productName = productName.toLowerCase();
-          if (productName.contains(value.toLowerCase())) {
-            filteredItems.add(product);
-          }
-        }
-        setState(() {
-          allListingsProducts = filteredItems;
-          if (filteredItems.isEmpty) {
-            allListingProductsErrMsg = 'No listing found.';
-          } else {
-            allListingProductsErrMsg = '';
-          }
-        });
-      },
-    );
   }
 
   @override
@@ -182,25 +186,6 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                         SizedBox(
                           width: 10.w,
                         ),
-                        // RoundedSmallDropdownMenu(
-                        //   // trailingIconName: 'blue_address_icon',
-                        //   width: 170,
-                        //   leadingIconName: selectedLocation != null
-                        //       ? 'cat-selected'
-                        //       : 'cat-unselected',
-                        //   hintText: 'Location',
-                        //   onSelected: (value) {
-                        //     setState(() {
-                        //       selectedLocation = value;
-                        //     });
-                        //   },
-                        //   dropdownMenuEntries: locations
-                        //       .map(
-                        //         (String value) => DropdownMenuEntry<String>(
-                        //             value: value, label: value),
-                        //       )
-                        //       .toList(),
-                        // ),
                       ],
                     )
                   : Shimmer.fromColors(

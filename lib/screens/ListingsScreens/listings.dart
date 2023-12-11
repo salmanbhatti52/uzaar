@@ -27,11 +27,9 @@ class ListingsScreen extends StatefulWidget {
 
 class _ListingsScreenState extends State<ListingsScreen> {
   int selectedCategory = 1;
-  dynamic boostingPackages;
+  List<dynamic> boostingPackages = [...boostingPackagesGV];
   bool showSpinner = false;
 
-  List<dynamic> listedProducts = [...listedProductsGV];
-  String listedProductsErrMsg = '';
   int _tapCount = 0;
   @override
   void initState() {
@@ -42,7 +40,6 @@ class _ListingsScreenState extends State<ListingsScreen> {
 
   init() {
     getBoostingPackages();
-    getSellerProductsListing();
   }
 
   getBoostingPackages() async {
@@ -50,30 +47,16 @@ class _ListingsScreenState extends State<ListingsScreen> {
 
     print(response.statusCode);
     print(response.body);
-    boostingPackages = jsonDecode(response.body);
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  getSellerProductsListing() async {
-    Response response =
-        await sendPostRequest(action: 'get_listings_products', data: {
-      'users_customers_id': userDataGV['userId'],
-    });
-    print(response.statusCode);
-    print(response.body);
-    var decodedResponse = jsonDecode(response.body);
-
-    if (mounted && listedProducts.isNotEmpty) {
-      setState(() {
-        listedProducts = decodedResponse['data'];
-        print('listedProducts: $listedProducts');
-      });
-    } else {
-      setState(() {
-        listedProductsErrMsg = 'No listing found.';
-      });
+    var decodedData = jsonDecode(response.body);
+    String status = decodedData['status'];
+    boostingPackagesGV = [];
+    if (status == 'success') {
+      boostingPackagesGV = decodedData['data'];
+      if (mounted) {
+        setState(() {
+          boostingPackages = boostingPackagesGV;
+        });
+      }
     }
   }
 
@@ -217,19 +200,19 @@ class _ListingsScreenState extends State<ListingsScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                selectedCategory == 1 && boostingPackages != null
+                selectedCategory == 1 && boostingPackages.isNotEmpty
                     ? ProductListingScreen(
-                        listedProductsErrMsg: listedProductsErrMsg,
+                        // listedProductsErrMsg: listedProductsErrMsg,
                         selectedCategory: selectedCategory,
                         boostingPackages: boostingPackages,
-                        listedProducts: listedProducts,
+                        // listedProducts: listedProducts,
                       )
-                    : selectedCategory == 2 && boostingPackages != null
+                    : selectedCategory == 2 && boostingPackages.isNotEmpty
                         ? ServiceListingScreen(
                             selectedCategory: selectedCategory,
                             boostingPackages: boostingPackages,
                           )
-                        : selectedCategory == 3 && boostingPackages != null
+                        : selectedCategory == 3 && boostingPackages.isNotEmpty
                             ? HousingListingScreen(
                                 selectedCategory: selectedCategory,
                                 boostingPackages: boostingPackages,

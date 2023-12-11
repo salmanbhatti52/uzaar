@@ -14,16 +14,13 @@ import '../../utils/reusable_data.dart';
 import '../../widgets/product_list_tile.dart';
 
 class ProductListingScreen extends StatefulWidget {
-  const ProductListingScreen(
-      {super.key,
-      required this.selectedCategory,
-      required this.boostingPackages,
-      required this.listedProducts,
-      required this.listedProductsErrMsg});
+  const ProductListingScreen({
+    super.key,
+    required this.selectedCategory,
+    required this.boostingPackages,
+  });
   final int selectedCategory;
-  final dynamic boostingPackages;
-  final String listedProductsErrMsg;
-  final List<dynamic> listedProducts;
+  final List<dynamic> boostingPackages;
 
   @override
   State<ProductListingScreen> createState() => _ProductListingScreenState();
@@ -32,17 +29,55 @@ class ProductListingScreen extends StatefulWidget {
 class _ProductListingScreenState extends State<ProductListingScreen> {
   late int _selectedPackage;
   dynamic selectedOption;
-
+  List<dynamic> listedProducts = [...listedProductsGV];
+  String listedProductsErrMsg = '';
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _selectedPackage = widget.boostingPackages?['data'][0]['packages_id'];
+    _selectedPackage = widget.boostingPackages[0]['packages_id'];
+    init();
+  }
+
+  init() {
+    getSellerProductsListing();
   }
 
   updateSelectedPackage(value) {
     _selectedPackage = value;
     print(_selectedPackage);
+  }
+
+  getSellerProductsListing() async {
+    Response response =
+        await sendPostRequest(action: 'get_listings_products', data: {
+      'users_customers_id': userDataGV['userId'],
+    });
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    listedProductsGV = [];
+    if (status == 'success') {
+      listedProductsGV = decodedResponse['data'];
+      if (mounted) {
+        setState(() {
+          listedProducts = listedProductsGV;
+        });
+      }
+    }
+
+    if (status == 'error') {
+      if (mounted) {
+        setState(() {
+          if (listedProducts.isEmpty) {
+            listedProductsErrMsg = 'No listing found.';
+          }
+        });
+      }
+    }
+
+    print('listedProducts: $listedProducts');
   }
 
   Future<String> deleteSelectedProduct({required int productListingId}) async {
@@ -71,16 +106,15 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: widget.listedProducts.isNotEmpty
+      child: listedProducts.isNotEmpty
           ? ListView.builder(
               itemBuilder: (context, index) {
                 return ProductListTile(
                   productImage: imgBaseUrl +
-                      widget.listedProducts[index]['listings_images'][0]
-                          ['image'],
-                  productName: widget.listedProducts[index]['name'],
+                      listedProducts[index]['listings_images'][0]['image'],
+                  productName: listedProducts[index]['name'],
                   productLocation: 'California',
-                  productPrice: '\$${widget.listedProducts[index]['price']}',
+                  productPrice: '\$${listedProducts[index]['price']}',
                   onSelected: (selectedValue) async {
                     setState(() {
                       selectedOption = selectedValue;
@@ -100,7 +134,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                                     'Boost your listings to get more orders',
                                 title: 'Boost Listings',
                                 itemsList: List.generate(
-                                  widget.boostingPackages?['data'].length,
+                                  widget.boostingPackages.length,
                                   (index) => SizedBox(
                                     height: 35,
                                     child: ListTile(
@@ -108,15 +142,15 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                                           EdgeInsets.symmetric(horizontal: 5),
                                       horizontalTitleGap: 5,
                                       title: Text(
-                                        '\$${widget.boostingPackages?['data'][index]['price']} ${widget.boostingPackages?['data'][index]['name']}',
+                                        '\$${widget.boostingPackages[index]['price']} ${widget.boostingPackages[index]['name']}',
                                         style: kTextFieldInputStyle,
                                       ),
                                       leading: Radio(
                                         activeColor: primaryBlue,
                                         fillColor: MaterialStatePropertyAll(
                                             primaryBlue),
-                                        value: widget.boostingPackages?['data']
-                                            [index]['packages_id'],
+                                        value: widget.boostingPackages[index]
+                                            ['packages_id'],
                                         groupValue: _selectedPackage,
                                         onChanged: (value) {
                                           stateSetterObject(() {
@@ -141,15 +175,15 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => EditListingScreen(
                           selectedCategory: widget.selectedCategory,
-                          listingData: widget.listedProducts[index],
+                          listingData: listedProducts[index],
                         ),
                       ));
                     } else if (selectedOption == 'delete') {
                       String result = await deleteSelectedProduct(
-                          productListingId: widget.listedProducts[index]
+                          productListingId: listedProducts[index]
                               ['listings_products_id']);
                       if (result == 'success') {
-                        widget.listedProducts.removeAt(index);
+                        listedProducts.removeAt(index);
                         setState(() {});
                       }
                     } else {}
@@ -160,12 +194,12 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                   initialValue: selectedOption,
                 );
               },
-              itemCount: widget.listedProducts.length,
+              itemCount: listedProducts.length,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               physics: BouncingScrollPhysics(),
             )
-          : widget.listedProducts.isEmpty && widget.listedProductsErrMsg.isEmpty
+          : listedProducts.isEmpty && listedProductsErrMsg.isEmpty
               ? Shimmer.fromColors(
                   baseColor: Colors.grey[500]!,
                   highlightColor: Colors.grey[100]!,
@@ -187,7 +221,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                     physics: BouncingScrollPhysics(),
                   ))
               : Center(
-                  child: Text(widget.listedProductsErrMsg),
+                  child: Text(listedProductsErrMsg),
                 ),
     );
   }

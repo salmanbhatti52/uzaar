@@ -62,14 +62,45 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     allListingsHousingsGV = decodedResponse['data'];
-    if (mounted && allListingsHousingsGV.isNotEmpty) {
+    if (mounted) {
       setState(() {
         allListingsHousings = allListingsHousingsGV;
+        if (allListingsHousings.isEmpty) {
+          allListingHousingsErrMsg = 'No listing found.';
+        }
       });
-    } else {
-      allListingHousingsErrMsg = 'No listing found.';
     }
+
     print('allListingsHousings: $allListingsHousings');
+  }
+
+  searchData(String value) {
+    print(value);
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        print(value);
+        List<dynamic> filteredItems = [];
+
+        for (var house in allListingsHousingsGV) {
+          String houseName = house['name'];
+          houseName = houseName.toLowerCase();
+          if (houseName.contains(value.toLowerCase())) {
+            filteredItems.add(house);
+          }
+        }
+        if (mounted) {
+          setState(() {
+            allListingsHousings = filteredItems;
+            if (allListingsHousings.isEmpty) {
+              allListingHousingsErrMsg = 'No listing found.';
+            } else {
+              allListingHousingsErrMsg = '';
+            }
+          });
+        }
+      },
+    );
   }
 
   getHousingsPriceRanges() async {
@@ -89,33 +120,6 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
     if (mounted) {
       setState(() {});
     }
-  }
-
-  searchData(String value) {
-    print(value);
-    Future.delayed(
-      const Duration(seconds: 1),
-      () {
-        print(value);
-        List<dynamic> filteredItems = [];
-
-        for (var house in allListingsHousingsGV) {
-          String houseName = house['name'];
-          houseName = houseName.toLowerCase();
-          if (houseName.contains(value.toLowerCase())) {
-            filteredItems.add(house);
-          }
-        }
-        setState(() {
-          allListingsHousings = filteredItems;
-          if (filteredItems.isEmpty) {
-            allListingHousingsErrMsg = 'No listing found.';
-          } else {
-            allListingHousingsErrMsg = '';
-          }
-        });
-      },
-    );
   }
 
   init() {

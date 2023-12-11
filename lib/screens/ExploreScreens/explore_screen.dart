@@ -24,7 +24,6 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
-  // final searchController = TextEditingController();
   int _tapCount = 0;
   int selectedListingType = 1;
   // final GlobalKey<FormState> _key = GlobalKey();

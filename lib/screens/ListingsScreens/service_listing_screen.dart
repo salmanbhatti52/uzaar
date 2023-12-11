@@ -19,7 +19,7 @@ class ServiceListingScreen extends StatefulWidget {
       required this.selectedCategory,
       required this.boostingPackages});
   final int selectedCategory;
-  final dynamic boostingPackages;
+  final List<dynamic> boostingPackages;
   @override
   State<ServiceListingScreen> createState() => _ServiceListingScreenState();
 }
@@ -27,7 +27,7 @@ class ServiceListingScreen extends StatefulWidget {
 class _ServiceListingScreenState extends State<ServiceListingScreen> {
   late int _selectedPackage;
   dynamic selectedOption;
-  List<dynamic> listedServices = [];
+  List<dynamic> listedServices = [...listedServicesGV];
   String listedServicesErrMsg = '';
   updateSelectedPackage(value) {
     _selectedPackage = value;
@@ -46,11 +46,28 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    listedServices = decodedResponse['data'];
-    print('listedServices: $listedServices');
-    if (mounted) {
-      setState(() {});
+    String status = decodedResponse['status'];
+    listedServicesGV = [];
+    if (status == 'success') {
+      listedServicesGV = decodedResponse['data'];
+      if (mounted) {
+        setState(() {
+          listedServices = listedServicesGV;
+        });
+      }
     }
+
+    if (status == 'error') {
+      if (mounted) {
+        setState(() {
+          if (listedServices.isEmpty) {
+            listedServicesErrMsg = 'No listing found.';
+          }
+        });
+      }
+    }
+
+    print('listedServices: $listedServices');
   }
 
   Future<String> deleteSelectedService({required int serviceListingId}) async {
@@ -80,14 +97,14 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _selectedPackage = widget.boostingPackages?['data'][0]['packages_id'];
+    _selectedPackage = widget.boostingPackages[0]['packages_id'];
     init();
   }
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: listedServices != null
+      child: listedServices.isNotEmpty
           ? ListView.builder(
               itemBuilder: (context, index) {
                 return ServiceListTile(
@@ -114,7 +131,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                                     'Boost your listings to get more orders',
                                 title: 'Boost Listings',
                                 itemsList: List.generate(
-                                  widget.boostingPackages?['data'].length,
+                                  widget.boostingPackages.length,
                                   (index) => SizedBox(
                                     height: 35,
                                     child: ListTile(
@@ -122,15 +139,15 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                                           EdgeInsets.symmetric(horizontal: 5),
                                       horizontalTitleGap: 5,
                                       title: Text(
-                                        '\$${widget.boostingPackages?['data'][index]['price']} ${widget.boostingPackages?['data'][index]['name']}',
+                                        '\$${widget.boostingPackages[index]['price']} ${widget.boostingPackages[index]['name']}',
                                         style: kTextFieldInputStyle,
                                       ),
                                       leading: Radio(
                                         activeColor: primaryBlue,
                                         fillColor: MaterialStatePropertyAll(
                                             primaryBlue),
-                                        value: widget.boostingPackages?['data']
-                                            [index]['packages_id'],
+                                        value: widget.boostingPackages[index]
+                                            ['packages_id'],
                                         groupValue: _selectedPackage,
                                         onChanged: (value) {
                                           stateSetterObject(() {
@@ -179,26 +196,30 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
               scrollDirection: Axis.vertical,
               physics: BouncingScrollPhysics(),
             )
-          : Shimmer.fromColors(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: 80,
-                    margin:
-                        EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Colors.grey.withOpacity(0.3),
-                    ),
-                  );
-                },
-                itemCount: 5,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
-              ),
-              baseColor: Colors.grey[500]!,
-              highlightColor: Colors.grey[100]!),
+          : listedServices.isEmpty && listedServicesErrMsg.isEmpty
+              ? Shimmer.fromColors(
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Container(
+                        height: 80,
+                        margin: EdgeInsets.only(
+                            top: 2, left: 5, right: 5, bottom: 14),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Colors.grey.withOpacity(0.3),
+                        ),
+                      );
+                    },
+                    itemCount: 5,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: BouncingScrollPhysics(),
+                  ),
+                  baseColor: Colors.grey[500]!,
+                  highlightColor: Colors.grey[100]!)
+              : Center(
+                  child: Text(listedServicesErrMsg),
+                ),
     );
   }
 }
