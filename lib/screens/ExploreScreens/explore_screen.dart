@@ -5,7 +5,9 @@ import 'package:Uzaar/screens/ExploreScreens/explore_housing_screen.dart';
 
 import 'package:Uzaar/utils/colors.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shimmer/shimmer.dart';
 
+import '../../services/restService.dart';
 import '../../widgets/DrawerWidget.dart';
 import '../../widgets/business_type_button.dart';
 import '../../widgets/search_field.dart';
@@ -22,8 +24,9 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
-  final searchController = TextEditingController();
-
+  // final searchController = TextEditingController();
+  int _tapCount = 0;
+  int selectedListingType = 1;
   // final GlobalKey<FormState> _key = GlobalKey();
 
   @override
@@ -43,8 +46,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
     });
   }
 
-  int _tapCount = 0;
-  int selectedListingType = 1;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -151,74 +152,56 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedListingType = 1;
-                              });
-                            },
-                            child: BusinessTypeButton(
-                              businessName: 'Products',
-                              gradient:
-                                  selectedListingType == 1 ? gradient : null,
-                              buttonBackground: selectedListingType != 1
-                                  ? grey.withOpacity(0.3)
-                                  : null,
-                              textColor:
-                                  selectedListingType == 1 ? white : grey,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10.w,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedListingType = 2;
-                              });
-                            },
-                            child: BusinessTypeButton(
-                              businessName: 'Services',
-                              gradient:
-                                  selectedListingType == 2 ? gradient : null,
-                              buttonBackground: selectedListingType != 2
-                                  ? grey.withOpacity(0.3)
-                                  : null,
-                              textColor:
-                                  selectedListingType == 2 ? white : grey,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10.w,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedListingType = 3;
-                              });
-                            },
-                            child: BusinessTypeButton(
-                              businessName: 'Housing',
-                              gradient:
-                                  selectedListingType == 3 ? gradient : null,
-                              buttonBackground: selectedListingType != 3
-                                  ? grey.withOpacity(0.3)
-                                  : null,
-                              textColor:
-                                  selectedListingType == 3 ? white : grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      SizedBox(
-                          child:
-                              SearchField(searchController: searchController)),
-                      SizedBox(
-                        height: 20.h,
+                        children: listingTypesGV != null
+                            ? List.generate(
+                                listingTypesGV?['data'].length,
+                                (index) => GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedListingType =
+                                          listingTypesGV?['data'][index]
+                                              ['listings_types_id'];
+                                    });
+                                    print(
+                                        'selectedListingType: $selectedListingType');
+                                  },
+                                  child: BusinessTypeButton(
+                                      margin: index <
+                                              listingTypesGV?['data'].length - 1
+                                          ? EdgeInsets.only(right: 10)
+                                          : null,
+                                      businessName: listingTypesGV?['data']
+                                          [index]['name'],
+                                      gradient: selectedListingType ==
+                                              listingTypesGV?['data'][index]
+                                                  ['listings_types_id']
+                                          ? gradient
+                                          : null,
+                                      buttonBackground: selectedListingType !=
+                                              listingTypesGV?['data'][index]
+                                                  ['listings_types_id']
+                                          ? grey.withOpacity(0.3)
+                                          : null,
+                                      textColor: selectedListingType ==
+                                              listingTypesGV?['data'][index]
+                                                  ['listings_types_id']
+                                          ? white
+                                          : grey),
+                                ),
+                              )
+                            : List.generate(
+                                3,
+                                (index) => Shimmer.fromColors(
+                                    child: BusinessTypeButton(
+                                        margin:
+                                            EdgeInsets.only(left: 5, right: 5),
+                                        businessName: '',
+                                        gradient: null,
+                                        buttonBackground: grey.withOpacity(0.3),
+                                        textColor: grey),
+                                    baseColor: Colors.grey[500]!,
+                                    highlightColor: Colors.grey[100]!),
+                              ),
                       ),
                     ],
                   ),

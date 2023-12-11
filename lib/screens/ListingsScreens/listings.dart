@@ -30,7 +30,8 @@ class _ListingsScreenState extends State<ListingsScreen> {
   dynamic boostingPackages;
   bool showSpinner = false;
 
-  dynamic listedProducts;
+  List<dynamic> listedProducts = [...listedProductsGV];
+  String listedProductsErrMsg = '';
   int _tapCount = 0;
   @override
   void initState() {
@@ -63,10 +64,16 @@ class _ListingsScreenState extends State<ListingsScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    listedProducts = decodedResponse['data'];
-    print('listedProducts: $listedProducts');
-    if (mounted) {
-      setState(() {});
+
+    if (mounted && listedProducts.isNotEmpty) {
+      setState(() {
+        listedProducts = decodedResponse['data'];
+        print('listedProducts: $listedProducts');
+      });
+    } else {
+      setState(() {
+        listedProductsErrMsg = 'No listing found.';
+      });
     }
   }
 
@@ -210,9 +217,9 @@ class _ListingsScreenState extends State<ListingsScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                selectedCategory == 1 &&
-                        (boostingPackages != null && listedProducts != null)
+                selectedCategory == 1 && boostingPackages != null
                     ? ProductListingScreen(
+                        listedProductsErrMsg: listedProductsErrMsg,
                         selectedCategory: selectedCategory,
                         boostingPackages: boostingPackages,
                         listedProducts: listedProducts,

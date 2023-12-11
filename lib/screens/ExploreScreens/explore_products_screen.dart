@@ -13,6 +13,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../services/restService.dart';
 import '../../utils/Buttons.dart';
 import '../../widgets/alert_dialog_reusable.dart';
+import '../../widgets/search_field.dart';
 
 enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 
@@ -24,18 +25,14 @@ class ExploreProductsScreen extends StatefulWidget {
 }
 
 class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
+  final searchController = TextEditingController();
   late Set<ReportReason> selectedReasons = {};
   String? selectedCategory;
   String? selectedPrice;
   String? selectedLocation;
-
+  List<dynamic> allListingsProducts = [...allListingsProductsGV];
+  String allListingProductsErrMsg = '';
   List<String> categories = [...productListingCategoriesNamesGV];
-
-  // final List<String> locations = [
-  //   'Multan',
-  //   'Lahore',
-  //   'Karachi',
-  // ];
 
   handleOptionSelection(ReportReason reason) {
     if (selectedReasons.contains(reason)) {
@@ -52,10 +49,15 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     allListingsProductsGV = decodedResponse['data'];
-    if (mounted) {
-      setState(() {});
+
+    if (mounted && allListingsProductsGV.isNotEmpty) {
+      setState(() {
+        allListingsProducts = allListingsProductsGV;
+      });
+    } else {
+      allListingProductsErrMsg = 'No listing found.';
     }
-    print('allListingsProductsGV: $allListingsProductsGV');
+    print('allListingsProducts: $allListingsProducts');
   }
 
   getProductsPriceRanges() async {
@@ -80,7 +82,33 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
   init() {
     getAllProducts();
     getProductsPriceRanges();
-    print(categories);
+  }
+
+  searchData(String value) {
+    print(value);
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        print(value);
+        List<dynamic> filteredItems = [];
+
+        for (var product in allListingsProductsGV) {
+          String productName = product['name'];
+          productName = productName.toLowerCase();
+          if (productName.contains(value.toLowerCase())) {
+            filteredItems.add(product);
+          }
+        }
+        setState(() {
+          allListingsProducts = filteredItems;
+          if (filteredItems.isEmpty) {
+            allListingProductsErrMsg = 'No listing found.';
+          } else {
+            allListingProductsErrMsg = '';
+          }
+        });
+      },
+    );
   }
 
   @override
@@ -98,6 +126,13 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Container(
+              margin: const EdgeInsets.only(top: 20, bottom: 20),
+              child: SearchField(
+                  onChanged: (value) {
+                    searchData(value);
+                  },
+                  searchController: searchController)),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
@@ -204,7 +239,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
             child: GlowingOverscrollIndicator(
               axisDirection: AxisDirection.down,
               color: primaryBlue,
-              child: allListingsProductsGV != null
+              child: allListingsProducts.isNotEmpty
                   ? GridView.builder(
                       padding: EdgeInsets.only(bottom: 33, left: 2),
                       physics: BouncingScrollPhysics(),
@@ -216,24 +251,24 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                         mainAxisSpacing: 10,
                         mainAxisExtent: 180,
                       ),
-                      itemCount: allListingsProductsGV.length,
+                      itemCount: allListingsProducts.length,
                       itemBuilder: (context, index) {
                         return FeaturedProductsWidget(
-                          productCondition: allListingsProductsGV[index]
+                          productCondition: allListingsProducts[index]
                               ['condition'],
                           image: imgBaseUrl +
-                              allListingsProductsGV[index]['listings_images'][0]
+                              allListingsProducts[index]['listings_images'][0]
                                   ['image'],
-                          productCategory: allListingsProductsGV[index]
+                          productCategory: allListingsProducts[index]
                               ['listings_categories']['name'],
-                          productName: allListingsProductsGV[index]['name'],
+                          productName: allListingsProducts[index]['name'],
                           // productLocation: 'California',
-                          productPrice: allListingsProductsGV[index]['price'],
+                          productPrice: allListingsProducts[index]['price'],
                           onImageTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => ProductDetailsPage(
-                                  productData: allListingsProductsGV[index],
+                                  productData: allListingsProducts[index],
                                 ),
                               ),
                             );
@@ -376,25 +411,31 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                         );
                       },
                     )
-                  : Shimmer.fromColors(
-                      child: GridView.builder(
-                        padding: EdgeInsets.only(bottom: 33, left: 2),
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          mainAxisExtent: 187,
+                  : allListingsProducts.isEmpty &&
+                          allListingProductsErrMsg.isEmpty
+                      ? Shimmer.fromColors(
+                          child: GridView.builder(
+                            padding: EdgeInsets.only(bottom: 33, left: 2),
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              mainAxisExtent: 187,
+                            ),
+                            itemCount: 10,
+                            itemBuilder: (context, index) {
+                              return FeaturedProductsDummy();
+                            },
+                          ),
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!)
+                      : Center(
+                          child: Text(allListingProductsErrMsg),
                         ),
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return FeaturedProductsDummy();
-                        },
-                      ),
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[100]!),
             ),
           )
         ],

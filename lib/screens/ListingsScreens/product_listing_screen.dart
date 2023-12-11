@@ -18,10 +18,12 @@ class ProductListingScreen extends StatefulWidget {
       {super.key,
       required this.selectedCategory,
       required this.boostingPackages,
-      required this.listedProducts});
+      required this.listedProducts,
+      required this.listedProductsErrMsg});
   final int selectedCategory;
   final dynamic boostingPackages;
-  final List listedProducts;
+  final String listedProductsErrMsg;
+  final List<dynamic> listedProducts;
 
   @override
   State<ProductListingScreen> createState() => _ProductListingScreenState();
@@ -163,26 +165,30 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
               scrollDirection: Axis.vertical,
               physics: BouncingScrollPhysics(),
             )
-          : Shimmer.fromColors(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: 80,
-                    margin:
-                        EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Colors.grey.withOpacity(0.3),
-                    ),
-                  );
-                },
-                itemCount: 5,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
-              ),
-              baseColor: Colors.grey[500]!,
-              highlightColor: Colors.grey[100]!),
+          : widget.listedProducts.isEmpty && widget.listedProductsErrMsg.isEmpty
+              ? Shimmer.fromColors(
+                  baseColor: Colors.grey[500]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Container(
+                        height: 80,
+                        margin: EdgeInsets.only(
+                            top: 2, left: 5, right: 5, bottom: 14),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Colors.grey.withOpacity(0.3),
+                        ),
+                      );
+                    },
+                    itemCount: 5,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: BouncingScrollPhysics(),
+                  ))
+              : Center(
+                  child: Text(widget.listedProductsErrMsg),
+                ),
     );
   }
 }

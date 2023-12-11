@@ -14,6 +14,7 @@ import '../../utils/Buttons.dart';
 import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/featured_housing_widget.dart';
 import '../../widgets/rounded_small_dropdown_menu.dart';
+import '../../widgets/search_field.dart';
 
 enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 
@@ -25,12 +26,14 @@ class ExploreHousingScreen extends StatefulWidget {
 }
 
 class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
+  final searchController = TextEditingController();
   late Set<ReportReason> selectedReasons = {};
   String? selectedCategory;
   String? selectedPrice;
   String? selectedLocation;
   String? furnishedVal;
-
+  List<dynamic> allListingsHousings = [...allListingsHousingsGV];
+  String allListingHousingsErrMsg = '';
   final List<String> categories = [...housingListingCategoriesNamesGV];
 
   final List<String> locations = [
@@ -59,11 +62,14 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     allListingsHousingsGV = decodedResponse['data'];
-    if (mounted) {
-      setState(() {});
+    if (mounted && allListingsHousingsGV.isNotEmpty) {
+      setState(() {
+        allListingsHousings = allListingsHousingsGV;
+      });
+    } else {
+      allListingHousingsErrMsg = 'No listing found.';
     }
-
-    print('allListingsHousingsGV: $allListingsHousingsGV');
+    print('allListingsHousings: $allListingsHousings');
   }
 
   getHousingsPriceRanges() async {
@@ -85,6 +91,33 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
     }
   }
 
+  searchData(String value) {
+    print(value);
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        print(value);
+        List<dynamic> filteredItems = [];
+
+        for (var house in allListingsHousingsGV) {
+          String houseName = house['name'];
+          houseName = houseName.toLowerCase();
+          if (houseName.contains(value.toLowerCase())) {
+            filteredItems.add(house);
+          }
+        }
+        setState(() {
+          allListingsHousings = filteredItems;
+          if (filteredItems.isEmpty) {
+            allListingHousingsErrMsg = 'No listing found.';
+          } else {
+            allListingHousingsErrMsg = '';
+          }
+        });
+      },
+    );
+  }
+
   init() {
     getAllHousings();
     getHousingsPriceRanges();
@@ -104,6 +137,13 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Container(
+              margin: const EdgeInsets.only(top: 20, bottom: 20),
+              child: SearchField(
+                  onChanged: (value) {
+                    searchData(value);
+                  },
+                  searchController: searchController)),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
@@ -233,7 +273,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
             child: GlowingOverscrollIndicator(
               axisDirection: AxisDirection.down,
               color: primaryBlue,
-              child: allListingsHousingsGV != null
+              child: allListingsHousings.isNotEmpty
                   ? GridView.builder(
                       padding: EdgeInsets.only(bottom: 33, left: 2),
                       physics: BouncingScrollPhysics(),
@@ -245,29 +285,29 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                         mainAxisSpacing: 10,
                         mainAxisExtent: 206,
                       ),
-                      itemCount: allListingsHousingsGV.length,
+                      itemCount: allListingsHousings.length,
                       itemBuilder: (context, index) {
                         return FeaturedHousingWidget(
                           furnishedStatus:
-                              allListingsHousingsGV[index]['furnished'] == 'Yes'
+                              allListingsHousings[index]['furnished'] == 'Yes'
                                   ? 'Furnished'
                                   : 'Not Furnished',
                           image: imgBaseUrl +
-                              allListingsHousingsGV[index]['listings_images'][0]
+                              allListingsHousings[index]['listings_images'][0]
                                   ['image'],
-                          housingCategory: allListingsHousingsGV[index]
+                          housingCategory: allListingsHousings[index]
                               ['listings_categories']['name'],
-                          housingName: allListingsHousingsGV[index]['name'],
-                          housingLocation: allListingsHousingsGV[index]
+                          housingName: allListingsHousings[index]['name'],
+                          housingLocation: allListingsHousings[index]
                               ['location'],
-                          housingPrice: allListingsHousingsGV[index]['price'],
-                          area: allListingsHousingsGV[index]['area'],
-                          bedrooms: allListingsHousingsGV[index]['bedroom'],
-                          bathrooms: allListingsHousingsGV[index]['bathroom'],
+                          housingPrice: allListingsHousings[index]['price'],
+                          area: allListingsHousings[index]['area'],
+                          bedrooms: allListingsHousings[index]['bedroom'],
+                          bathrooms: allListingsHousings[index]['bathroom'],
                           onImageTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => HousingDetailsPage(
-                                houseData: allListingsHousingsGV[index],
+                                houseData: allListingsHousings[index],
                               ),
                             ));
                           },
@@ -409,25 +449,31 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                         );
                       },
                     )
-                  : Shimmer.fromColors(
-                      child: GridView.builder(
-                        padding: EdgeInsets.only(bottom: 33, left: 2),
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          mainAxisExtent: 187,
+                  : allListingsHousings.isEmpty &&
+                          allListingHousingsErrMsg.isEmpty
+                      ? Shimmer.fromColors(
+                          child: GridView.builder(
+                            padding: EdgeInsets.only(bottom: 33, left: 2),
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              mainAxisExtent: 187,
+                            ),
+                            itemCount: 10,
+                            itemBuilder: (context, index) {
+                              return FeaturedProductsDummy();
+                            },
+                          ),
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!)
+                      : Center(
+                          child: Text(allListingHousingsErrMsg),
                         ),
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return FeaturedProductsDummy();
-                        },
-                      ),
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[100]!),
             ),
           )
         ],

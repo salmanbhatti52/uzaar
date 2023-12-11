@@ -14,6 +14,7 @@ import '../../utils/Buttons.dart';
 import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/featured_products_widget.dart';
 import '../../widgets/rounded_small_dropdown_menu.dart';
+import '../../widgets/search_field.dart';
 
 enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 
@@ -25,11 +26,13 @@ class ExploreServicesScreen extends StatefulWidget {
 }
 
 class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
+  final searchController = TextEditingController();
   late Set<ReportReason> selectedReasons = {};
   String? selectedCategory;
   String? selectedPrice;
   String? selectedLocation;
-
+  List<dynamic> allListingsServices = [...allListingsServicesGV];
+  String allListingServicesErrMsg = '';
   List<String> categories = [...serviceListingCategoriesNamesGV];
 
   final List<String> locations = [
@@ -53,11 +56,15 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     allListingsServicesGV = decodedResponse['data'];
-    if (mounted) {
-      setState(() {});
+    if (mounted && allListingsServicesGV.isNotEmpty) {
+      setState(() {
+        allListingsServices = allListingsServicesGV;
+      });
+    } else {
+      allListingServicesErrMsg = 'No listing found.';
     }
 
-    print('allListingsServicesGV: $allListingsServicesGV');
+    print('allListingsServices: $allListingsServices');
   }
 
   getServicesPriceRanges() async {
@@ -79,6 +86,33 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
     }
   }
 
+  searchData(String value) {
+    print(value);
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        print(value);
+        List<dynamic> filteredItems = [];
+
+        for (var service in allListingsServicesGV) {
+          String serviceName = service['name'];
+          serviceName = serviceName.toLowerCase();
+          if (serviceName.contains(value.toLowerCase())) {
+            filteredItems.add(service);
+          }
+        }
+        setState(() {
+          allListingsServices = filteredItems;
+          if (filteredItems.isEmpty) {
+            allListingServicesErrMsg = 'No listing found.';
+          } else {
+            allListingServicesErrMsg = '';
+          }
+        });
+      },
+    );
+  }
+
   init() async {
     getAllServices();
     getServicesPriceRanges();
@@ -98,6 +132,13 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Container(
+              margin: const EdgeInsets.only(top: 20, bottom: 20),
+              child: SearchField(
+                  onChanged: (value) {
+                    searchData(value);
+                  },
+                  searchController: searchController)),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
@@ -205,7 +246,7 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
               child: GlowingOverscrollIndicator(
                 axisDirection: AxisDirection.down,
                 color: primaryBlue,
-                child: allListingsServicesGV != null
+                child: allListingsServices.isNotEmpty
                     ? GridView.builder(
                         padding: EdgeInsets.only(bottom: 33, left: 2),
                         physics: BouncingScrollPhysics(),
@@ -217,22 +258,22 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
                           mainAxisSpacing: 10,
                           mainAxisExtent: 185,
                         ),
-                        itemCount: allListingsServicesGV.length,
+                        itemCount: allListingsServices.length,
                         itemBuilder: (context, index) {
                           return FeaturedServicesWidget(
                             image: imgBaseUrl +
-                                allListingsServicesGV[index]['listings_images']
-                                    [0]['image'],
-                            serviceCategory: allListingsServicesGV[index]
+                                allListingsServices[index]['listings_images'][0]
+                                    ['image'],
+                            serviceCategory: allListingsServices[index]
                                 ['listings_categories']['name'],
-                            serviceName: allListingsServicesGV[index]['name'],
-                            serviceLocation: allListingsServicesGV[index]
+                            serviceName: allListingsServices[index]['name'],
+                            serviceLocation: allListingsServices[index]
                                 ['location'],
-                            servicePrice: allListingsServicesGV[index]['price'],
+                            servicePrice: allListingsServices[index]['price'],
                             onImageTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => ServiceDetailsPage(
-                                  serviceData: allListingsServicesGV[index],
+                                  serviceData: allListingsServices[index],
                                 ),
                               ));
                             },
@@ -374,26 +415,31 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
                           );
                         },
                       )
-                    : Shimmer.fromColors(
-                        child: GridView.builder(
-                          padding: EdgeInsets.only(bottom: 33, left: 2),
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            mainAxisExtent: 187,
+                    : allListingsServices.isEmpty &&
+                            allListingServicesErrMsg.isEmpty
+                        ? Shimmer.fromColors(
+                            child: GridView.builder(
+                              padding: EdgeInsets.only(bottom: 33, left: 2),
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                mainAxisExtent: 187,
+                              ),
+                              itemCount: 10,
+                              itemBuilder: (context, index) {
+                                return FeaturedProductsDummy();
+                              },
+                            ),
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!)
+                        : Center(
+                            child: Text(allListingServicesErrMsg),
                           ),
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return FeaturedProductsDummy();
-                          },
-                        ),
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!),
               ))
         ],
       ),

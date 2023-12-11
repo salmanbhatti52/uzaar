@@ -27,7 +27,8 @@ class ServiceListingScreen extends StatefulWidget {
 class _ServiceListingScreenState extends State<ServiceListingScreen> {
   late int _selectedPackage;
   dynamic selectedOption;
-  dynamic listedServices;
+  List<dynamic> listedServices = [];
+  String listedServicesErrMsg = '';
   updateSelectedPackage(value) {
     _selectedPackage = value;
     print(_selectedPackage);

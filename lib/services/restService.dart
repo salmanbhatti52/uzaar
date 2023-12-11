@@ -9,9 +9,9 @@ List<dynamic> featuredProductsGV = [];
 List<dynamic> featuredServicesGV = [];
 List<dynamic> featuredHousingGV = [];
 dynamic listingTypesGV;
-dynamic allListingsProductsGV;
-dynamic allListingsServicesGV;
-dynamic allListingsHousingsGV;
+List<dynamic> allListingsProductsGV = [];
+List<dynamic> allListingsServicesGV = [];
+List<dynamic> allListingsHousingsGV = [];
 dynamic productListingCategoriesGV;
 dynamic serviceListingCategoriesGV;
 dynamic housingListingCategoriesGV;
@@ -21,10 +21,12 @@ List<String> housingListingCategoriesNamesGV = [];
 List<String> productsPriceRangesGV = [];
 List<String> servicesPriceRangesGV = [];
 List<String> housingsPriceRangesGV = [];
+List<dynamic> listedProductsGV = [];
+List<dynamic> listedServicesGV = [];
+List<dynamic> listedHousingsGV = [];
 Map<String, dynamic> userDataGV = {};
 Map<String, dynamic> guestUserDataGV = {};
 bool loginAsGuestGV = false;
-String selectedListingTypeGV = 'Products';
 String listingSelectedCategoryGV = '';
 
 Future<http.Response> sendGetRequest(String action) {
