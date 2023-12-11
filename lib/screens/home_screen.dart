@@ -44,9 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
   late Set<ReportReason> selectedReasons = {};
   late SharedPreferences preferences;
   bool showSpinner = false;
-  dynamic featuredProducts;
-  dynamic featuredServices;
-  dynamic featuredHousings;
+  List<dynamic> featuredProducts = [...featuredProductsGV];
+  List<dynamic> featuredServices = [...featuredServicesGV];
+  List<dynamic> featuredHousings = [...featuredHousingGV];
   String featuredProductsErrMsg = '';
   String featuredServicesErrMsg = '';
   String featuredHousingsErrMsg = '';
@@ -59,10 +59,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   init() async {
-    featuredProducts = featuredProductsGV;
-    featuredServices = featuredServicesGV;
-    featuredHousings = featuredHousingGV;
-    setState(() {});
     await getUserData();
     getListingTypes();
     getProductListingsCategories();
@@ -246,10 +242,11 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     featuredProductsGV = decodedResponse['data'];
-    featuredProducts = featuredProductsGV;
     print('featuredProductsGV: $featuredProductsGV');
     if (mounted) {
-      setState(() {});
+      setState(() {
+        featuredProducts = featuredProductsGV;
+      });
     }
   }
 
@@ -262,10 +259,11 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     featuredServicesGV = decodedResponse['data'];
-    featuredServices = featuredServicesGV;
     print('featuredServicesGV: $featuredServicesGV');
     if (mounted) {
-      setState(() {});
+      setState(() {
+        featuredServices = featuredServicesGV;
+      });
     }
   }
 
@@ -278,10 +276,11 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     featuredHousingGV = decodedResponse['data'];
-    featuredHousings = featuredHousingGV;
     print('featuredHousingGV: $featuredHousingGV');
     if (mounted) {
-      setState(() {});
+      setState(() {
+        featuredHousings = featuredHousingGV;
+      });
     }
   }
 
@@ -301,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
       () {
         print(value);
         List<dynamic> filteredItems = [];
-        if (selectedListingTypeGV == 'Products') {
+        if (selectedListingTypeGV == listingTypesGV?['data'][0]['name']) {
           for (var product in featuredProductsGV) {
             String productName = product['name'];
             productName = productName.toLowerCase();
@@ -309,9 +308,12 @@ class _HomeScreenState extends State<HomeScreen> {
               filteredItems.add(product);
             }
           }
-          featuredProducts = filteredItems;
-          setState(() {});
-        } else if (selectedListingTypeGV == 'Services') {
+
+          setState(() {
+            featuredProducts = filteredItems;
+          });
+        } else if (selectedListingTypeGV ==
+            listingTypesGV?['data'][1]['name']) {
           for (var service in featuredServicesGV) {
             String serviceName = service['name'];
             serviceName = serviceName.toLowerCase();
@@ -319,9 +321,11 @@ class _HomeScreenState extends State<HomeScreen> {
               filteredItems.add(service);
             }
           }
-          featuredServices = filteredItems;
-          setState(() {});
-        } else if (selectedListingTypeGV == 'Housings') {
+          setState(() {
+            featuredServices = filteredItems;
+          });
+        } else if (selectedListingTypeGV ==
+            listingTypesGV?['data'][2]['name']) {
           for (var house in featuredHousingGV) {
             String houseName = house['name'];
             houseName = houseName.toLowerCase();
@@ -329,8 +333,9 @@ class _HomeScreenState extends State<HomeScreen> {
               filteredItems.add(house);
             }
           }
-          featuredHousings = filteredItems;
-          setState(() {});
+          setState(() {
+            featuredHousings = filteredItems;
+          });
         } else {}
       },
     );
@@ -342,7 +347,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
     selectedListingTypeGV = listingTypesGV?['data'][0]['name'];
     listingSelectedCategoryGV = '';
-    // selectedListingTypeGV = 'Products';
   }
 
   int selectedCategory = 1;
@@ -567,7 +571,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     SizedBox(
                       height: 98,
-                      child: selectedListingTypeGV == 'Products' &&
+                      child: selectedListingTypeGV ==
+                                  listingTypesGV?['data'][0]['name'] &&
                               productListingCategoriesGV != null
                           ? ListView.builder(
                               itemCount: productListingCategoriesGV.length,
@@ -588,8 +593,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                         filteredProducts.add(product);
                                       }
                                     }
-                                    featuredProducts = filteredProducts;
-                                    setState(() {});
+                                    setState(() {
+                                      featuredProducts = filteredProducts;
+                                      if (filteredProducts.isEmpty) {
+                                        featuredProductsErrMsg =
+                                            'No listing found.';
+                                      } else {
+                                        featuredProductsErrMsg = '';
+                                      }
+                                    });
                                   },
                                   child: BusinessListTile(
                                     selectedCategory:
@@ -608,7 +620,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               },
                             )
-                          : selectedListingTypeGV == 'Services' &&
+                          : selectedListingTypeGV ==
+                                      listingTypesGV?['data'][1]['name'] &&
                                   serviceListingCategoriesGV != null
                               ? ListView.builder(
                                   itemCount: serviceListingCategoriesGV.length,
@@ -631,8 +644,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                             filteredServices.add(service);
                                           }
                                         }
-                                        featuredServices = filteredServices;
-                                        setState(() {});
+                                        setState(() {
+                                          featuredServices = filteredServices;
+                                          if (filteredServices.isEmpty) {
+                                            featuredServicesErrMsg =
+                                                'No listing found.';
+                                          } else {
+                                            featuredServicesErrMsg = '';
+                                          }
+                                        });
                                       },
                                       child: BusinessListTile(
                                           selectedCategory:
@@ -650,7 +670,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     );
                                   },
                                 )
-                              : selectedListingTypeGV == 'Housings' &&
+                              : selectedListingTypeGV ==
+                                          listingTypesGV?['data'][2]['name'] &&
                                       housingListingCategoriesGV != null
                                   ? ListView.builder(
                                       itemCount:
@@ -665,21 +686,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 housingListingCategoriesGV[
                                                     index]['name'];
                                             List<dynamic> filteredHousings = [];
-                                            if (featuredHousingGV != null) {
-                                              for (var house
-                                                  in featuredHousingGV) {
-                                                if (house['listings_categories']
-                                                        ['name']
-                                                    .contains(
-                                                        listingSelectedCategoryGV)) {
-                                                  filteredHousings.add(house);
-                                                }
+
+                                            for (var house
+                                                in featuredHousingGV) {
+                                              if (house['listings_categories']
+                                                      ['name']
+                                                  .contains(
+                                                      listingSelectedCategoryGV)) {
+                                                filteredHousings.add(house);
                                               }
-                                              featuredHousings =
-                                                  filteredHousings;
                                             }
 
-                                            setState(() {});
+                                            setState(() {
+                                              featuredHousings =
+                                                  filteredHousings;
+                                              if (filteredHousings.isEmpty) {
+                                                featuredHousingsErrMsg =
+                                                    'No listing found.';
+                                              } else {
+                                                featuredHousingsErrMsg = '';
+                                              }
+                                            });
                                           },
                                           child: BusinessListTile(
                                               selectedCategory:
@@ -775,7 +802,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Container(
                                 decoration: BoxDecoration(color: Colors.white),
                                 height: 180,
-                                child: featuredProducts != null
+                                child: featuredProducts.isNotEmpty
                                     ? ListView.builder(
                                         itemBuilder: (context, index) {
                                           return FeaturedProductsWidget(
@@ -977,18 +1004,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                         scrollDirection: Axis.horizontal,
                                         physics: BouncingScrollPhysics(),
                                       )
-                                    : Shimmer.fromColors(
-                                        child: ListView.builder(
-                                          itemBuilder: (context, index) {
-                                            return const FeaturedProductsDummy();
-                                          },
-                                          itemCount: 6,
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.horizontal,
-                                          physics: BouncingScrollPhysics(),
-                                        ),
-                                        baseColor: Colors.grey[300]!,
-                                        highlightColor: Colors.grey[100]!),
+                                    : featuredProducts.isEmpty &&
+                                            featuredProductsErrMsg.isEmpty
+                                        ? Shimmer.fromColors(
+                                            child: ListView.builder(
+                                              itemBuilder: (context, index) {
+                                                return const FeaturedProductsDummy();
+                                              },
+                                              itemCount: 6,
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              physics: BouncingScrollPhysics(),
+                                            ),
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!)
+                                        : Center(
+                                            child: Text(featuredProductsErrMsg),
+                                          ),
                               ),
                               SizedBox(
                                 height: 20.h,
@@ -997,7 +1029,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           )
                         : SizedBox(),
 
-                    selectedListingTypeGV == 'Services'
+                    selectedListingTypeGV == listingTypesGV?['data'][1]['name']
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -1031,7 +1063,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               SizedBox(
                                 height: 187,
-                                child: featuredServices != null
+                                child: featuredServices.isNotEmpty
                                     ? ListView.builder(
                                         itemBuilder: (context, index) {
                                           return FeaturedServicesWidget(
@@ -1225,18 +1257,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                         scrollDirection: Axis.horizontal,
                                         physics: BouncingScrollPhysics(),
                                       )
-                                    : Shimmer.fromColors(
-                                        child: ListView.builder(
-                                          itemBuilder: (context, index) {
-                                            return const FeaturedProductsDummy();
-                                          },
-                                          itemCount: 6,
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.horizontal,
-                                          physics: BouncingScrollPhysics(),
-                                        ),
-                                        baseColor: Colors.grey[300]!,
-                                        highlightColor: Colors.grey[100]!),
+                                    : featuredServices.isEmpty &&
+                                            featuredServicesErrMsg.isEmpty
+                                        ? Shimmer.fromColors(
+                                            child: ListView.builder(
+                                              itemBuilder: (context, index) {
+                                                return const FeaturedProductsDummy();
+                                              },
+                                              itemCount: 6,
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              physics: BouncingScrollPhysics(),
+                                            ),
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!)
+                                        : Center(
+                                            child: Text(featuredServicesErrMsg),
+                                          ),
                               ),
                               SizedBox(
                                 height: 20.h,
@@ -1245,7 +1282,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           )
                         : SizedBox(),
 
-                    selectedListingTypeGV == 'Housings'
+                    selectedListingTypeGV == listingTypesGV?['data'][2]['name']
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -1279,7 +1316,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               SizedBox(
                                 height: 206,
-                                child: featuredHousings != null
+                                child: featuredHousings.isNotEmpty
                                     ? ListView.builder(
                                         itemBuilder: (context, index) {
                                           return FeaturedHousingWidget(
@@ -1485,18 +1522,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                         scrollDirection: Axis.horizontal,
                                         physics: BouncingScrollPhysics(),
                                       )
-                                    : Shimmer.fromColors(
-                                        child: ListView.builder(
-                                          itemBuilder: (context, index) {
-                                            return const FeaturedProductsDummy();
-                                          },
-                                          itemCount: 6,
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.horizontal,
-                                          physics: BouncingScrollPhysics(),
-                                        ),
-                                        baseColor: Colors.grey[300]!,
-                                        highlightColor: Colors.grey[100]!),
+                                    : featuredHousings.isEmpty &&
+                                            featuredHousingsErrMsg.isEmpty
+                                        ? Shimmer.fromColors(
+                                            child: ListView.builder(
+                                              itemBuilder: (context, index) {
+                                                return const FeaturedProductsDummy();
+                                              },
+                                              itemCount: 6,
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              physics: BouncingScrollPhysics(),
+                                            ),
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!)
+                                        : Center(
+                                            child: Text(featuredHousingsErrMsg),
+                                          ),
                               ),
                               SizedBox(
                                 height: 20.h,

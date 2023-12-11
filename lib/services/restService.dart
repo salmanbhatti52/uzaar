@@ -5,9 +5,9 @@ const apiBaseUrl = 'https://uzaar.eigix.net/api/';
 const imgBaseUrl = 'https://uzaar.eigix.net/public/';
 
 //GV : GlobalVariable
-dynamic featuredProductsGV;
-dynamic featuredServicesGV;
-dynamic featuredHousingGV;
+List<dynamic> featuredProductsGV = [];
+List<dynamic> featuredServicesGV = [];
+List<dynamic> featuredHousingGV = [];
 dynamic listingTypesGV;
 dynamic allListingsProductsGV;
 dynamic allListingsServicesGV;
