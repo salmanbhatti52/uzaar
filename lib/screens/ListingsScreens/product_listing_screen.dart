@@ -16,10 +16,10 @@ import '../../widgets/product_list_tile.dart';
 class ProductListingScreen extends StatefulWidget {
   const ProductListingScreen({
     super.key,
-    required this.selectedCategory,
+    required this.selectedListingType,
     required this.boostingPackages,
   });
-  final int selectedCategory;
+  final int selectedListingType;
   final List<dynamic> boostingPackages;
 
   @override
@@ -174,7 +174,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                     } else if (selectedOption == 'edit') {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => EditListingScreen(
-                          selectedCategory: widget.selectedCategory,
+                          selectedListingType: widget.selectedListingType,
                           listingData: listedProducts[index],
                         ),
                       ));

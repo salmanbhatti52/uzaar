@@ -19,8 +19,10 @@ import '../notifications_screen.dart';
 
 class EditListingScreen extends StatefulWidget {
   const EditListingScreen(
-      {super.key, required this.selectedCategory, required this.listingData});
-  final int selectedCategory;
+      {super.key,
+      required this.selectedListingType,
+      required this.listingData});
+  final int selectedListingType;
   final dynamic listingData;
 
   @override
@@ -28,7 +30,7 @@ class EditListingScreen extends StatefulWidget {
 }
 
 class _EditListingScreenState extends State<EditListingScreen> {
-  int selectedCategory = 1;
+  int selectedListingType = 1;
   int noOfTabs = 3;
   String selectedImageInBase64 = '';
   late Map<String, dynamic> images;
@@ -37,7 +39,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
   List<Widget> getPageIndicators() {
     List<Widget> tabs = [];
 
-    if (selectedCategory != 1) {
+    if (selectedListingType != 1) {
       noOfTabs = 2;
     } else {
       noOfTabs = 3;
@@ -59,7 +61,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    selectedCategory = widget.selectedCategory;
+    selectedListingType = widget.selectedListingType;
     print('widget.listingData: ${widget.listingData}');
     init();
   }
@@ -398,12 +400,12 @@ class _EditListingScreenState extends State<EditListingScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return selectedCategory == 1
+                              return selectedListingType == 1
                                   ? ProductEditScreenOne(
                                       imagesList: pickedImages,
                                       listingData: widget.listingData,
                                     )
-                                  : selectedCategory == 2
+                                  : selectedListingType == 2
                                       ? ServiceEditScreen(
                                           imagesList: pickedImages,
                                           listingData: widget.listingData,

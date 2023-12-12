@@ -16,9 +16,9 @@ import '../EditListingScreens/edit_listing_screen.dart';
 class ServiceListingScreen extends StatefulWidget {
   const ServiceListingScreen(
       {super.key,
-      required this.selectedCategory,
+      required this.selectedListingType,
       required this.boostingPackages});
-  final int selectedCategory;
+  final int selectedListingType;
   final List<dynamic> boostingPackages;
   @override
   State<ServiceListingScreen> createState() => _ServiceListingScreenState();
@@ -172,7 +172,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => EditListingScreen(
                           listingData: listedServices[index],
-                          selectedCategory: widget.selectedCategory,
+                          selectedListingType: widget.selectedListingType,
                         ),
                       ));
                     } else if (selectedOption == 'delete') {

@@ -61,14 +61,26 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    allListingsHousingsGV = decodedResponse['data'];
-    if (mounted) {
-      setState(() {
-        allListingsHousings = allListingsHousingsGV;
-        if (allListingsHousings.isEmpty) {
-          allListingHousingsErrMsg = 'No listing found.';
-        }
-      });
+
+    String status = decodedResponse['status'];
+    allListingsHousingsGV = [];
+    if (status == 'success') {
+      allListingsHousingsGV = decodedResponse['data'];
+      if (mounted) {
+        setState(() {
+          allListingsHousings = allListingsHousingsGV;
+        });
+      }
+    }
+
+    if (status == 'error') {
+      if (mounted) {
+        setState(() {
+          if (allListingsHousings.isEmpty) {
+            allListingHousingsErrMsg = 'No listing found.';
+          }
+        });
+      }
     }
 
     print('allListingsHousings: $allListingsHousings');

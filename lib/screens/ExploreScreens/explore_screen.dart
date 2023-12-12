@@ -151,38 +151,37 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: listingTypesGV != null
+                        children: listingTypesGV.isNotEmpty
                             ? List.generate(
-                                listingTypesGV?['data'].length,
+                                listingTypesGV.length,
                                 (index) => GestureDetector(
                                   onTap: () {
                                     setState(() {
                                       selectedListingType =
-                                          listingTypesGV?['data'][index]
+                                          listingTypesGV[index]
                                               ['listings_types_id'];
                                     });
                                     print(
                                         'selectedListingType: $selectedListingType');
                                   },
                                   child: BusinessTypeButton(
-                                      margin: index <
-                                              listingTypesGV?['data'].length - 1
+                                      margin: index < listingTypesGV.length - 1
                                           ? EdgeInsets.only(right: 10)
                                           : null,
-                                      businessName: listingTypesGV?['data']
-                                          [index]['name'],
+                                      businessName: listingTypesGV[index]
+                                          ['name'],
                                       gradient: selectedListingType ==
-                                              listingTypesGV?['data'][index]
+                                              listingTypesGV[index]
                                                   ['listings_types_id']
                                           ? gradient
                                           : null,
                                       buttonBackground: selectedListingType !=
-                                              listingTypesGV?['data'][index]
+                                              listingTypesGV[index]
                                                   ['listings_types_id']
                                           ? grey.withOpacity(0.3)
                                           : null,
                                       textColor: selectedListingType ==
-                                              listingTypesGV?['data'][index]
+                                              listingTypesGV[index]
                                                   ['listings_types_id']
                                           ? white
                                           : grey),

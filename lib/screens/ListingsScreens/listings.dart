@@ -26,11 +26,10 @@ class ListingsScreen extends StatefulWidget {
 }
 
 class _ListingsScreenState extends State<ListingsScreen> {
-  int selectedCategory = 1;
-  List<dynamic> boostingPackages = [...boostingPackagesGV];
-  bool showSpinner = false;
-
   int _tapCount = 0;
+  int selectedListingType = 1;
+  List<dynamic> boostingPackages = [...boostingPackagesGV];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -134,120 +133,108 @@ class _ListingsScreenState extends State<ListingsScreen> {
           buildContext: context,
         ),
         backgroundColor: Colors.white,
-        body: ModalProgressHUD(
-          color: Colors.white,
-          inAsyncCall: showSpinner,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 22.0.w),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 20.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedCategory = 1;
-                        });
-                      },
-                      child: BusinessTypeButton(
-                          businessName: 'Products',
-                          gradient: selectedCategory == 1 ? gradient : null,
-                          buttonBackground: selectedCategory != 1
-                              ? grey.withOpacity(0.3)
-                              : null,
-                          textColor: selectedCategory == 1 ? white : grey),
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedCategory = 2;
-                        });
-                      },
-                      child: BusinessTypeButton(
-                          businessName: 'Services',
-                          gradient: selectedCategory == 2 ? gradient : null,
-                          buttonBackground: selectedCategory != 2
-                              ? grey.withOpacity(0.3)
-                              : null,
-                          textColor: selectedCategory == 2 ? white : grey),
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedCategory = 3;
-                        });
-                      },
-                      child: BusinessTypeButton(
-                          businessName: 'Housing',
-                          gradient: selectedCategory == 3 ? gradient : null,
-                          buttonBackground: selectedCategory != 3
-                              ? grey.withOpacity(0.3)
-                              : null,
-                          textColor: selectedCategory == 3 ? white : grey),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                selectedCategory == 1 && boostingPackages.isNotEmpty
-                    ? ProductListingScreen(
-                        // listedProductsErrMsg: listedProductsErrMsg,
-                        selectedCategory: selectedCategory,
-                        boostingPackages: boostingPackages,
-                        // listedProducts: listedProducts,
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: listingTypesGV.isNotEmpty
+                    ? List.generate(
+                        listingTypesGV.length,
+                        (index) => GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedListingType =
+                                  listingTypesGV[index]['listings_types_id'];
+                            });
+                            print('selectedListingType: $selectedListingType');
+                          },
+                          child: BusinessTypeButton(
+                              margin: index < listingTypesGV.length - 1
+                                  ? EdgeInsets.only(right: 10)
+                                  : null,
+                              businessName: listingTypesGV[index]['name'],
+                              gradient: selectedListingType ==
+                                      listingTypesGV[index]['listings_types_id']
+                                  ? gradient
+                                  : null,
+                              buttonBackground: selectedListingType !=
+                                      listingTypesGV[index]['listings_types_id']
+                                  ? grey.withOpacity(0.3)
+                                  : null,
+                              textColor: selectedListingType ==
+                                      listingTypesGV[index]['listings_types_id']
+                                  ? white
+                                  : grey),
+                        ),
                       )
-                    : selectedCategory == 2 && boostingPackages.isNotEmpty
-                        ? ServiceListingScreen(
-                            selectedCategory: selectedCategory,
-                            boostingPackages: boostingPackages,
-                          )
-                        : selectedCategory == 3 && boostingPackages.isNotEmpty
-                            ? HousingListingScreen(
-                                selectedCategory: selectedCategory,
-                                boostingPackages: boostingPackages,
-                              )
-                            : Expanded(
-                                child: Shimmer.fromColors(
-                                    child: ListView.builder(
-                                      itemBuilder: (context, index) {
-                                        return Container(
-                                          height: 80,
-                                          margin: EdgeInsets.only(
-                                              top: 2,
-                                              left: 5,
-                                              right: 5,
-                                              bottom: 14),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            color: Colors.grey.withOpacity(0.3),
-                                          ),
-                                        );
-                                      },
-                                      itemCount: 5,
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.vertical,
-                                      physics: BouncingScrollPhysics(),
-                                    ),
-                                    baseColor: Colors.grey[500]!,
-                                    highlightColor: Colors.grey[100]!),
-                              ),
-                // SizedBox(
-                //   height: 10,
-                // )
-              ],
-            ),
+                    : List.generate(
+                        3,
+                        (index) => Shimmer.fromColors(
+                            child: BusinessTypeButton(
+                                margin: EdgeInsets.only(left: 5, right: 5),
+                                businessName: '',
+                                gradient: null,
+                                buttonBackground: grey.withOpacity(0.3),
+                                textColor: grey),
+                            baseColor: Colors.grey[500]!,
+                            highlightColor: Colors.grey[100]!),
+                      ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              selectedListingType == 1 && boostingPackages.isNotEmpty
+                  ? ProductListingScreen(
+                      // listedProductsErrMsg: listedProductsErrMsg,
+                      selectedListingType: selectedListingType,
+                      boostingPackages: boostingPackages,
+                      // listedProducts: listedProducts,
+                    )
+                  : selectedListingType == 2 && boostingPackages.isNotEmpty
+                      ? ServiceListingScreen(
+                          selectedListingType: selectedListingType,
+                          boostingPackages: boostingPackages,
+                        )
+                      : selectedListingType == 3 && boostingPackages.isNotEmpty
+                          ? HousingListingScreen(
+                              selectedListingType: selectedListingType,
+                              boostingPackages: boostingPackages,
+                            )
+                          : Expanded(
+                              child: Shimmer.fromColors(
+                                  child: ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        height: 80,
+                                        margin: EdgeInsets.only(
+                                            top: 2,
+                                            left: 5,
+                                            right: 5,
+                                            bottom: 14),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          color: Colors.grey.withOpacity(0.3),
+                                        ),
+                                      );
+                                    },
+                                    itemCount: 5,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    physics: BouncingScrollPhysics(),
+                                  ),
+                                  baseColor: Colors.grey[500]!,
+                                  highlightColor: Colors.grey[100]!),
+                            ),
+              // SizedBox(
+              //   height: 10,
+              // )
+            ],
           ),
         ),
       ),

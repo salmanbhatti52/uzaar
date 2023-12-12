@@ -48,15 +48,26 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    allListingsProductsGV = decodedResponse['data'];
 
-    if (mounted) {
-      setState(() {
-        allListingsProducts = allListingsProductsGV;
-        if (allListingsProducts.isEmpty) {
-          allListingProductsErrMsg = 'No listing found.';
-        }
-      });
+    String status = decodedResponse['status'];
+    allListingsProductsGV = [];
+    if (status == 'success') {
+      allListingsProductsGV = decodedResponse['data'];
+      if (mounted) {
+        setState(() {
+          allListingsProducts = allListingsProductsGV;
+        });
+      }
+    }
+
+    if (status == 'error') {
+      if (mounted) {
+        setState(() {
+          if (allListingsProducts.isEmpty) {
+            allListingProductsErrMsg = 'No listing found.';
+          }
+        });
+      }
     }
 
     print('allListingsProducts: $allListingsProducts');

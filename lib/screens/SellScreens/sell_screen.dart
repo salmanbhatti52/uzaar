@@ -8,8 +8,10 @@ import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_
 import 'package:Uzaar/screens/SellScreens/ServiceSellScreens/service_add_screen.dart';
 import 'dart:io';
 import 'package:Uzaar/utils/colors.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../services/getImage.dart';
+import '../../services/restService.dart';
 import '../../utils/Buttons.dart';
 import '../../widgets/DrawerWidget.dart';
 import '../../widgets/business_type_button.dart';
@@ -27,7 +29,7 @@ class SellScreen extends StatefulWidget {
 
 class _SellScreenState extends State<SellScreen> {
   int selectedPage = 0;
-  int selectedCategory = 1;
+  int selectedListingType = 1;
   int noOfTabs = 3;
   // XFile? _selectedImage;
   // String? selectedImageInBase64 = '';
@@ -37,7 +39,7 @@ class _SellScreenState extends State<SellScreen> {
   List<Widget> getPageIndicators() {
     List<Widget> tabs = [];
 
-    if (selectedCategory != 1) {
+    if (selectedListingType != 1) {
       noOfTabs = 2;
     } else {
       noOfTabs = 3;
@@ -158,63 +160,57 @@ class _SellScreenState extends State<SellScreen> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            imagesList = [];
-                            selectedCategory = 1;
-                            getPageIndicators();
-                          });
-                        },
-                        child: BusinessTypeButton(
-                            businessName: 'Products',
-                            gradient: selectedCategory == 1 ? gradient : null,
-                            buttonBackground: selectedCategory != 1
-                                ? grey.withOpacity(0.3)
-                                : null,
-                            textColor: selectedCategory == 1 ? white : grey),
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            imagesList = [];
-                            selectedCategory = 2;
-                            getPageIndicators();
-                          });
-                        },
-                        child: BusinessTypeButton(
-                            businessName: 'Services',
-                            gradient: selectedCategory == 2 ? gradient : null,
-                            buttonBackground: selectedCategory != 2
-                                ? grey.withOpacity(0.3)
-                                : null,
-                            textColor: selectedCategory == 2 ? white : grey),
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            imagesList = [];
-                            selectedCategory = 3;
-                            getPageIndicators();
-                          });
-                        },
-                        child: BusinessTypeButton(
-                            businessName: 'Housing',
-                            gradient: selectedCategory == 3 ? gradient : null,
-                            buttonBackground: selectedCategory != 3
-                                ? grey.withOpacity(0.3)
-                                : null,
-                            textColor: selectedCategory == 3 ? white : grey),
-                      ),
-                    ],
+                    children: listingTypesGV.isNotEmpty
+                        ? List.generate(
+                            listingTypesGV.length,
+                            (index) => GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedListingType = listingTypesGV[index]
+                                      ['listings_types_id'];
+                                  imagesList = [];
+                                  getPageIndicators();
+                                });
+                                print(
+                                    'selectedListingType: $selectedListingType');
+                              },
+                              child: BusinessTypeButton(
+                                  margin: index < listingTypesGV.length - 1
+                                      ? EdgeInsets.only(right: 10)
+                                      : null,
+                                  businessName: listingTypesGV[index]['name'],
+                                  gradient: selectedListingType ==
+                                          listingTypesGV[index]
+                                              ['listings_types_id']
+                                      ? gradient
+                                      : null,
+                                  buttonBackground: selectedListingType !=
+                                          listingTypesGV[index]
+                                              ['listings_types_id']
+                                      ? grey.withOpacity(0.3)
+                                      : null,
+                                  textColor: selectedListingType ==
+                                          listingTypesGV[index]
+                                              ['listings_types_id']
+                                      ? white
+                                      : grey),
+                            ),
+                          )
+                        : List.generate(
+                            3,
+                            (index) => Shimmer.fromColors(
+                                baseColor: Colors.grey[500]!,
+                                highlightColor: Colors.grey[100]!,
+                                child: BusinessTypeButton(
+                                    margin: const EdgeInsets.only(
+                                        left: 5, right: 5),
+                                    businessName: '',
+                                    gradient: null,
+                                    buttonBackground: grey.withOpacity(0.3),
+                                    textColor: grey)),
+                          ),
                   ),
+
                   SizedBox(
                     height: 20.h,
                   ),
@@ -362,11 +358,11 @@ class _SellScreenState extends State<SellScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return selectedCategory == 1
+                                return selectedListingType == 1
                                     ? ProductAddScreenOne(
                                         imagesList: imagesList,
                                       )
-                                    : selectedCategory == 2
+                                    : selectedListingType == 2
                                         ? ServiceAddScreen(
                                             imagesList: imagesList,
                                           )

@@ -55,14 +55,26 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    allListingsServicesGV = decodedResponse['data'];
-    if (mounted) {
-      setState(() {
-        allListingsServices = allListingsServicesGV;
-        if (allListingsServices.isEmpty) {
-          allListingServicesErrMsg = 'No listing found.';
-        }
-      });
+
+    String status = decodedResponse['status'];
+    allListingsServicesGV = [];
+    if (status == 'success') {
+      allListingsServicesGV = decodedResponse['data'];
+      if (mounted) {
+        setState(() {
+          allListingsServices = allListingsServicesGV;
+        });
+      }
+    }
+
+    if (status == 'error') {
+      if (mounted) {
+        setState(() {
+          if (allListingsServices.isEmpty) {
+            allListingServicesErrMsg = 'No listing found.';
+          }
+        });
+      }
     }
 
     print('allListingsServices: $allListingsServices');

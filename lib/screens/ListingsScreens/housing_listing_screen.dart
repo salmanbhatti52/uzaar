@@ -16,9 +16,9 @@ import '../EditListingScreens/edit_listing_screen.dart';
 class HousingListingScreen extends StatefulWidget {
   const HousingListingScreen(
       {super.key,
-      required this.selectedCategory,
+      required this.selectedListingType,
       required this.boostingPackages});
-  final int selectedCategory;
+  final int selectedListingType;
   final List<dynamic> boostingPackages;
 
   @override
@@ -178,7 +178,7 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => EditListingScreen(
                           listingData: listedHousings[index],
-                          selectedCategory: widget.selectedCategory,
+                          selectedListingType: widget.selectedListingType,
                         ),
                       ));
                     } else if (selectedOption == 'delete') {

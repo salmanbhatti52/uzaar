@@ -128,9 +128,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     print(response.statusCode);
     print(response.body);
-    listingTypesGV = jsonDecode(response.body);
-    if (mounted) {
-      setState(() {});
+    var decodedData = jsonDecode(response.body);
+    String status = decodedData['status'];
+    if (status == 'success') {
+      if (mounted) {
+        setState(() {
+          listingTypesGV = decodedData['data'];
+        });
+      }
     }
   }
 
@@ -145,6 +150,8 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     String status = decodedResponse['status'];
+    productListingCategoriesGV = [];
+    productListingCategoriesNamesGV = [];
     if (status == 'success') {
       productListingCategoriesGV = decodedResponse['data'];
       print('productListingCategoriesGV: $productListingCategoriesGV');
@@ -176,6 +183,8 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     String status = decodedResponse['status'];
+    serviceListingCategoriesGV = [];
+    serviceListingCategoriesNamesGV = [];
     if (status == 'success') {
       serviceListingCategoriesGV = decodedResponse['data'];
       print('serviceListingCategoriesGV: $serviceListingCategoriesGV');
@@ -207,6 +216,8 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     String status = decodedResponse['status'];
+    housingListingCategoriesGV = [];
+    housingListingCategoriesNamesGV = [];
     if (status == 'success') {
       housingListingCategoriesGV = decodedResponse['data'];
       print('housingListingCategoriesGV: $housingListingCategoriesGV');
@@ -235,13 +246,29 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    featuredProductsGV = decodedResponse['data'];
-    print('featuredProductsGV: $featuredProductsGV');
-    if (mounted) {
-      setState(() {
-        featuredProducts = featuredProductsGV;
-      });
+
+    String status = decodedResponse['status'];
+    featuredProductsGV = [];
+    if (status == 'success') {
+      featuredProductsGV = decodedResponse['data'];
+      if (mounted) {
+        setState(() {
+          featuredProducts = featuredProductsGV;
+        });
+      }
     }
+
+    if (status == 'error') {
+      if (mounted) {
+        setState(() {
+          if (featuredProducts.isEmpty) {
+            featuredProductsErrMsg = 'No listing found.';
+          }
+        });
+      }
+    }
+
+    print('featuredProducts: $featuredProducts');
   }
 
   getFeaturedServices() async {
@@ -252,12 +279,26 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    featuredServicesGV = decodedResponse['data'];
-    print('featuredServicesGV: $featuredServicesGV');
-    if (mounted) {
-      setState(() {
-        featuredServices = featuredServicesGV;
-      });
+
+    String status = decodedResponse['status'];
+    featuredServicesGV = [];
+    if (status == 'success') {
+      featuredServicesGV = decodedResponse['data'];
+      if (mounted) {
+        setState(() {
+          featuredServices = featuredServicesGV;
+        });
+      }
+    }
+
+    if (status == 'error') {
+      if (mounted) {
+        setState(() {
+          if (featuredServices.isEmpty) {
+            featuredServicesErrMsg = 'No listing found.';
+          }
+        });
+      }
     }
   }
 
@@ -269,12 +310,26 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    featuredHousingGV = decodedResponse['data'];
-    print('featuredHousingGV: $featuredHousingGV');
-    if (mounted) {
-      setState(() {
-        featuredHousings = featuredHousingGV;
-      });
+
+    String status = decodedResponse['status'];
+    featuredHousingGV = [];
+    if (status == 'success') {
+      featuredHousingGV = decodedResponse['data'];
+      if (mounted) {
+        setState(() {
+          featuredHousings = featuredHousingGV;
+        });
+      }
+    }
+
+    if (status == 'error') {
+      if (mounted) {
+        setState(() {
+          if (featuredHousings.isEmpty) {
+            featuredHousingsErrMsg = 'No listing found.';
+          }
+        });
+      }
     }
   }
 
@@ -294,8 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
       () {
         print(value);
         List<dynamic> filteredItems = [];
-        if (selectedListingType ==
-            listingTypesGV?['data'][0]['listings_types_id']) {
+        if (selectedListingType == listingTypesGV[0]['listings_types_id']) {
           for (var product in featuredProductsGV) {
             String productName = product['name'];
             productName = productName.toLowerCase();
@@ -312,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           });
         } else if (selectedListingType ==
-            listingTypesGV?['data'][1]['listings_types_id']) {
+            listingTypesGV[1]['listings_types_id']) {
           for (var service in featuredServicesGV) {
             String serviceName = service['name'];
             serviceName = serviceName.toLowerCase();
@@ -329,7 +383,7 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           });
         } else if (selectedListingType ==
-            listingTypesGV?['data'][2]['listings_types_id']) {
+            listingTypesGV[2]['listings_types_id']) {
           for (var house in featuredHousingGV) {
             String houseName = house['name'];
             houseName = houseName.toLowerCase();
@@ -354,7 +408,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    selectedListingType = listingTypesGV?['data'][0]['listings_types_id'];
+    selectedListingType = listingTypesGV[0]['listings_types_id'];
     listingSelectedCategoryGV = '';
   }
 
@@ -515,16 +569,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: listingTypesGV != null
+                      children: listingTypesGV.isNotEmpty
                           ? List.generate(
-                              listingTypesGV?['data'].length,
+                              listingTypesGV.length,
                               (index) => GestureDetector(
                                 onTap: () {
                                   setState(() {
                                     searchController.clear();
-                                    selectedListingType =
-                                        listingTypesGV?['data'][index]
-                                            ['listings_types_id'];
+                                    selectedListingType = listingTypesGV[index]
+                                        ['listings_types_id'];
 
                                     // to get all data when a listing type selected and clear filtered data
                                     listingSelectedCategoryGV = '';
@@ -536,24 +589,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                       'selectedListingType: $selectedListingType');
                                 },
                                 child: BusinessTypeButton(
-                                    margin: index <
-                                            listingTypesGV?['data'].length - 1
+                                    margin: index < listingTypesGV.length - 1
                                         ? EdgeInsets.only(right: 10)
                                         : null,
-                                    businessName: listingTypesGV?['data'][index]
-                                        ['name'],
+                                    businessName: listingTypesGV[index]['name'],
                                     gradient: selectedListingType ==
-                                            listingTypesGV?['data'][index]
+                                            listingTypesGV[index]
                                                 ['listings_types_id']
                                         ? gradient
                                         : null,
                                     buttonBackground: selectedListingType !=
-                                            listingTypesGV?['data'][index]
+                                            listingTypesGV[index]
                                                 ['listings_types_id']
                                         ? grey.withOpacity(0.3)
                                         : null,
                                     textColor: selectedListingType ==
-                                            listingTypesGV?['data'][index]
+                                            listingTypesGV[index]
                                                 ['listings_types_id']
                                         ? white
                                         : grey),
@@ -580,10 +631,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     SizedBox(
                       height: 98,
-                      child: selectedListingType ==
-                                  listingTypesGV?['data'][0]
-                                      ['listings_types_id'] &&
-                              productListingCategoriesGV != null
+                      child: selectedListingType == 1 &&
+                              productListingCategoriesGV.isNotEmpty
                           ? ListView.builder(
                               itemCount: productListingCategoriesGV.length,
                               shrinkWrap: true,
@@ -630,10 +679,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               },
                             )
-                          : selectedListingType ==
-                                      listingTypesGV?['data'][1]
-                                          ['listings_types_id'] &&
-                                  serviceListingCategoriesGV != null
+                          : selectedListingType == 2 &&
+                                  serviceListingCategoriesGV.isNotEmpty
                               ? ListView.builder(
                                   itemCount: serviceListingCategoriesGV.length,
                                   shrinkWrap: true,
@@ -681,10 +728,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     );
                                   },
                                 )
-                              : selectedListingType ==
-                                          listingTypesGV?['data'][2]
-                                              ['listings_types_id'] &&
-                                      housingListingCategoriesGV != null
+                              : selectedListingType == 3 &&
+                                      housingListingCategoriesGV.isNotEmpty
                                   ? ListView.builder(
                                       itemCount:
                                           housingListingCategoriesGV.length,
@@ -1041,8 +1086,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           )
                         : SizedBox(),
 
-                    selectedListingType ==
-                            listingTypesGV?['data'][1]['listings_types_id']
+                    selectedListingType == 2
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -1295,8 +1339,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           )
                         : SizedBox(),
 
-                    selectedListingType ==
-                            listingTypesGV?['data'][2]['listings_types_id']
+                    selectedListingType == 3
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
