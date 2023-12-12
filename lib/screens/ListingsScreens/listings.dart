@@ -190,10 +190,8 @@ class _ListingsScreenState extends State<ListingsScreen> {
               ),
               selectedListingType == 1 && boostingPackages.isNotEmpty
                   ? ProductListingScreen(
-                      // listedProductsErrMsg: listedProductsErrMsg,
                       selectedListingType: selectedListingType,
                       boostingPackages: boostingPackages,
-                      // listedProducts: listedProducts,
                     )
                   : selectedListingType == 2 && boostingPackages.isNotEmpty
                       ? ServiceListingScreen(

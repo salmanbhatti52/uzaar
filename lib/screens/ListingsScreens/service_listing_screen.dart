@@ -181,7 +181,11 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                               ['listings_services_id']);
                       if (result == 'success') {
                         listedServices.removeAt(index);
-                        setState(() {});
+                        setState(() {
+                          if (listedServices.isEmpty) {
+                            listedServicesErrMsg = 'No listing found.';
+                          }
+                        });
                       }
                     } else {}
                   },

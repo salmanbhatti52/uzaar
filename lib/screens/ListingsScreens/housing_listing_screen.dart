@@ -187,7 +187,11 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                               ['listings_housings_id']);
                       if (result == 'success') {
                         listedHousings.removeAt(index);
-                        setState(() {});
+                        setState(() {
+                          if (listedHousings.isEmpty) {
+                            listedHousingsErrMsg = 'No listing found.';
+                          }
+                        });
                       }
                     } else {}
                   },

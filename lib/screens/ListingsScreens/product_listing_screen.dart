@@ -184,7 +184,11 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                               ['listings_products_id']);
                       if (result == 'success') {
                         listedProducts.removeAt(index);
-                        setState(() {});
+                        setState(() {
+                          if (listedProducts.isEmpty) {
+                            listedProductsErrMsg = 'No listing found.';
+                          }
+                        });
                       }
                     } else {}
                   },

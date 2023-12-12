@@ -29,7 +29,6 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
   late Set<ReportReason> selectedReasons = {};
   String? selectedCategory;
   String? selectedPrice;
-  String? selectedLocation;
   List<dynamic> allListingsProducts = [...allListingsProductsGV];
   String allListingProductsErrMsg = '';
   List<String> categories = [...productListingCategoriesNamesGV];
@@ -102,6 +101,46 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     );
   }
 
+  findSelectedCategoryItems() {
+    allListingsProducts = allListingsProductsGV;
+    List<dynamic> filteredProducts = [];
+    for (var product in allListingsProducts) {
+      if (product['listings_categories']['name'].contains(selectedCategory)) {
+        filteredProducts.add(product);
+      }
+    }
+    setState(() {
+      allListingsProducts = filteredProducts;
+      if (allListingsProducts.isEmpty) {
+        allListingProductsErrMsg = 'No listing found.';
+      } else {
+        allListingProductsErrMsg = '';
+      }
+    });
+  }
+
+  findMatchedPriceItems(dynamic value) {
+    print(value);
+    double? productPrice;
+    allListingsProducts = allListingsProductsGV;
+    List<dynamic> filteredProducts = [];
+    for (var product in allListingsProducts) {
+      productPrice = double.parse(product['price']);
+      if (productPrice >= value['range_from'] &&
+          productPrice <= value['range_to']) {
+        filteredProducts.add(product);
+      }
+    }
+    setState(() {
+      allListingsProducts = filteredProducts;
+      if (allListingsProducts.isEmpty) {
+        allListingProductsErrMsg = 'No listing found.';
+      } else {
+        allListingProductsErrMsg = '';
+      }
+    });
+  }
+
   getProductsPriceRanges() async {
     Response response = await sendPostRequest(
         action: 'listings_types_prices_ranges',
@@ -109,13 +148,14 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    dynamic data = decodedResponse['data'];
-    productsPriceRangesGV = [];
-    for (int i = 0; i < data.length; i++) {
-      productsPriceRangesGV
-          .add('${data[i]['range_from']} - ${data[i]['range_to']}');
-    }
-    print(productsPriceRangesGV);
+    // productsPriceRangesGV = [];
+    productsPriceRangesGV = decodedResponse['data'];
+
+    // for (int i = 0; i < data.length; i++) {
+    //   productsPriceRangesGV
+    //       .add('${data[i]['range_from']} - ${data[i]['range_to']}');
+    // }
+    // print(productsPriceRangesGV);
     if (mounted) {
       setState(() {});
     }
@@ -145,7 +185,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
               margin: const EdgeInsets.only(top: 20, bottom: 20),
               child: SearchField(
                   onChanged: (value) {
-                    searchData(value);
+                    searchData(value.trim());
                   },
                   searchController: searchController)),
           SingleChildScrollView(
@@ -165,6 +205,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                             setState(() {
                               selectedCategory = value;
                             });
+                            findSelectedCategoryItems();
                           },
                           dropdownMenuEntries: categories
                               .map(
@@ -184,13 +225,18 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                           hintText: 'Price',
                           onSelected: (value) {
                             setState(() {
-                              selectedPrice = value;
+                              selectedPrice =
+                                  '${value['range_from']} - ${value['range_to']}';
                             });
+                            print(selectedPrice);
+                            findMatchedPriceItems(value);
                           },
                           dropdownMenuEntries: productsPriceRangesGV
                               .map(
-                                (String value) => DropdownMenuEntry<String>(
-                                    value: value, label: value),
+                                (dynamic value) => DropdownMenuEntry<dynamic>(
+                                    value: value,
+                                    label:
+                                        '${value['range_from']} - ${value['range_to']}'),
                               )
                               .toList(),
                         ),

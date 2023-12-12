@@ -157,7 +157,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
               margin: const EdgeInsets.only(top: 20, bottom: 20),
               child: SearchField(
                   onChanged: (value) {
-                    searchData(value);
+                    searchData(value.trim());
                   },
                   searchController: searchController)),
           SingleChildScrollView(

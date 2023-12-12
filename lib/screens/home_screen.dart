@@ -554,7 +554,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     SearchField(
                       searchController: searchController,
                       onChanged: (value) {
-                        searchData(value);
+                        searchData(value.trim());
                       },
                     ),
                     SizedBox(
