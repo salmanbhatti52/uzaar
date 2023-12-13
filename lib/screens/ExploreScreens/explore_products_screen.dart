@@ -27,12 +27,12 @@ class ExploreProductsScreen extends StatefulWidget {
 class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
   final searchController = TextEditingController();
   late Set<ReportReason> selectedReasons = {};
-  String? selectedCategory;
+  String selectedCategory = '';
   String? selectedPrice;
   List<dynamic> allListingsProducts = [...allListingsProductsGV];
   String allListingProductsErrMsg = '';
   List<String> categories = [...productListingCategoriesNamesGV];
-
+  dynamic selectedPriceRange;
   handleOptionSelection(ReportReason reason) {
     if (selectedReasons.contains(reason)) {
       selectedReasons.remove(reason);
@@ -72,7 +72,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     print('allListingsProducts: $allListingsProducts');
   }
 
-  searchData(String value) {
+  searchProductsByName(String value) {
     print(value);
     Future.delayed(
       const Duration(seconds: 1),
@@ -101,14 +101,35 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     );
   }
 
-  findSelectedCategoryItems() {
+  filterProducts() {
+    dynamic productName;
+    double productPrice;
     allListingsProducts = allListingsProductsGV;
     List<dynamic> filteredProducts = [];
+    print('selectedPriceRange: $selectedPriceRange');
+    print('selectedCategory: $selectedCategory');
     for (var product in allListingsProducts) {
-      if (product['listings_categories']['name'].contains(selectedCategory)) {
-        filteredProducts.add(product);
-      }
+      productName = product['listings_categories']['name'];
+      productPrice = double.parse(product['price']);
+
+      if (selectedCategory.isNotEmpty && selectedPriceRange != null) {
+        if (productName.contains(selectedCategory) &&
+            (productPrice >= selectedPriceRange['range_from'] &&
+                productPrice <= selectedPriceRange['range_to'])) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedCategory.isNotEmpty) {
+        if (productName.contains(selectedCategory)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedPriceRange != null) {
+        if (productPrice >= selectedPriceRange['range_from'] &&
+            productPrice <= selectedPriceRange['range_to']) {
+          filteredProducts.add(product);
+        }
+      } else {}
     }
+
     setState(() {
       allListingsProducts = filteredProducts;
       if (allListingsProducts.isEmpty) {
@@ -119,27 +140,45 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     });
   }
 
-  findMatchedPriceItems(dynamic value) {
-    print(value);
-    double? productPrice;
-    allListingsProducts = allListingsProductsGV;
-    List<dynamic> filteredProducts = [];
-    for (var product in allListingsProducts) {
-      productPrice = double.parse(product['price']);
-      if (productPrice >= value['range_from'] &&
-          productPrice <= value['range_to']) {
-        filteredProducts.add(product);
-      }
-    }
-    setState(() {
-      allListingsProducts = filteredProducts;
-      if (allListingsProducts.isEmpty) {
-        allListingProductsErrMsg = 'No listing found.';
-      } else {
-        allListingProductsErrMsg = '';
-      }
-    });
-  }
+  // findSelectedCategoryItems() {
+  //   allListingsProducts = allListingsProductsGV;
+  //   List<dynamic> filteredProducts = [];
+  //   for (var product in allListingsProducts) {
+  //     if (product['listings_categories']['name'].contains(selectedCategory)) {
+  //       filteredProducts.add(product);
+  //     }
+  //   }
+  //   setState(() {
+  //     allListingsProducts = filteredProducts;
+  //     if (allListingsProducts.isEmpty) {
+  //       allListingProductsErrMsg = 'No listing found.';
+  //     } else {
+  //       allListingProductsErrMsg = '';
+  //     }
+  //   });
+  // }
+  //
+  // findMatchedPriceItems(dynamic value) {
+  //   print(value);
+  //   double? productPrice;
+  //   // allListingsProducts = allListingsProductsGV;
+  //   List<dynamic> filteredProducts = [];
+  //   for (var product in allListingsProducts) {
+  //     productPrice = double.parse(product['price']);
+  //     if (productPrice >= value['range_from'] &&
+  //         productPrice <= value['range_to']) {
+  //       filteredProducts.add(product);
+  //     }
+  //   }
+  //   setState(() {
+  //     allListingsProducts = filteredProducts;
+  //     if (allListingsProducts.isEmpty) {
+  //       allListingProductsErrMsg = 'No listing found.';
+  //     } else {
+  //       allListingProductsErrMsg = '';
+  //     }
+  //   });
+  // }
 
   getProductsPriceRanges() async {
     Response response = await sendPostRequest(
@@ -174,6 +213,12 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // return Container();
     return Padding(
@@ -185,7 +230,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
               margin: const EdgeInsets.only(top: 20, bottom: 20),
               child: SearchField(
                   onChanged: (value) {
-                    searchData(value.trim());
+                    searchProductsByName(value.trim());
                   },
                   searchController: searchController)),
           SingleChildScrollView(
@@ -205,7 +250,8 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                             setState(() {
                               selectedCategory = value;
                             });
-                            findSelectedCategoryItems();
+                            // findSelectedCategoryItems();
+                            filterProducts();
                           },
                           dropdownMenuEntries: categories
                               .map(
@@ -229,7 +275,9 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                                   '${value['range_from']} - ${value['range_to']}';
                             });
                             print(selectedPrice);
-                            findMatchedPriceItems(value);
+                            // findMatchedPriceItems(value);
+                            selectedPriceRange = value;
+                            filterProducts();
                           },
                           dropdownMenuEntries: productsPriceRangesGV
                               .map(
