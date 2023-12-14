@@ -31,7 +31,7 @@ class ProductAddScreenTwo extends StatefulWidget {
 class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
   int noOfTabs = 3;
   final minPriceEditingController = TextEditingController();
-  late String selectedBoosting;
+  String? selectedBoosting;
   dynamic selectedBoostingItem;
   bool setLoader = false;
   String setButtonStatus = 'Publish';
@@ -164,8 +164,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                           if (minPriceEditingController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
-                                    message:
-                                        'Plz add price you want to offer'));
+                                    message: 'Please add minimum offer price'));
                           } else {
                             FocusScopeNode currentFocus =
                                 FocusScope.of(context);
@@ -210,7 +209,8 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                                   'price': widget.formData['productPrice'],
                                   'min_offer_price':
                                       minPriceEditingController.text.toString(),
-                                  'packages_id': "",
+                                  'packages_id':
+                                      selectedBoostingItem?['packages_id'],
                                   'payment_gateways_id': "",
                                   'payment_status': "",
                                   'listings_images': images,

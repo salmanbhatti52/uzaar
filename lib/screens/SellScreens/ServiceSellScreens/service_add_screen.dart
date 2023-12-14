@@ -29,9 +29,10 @@ class ServiceAddScreen extends StatefulWidget {
 
 class _ServiceAddScreenState extends State<ServiceAddScreen> {
   int noOfTabs = 2;
+  String? selectedBoosting;
+  dynamic selectedBoostingItem;
   late String? selectedCategoryName = '';
   late String? selectedCategoryId = '';
-  late String? selectedBoostingOption = '';
   final nameEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final locationEditingController = TextEditingController();
@@ -44,7 +45,6 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
     {'categoryName': 'Medical', 'categoryId': '11'},
     {'categoryName': 'Printing', 'categoryId': '12'},
   ];
-  List<String> boostingOptions = ['Free', 'Paid'];
 
   late double latitude;
   late double longitude;
@@ -280,13 +280,16 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           hintText: 'Select Option',
                           onSelected: (value) {
                             setState(() {
-                              selectedBoostingOption = value;
+                              selectedBoosting = value['name'];
                             });
+                            print(selectedBoosting);
+                            selectedBoostingItem = value;
+                            print(selectedBoostingItem);
                           },
-                          dropdownMenuEntries: boostingOptions
+                          dropdownMenuEntries: boostingPackagesGV
                               .map(
-                                (String value) => DropdownMenuEntry<String>(
-                                    value: value, label: value),
+                                (dynamic value) => DropdownMenuEntry<dynamic>(
+                                    value: value, label: value['name']),
                               )
                               .toList()),
                       SizedBox(
@@ -385,7 +388,8 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                         .toString(),
                                     'latitude': latitude.toString(),
                                     'longitude': longitude.toString(),
-                                    'packages_id': '',
+                                    'packages_id':
+                                        selectedBoostingItem?['packages_id'],
                                     'payment_gateways_id': '',
                                     'payment_status': '',
                                     'listings_images': images

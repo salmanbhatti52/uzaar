@@ -31,6 +31,8 @@ class HouseAddScreen extends StatefulWidget {
 
 class _HouseAddScreenState extends State<HouseAddScreen> {
   int noOfTabs = 2;
+  String? selectedBoosting;
+  dynamic selectedBoostingItem;
   late String? selectedCategoryName = '';
   late String? selectedCategoryId = '';
   late String? selectedBoostingOption = '';
@@ -46,7 +48,6 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
     {'categoryName': 'For Sale', 'categoryId': '14'},
     {'categoryName': 'Lease', 'categoryId': '15'},
   ];
-  List<String> boostingOptions = ['Free', 'Paid'];
   List<int> bedrooms = [1, 2, 3, 4, 5];
   List<int> bathrooms = [1, 2, 3, 4, 5];
 
@@ -451,18 +452,17 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                           leadingIconName: 'boost_icon',
                           hintText: 'Select Option',
                           onSelected: (value) {
-                            // FocusScopeNode currentFocus = FocusScope.of(context);
-                            // if(!currentFocus.hasPrimaryFocus){
-                            //   currentFocus.unfocus();
-                            // }
                             setState(() {
-                              selectedBoostingOption = value;
+                              selectedBoosting = value['name'];
                             });
+                            print(selectedBoosting);
+                            selectedBoostingItem = value;
+                            print(selectedBoostingItem);
                           },
-                          dropdownMenuEntries: boostingOptions
+                          dropdownMenuEntries: boostingPackagesGV
                               .map(
-                                (String value) => DropdownMenuEntry<String>(
-                                    value: value, label: value),
+                                (dynamic value) => DropdownMenuEntry<dynamic>(
+                                    value: value, label: value['name']),
                               )
                               .toList()),
                       SizedBox(
@@ -581,7 +581,8 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                     'bedroom': selectedBedroomOption.toString(),
                                     'bathroom':
                                         selectedBathroomOption.toString(),
-                                    'packages_id': '',
+                                    'packages_id':
+                                        selectedBoostingItem?['packages_id'],
                                     'payment_gateways_id': '',
                                     'payment_status': '',
                                     'listings_images': images
