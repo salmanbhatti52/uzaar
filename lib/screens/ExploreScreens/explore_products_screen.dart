@@ -28,11 +28,17 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
   final searchController = TextEditingController();
   late Set<ReportReason> selectedReasons = {};
   String? selectedCategory;
+  String? selectedCondition;
   String? selectedPrice;
   List<dynamic> allListingsProducts = [...allListingsProductsGV];
   String allListingProductsErrMsg = '';
   List<String> categories = [...productListingCategoriesNamesGV];
   dynamic selectedPriceRange;
+
+  final List<String> productConditions = [
+    'New',
+    'Used',
+  ];
 
   handleOptionSelection(ReportReason reason) {
     if (selectedReasons.contains(reason)) {
@@ -104,23 +110,51 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
 
   filterProducts() {
     dynamic productCategoryName;
+    dynamic productCondition;
     double productPrice;
     allListingsProducts = allListingsProductsGV;
     List<dynamic> filteredProducts = [];
     print('selectedPriceRange: $selectedPriceRange');
     print('selectedCategory: $selectedCategory');
+    print('productCondition: $selectedCondition');
+
     for (var product in allListingsProducts) {
       productCategoryName = product['listings_categories']['name'];
       productPrice = double.parse(product['price']);
+      productCondition = product['condition'];
 
-      if (selectedCategory != null && selectedPriceRange != null) {
+      if (selectedCategory != null &&
+          selectedPriceRange != null &&
+          selectedCondition != null) {
+        if (productCategoryName.contains(selectedCategory) &&
+            (productPrice >= selectedPriceRange['range_from'] &&
+                productPrice <= selectedPriceRange['range_to']) &&
+            productCondition.contains(selectedCondition)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedCategory != null && selectedPriceRange != null) {
         if (productCategoryName.contains(selectedCategory) &&
             (productPrice >= selectedPriceRange['range_from'] &&
                 productPrice <= selectedPriceRange['range_to'])) {
           filteredProducts.add(product);
         }
+      } else if (selectedCategory != null && selectedCondition != null) {
+        if (productCategoryName.contains(selectedCategory) &&
+            productCondition.contains(selectedCondition)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedPriceRange != null && selectedCondition != null) {
+        if ((productPrice >= selectedPriceRange['range_from'] &&
+                productPrice <= selectedPriceRange['range_to']) &&
+            productCondition.contains(selectedCondition)) {
+          filteredProducts.add(product);
+        }
       } else if (selectedCategory != null) {
         if (productCategoryName.contains(selectedCategory)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedCondition != null) {
+        if (productCondition.contains(selectedCondition)) {
           filteredProducts.add(product);
         }
       } else if (selectedPriceRange != null) {
@@ -212,6 +246,29 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                             filterProducts();
                           },
                           dropdownMenuEntries: categories
+                              .map(
+                                (String value) => DropdownMenuEntry<String>(
+                                    value: value, label: value),
+                              )
+                              .toList(),
+                        ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        RoundedSmallDropdownMenu(
+                          width: 165,
+                          leadingIconName: selectedCondition != null
+                              ? 'cat-selected'
+                              : 'cat-unselected',
+                          hintText: 'Condition',
+                          onSelected: (value) {
+                            setState(() {
+                              selectedCondition = value;
+                            });
+
+                            filterProducts();
+                          },
+                          dropdownMenuEntries: productConditions
                               .map(
                                 (String value) => DropdownMenuEntry<String>(
                                     value: value, label: value),

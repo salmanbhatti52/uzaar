@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:Uzaar/widgets/navigate_back_icon.dart';
 import 'package:Uzaar/widgets/snackbars.dart';
 
@@ -7,7 +9,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_two.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/utils/colors.dart';
+import 'package:http/http.dart';
 
+import '../../../services/restService.dart';
 import '../../../widgets/text_form_field_reusable.dart';
 import '../../../widgets/rounded_dropdown_menu.dart';
 import '../../../widgets/suffix_svg_icon.dart';
@@ -41,10 +45,12 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
     {'categoryName': 'Sports', 'categoryId': '6'},
     {'categoryName': 'Accessories', 'categoryId': '7'},
   ];
+
   late String? selectedCategoryName = '';
   late String? selectedCategoryId = '';
 
   ProductConditions _selectedProductCondition = ProductConditions.fresh;
+
   updateSelectedCondition(value) {
     _selectedProductCondition = value;
     print(_selectedProductCondition);
@@ -54,6 +60,7 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     // selectedCategoryName = productCategories.first;
   }
 

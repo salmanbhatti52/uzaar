@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:Uzaar/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +10,7 @@ import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_
 import 'package:Uzaar/screens/SellScreens/ServiceSellScreens/service_add_screen.dart';
 import 'dart:io';
 import 'package:Uzaar/utils/colors.dart';
+import 'package:http/http.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../services/getImage.dart';
@@ -36,6 +39,28 @@ class _SellScreenState extends State<SellScreen> {
   late Map<String, dynamic> images;
   List<Map<String, dynamic>> imagesList = [];
   int _tapCount = 0;
+
+  List<dynamic> boostingPackages = [...boostingPackagesGV];
+
+  getBoostingPackages() async {
+    Response response = await sendGetRequest('get_packages');
+
+    print(response.statusCode);
+    print(response.body);
+    var decodedData = jsonDecode(response.body);
+    String status = decodedData['status'];
+    boostingPackagesGV = [];
+    if (status == 'success') {
+      boostingPackagesGV = decodedData['data'];
+      if (mounted) {
+        setState(() {
+          boostingPackagesGV.removeAt(3);
+          boostingPackages = boostingPackagesGV;
+        });
+      }
+    }
+  }
+
   List<Widget> getPageIndicators() {
     List<Widget> tabs = [];
 
@@ -55,10 +80,15 @@ class _SellScreenState extends State<SellScreen> {
     return tabs;
   }
 
+  init() {
+    getBoostingPackages();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    init();
   }
 
   @override

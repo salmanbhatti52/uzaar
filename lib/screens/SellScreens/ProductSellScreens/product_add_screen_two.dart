@@ -18,7 +18,10 @@ import '../../../widgets/text.dart';
 
 class ProductAddScreenTwo extends StatefulWidget {
   static const String id = 'product_add_screen_two';
-  const ProductAddScreenTwo({super.key, required this.formData});
+  const ProductAddScreenTwo({
+    super.key,
+    required this.formData,
+  });
 
   final Map<String, dynamic> formData;
   @override
@@ -28,8 +31,8 @@ class ProductAddScreenTwo extends StatefulWidget {
 class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
   int noOfTabs = 3;
   final minPriceEditingController = TextEditingController();
-  late String? selectedBoostingOption = '';
-  List<String> boostingOptions = ['Free', 'Paid'];
+  late String selectedBoosting;
+  dynamic selectedBoostingItem;
   bool setLoader = false;
   String setButtonStatus = 'Publish';
 
@@ -131,13 +134,16 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                         hintText: 'Select Option',
                         onSelected: (value) {
                           setState(() {
-                            selectedBoostingOption = value;
+                            selectedBoosting = value['name'];
                           });
+                          print(selectedBoosting);
+                          selectedBoostingItem = value;
+                          print(selectedBoostingItem);
                         },
-                        dropdownMenuEntries: boostingOptions
+                        dropdownMenuEntries: boostingPackagesGV
                             .map(
-                              (String value) => DropdownMenuEntry<String>(
-                                  value: value, label: value),
+                              (dynamic value) => DropdownMenuEntry<dynamic>(
+                                  value: value, label: value['name']),
                             )
                             .toList(),
                       ),
