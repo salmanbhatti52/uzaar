@@ -253,17 +253,32 @@ class _SellScreenState extends State<SellScreen> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          if (imagesList.length < 6) {
-                            images = await getImage(from: 'camera');
-                            if (images.isNotEmpty) {
-                              imagesList.add(images);
-                              setState(() {});
+                          if (selectedListingType == 3) {
+                            if (imagesList.length < 20) {
+                              images = await getImage(from: 'camera');
+                              if (images.isNotEmpty) {
+                                imagesList.add(images);
+                                setState(() {});
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  ErrorSnackBar(
+                                      message:
+                                          'You can add maximum twenty images.'));
                             }
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                ErrorSnackBar(
-                                    message:
-                                        'You can add maximum six images.'));
+                            if (imagesList.length < 6) {
+                              images = await getImage(from: 'camera');
+                              if (images.isNotEmpty) {
+                                imagesList.add(images);
+                                setState(() {});
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  ErrorSnackBar(
+                                      message:
+                                          'You can add maximum six images.'));
+                            }
                           }
                         },
                         child: SvgPicture.asset('assets/add-pic-button.svg'),
@@ -281,25 +296,48 @@ class _SellScreenState extends State<SellScreen> {
                       borderRadius: BorderRadius.circular(20),
                       child: GestureDetector(
                         onTap: () async {
-                          if (imagesList.length < 6) {
-                            List<Map<String, dynamic>> pickedImages =
-                                await pickMultiImage();
-                            if (pickedImages.isNotEmpty) {
-                              for (int i = 0; i < pickedImages.length; i++) {
-                                imagesList.add(pickedImages[i]);
+                          if (selectedListingType == 3) {
+                            if (imagesList.length < 20) {
+                              List<Map<String, dynamic>> pickedImages =
+                                  await pickMultiImage();
+                              if (pickedImages.isNotEmpty) {
+                                for (int i = 0; i < pickedImages.length; i++) {
+                                  imagesList.add(pickedImages[i]);
+                                }
                               }
+                              print(imagesList.length);
+                              if (imagesList.length > 20) {
+                                imagesList = imagesList.sublist(0, 20);
+                              }
+                              print(imagesList.length);
+                              setState(() {});
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  ErrorSnackBar(
+                                      message:
+                                          'You can add maximum twenty images.'));
                             }
-                            print(imagesList.length);
-                            if (imagesList.length > 6) {
-                              imagesList = imagesList.sublist(0, 6);
-                            }
-                            print(imagesList.length);
-                            setState(() {});
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                ErrorSnackBar(
-                                    message:
-                                        'You can add maximum six images.'));
+                            if (imagesList.length < 6) {
+                              List<Map<String, dynamic>> pickedImages =
+                                  await pickMultiImage();
+                              if (pickedImages.isNotEmpty) {
+                                for (int i = 0; i < pickedImages.length; i++) {
+                                  imagesList.add(pickedImages[i]);
+                                }
+                              }
+                              print(imagesList.length);
+                              if (imagesList.length > 6) {
+                                imagesList = imagesList.sublist(0, 6);
+                              }
+                              print(imagesList.length);
+                              setState(() {});
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  ErrorSnackBar(
+                                      message:
+                                          'You can add maximum six images.'));
+                            }
                           }
                         },
                         child: SvgPicture.asset(
@@ -318,7 +356,7 @@ class _SellScreenState extends State<SellScreen> {
                     // alignment: WrapAlignment.center,
                     direction: Axis.horizontal,
                     children: List.generate(
-                        6,
+                        selectedListingType == 3 ? 20 : 6,
                         (index) => Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
@@ -380,28 +418,56 @@ class _SellScreenState extends State<SellScreen> {
                       context: context,
                       buttonText: 'Next',
                       onTap: () {
-                        if (imagesList.length < 6) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              ErrorSnackBar(message: 'Please add six images'));
+                        if (selectedListingType == 3) {
+                          if (imagesList.length < 20) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Please add twenty images'));
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return selectedListingType == 1
+                                      ? ProductAddScreenOne(
+                                          imagesList: imagesList,
+                                        )
+                                      : selectedListingType == 2
+                                          ? ServiceAddScreen(
+                                              imagesList: imagesList,
+                                            )
+                                          : HouseAddScreen(
+                                              imagesList: imagesList,
+                                            );
+                                },
+                              ),
+                            );
+                          }
                         } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return selectedListingType == 1
-                                    ? ProductAddScreenOne(
-                                        imagesList: imagesList,
-                                      )
-                                    : selectedListingType == 2
-                                        ? ServiceAddScreen(
-                                            imagesList: imagesList,
-                                          )
-                                        : HouseAddScreen(
-                                            imagesList: imagesList,
-                                          );
-                              },
-                            ),
-                          );
+                          if (imagesList.length < 6) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Please add six images'));
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return selectedListingType == 1
+                                      ? ProductAddScreenOne(
+                                          imagesList: imagesList,
+                                        )
+                                      : selectedListingType == 2
+                                          ? ServiceAddScreen(
+                                              imagesList: imagesList,
+                                            )
+                                          : HouseAddScreen(
+                                              imagesList: imagesList,
+                                            );
+                                },
+                              ),
+                            );
+                          }
                         }
                       },
                       showLoader: false),

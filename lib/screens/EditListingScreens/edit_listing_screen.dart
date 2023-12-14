@@ -152,18 +152,36 @@ class _EditListingScreenState extends State<EditListingScreen> {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        if (listedImages.length < 6) {
-                          images = await getImage(from: 'camera');
-                          if (images.isNotEmpty) {
-                            listedImages.add(images);
-                            imagesList.add(images);
-                            setState(() {});
+                        if (selectedListingType == 3) {
+                          if (listedImages.length < 20) {
+                            images = await getImage(from: 'camera');
+                            if (images.isNotEmpty) {
+                              listedImages.add(images);
+                              imagesList.add(images);
+                              setState(() {});
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message:
+                                        'You can add maximum twenty images.'));
                           }
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              ErrorSnackBar(
-                                  message: 'You can add maximum six images.'));
+                          if (listedImages.length < 6) {
+                            images = await getImage(from: 'camera');
+                            if (images.isNotEmpty) {
+                              listedImages.add(images);
+                              imagesList.add(images);
+                              setState(() {});
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message:
+                                        'You can add maximum six images.'));
+                          }
                         }
+
                         // images = await getImage(from: 'camera');
                         // if (images.isNotEmpty) {
                         //   setState(() {
@@ -189,26 +207,52 @@ class _EditListingScreenState extends State<EditListingScreen> {
                     borderRadius: BorderRadius.circular(20),
                     child: GestureDetector(
                       onTap: () async {
-                        if (listedImages.length < 6) {
-                          List<Map<String, dynamic>> pickedImages =
-                              await pickMultiImage();
-                          if (pickedImages.isNotEmpty) {
-                            for (int i = 0; i < pickedImages.length; i++) {
-                              imagesList.add(pickedImages[i]);
-                              listedImages.add(pickedImages[i]);
+                        if (selectedListingType == 3) {
+                          if (listedImages.length < 20) {
+                            List<Map<String, dynamic>> pickedImages =
+                                await pickMultiImage();
+                            if (pickedImages.isNotEmpty) {
+                              for (int i = 0; i < pickedImages.length; i++) {
+                                imagesList.add(pickedImages[i]);
+                                listedImages.add(pickedImages[i]);
+                              }
                             }
-                          }
-                          print(imagesList.length);
-                          if (imagesList.length > 6) {
-                            imagesList = imagesList.sublist(0, 6);
-                          }
-                          print(imagesList.length);
+                            print(imagesList.length);
+                            if (imagesList.length > 20) {
+                              imagesList = imagesList.sublist(0, 20);
+                            }
+                            print(imagesList.length);
 
-                          setState(() {});
+                            setState(() {});
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message:
+                                        'You can add maximum twenty images.'));
+                          }
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              ErrorSnackBar(
-                                  message: 'You can add maximum six images.'));
+                          if (listedImages.length < 6) {
+                            List<Map<String, dynamic>> pickedImages =
+                                await pickMultiImage();
+                            if (pickedImages.isNotEmpty) {
+                              for (int i = 0; i < pickedImages.length; i++) {
+                                imagesList.add(pickedImages[i]);
+                                listedImages.add(pickedImages[i]);
+                              }
+                            }
+                            print(imagesList.length);
+                            if (imagesList.length > 6) {
+                              imagesList = imagesList.sublist(0, 6);
+                            }
+                            print(imagesList.length);
+
+                            setState(() {});
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message:
+                                        'You can add maximum six images.'));
+                          }
                         }
                       },
                       child: SvgPicture.asset(
@@ -223,7 +267,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                     spacing: 8,
                     runSpacing: 8,
                     children: List.generate(
-                        6,
+                        listedImages.length,
                         (index) => Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
