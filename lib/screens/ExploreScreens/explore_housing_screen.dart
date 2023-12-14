@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:Uzaar/screens/BusinessDetailPages/housing_details_page.dart';
-import 'package:Uzaar/services/restService.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,6 +10,7 @@ import 'package:Uzaar/widgets/featured_products_widget.dart';
 import 'package:http/http.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../services/restService.dart';
 import '../../utils/Buttons.dart';
 import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/featured_housing_widget.dart';
@@ -31,10 +32,11 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
   String? selectedCategory;
   String? selectedPrice;
   String? selectedLocation;
-  String? furnishedVal;
+  String? selectedFurnishingStatus;
   List<dynamic> allListingsHousings = [...allListingsHousingsGV];
   String allListingHousingsErrMsg = '';
   final List<String> categories = [...housingListingCategoriesNamesGV];
+  dynamic selectedPriceRange;
 
   final List<String> locations = [
     'Multan',
@@ -86,7 +88,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
     print('allListingsHousings: $allListingsHousings');
   }
 
-  searchData(String value) {
+  searchHousingsByName(String value) {
     print(value);
     Future.delayed(
       const Duration(seconds: 1),
@@ -115,6 +117,132 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
     );
   }
 
+  filterHousings() {
+    dynamic houseCategoryName;
+    dynamic houseLocation;
+    dynamic houseFurnishedStatus;
+    double housePrice;
+    allListingsHousings = allListingsHousingsGV;
+    List<dynamic> filteredHousings = [];
+    print('selectedPriceRange: $selectedPriceRange');
+    print('selectedCategory: $selectedCategory');
+    print('selectedLocation: $selectedLocation');
+    print('selectedFurnishedStatus: $selectedFurnishingStatus');
+    for (var house in allListingsHousings) {
+      houseCategoryName = house['listings_categories']['name'];
+      housePrice = double.parse(house['price']);
+      houseLocation = house['location'];
+      houseFurnishedStatus = house['furnished'];
+      if (selectedCategory != null &&
+          selectedPriceRange != null &&
+          selectedLocation != null &&
+          selectedFurnishingStatus != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            (housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseLocation.contains(selectedLocation) &&
+            houseFurnishedStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null &&
+          selectedPriceRange != null &&
+          selectedLocation != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            (housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseLocation.contains(selectedLocation)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null &&
+          selectedPriceRange != null &&
+          selectedFurnishingStatus != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            (housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseFurnishedStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedPriceRange != null &&
+          selectedLocation != null &&
+          selectedFurnishingStatus != null) {
+        if ((housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseLocation.contains(selectedLocation) &&
+            houseFurnishedStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null &&
+          selectedLocation != null &&
+          selectedFurnishingStatus != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            houseLocation.contains(selectedLocation) &&
+            houseFurnishedStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null && selectedPriceRange != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            (housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to'])) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null && selectedLocation != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            houseLocation.contains(selectedLocation)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null && selectedFurnishingStatus != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            houseFurnishedStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedPriceRange != null && selectedLocation != null) {
+        if ((housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseLocation.contains(selectedLocation)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedPriceRange != null &&
+          selectedFurnishingStatus != null) {
+        if ((housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseFurnishedStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedLocation != null && selectedFurnishingStatus != null) {
+        if (houseLocation.contains(selectedLocation) &&
+            houseFurnishedStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null) {
+        if (houseCategoryName.contains(selectedCategory)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedPriceRange != null) {
+        if (housePrice >= selectedPriceRange['range_from'] &&
+            housePrice <= selectedPriceRange['range_to']) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedLocation != null) {
+        if (houseLocation.contains(selectedLocation)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedFurnishingStatus != null) {
+        if (houseFurnishedStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else {}
+    }
+
+    setState(() {
+      allListingsHousings = filteredHousings;
+      if (allListingsHousings.isEmpty) {
+        allListingHousingsErrMsg = 'No listing found.';
+      } else {
+        allListingHousingsErrMsg = '';
+      }
+    });
+  }
+
   getHousingsPriceRanges() async {
     Response response = await sendPostRequest(
         action: 'listings_types_prices_ranges',
@@ -122,13 +250,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    dynamic data = decodedResponse['data'];
-    housingsPriceRangesGV = [];
-    for (int i = 0; i < data.length; i++) {
-      housingsPriceRangesGV
-          .add('${data[i]['range_from']} - ${data[i]['range_to']}');
-    }
-    print(housingsPriceRangesGV);
+    housingsPriceRangesGV = decodedResponse['data'];
     if (mounted) {
       setState(() {});
     }
@@ -157,7 +279,12 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
               margin: const EdgeInsets.only(top: 20, bottom: 20),
               child: SearchField(
                   onChanged: (value) {
-                    searchData(value.trim());
+                    setState(() {
+                      selectedPrice = null;
+                      selectedCategory = null;
+                      allListingsHousings = allListingsHousingsGV;
+                    });
+                    searchHousingsByName(value.trim());
                   },
                   searchController: searchController)),
           SingleChildScrollView(
@@ -178,6 +305,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                             setState(() {
                               selectedCategory = value;
                             });
+                            filterHousings();
                           },
                           dropdownMenuEntries: categories
                               .map(
@@ -197,13 +325,19 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                           hintText: 'Price',
                           onSelected: (value) {
                             setState(() {
-                              selectedPrice = value;
+                              selectedPrice =
+                                  '${value['range_from']} - ${value['range_to']}';
                             });
+                            print(selectedPrice);
+                            selectedPriceRange = value;
+                            filterHousings();
                           },
                           dropdownMenuEntries: housingsPriceRangesGV
                               .map(
-                                (String value) => DropdownMenuEntry<String>(
-                                    value: value, label: value),
+                                (dynamic value) => DropdownMenuEntry<dynamic>(
+                                    value: value,
+                                    label:
+                                        '${value['range_from']} - ${value['range_to']}'),
                               )
                               .toList(),
                         ),
@@ -221,6 +355,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                             setState(() {
                               selectedLocation = value;
                             });
+                            filterHousings();
                           },
                           dropdownMenuEntries: locations
                               .map(
@@ -235,14 +370,15 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                         RoundedSmallDropdownMenu(
                           // trailingIconName: 'blue_address_icon',
                           width: 170,
-                          leadingIconName: furnishedVal != null
+                          leadingIconName: selectedFurnishingStatus != null
                               ? 'cat-selected'
                               : 'cat-unselected',
                           hintText: 'Furnished',
                           onSelected: (value) {
                             setState(() {
-                              furnishedVal = value;
+                              selectedFurnishingStatus = value;
                             });
+                            filterHousings();
                           },
                           dropdownMenuEntries: furnished
                               .map(

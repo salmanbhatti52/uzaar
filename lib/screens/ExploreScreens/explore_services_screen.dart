@@ -34,7 +34,7 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
   List<dynamic> allListingsServices = [...allListingsServicesGV];
   String allListingServicesErrMsg = '';
   List<String> categories = [...serviceListingCategoriesNamesGV];
-
+  dynamic selectedPriceRange;
   final List<String> locations = [
     'Multan',
     'Lahore',
@@ -80,7 +80,7 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
     print('allListingsServices: $allListingsServices');
   }
 
-  searchData(String value) {
+  searchServicesByName(String value) {
     print(value);
     Future.delayed(
       const Duration(seconds: 1),
@@ -109,6 +109,72 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
     );
   }
 
+  filterServices() {
+    dynamic serviceCategoryName;
+    dynamic serviceLocation;
+    double servicePrice;
+    allListingsServices = allListingsServicesGV;
+    List<dynamic> filteredServices = [];
+    print('selectedPriceRange: $selectedPriceRange');
+    print('selectedCategory: $selectedCategory');
+    print('selectedLocation: $selectedLocation');
+
+    for (var service in allListingsServices) {
+      serviceCategoryName = service['listings_categories']['name'];
+      servicePrice = double.parse(service['price']);
+      serviceLocation = service['location'];
+      if (selectedCategory != null &&
+          selectedPriceRange != null &&
+          selectedLocation != null) {
+        if (serviceCategoryName.contains(selectedCategory) &&
+            (servicePrice >= selectedPriceRange['range_from'] &&
+                servicePrice <= selectedPriceRange['range_to']) &&
+            serviceLocation.contains(selectedLocation)) {
+          filteredServices.add(service);
+        }
+      } else if (selectedCategory != null && selectedPriceRange != null) {
+        if (serviceCategoryName.contains(selectedCategory) &&
+            (servicePrice >= selectedPriceRange['range_from'] &&
+                servicePrice <= selectedPriceRange['range_to'])) {
+          filteredServices.add(service);
+        }
+      } else if (selectedCategory != null && selectedLocation != null) {
+        if (serviceCategoryName.contains(selectedCategory) &&
+            serviceLocation.contains(selectedLocation)) {
+          filteredServices.add(service);
+        }
+      } else if (selectedPriceRange != null && selectedLocation != null) {
+        if ((servicePrice >= selectedPriceRange['range_from'] &&
+                servicePrice <= selectedPriceRange['range_to']) &&
+            serviceLocation.contains(selectedLocation)) {
+          filteredServices.add(service);
+        }
+      } else if (selectedCategory != null) {
+        if (serviceCategoryName.contains(selectedCategory)) {
+          filteredServices.add(service);
+        }
+      } else if (selectedPriceRange != null) {
+        if (servicePrice >= selectedPriceRange['range_from'] &&
+            servicePrice <= selectedPriceRange['range_to']) {
+          filteredServices.add(service);
+        }
+      } else if (selectedLocation != null) {
+        if (serviceLocation.contains(selectedLocation)) {
+          filteredServices.add(service);
+        }
+      } else {}
+    }
+
+    setState(() {
+      allListingsServices = filteredServices;
+      if (allListingsServices.isEmpty) {
+        allListingServicesErrMsg = 'No listing found.';
+      } else {
+        allListingServicesErrMsg = '';
+      }
+    });
+  }
+
   getServicesPriceRanges() async {
     Response response = await sendPostRequest(
         action: 'listings_types_prices_ranges',
@@ -116,13 +182,7 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    dynamic data = decodedResponse['data'];
-    servicesPriceRangesGV = [];
-    for (int i = 0; i < data.length; i++) {
-      servicesPriceRangesGV
-          .add('${data[i]['range_from']} - ${data[i]['range_to']}');
-    }
-    print(servicesPriceRangesGV);
+    servicesPriceRangesGV = decodedResponse['data'];
     if (mounted) {
       setState(() {});
     }
@@ -151,7 +211,12 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
               margin: const EdgeInsets.only(top: 20, bottom: 20),
               child: SearchField(
                   onChanged: (value) {
-                    searchData(value.trim());
+                    setState(() {
+                      selectedPrice = null;
+                      selectedCategory = null;
+                      allListingsServices = allListingsServicesGV;
+                    });
+                    searchServicesByName(value.trim());
                   },
                   searchController: searchController)),
           SingleChildScrollView(
@@ -172,6 +237,7 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
                             setState(() {
                               selectedCategory = value;
                             });
+                            filterServices();
                           },
                           dropdownMenuEntries: categories
                               .map(
@@ -191,13 +257,19 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
                           hintText: 'Price',
                           onSelected: (value) {
                             setState(() {
-                              selectedPrice = value;
+                              selectedPrice =
+                                  '${value['range_from']} - ${value['range_to']}';
                             });
+                            print(selectedPrice);
+                            selectedPriceRange = value;
+                            filterServices();
                           },
                           dropdownMenuEntries: servicesPriceRangesGV
                               .map(
-                                (String value) => DropdownMenuEntry<String>(
-                                    value: value, label: value),
+                                (dynamic value) => DropdownMenuEntry<dynamic>(
+                                    value: value,
+                                    label:
+                                        '${value['range_from']} - ${value['range_to']}'),
                               )
                               .toList(),
                         ),
@@ -215,6 +287,7 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
                             setState(() {
                               selectedLocation = value;
                             });
+                            filterServices();
                           },
                           dropdownMenuEntries: locations
                               .map(

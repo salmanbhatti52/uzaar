@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:Uzaar/screens/BusinessDetailPages/housing_details_page.dart';
-import 'package:Uzaar/screens/ExploreScreens/explore_screen.dart';
+
 import 'package:Uzaar/services/restService.dart';
 import 'package:Uzaar/widgets/BottomNaviBar.dart';
 import 'package:Uzaar/widgets/featured_housing_widget.dart';
@@ -15,7 +15,7 @@ import 'package:Uzaar/widgets/featured_products_widget.dart';
 import 'package:Uzaar/widgets/featured_services_widget.dart';
 
 import 'package:Uzaar/widgets/search_field.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
