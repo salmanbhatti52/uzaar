@@ -167,7 +167,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                     child: UserMsgWidget(
                                         date: messages[reverse]['date'],
                                         networkImagePath: messages[reverse]
-                                            ['users_customers']['profile_pic'],
+                                                    ['users_customers']
+                                                ['profile_pic'] ??
+                                            '',
                                         msgText: messages[reverse]['message']),
                                   )
                                 : Container(
@@ -175,7 +177,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                     child: OtherUserMsgWidget(
                                         date: messages[reverse]['date'],
                                         networkImagePath: messages[reverse]
-                                            ['users_customers']['profile_pic'],
+                                                    ['users_customers']
+                                                ['profile_pic'] ??
+                                            '',
                                         msgText: messages[reverse]['message']),
                                   );
                           },
@@ -252,12 +256,14 @@ class OtherUserMsgWidget extends StatelessWidget {
           maxRadius: 12,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(100),
-            child: Image.network(
-              imgBaseUrl + networkImagePath,
-              height: 24,
-              width: 24,
-              fit: BoxFit.cover,
-            ),
+            child: networkImagePath.isNotEmpty
+                ? Image.network(
+                    imgBaseUrl + networkImagePath,
+                    height: 24,
+                    width: 24,
+                    fit: BoxFit.cover,
+                  )
+                : null,
           ),
         ),
         Container(
@@ -393,12 +399,14 @@ class UserMsgWidget extends StatelessWidget {
           maxRadius: 12,
           child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
-              child: Image.network(
-                imgBaseUrl + networkImagePath,
-                height: 24,
-                width: 24,
-                fit: BoxFit.cover,
-              )),
+              child: networkImagePath.isNotEmpty
+                  ? Image.network(
+                      imgBaseUrl + networkImagePath,
+                      height: 24,
+                      width: 24,
+                      fit: BoxFit.cover,
+                    )
+                  : null),
         ),
       ],
     );

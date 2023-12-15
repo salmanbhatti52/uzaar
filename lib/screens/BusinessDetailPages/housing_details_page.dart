@@ -16,6 +16,7 @@ import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/featured_housing_widget.dart';
 import '../../widgets/featured_products_widget.dart';
 import '../../widgets/icon_text_combo.dart';
+import '../../widgets/snackbars.dart';
 import '../ProfileScreens/SellerProfileScreens/seller_profile_screen.dart';
 import '../chat_screen.dart';
 
@@ -60,7 +61,10 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
     print('aSellerOtherFeaturedHouses: $aSellerOtherFeaturedHouses');
   }
 
-  Future<String> startChat() async {
+  Future<String?> startChat() async {
+    if (userDataGV['userId'] == widget.houseData['users_customers_id']) {
+      return 'yourself';
+    }
     setState(() {
       showSpinner = true;
     });
@@ -76,7 +80,10 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
     print(response.body);
     var decodedData = jsonDecode(response.body);
     String status = decodedData['status'];
-    return status;
+    if (status == 'error') {
+      return decodedData['message'];
+    }
+    return null;
   }
 
   bool showSpinner = false;
@@ -317,8 +324,9 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          String status = await startChat();
-                          if (status.isNotEmpty) {
+                          String? errorMessage = await startChat();
+                          if (errorMessage == null ||
+                              errorMessage != 'yourself') {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) {
                                 return ChatScreen(
@@ -329,6 +337,10 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                                 );
                               },
                             ));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'You can only see your listing'));
                           }
                         },
                         child: Row(
@@ -391,17 +403,25 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                                   Container(
                                     width: 40,
                                     height: 40,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(
-                                            imgBaseUrl +
-                                                widget.houseData[
-                                                        'users_customers']
-                                                    ['profile_pic'],
-                                          )),
-                                    ),
+                                    decoration:
+                                        widget.houseData['users_customers']
+                                                    ['profile_pic'] !=
+                                                null
+                                            ? BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: NetworkImage(
+                                                      imgBaseUrl +
+                                                          widget.houseData[
+                                                                  'users_customers']
+                                                              ['profile_pic'],
+                                                    )),
+                                              )
+                                            : const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Color(0xFFD9D9D9),
+                                              ),
                                   ),
                                   Positioned(
                                     child: SvgPicture.asset(
@@ -442,7 +462,8 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                                                 0.4,
                                         child: Text(
                                           widget.houseData['users_customers']
-                                              ['address'],
+                                                  ['address'] ??
+                                              '',
                                           overflow: TextOverflow.ellipsis,
                                           softWrap: true,
                                           maxLines: 1,

@@ -52,12 +52,14 @@ class CommonListTile extends StatelessWidget {
                   backgroundColor: Color(0xFFD9D9D9),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(100),
-                    child: Image.network(
-                      imgBaseUrl + imageName,
-                      height: 60,
-                      width: 60,
-                      fit: BoxFit.cover,
-                    ),
+                    child: imageName.isNotEmpty
+                        ? Image.network(
+                            imgBaseUrl + imageName,
+                            height: 60,
+                            width: 60,
+                            fit: BoxFit.cover,
+                          )
+                        : null,
                   ),
                 )
               : Image.asset(

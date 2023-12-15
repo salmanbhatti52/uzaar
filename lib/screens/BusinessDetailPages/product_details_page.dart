@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:Uzaar/screens/chat_screen.dart';
+import 'package:Uzaar/widgets/snackbars.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,7 +56,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     print('aSellerOtherFeaturedProducts: $aSellerOtherFeaturedProducts');
   }
 
-  Future<String> startChat() async {
+  Future<String?> startChat() async {
+    if (userDataGV['userId'] == widget.productData['users_customers_id']) {
+      return 'yourself';
+    }
     setState(() {
       showSpinner = true;
     });
@@ -71,7 +75,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     print(response.body);
     var decodedData = jsonDecode(response.body);
     String status = decodedData['status'];
-    return status;
+    if (status == 'error') {
+      return decodedData['message'];
+    }
+    return null;
   }
 
   handleOptionSelection(ReportReason reason) {
@@ -322,8 +329,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          String status = await startChat();
-                          if (status.isNotEmpty) {
+                          String? errorMessage = await startChat();
+                          if (errorMessage == null ||
+                              errorMessage != 'yourself') {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) {
                                 return ChatScreen(
@@ -334,6 +342,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 );
                               },
                             ));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'You can only see your listing'));
                           }
                         },
                         child: Row(
@@ -355,25 +367,34 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => showModalBottomSheet(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(20)),
-                          ),
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (context) => SingleChildScrollView(
-                            child: Container(
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: BottomSheetForSendOffer(
-                                  // buildContext: context,
-                                  listingData: widget.productData,
-                                )),
-                          ),
-                        ),
+                        onTap: () {
+                          if (userDataGV['userId'] ==
+                              widget.productData['users_customers_id']) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'You can only see your listing'));
+                          } else {
+                            showModalBottomSheet(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20)),
+                              ),
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) => SingleChildScrollView(
+                                child: Container(
+                                    padding: EdgeInsets.only(
+                                        bottom: MediaQuery.of(context)
+                                            .viewInsets
+                                            .bottom),
+                                    child: BottomSheetForSendOffer(
+                                      // buildContext: context,
+                                      listingData: widget.productData,
+                                    )),
+                              ),
+                            );
+                          }
+                        },
                         child: Row(
                           children: [
                             SvgPicture.asset(
@@ -434,16 +455,24 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   Container(
                                     width: 40,
                                     height: 40,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(
-                                              imgBaseUrl +
-                                                  widget.productData[
-                                                          'users_customers']
-                                                      ['profile_pic'],
-                                            ))),
+                                    decoration:
+                                        widget.productData['users_customers']
+                                                    ['profile_pic'] !=
+                                                null
+                                            ? BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: NetworkImage(
+                                                      imgBaseUrl +
+                                                          widget.productData[
+                                                                  'users_customers']
+                                                              ['profile_pic'],
+                                                    )))
+                                            : const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Color(0xFFD9D9D9),
+                                              ),
                                   ),
                                   Positioned(
                                     child: SvgPicture.asset(
@@ -484,7 +513,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                 0.4,
                                         child: Text(
                                           widget.productData['users_customers']
-                                              ['address'],
+                                                  ['address'] ??
+                                              '',
                                           overflow: TextOverflow.ellipsis,
                                           softWrap: true,
                                           maxLines: 1,
@@ -730,24 +760,24 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 25,
                 ),
 
-                Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 22,
-                  ),
-                  child: primaryButton(
-                      context: context,
-                      buttonText: 'Buy Now',
-                      onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => PaymentScreen(),
-                            ),
-                          ),
-                      showLoader: false),
-                ),
+                // Container(
+                //   margin: EdgeInsets.only(bottom: 10),
+                //   padding: const EdgeInsets.symmetric(
+                //     horizontal: 22,
+                //   ),
+                //   child: primaryButton(
+                //       context: context,
+                //       buttonText: 'Buy Now',
+                //       onTap: () => Navigator.of(context).push(
+                //             MaterialPageRoute(
+                //               builder: (context) => PaymentScreen(),
+                //             ),
+                //           ),
+                //       showLoader: false),
+                // ),
               ],
             ),
           ),

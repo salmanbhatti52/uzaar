@@ -15,6 +15,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../services/restService.dart';
 import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/featured_services_widget.dart';
+import '../../widgets/snackbars.dart';
 import '../ProfileScreens/SellerProfileScreens/seller_profile_screen.dart';
 import '../chat_screen.dart';
 
@@ -59,7 +60,10 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
     print(selectedReasons);
   }
 
-  Future<String> startChat() async {
+  Future<String?> startChat() async {
+    if (userDataGV['userId'] == widget.serviceData['users_customers_id']) {
+      return 'yourself';
+    }
     setState(() {
       showSpinner = true;
     });
@@ -75,7 +79,10 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
     print(response.body);
     var decodedData = jsonDecode(response.body);
     String status = decodedData['status'];
-    return status;
+    if (status == 'error') {
+      return decodedData['message'];
+    }
+    return null;
   }
 
   init() async {
@@ -272,8 +279,9 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          String status = await startChat();
-                          if (status.isNotEmpty) {
+                          String? errorMessage = await startChat();
+                          if (errorMessage == null ||
+                              errorMessage != 'yourself') {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) {
                                 return ChatScreen(
@@ -284,6 +292,10 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                                 );
                               },
                             ));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'You can only see your listing'));
                           }
                         },
                         child: Row(
@@ -346,17 +358,25 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                                   Container(
                                     width: 40,
                                     height: 40,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(
-                                            imgBaseUrl +
-                                                widget.serviceData[
-                                                        'users_customers']
-                                                    ['profile_pic'],
-                                          )),
-                                    ),
+                                    decoration:
+                                        widget.serviceData['users_customers']
+                                                    ['profile_pic'] !=
+                                                null
+                                            ? BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: NetworkImage(
+                                                      imgBaseUrl +
+                                                          widget.serviceData[
+                                                                  'users_customers']
+                                                              ['profile_pic'],
+                                                    )),
+                                              )
+                                            : const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Color(0xFFD9D9D9),
+                                              ),
                                   ),
                                   Positioned(
                                     child: SvgPicture.asset(
@@ -397,7 +417,8 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                                                 0.4,
                                         child: Text(
                                           widget.serviceData['users_customers']
-                                              ['address'],
+                                                  ['address'] ??
+                                              '',
                                           overflow: TextOverflow.ellipsis,
                                           softWrap: true,
                                           maxLines: 1,

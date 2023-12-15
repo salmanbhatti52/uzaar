@@ -122,7 +122,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
                           )),
                           child: CommonListTile(
                             imageName: chatList[index]['users_customers']
-                                ['profile_pic'],
+                                    ['profile_pic'] ??
+                                '',
                             title:
                                 '${chatList[index]['users_customers']['first_name']} ${chatList[index]['users_customers']['last_name']}',
                             detail: getMessageDetail(
