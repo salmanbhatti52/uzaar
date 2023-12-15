@@ -33,7 +33,7 @@ class ProductDetailsPage extends StatefulWidget {
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
   late Set<ReportReason> selectedReasons = {};
-
+  String featuredProductsErrMsg = '';
   Widget HorizontalPadding({required Widget child}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 22.w),
@@ -41,7 +41,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
-  dynamic aSellerOtherFeaturedProducts;
+  List<dynamic> aSellerOtherFeaturedProducts = [];
 
   // To get other featured products of a user. Not confirm now
   getASellerOtherFeaturedProducts() async {
@@ -53,6 +53,17 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     aSellerOtherFeaturedProducts = decodedResponse['data'];
+    for (var product in aSellerOtherFeaturedProducts) {
+      if (product['listings_products_id'] ==
+          widget.productData['listings_products_id']) {
+        aSellerOtherFeaturedProducts.remove(product);
+        break;
+      }
+    }
+    if (aSellerOtherFeaturedProducts.isEmpty) {
+      featuredProductsErrMsg = 'No more listings found.';
+    }
+
     print('aSellerOtherFeaturedProducts: $aSellerOtherFeaturedProducts');
   }
 
@@ -570,7 +581,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   ),
                   child: SizedBox(
                     height: 180,
-                    child: aSellerOtherFeaturedProducts != null
+                    child: aSellerOtherFeaturedProducts.isNotEmpty
                         ? ListView.builder(
                             itemCount: aSellerOtherFeaturedProducts.length,
                             shrinkWrap: true,
@@ -745,18 +756,23 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               );
                             },
                           )
-                        : Shimmer.fromColors(
-                            child: ListView.builder(
-                              itemBuilder: (context, index) {
-                                return const FeaturedProductsDummy();
-                              },
-                              itemCount: 6,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              physics: BouncingScrollPhysics(),
-                            ),
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!),
+                        : aSellerOtherFeaturedProducts.isEmpty &&
+                                featuredProductsErrMsg.isEmpty
+                            ? Shimmer.fromColors(
+                                child: ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    return const FeaturedProductsDummy();
+                                  },
+                                  itemCount: 6,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  physics: BouncingScrollPhysics(),
+                                ),
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!)
+                            : Center(
+                                child: Text(featuredProductsErrMsg),
+                              ),
                   ),
                 ),
                 SizedBox(

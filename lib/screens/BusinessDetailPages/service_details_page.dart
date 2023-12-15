@@ -30,7 +30,7 @@ class ServiceDetailsPage extends StatefulWidget {
 
 class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
   late Set<ReportReason> selectedReasons = {};
-
+  String featuredServicesErrMsg = '';
   Widget HorizontalPadding({required Widget child}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 22.w),
@@ -38,7 +38,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
     );
   }
 
-  dynamic aSellerOtherFeaturedServices;
+  List aSellerOtherFeaturedServices = [];
   getASellerOtherFeaturedServices() async {
     Response response =
         await sendPostRequest(action: 'get_listings_services', data: {
@@ -48,6 +48,16 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     aSellerOtherFeaturedServices = decodedResponse['data'];
+    for (var service in aSellerOtherFeaturedServices) {
+      if (service['listings_services_id'] ==
+          widget.serviceData['listings_services_id']) {
+        aSellerOtherFeaturedServices.remove(service);
+        break;
+      }
+    }
+    if (aSellerOtherFeaturedServices.isEmpty) {
+      featuredServicesErrMsg = 'No more listings found.';
+    }
     print('aSellerOtherFeaturedServices: $aSellerOtherFeaturedServices');
   }
 
@@ -488,7 +498,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                   ),
                   child: SizedBox(
                     height: 187,
-                    child: aSellerOtherFeaturedServices != null
+                    child: aSellerOtherFeaturedServices.isNotEmpty
                         ? ListView.builder(
                             itemCount: aSellerOtherFeaturedServices.length,
                             shrinkWrap: true,
@@ -660,18 +670,23 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                               );
                             },
                           )
-                        : Shimmer.fromColors(
-                            child: ListView.builder(
-                              itemBuilder: (context, index) {
-                                return const FeaturedProductsDummy();
-                              },
-                              itemCount: 6,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              physics: BouncingScrollPhysics(),
-                            ),
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!),
+                        : aSellerOtherFeaturedServices.isEmpty &&
+                                featuredServicesErrMsg.isEmpty
+                            ? Shimmer.fromColors(
+                                child: ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    return const FeaturedProductsDummy();
+                                  },
+                                  itemCount: 6,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  physics: BouncingScrollPhysics(),
+                                ),
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!)
+                            : Center(
+                                child: Text(featuredServicesErrMsg),
+                              ),
                   ),
                 ),
                 SizedBox(

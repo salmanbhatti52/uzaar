@@ -32,6 +32,7 @@ class HousingDetailsPage extends StatefulWidget {
 
 class _HousingDetailsPageState extends State<HousingDetailsPage> {
   late Set<ReportReason> selectedReasons = {};
+  String featuredHousesErrMsg = '';
   Widget HorizontalPadding({required Widget child}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 22.w),
@@ -48,7 +49,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
     print(selectedReasons);
   }
 
-  dynamic aSellerOtherFeaturedHouses;
+  List aSellerOtherFeaturedHouses = [];
   getASellerOtherFeaturedHouses() async {
     Response response =
         await sendPostRequest(action: 'get_listings_housings', data: {
@@ -58,6 +59,16 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     aSellerOtherFeaturedHouses = decodedResponse['data'];
+    for (var house in aSellerOtherFeaturedHouses) {
+      if (house['listings_housings_id'] ==
+          widget.houseData['listings_housings_id']) {
+        aSellerOtherFeaturedHouses.remove(house);
+        break;
+      }
+    }
+    if (aSellerOtherFeaturedHouses.isEmpty) {
+      featuredHousesErrMsg = 'No more listings found.';
+    }
     print('aSellerOtherFeaturedHouses: $aSellerOtherFeaturedHouses');
   }
 
@@ -533,7 +544,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                   ),
                   child: SizedBox(
                     height: 206,
-                    child: aSellerOtherFeaturedHouses != null
+                    child: aSellerOtherFeaturedHouses.isNotEmpty
                         ? ListView.builder(
                             itemCount: aSellerOtherFeaturedHouses.length,
                             shrinkWrap: true,
@@ -717,18 +728,23 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                               );
                             },
                           )
-                        : Shimmer.fromColors(
-                            child: ListView.builder(
-                              itemBuilder: (context, index) {
-                                return const FeaturedProductsDummy();
-                              },
-                              itemCount: 6,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              physics: BouncingScrollPhysics(),
-                            ),
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!),
+                        : aSellerOtherFeaturedHouses.isEmpty &&
+                                featuredHousesErrMsg.isEmpty
+                            ? Shimmer.fromColors(
+                                child: ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    return const FeaturedProductsDummy();
+                                  },
+                                  itemCount: 6,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  physics: BouncingScrollPhysics(),
+                                ),
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!)
+                            : Center(
+                                child: Text(featuredHousesErrMsg),
+                              ),
                   ),
                 ),
                 SizedBox(

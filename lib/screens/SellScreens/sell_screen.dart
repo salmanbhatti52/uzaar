@@ -418,57 +418,58 @@ class _SellScreenState extends State<SellScreen> {
                       context: context,
                       buttonText: 'Next',
                       onTap: () {
-                        if (selectedListingType == 3) {
-                          if (imagesList.length < 20) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                ErrorSnackBar(
-                                    message: 'Please add twenty images'));
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return selectedListingType == 1
-                                      ? ProductAddScreenOne(
-                                          imagesList: imagesList,
-                                        )
-                                      : selectedListingType == 2
-                                          ? ServiceAddScreen(
-                                              imagesList: imagesList,
-                                            )
-                                          : HouseAddScreen(
-                                              imagesList: imagesList,
-                                            );
-                                },
-                              ),
-                            );
-                          }
+                        // if (selectedListingType == 3) {
+                        if (imagesList.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              ErrorSnackBar(
+                                  message: 'Please add at least one image'));
                         } else {
-                          if (imagesList.length < 6) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                ErrorSnackBar(
-                                    message: 'Please add six images'));
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return selectedListingType == 1
-                                      ? ProductAddScreenOne(
-                                          imagesList: imagesList,
-                                        )
-                                      : selectedListingType == 2
-                                          ? ServiceAddScreen(
-                                              imagesList: imagesList,
-                                            )
-                                          : HouseAddScreen(
-                                              imagesList: imagesList,
-                                            );
-                                },
-                              ),
-                            );
-                          }
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return selectedListingType == 1
+                                    ? ProductAddScreenOne(
+                                        imagesList: imagesList,
+                                      )
+                                    : selectedListingType == 2
+                                        ? ServiceAddScreen(
+                                            imagesList: imagesList,
+                                          )
+                                        : HouseAddScreen(
+                                            imagesList: imagesList,
+                                          );
+                              },
+                            ),
+                          );
                         }
+                        // }
+                        // else {
+                        //   if (imagesList.length < 6) {
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //         ErrorSnackBar(
+                        //             message: 'Please add six images'));
+                        //   } else {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) {
+                        //           return selectedListingType == 1
+                        //               ? ProductAddScreenOne(
+                        //                   imagesList: imagesList,
+                        //                 )
+                        //               : selectedListingType == 2
+                        //                   ? ServiceAddScreen(
+                        //                       imagesList: imagesList,
+                        //                     )
+                        //                   : HouseAddScreen(
+                        //                       imagesList: imagesList,
+                        //                     );
+                        //         },
+                        //       ),
+                        //     );
+                        //   }
+                        // }
                       },
                       showLoader: false),
                 ],

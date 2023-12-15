@@ -29,8 +29,8 @@ class ProductEditScreenTwo extends StatefulWidget {
 class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
   int noOfTabs = 3;
   final minPriceEditingController = TextEditingController();
-  late String? selectedBoostingOption = '';
-  List<String> boostingOptions = ['Free', 'Paid'];
+  String? selectedBoosting;
+  dynamic selectedBoostingItem;
   bool setLoader = false;
   String setButtonStatus = 'Save Changes';
 
@@ -138,13 +138,16 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
                         hintText: 'Select Option',
                         onSelected: (value) {
                           setState(() {
-                            selectedBoostingOption = value;
+                            selectedBoosting = value['name'];
                           });
+                          print(selectedBoosting);
+                          selectedBoostingItem = value;
+                          print(selectedBoostingItem);
                         },
-                        dropdownMenuEntries: boostingOptions
+                        dropdownMenuEntries: boostingPackagesGV
                             .map(
-                              (String value) => DropdownMenuEntry<String>(
-                                  value: value, label: value),
+                              (dynamic value) => DropdownMenuEntry<dynamic>(
+                                  value: value, label: value['name']),
                             )
                             .toList(),
                       ),
@@ -194,7 +197,8 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
                                   'price': widget.formData['productPrice'],
                                   'min_offer_price':
                                       minPriceEditingController.text.toString(),
-                                  'packages_id': "",
+                                  'packages_id':
+                                      selectedBoostingItem?['packages_id'],
                                   'listings_images':
                                       widget.formData['imagesList'],
                                 });

@@ -34,7 +34,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
   int noOfTabs = 2;
   late String? selectedCategoryName = '';
   late String? selectedCategoryId = '';
-  late String? selectedBoostingOption = '';
+  String? selectedBoosting;
+  dynamic selectedBoostingItem;
   late int? selectedBedroomOption = 0;
   late int? selectedBathroomOption = 0;
   final nameEditingController = TextEditingController();
@@ -47,7 +48,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
     {'categoryName': 'For Sale', 'categoryId': '14'},
     {'categoryName': 'Lease', 'categoryId': '15'},
   ];
-  List<String> boostingOptions = ['Free', 'Paid'];
+
   List<int> bedrooms = [1, 2, 3, 4, 5];
   List<int> bathrooms = [1, 2, 3, 4, 5];
 
@@ -483,20 +484,24 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                         height: 10.h,
                       ),
                       RoundedDropdownMenu(
-                          width: MediaQuery.sizeOf(context).width * 0.887,
-                          leadingIconName: 'boost_icon',
-                          hintText: 'Select Option',
-                          onSelected: (value) {
-                            setState(() {
-                              selectedBoostingOption = value;
-                            });
-                          },
-                          dropdownMenuEntries: boostingOptions
-                              .map(
-                                (String value) => DropdownMenuEntry<String>(
-                                    value: value, label: value),
-                              )
-                              .toList()),
+                        width: MediaQuery.sizeOf(context).width * 0.887,
+                        leadingIconName: 'boost_icon',
+                        hintText: 'Select Option',
+                        onSelected: (value) {
+                          setState(() {
+                            selectedBoosting = value['name'];
+                          });
+                          print(selectedBoosting);
+                          selectedBoostingItem = value;
+                          print(selectedBoostingItem);
+                        },
+                        dropdownMenuEntries: boostingPackagesGV
+                            .map(
+                              (dynamic value) => DropdownMenuEntry<dynamic>(
+                                  value: value, label: value['name']),
+                            )
+                            .toList(),
+                      ),
                       SizedBox(
                         height: 14.h,
                       ),
@@ -595,7 +600,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                     'bedroom': selectedBedroomOption.toString(),
                                     'bathroom':
                                         selectedBathroomOption.toString(),
-                                    'packages_id': '',
+                                    'packages_id':
+                                        selectedBoostingItem?['packages_id'],
                                     // 'payment_gateways_id': '',
                                     // 'payment_status': '',
                                     'listings_images': widget.imagesList

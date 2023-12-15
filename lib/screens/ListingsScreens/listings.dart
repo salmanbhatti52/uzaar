@@ -53,6 +53,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
       boostingPackagesGV = decodedData['data'];
       if (mounted) {
         setState(() {
+          boostingPackagesGV.removeAt(3);
           boostingPackages = boostingPackagesGV;
         });
       }
