@@ -217,11 +217,18 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                 listedImages.add(pickedImages[i]);
                               }
                             }
+
                             print(imagesList.length);
                             if (imagesList.length > 20) {
                               imagesList = imagesList.sublist(0, 20);
                             }
                             print(imagesList.length);
+
+                            print(listedImages.length);
+                            if (listedImages.length > 20) {
+                              listedImages = listedImages.sublist(0, 20);
+                            }
+                            print(listedImages.length);
 
                             setState(() {});
                           } else {
@@ -240,12 +247,18 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                 listedImages.add(pickedImages[i]);
                               }
                             }
+
                             print(imagesList.length);
                             if (imagesList.length > 6) {
                               imagesList = imagesList.sublist(0, 6);
                             }
                             print(imagesList.length);
 
+                            print(listedImages.length);
+                            if (listedImages.length > 6) {
+                              listedImages = listedImages.sublist(0, 6);
+                            }
+                            print(listedImages.length);
                             setState(() {});
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -266,8 +279,9 @@ class _EditListingScreenState extends State<EditListingScreen> {
                 Wrap(
                     spacing: 8,
                     runSpacing: 8,
+                    direction: Axis.horizontal,
                     children: List.generate(
-                        listedImages.length,
+                        selectedListingType == 3 ? 20 : 6,
                         (index) => Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
@@ -353,69 +367,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                       color: Colors.grey,
                                     ),
                             ))),
-                // Wrap(
-                //   spacing: 8,
-                //   runSpacing: 8,
-                //   // alignment: WrapAlignment.spaceBetween,
-                //   children: List.generate(
-                //       6 - listedImages.length,
-                //       (index) => Container(
-                //             decoration: BoxDecoration(
-                //                 borderRadius: BorderRadius.circular(5),
-                //                 border: Border.all(
-                //                   color: primaryBlue,
-                //                   width: 1,
-                //                   style: BorderStyle.solid,
-                //                 )),
-                //             child: imagesList.length > index
-                //                 ? Stack(
-                //                     children: [
-                //                       Container(
-                //                         height: 94,
-                //                         width: 94,
-                //                         child: ClipRRect(
-                //                           borderRadius:
-                //                               BorderRadius.circular(5),
-                //                           child: Image.file(
-                //                             // File(_selectedImage!.path),
-                //                             File(imagesList[index]['image']
-                //                                     ['imageInXFile']
-                //                                 .path),
-                //                             fit: BoxFit.cover,
-                //                           ),
-                //                         ),
-                //                       ),
-                //                       Positioned(
-                //                         top: 6,
-                //                         right: 6,
-                //                         child: GestureDetector(
-                //                           onTap: () {
-                //                             print('tapped: $index');
-                //
-                //                             imagesList.removeAt(index);
-                //                             // listedImage = '';
-                //                             // _selectedImage = null;
-                //                             setState(() {});
-                //                           },
-                //                           child: SvgPicture.asset(
-                //                             'assets/remove.svg',
-                //                             height: 20,
-                //                             width: 20,
-                //                           ),
-                //                         ),
-                //                       )
-                //                     ],
-                //                   )
-                //                 : const Icon(
-                //                     Icons.image,
-                //                     size: 94,
-                //                     color: Colors.grey,
-                //                   ),
-                //           )),
-                // ),
-                //      SizedBox(
-                // height: 190,
-                // ),
+
                 SizedBox(
                   height: MediaQuery.sizeOf(context).height * 0.11,
                 ),
@@ -428,18 +380,77 @@ class _EditListingScreenState extends State<EditListingScreen> {
                       onTap: () {
                         // listings_images Required format for API call
                         // [
-                        //   {'image': 'base64Image']}
+                        //     {
+                        //       'listings_images_id': '1',
+                        //       'image': 'base64Image'
+                        //     },
+                        //   {'image': 'base64Image'}
                         // ]
 
                         // Fulfilling the requirements.
+                        int noOfPreviousListedImages =
+                            widget.listingData['listings_images'].length;
+                        int noOfUpdatedImages = removedImagesIds.length;
+                        int noOfRemainingListedImages =
+                            noOfPreviousListedImages - noOfUpdatedImages;
                         List<Map<String, dynamic>> pickedImages = [];
-                        for (int i = 0; i < imagesList.length; i++) {
-                          pickedImages.add({
-                            'listings_images_id': removedImagesIds[i],
-                            'image': imagesList[i]['image']['imageInBase64']
-                          });
+
+                        if (selectedListingType == 3) {
+                          int maximumImagesAllowed = 20;
+                          int imagesCanBeListed =
+                              maximumImagesAllowed - noOfRemainingListedImages;
+                          if (imagesList.length > imagesCanBeListed) {
+                            imagesList =
+                                imagesList.sublist(0, imagesCanBeListed);
+                          }
+
+                          for (int index = 0;
+                              index < imagesList.length;
+                              index++) {
+                            if (index < removedImagesIds.length) {
+                              pickedImages.add({
+                                'listings_images_id': removedImagesIds[index],
+                                'image': imagesList[index]['image']
+                                    ['imageInBase64']
+                              });
+                            } else {
+                              pickedImages.add({
+                                'image': imagesList[index]['image']
+                                    ['imageInBase64']
+                              });
+                            }
+                          }
+                          print(pickedImages);
+                          print('pickedImages.length: ${pickedImages.length}');
+                        } else {
+                          int maximumImagesAllowed = 6;
+                          int imagesCanBeListed =
+                              maximumImagesAllowed - noOfRemainingListedImages;
+                          if (imagesList.length > imagesCanBeListed) {
+                            imagesList =
+                                imagesList.sublist(0, imagesCanBeListed);
+                          }
+
+                          for (int index = 0;
+                              index < imagesList.length;
+                              index++) {
+                            if (index < removedImagesIds.length) {
+                              pickedImages.add({
+                                'listings_images_id': removedImagesIds[index],
+                                'image': imagesList[index]['image']
+                                    ['imageInBase64']
+                              });
+                            } else {
+                              pickedImages.add({
+                                'image': imagesList[index]['image']
+                                    ['imageInBase64']
+                              });
+                            }
+                          }
+                          print(pickedImages);
+                          print('pickedImages.length: ${pickedImages.length}');
                         }
-                        print(pickedImages);
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(

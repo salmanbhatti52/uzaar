@@ -113,7 +113,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                   productImage: imgBaseUrl +
                       listedProducts[index]['listings_images'][0]['image'],
                   productName: listedProducts[index]['name'],
-                  productLocation: 'California',
+                  productCondition: listedProducts[index]['condition'],
                   productPrice: '\$${listedProducts[index]['price']}',
                   onSelected: (selectedValue) async {
                     setState(() {

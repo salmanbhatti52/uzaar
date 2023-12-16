@@ -24,7 +24,7 @@ final priceTextStyle = GoogleFonts.outfit(
 class ProductListTile extends StatelessWidget {
   final String productImage;
   final String productName;
-  final String productLocation;
+  final String productCondition;
   final String productPrice;
   final void Function(dynamic)? onSelected;
   final List<PopupMenuEntry<dynamic>> Function(BuildContext) itemBuilder;
@@ -33,7 +33,7 @@ class ProductListTile extends StatelessWidget {
   ProductListTile({
     required this.productImage,
     required this.productName,
-    required this.productLocation,
+    required this.productCondition,
     required this.productPrice,
     required this.onSelected,
     required this.itemBuilder,
@@ -92,22 +92,22 @@ class ProductListTile extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      SvgPicture.asset(
-                        'assets/address-icon.svg',
-                        width: 14,
-                        height: 14,
-                      ),
-                      SizedBox(
-                        width: 4,
-                      ),
+                      // SvgPicture.asset(
+                      //   'assets/address-icon.svg',
+                      //   width: 14,
+                      //   height: 14,
+                      // ),
+                      // SizedBox(
+                      //   width: 4,
+                      // ),
                       SizedBox(
                         width: 130,
                         child: Text(
-                          productLocation,
+                          productCondition,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           softWrap: true,
-                          style: locationNameTextStyle,
+                          style: kColoredTextStyle,
                         ),
                       )
                     ],
