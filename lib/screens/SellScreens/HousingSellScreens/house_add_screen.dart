@@ -453,7 +453,8 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                           hintText: 'Select Option',
                           onSelected: (value) {
                             setState(() {
-                              selectedBoosting = value['name'];
+                              selectedBoosting =
+                                  '\$${double.parse(value['price'])} ${value['name']}';
                             });
                             print(selectedBoosting);
                             selectedBoostingItem = value;
@@ -462,7 +463,9 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                           dropdownMenuEntries: boostingPackagesGV
                               .map(
                                 (dynamic value) => DropdownMenuEntry<dynamic>(
-                                    value: value, label: value['name']),
+                                    value: value,
+                                    label:
+                                        '\$${double.parse(value['price'])} ${value['name']}'),
                               )
                               .toList()),
                       SizedBox(

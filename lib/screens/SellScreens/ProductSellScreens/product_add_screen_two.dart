@@ -134,7 +134,8 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                         hintText: 'Select Option',
                         onSelected: (value) {
                           setState(() {
-                            selectedBoosting = value['name'];
+                            selectedBoosting =
+                                '\$${double.parse(value['price'])} ${value['name']}';
                           });
                           print(selectedBoosting);
                           selectedBoostingItem = value;
@@ -143,7 +144,9 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                         dropdownMenuEntries: boostingPackagesGV
                             .map(
                               (dynamic value) => DropdownMenuEntry<dynamic>(
-                                  value: value, label: value['name']),
+                                  value: value,
+                                  label:
+                                      '\$${double.parse(value['price'])} ${value['name']}'),
                             )
                             .toList(),
                       ),
