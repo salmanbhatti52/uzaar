@@ -28,12 +28,14 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
   final searchController = TextEditingController();
   late Set<ReportReason> selectedReasons = {};
   String? selectedCategory;
+  String? selectedSubCategory;
   String? selectedCondition;
   String? selectedPrice;
   List<dynamic> allListingsProducts = [...allListingsProductsGV];
   String allListingProductsErrMsg = '';
-  List<String> categories = [...productListingCategoriesNamesGV];
+  // List<String> categories = [...productListingCategoriesNamesGV];
   dynamic selectedPriceRange;
+  List subCategories = [];
 
   final List<String> productConditions = [
     'New',
@@ -188,6 +190,27 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     }
   }
 
+  getCategorySubCategories({required int categoryId}) async {
+    subCategories = [];
+    selectedSubCategory = null;
+    Response response = await sendPostRequest(
+        action: 'get_listings_sub_categories',
+        data: {'listings_categories_id': categoryId});
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+
+    if (mounted) {
+      setState(() {
+        if (status == 'success') {
+          subCategories = decodedResponse['data'];
+        }
+      });
+    }
+    print(subCategories);
+  }
+
   init() {
     getAllProducts();
     getProductsPriceRanges();
@@ -240,18 +263,51 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                           hintText: 'Category',
                           onSelected: (value) {
                             setState(() {
-                              selectedCategory = value;
+                              selectedCategory = value['name'];
                             });
-                            // findSelectedCategoryItems();
+                            getCategorySubCategories(
+                                categoryId: value['listings_categories_id']);
+                            print(value);
                             filterProducts();
                           },
-                          dropdownMenuEntries: categories
+                          dropdownMenuEntries: productListingCategoriesGV
                               .map(
-                                (String value) => DropdownMenuEntry<String>(
-                                    value: value, label: value),
+                                (dynamic value) => DropdownMenuEntry<dynamic>(
+                                    value: value, label: value['name']),
                               )
                               .toList(),
                         ),
+                        subCategories.isNotEmpty
+                            ? Row(
+                                children: [
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  RoundedSmallDropdownMenu(
+                                    width: 180,
+                                    leadingIconName: selectedSubCategory != null
+                                        ? 'cat-selected'
+                                        : 'cat-unselected',
+                                    hintText: 'Seller Type',
+                                    onSelected: (value) async {
+                                      setState(() {
+                                        selectedSubCategory = value['name'];
+                                      });
+                                      print(value);
+                                      // filterProducts();
+                                    },
+                                    dropdownMenuEntries: subCategories
+                                        .map(
+                                          (dynamic value) =>
+                                              DropdownMenuEntry<dynamic>(
+                                                  value: value,
+                                                  label: value['name']),
+                                        )
+                                        .toList(),
+                                  ),
+                                ],
+                              )
+                            : SizedBox(),
                         SizedBox(
                           width: 10.w,
                         ),

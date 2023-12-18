@@ -151,21 +151,21 @@ class _HomeScreenState extends State<HomeScreen> {
     var decodedResponse = jsonDecode(response.body);
     String status = decodedResponse['status'];
     productListingCategoriesGV = [];
-    productListingCategoriesNamesGV = [];
+    // productListingCategoriesNamesGV = [];
     if (status == 'success') {
       productListingCategoriesGV = decodedResponse['data'];
       print('productListingCategoriesGV: $productListingCategoriesGV');
 
-      // fetching and storing data of category Names in  productListingCategoriesNames
-      if (productListingCategoriesNamesGV.isEmpty) {
-        for (int i = 0; i < productListingCategoriesGV.length; i++) {
-          print(productListingCategoriesGV[i]['name']);
-          productListingCategoriesNamesGV
-              .add(productListingCategoriesGV[i]['name']);
-        }
-        print('categories: $productListingCategoriesNamesGV');
-      }
-      // done
+      // // fetching and storing data of category Names in  productListingCategoriesNames
+      // if (productListingCategoriesNamesGV.isEmpty) {
+      //   for (int i = 0; i < productListingCategoriesGV.length; i++) {
+      //     print(productListingCategoriesGV[i]['name']);
+      //     productListingCategoriesNamesGV
+      //         .add(productListingCategoriesGV[i]['name']);
+      //   }
+      //   print('categories: $productListingCategoriesNamesGV');
+      // }
+      // // done
     }
     if (mounted) {
       setState(() {});
@@ -184,21 +184,21 @@ class _HomeScreenState extends State<HomeScreen> {
     var decodedResponse = jsonDecode(response.body);
     String status = decodedResponse['status'];
     serviceListingCategoriesGV = [];
-    serviceListingCategoriesNamesGV = [];
+    // serviceListingCategoriesNamesGV = [];
     if (status == 'success') {
       serviceListingCategoriesGV = decodedResponse['data'];
       print('serviceListingCategoriesGV: $serviceListingCategoriesGV');
 
-      // fetching and storing data of category Names in  serviceListingCategoriesNames
-      if (serviceListingCategoriesNamesGV.isEmpty) {
-        for (int i = 0; i < serviceListingCategoriesGV.length; i++) {
-          print(serviceListingCategoriesGV[i]['name']);
-          serviceListingCategoriesNamesGV
-              .add(serviceListingCategoriesGV[i]['name']);
-        }
-        print('categories: $serviceListingCategoriesNamesGV');
-      }
-      // done
+      // // fetching and storing data of category Names in  serviceListingCategoriesNames
+      // if (serviceListingCategoriesNamesGV.isEmpty) {
+      //   for (int i = 0; i < serviceListingCategoriesGV.length; i++) {
+      //     print(serviceListingCategoriesGV[i]['name']);
+      //     serviceListingCategoriesNamesGV
+      //         .add(serviceListingCategoriesGV[i]['name']);
+      //   }
+      //   print('categories: $serviceListingCategoriesNamesGV');
+      // }
+      // // done
     }
     if (mounted) {
       setState(() {});
@@ -217,21 +217,21 @@ class _HomeScreenState extends State<HomeScreen> {
     var decodedResponse = jsonDecode(response.body);
     String status = decodedResponse['status'];
     housingListingCategoriesGV = [];
-    housingListingCategoriesNamesGV = [];
+    // housingListingCategoriesNamesGV = [];
     if (status == 'success') {
       housingListingCategoriesGV = decodedResponse['data'];
       print('housingListingCategoriesGV: $housingListingCategoriesGV');
 
-      // fetching and storing data of category Names in  housingListingCategoriesNames
-      if (housingListingCategoriesNamesGV.isEmpty) {
-        for (int i = 0; i < housingListingCategoriesGV.length; i++) {
-          print(housingListingCategoriesGV[i]['name']);
-          housingListingCategoriesNamesGV
-              .add(housingListingCategoriesGV[i]['name']);
-        }
-        print('categories: $housingListingCategoriesNamesGV');
-      }
-      // done
+      // // fetching and storing data of category Names in  housingListingCategoriesNames
+      // if (housingListingCategoriesNamesGV.isEmpty) {
+      //   for (int i = 0; i < housingListingCategoriesGV.length; i++) {
+      //     print(housingListingCategoriesGV[i]['name']);
+      //     housingListingCategoriesNamesGV
+      //         .add(housingListingCategoriesGV[i]['name']);
+      //   }
+      //   print('categories: $housingListingCategoriesNamesGV');
+      // }
+      // // done
     }
     if (mounted) {
       setState(() {});

@@ -30,14 +30,15 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
   final searchController = TextEditingController();
   late Set<ReportReason> selectedReasons = {};
   String? selectedCategory;
+  String? selectedSubCategory;
   String? selectedPrice;
   String? selectedLocation;
   String? selectedFurnishingStatus;
   List<dynamic> allListingsHousings = [...allListingsHousingsGV];
   String allListingHousingsErrMsg = '';
-  final List<String> categories = [...housingListingCategoriesNamesGV];
+  // final List<String> categories = [...housingListingCategoriesNamesGV];
   dynamic selectedPriceRange;
-
+  List subCategories = [];
   final List<String> locations = [
     'Multan',
     'Lahore',
@@ -256,6 +257,27 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
     }
   }
 
+  getCategorySubCategories({required int categoryId}) async {
+    subCategories = [];
+    selectedSubCategory = null;
+    Response response = await sendPostRequest(
+        action: 'get_listings_sub_categories',
+        data: {'listings_categories_id': categoryId});
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+
+    if (mounted) {
+      setState(() {
+        if (status == 'success') {
+          subCategories = decodedResponse['data'];
+        }
+      });
+    }
+    print(subCategories);
+  }
+
   init() {
     getAllHousings();
     getHousingsPriceRanges();
@@ -303,17 +325,51 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                           hintText: 'Category',
                           onSelected: (value) {
                             setState(() {
-                              selectedCategory = value;
+                              selectedCategory = value['name'];
                             });
+                            getCategorySubCategories(
+                                categoryId: value['listings_categories_id']);
+                            print(value);
                             filterHousings();
                           },
-                          dropdownMenuEntries: categories
+                          dropdownMenuEntries: housingListingCategoriesGV
                               .map(
-                                (String value) => DropdownMenuEntry<String>(
-                                    value: value, label: value),
+                                (dynamic value) => DropdownMenuEntry<dynamic>(
+                                    value: value, label: value['name']),
                               )
                               .toList(),
                         ),
+                        subCategories.isNotEmpty
+                            ? Row(
+                                children: [
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  RoundedSmallDropdownMenu(
+                                    width: 180,
+                                    leadingIconName: selectedSubCategory != null
+                                        ? 'cat-selected'
+                                        : 'cat-unselected',
+                                    hintText: 'Seller Type',
+                                    onSelected: (value) async {
+                                      setState(() {
+                                        selectedSubCategory = value['name'];
+                                      });
+                                      print(value);
+                                      // filterHousings();
+                                    },
+                                    dropdownMenuEntries: subCategories
+                                        .map(
+                                          (dynamic value) =>
+                                              DropdownMenuEntry<dynamic>(
+                                                  value: value,
+                                                  label: value['name']),
+                                        )
+                                        .toList(),
+                                  ),
+                                ],
+                              )
+                            : SizedBox(),
                         SizedBox(
                           width: 10.w,
                         ),
