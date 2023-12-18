@@ -31,6 +31,7 @@ class EditListingScreen extends StatefulWidget {
 
 class _EditListingScreenState extends State<EditListingScreen> {
   int selectedListingType = 1;
+  dynamic selectedListingMap;
   int noOfTabs = 3;
   String selectedImageInBase64 = '';
   late Map<String, dynamic> images;
@@ -62,6 +63,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
     // TODO: implement initState
     super.initState();
     selectedListingType = widget.selectedListingType;
+    selectedListingMap = widget.listingData['listings_types'];
     print('widget.listingData: ${widget.listingData}');
     init();
   }
@@ -152,44 +154,19 @@ class _EditListingScreenState extends State<EditListingScreen> {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        if (selectedListingType == 3) {
-                          if (listedImages.length < 20) {
-                            images = await getImage(from: 'camera');
-                            if (images.isNotEmpty) {
-                              listedImages.add(images);
-                              imagesList.add(images);
-                              setState(() {});
-                            }
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                ErrorSnackBar(
-                                    message:
-                                        'You can add maximum twenty images.'));
+                        if (listedImages.length <
+                            selectedListingMap['max_images']) {
+                          images = await getImage(from: 'camera');
+                          if (images.isNotEmpty) {
+                            listedImages.add(images);
+                            imagesList.add(images);
+                            setState(() {});
                           }
                         } else {
-                          if (listedImages.length < 6) {
-                            images = await getImage(from: 'camera');
-                            if (images.isNotEmpty) {
-                              listedImages.add(images);
-                              imagesList.add(images);
-                              setState(() {});
-                            }
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                ErrorSnackBar(
-                                    message:
-                                        'You can add maximum six images.'));
-                          }
+                          ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(
+                              message:
+                                  'You can add maximum ${selectedListingMap['max_images']} images.'));
                         }
-
-                        // images = await getImage(from: 'camera');
-                        // if (images.isNotEmpty) {
-                        //   setState(() {
-                        //     _selectedImage = images['image']['imageInXFile'];
-                        //   });
-                        //   selectedImageInBase64 =
-                        //       images['image']['imageInBase64'];
-                        // }
                       },
                       child: SvgPicture.asset('assets/add-pic-button.svg'),
                     ),
@@ -207,65 +184,38 @@ class _EditListingScreenState extends State<EditListingScreen> {
                     borderRadius: BorderRadius.circular(20),
                     child: GestureDetector(
                       onTap: () async {
-                        if (selectedListingType == 3) {
-                          if (listedImages.length < 20) {
-                            List<Map<String, dynamic>> pickedImages =
-                                await pickMultiImage();
-                            if (pickedImages.isNotEmpty) {
-                              for (int i = 0; i < pickedImages.length; i++) {
-                                imagesList.add(pickedImages[i]);
-                                listedImages.add(pickedImages[i]);
-                              }
+                        if (listedImages.length <
+                            selectedListingMap['max_images']) {
+                          List<Map<String, dynamic>> pickedImages =
+                              await pickMultiImage();
+                          if (pickedImages.isNotEmpty) {
+                            for (int i = 0; i < pickedImages.length; i++) {
+                              imagesList.add(pickedImages[i]);
+                              listedImages.add(pickedImages[i]);
                             }
-
-                            print(imagesList.length);
-                            if (imagesList.length > 20) {
-                              imagesList = imagesList.sublist(0, 20);
-                            }
-                            print(imagesList.length);
-
-                            print(listedImages.length);
-                            if (listedImages.length > 20) {
-                              listedImages = listedImages.sublist(0, 20);
-                            }
-                            print(listedImages.length);
-
-                            setState(() {});
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                ErrorSnackBar(
-                                    message:
-                                        'You can add maximum twenty images.'));
                           }
+
+                          print(imagesList.length);
+                          if (imagesList.length >
+                              selectedListingMap['max_images']) {
+                            imagesList = imagesList.sublist(
+                                0, selectedListingMap['max_images']);
+                          }
+                          print(imagesList.length);
+
+                          print(listedImages.length);
+                          if (listedImages.length >
+                              selectedListingMap['max_images']) {
+                            listedImages = listedImages.sublist(
+                                0, selectedListingMap['max_images']);
+                          }
+                          print(listedImages.length);
+
+                          setState(() {});
                         } else {
-                          if (listedImages.length < 6) {
-                            List<Map<String, dynamic>> pickedImages =
-                                await pickMultiImage();
-                            if (pickedImages.isNotEmpty) {
-                              for (int i = 0; i < pickedImages.length; i++) {
-                                imagesList.add(pickedImages[i]);
-                                listedImages.add(pickedImages[i]);
-                              }
-                            }
-
-                            print(imagesList.length);
-                            if (imagesList.length > 6) {
-                              imagesList = imagesList.sublist(0, 6);
-                            }
-                            print(imagesList.length);
-
-                            print(listedImages.length);
-                            if (listedImages.length > 6) {
-                              listedImages = listedImages.sublist(0, 6);
-                            }
-                            print(listedImages.length);
-                            setState(() {});
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                ErrorSnackBar(
-                                    message:
-                                        'You can add maximum six images.'));
-                          }
+                          ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(
+                              message:
+                                  'You can add maximum ${selectedListingMap['max_images']} images.'));
                         }
                       },
                       child: SvgPicture.asset(
@@ -281,7 +231,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                     runSpacing: 8,
                     direction: Axis.horizontal,
                     children: List.generate(
-                        selectedListingType == 3 ? 20 : 6,
+                        selectedListingMap['max_images'],
                         (index) => Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
@@ -395,61 +345,32 @@ class _EditListingScreenState extends State<EditListingScreen> {
                             noOfPreviousListedImages - noOfUpdatedImages;
                         List<Map<String, dynamic>> pickedImages = [];
 
-                        if (selectedListingType == 3) {
-                          int maximumImagesAllowed = 20;
-                          int imagesCanBeListed =
-                              maximumImagesAllowed - noOfRemainingListedImages;
-                          if (imagesList.length > imagesCanBeListed) {
-                            imagesList =
-                                imagesList.sublist(0, imagesCanBeListed);
-                          }
-
-                          for (int index = 0;
-                              index < imagesList.length;
-                              index++) {
-                            if (index < removedImagesIds.length) {
-                              pickedImages.add({
-                                'listings_images_id': removedImagesIds[index],
-                                'image': imagesList[index]['image']
-                                    ['imageInBase64']
-                              });
-                            } else {
-                              pickedImages.add({
-                                'image': imagesList[index]['image']
-                                    ['imageInBase64']
-                              });
-                            }
-                          }
-                          print(pickedImages);
-                          print('pickedImages.length: ${pickedImages.length}');
-                        } else {
-                          int maximumImagesAllowed = 6;
-                          int imagesCanBeListed =
-                              maximumImagesAllowed - noOfRemainingListedImages;
-                          if (imagesList.length > imagesCanBeListed) {
-                            imagesList =
-                                imagesList.sublist(0, imagesCanBeListed);
-                          }
-
-                          for (int index = 0;
-                              index < imagesList.length;
-                              index++) {
-                            if (index < removedImagesIds.length) {
-                              pickedImages.add({
-                                'listings_images_id': removedImagesIds[index],
-                                'image': imagesList[index]['image']
-                                    ['imageInBase64']
-                              });
-                            } else {
-                              pickedImages.add({
-                                'image': imagesList[index]['image']
-                                    ['imageInBase64']
-                              });
-                            }
-                          }
-                          print(pickedImages);
-                          print('pickedImages.length: ${pickedImages.length}');
+                        int maximumImagesAllowed =
+                            selectedListingMap['max_images'];
+                        int imagesCanBeListed =
+                            maximumImagesAllowed - noOfRemainingListedImages;
+                        if (imagesList.length > imagesCanBeListed) {
+                          imagesList = imagesList.sublist(0, imagesCanBeListed);
                         }
+
+                        for (int index = 0;
+                            index < imagesList.length;
+                            index++) {
+                          if (index < removedImagesIds.length) {
+                            pickedImages.add({
+                              'listings_images_id': removedImagesIds[index],
+                              'image': imagesList[index]['image']
+                                  ['imageInBase64']
+                            });
+                          } else {
+                            pickedImages.add({
+                              'image': imagesList[index]['image']
+                                  ['imageInBase64']
+                            });
+                          }
+                        }
+                        print(pickedImages);
+                        print('pickedImages.length: ${pickedImages.length}');
 
                         Navigator.push(
                           context,

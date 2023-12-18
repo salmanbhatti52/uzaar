@@ -34,7 +34,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
   String? selectedBoosting;
   dynamic selectedBoostingItem;
   late String? selectedCategoryName = '';
-  late String? selectedCategoryId = '';
+  late int selectedCategoryId;
   late String? selectedBoostingOption = '';
   late int? selectedBedroomOption = 0;
   late int? selectedBathroomOption = 0;
@@ -43,11 +43,11 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
   final priceEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final areaEditingController = TextEditingController();
-  List<Map<String, String>> housingCategories = [
-    {'categoryName': 'Rental', 'categoryId': '13'},
-    {'categoryName': 'For Sale', 'categoryId': '14'},
-    {'categoryName': 'Lease', 'categoryId': '15'},
-  ];
+  // List<Map<String, String>> housingCategories = [
+  //   {'categoryName': 'Rental', 'categoryId': '13'},
+  //   {'categoryName': 'For Sale', 'categoryId': '14'},
+  //   {'categoryName': 'Lease', 'categoryId': '15'},
+  // ];
   List<int> bedrooms = [1, 2, 3, 4, 5];
   List<int> bathrooms = [1, 2, 3, 4, 5];
 
@@ -153,18 +153,17 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                           hintText: 'Rental',
                           onSelected: (value) {
                             setState(() {
-                              selectedCategoryName = value['categoryName'];
+                              selectedCategoryName = value['name'];
                             });
-                            selectedCategoryId = value['categoryId'];
+                            selectedCategoryId =
+                                value['listings_categories_id'];
                             print(selectedCategoryName);
                             print(selectedCategoryId);
                           },
-                          dropdownMenuEntries: housingCategories
+                          dropdownMenuEntries: housingListingCategoriesGV
                               .map(
-                                (Map<String, String> value) =>
-                                    DropdownMenuEntry<Object?>(
-                                        value: value,
-                                        label: value['categoryName'] ?? ''),
+                                (dynamic value) => DropdownMenuEntry<dynamic>(
+                                    value: value, label: value['name'] ?? ''),
                               )
                               .toList()),
                       SizedBox(

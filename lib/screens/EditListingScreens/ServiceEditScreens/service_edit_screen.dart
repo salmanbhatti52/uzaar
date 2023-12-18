@@ -31,7 +31,7 @@ class ServiceEditScreen extends StatefulWidget {
 class _ServiceEditScreenState extends State<ServiceEditScreen> {
   int noOfTabs = 2;
   late String? selectedCategoryName = '';
-  late String? selectedCategoryId = '';
+  late int selectedCategoryId;
   String? selectedBoosting;
   dynamic selectedBoostingItem;
   final nameEditingController = TextEditingController();
@@ -39,13 +39,13 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
   final locationEditingController = TextEditingController();
   final priceEditingController = TextEditingController();
 
-  List<Map<String, String>> serviceCategories = [
-    {'categoryName': 'Technology', 'categoryId': '8'},
-    {'categoryName': 'Designing', 'categoryId': '9'},
-    {'categoryName': 'Beauty', 'categoryId': '10'},
-    {'categoryName': 'Medical', 'categoryId': '11'},
-    {'categoryName': 'Printing', 'categoryId': '12'},
-  ];
+  // List<Map<String, String>> serviceCategories = [
+  //   {'categoryName': 'Technology', 'categoryId': '8'},
+  //   {'categoryName': 'Designing', 'categoryId': '9'},
+  //   {'categoryName': 'Beauty', 'categoryId': '10'},
+  //   {'categoryName': 'Medical', 'categoryId': '11'},
+  //   {'categoryName': 'Printing', 'categoryId': '12'},
+  // ];
 
   late double latitude;
   late double longitude;
@@ -65,16 +65,15 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
     descriptionEditingController.text = widget.listingData['description'];
     priceEditingController.text = widget.listingData['price'];
     locationEditingController.text = widget.listingData['location'];
-    int index = serviceCategories.indexWhere((map) =>
-        map['categoryName'] ==
-        widget.listingData['listings_categories']['name']);
-    initialCategoryValue = serviceCategories[index];
+    int index = serviceListingCategoriesGV.indexWhere((map) =>
+        map['name'] == widget.listingData['listings_categories']['name']);
+    initialCategoryValue = serviceListingCategoriesGV[index];
     updateSelectedCategory(initialCategoryValue);
   }
 
   updateSelectedCategory(value) {
-    selectedCategoryName = value['categoryName'];
-    selectedCategoryId = value['categoryId'];
+    selectedCategoryName = value['name'];
+    selectedCategoryId = value['listings_categories_id'];
     print(selectedCategoryName);
     print(selectedCategoryId);
   }
@@ -162,12 +161,10 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                           hintText: 'Category',
                           onSelected: updateSelectedCategory,
                           initialSelection: initialCategoryValue,
-                          dropdownMenuEntries: serviceCategories
+                          dropdownMenuEntries: serviceListingCategoriesGV
                               .map(
-                                (Map<String, String> value) =>
-                                    DropdownMenuEntry<Object?>(
-                                        value: value,
-                                        label: value['categoryName'] ?? ''),
+                                (dynamic value) => DropdownMenuEntry<Object?>(
+                                    value: value, label: value['name']),
                               )
                               .toList()),
                       SizedBox(

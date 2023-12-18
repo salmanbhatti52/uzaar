@@ -33,7 +33,7 @@ class HouseEditScreen extends StatefulWidget {
 class _HouseEditScreenState extends State<HouseEditScreen> {
   int noOfTabs = 2;
   late String? selectedCategoryName = '';
-  late String? selectedCategoryId = '';
+  late int selectedCategoryId;
   String? selectedBoosting;
   dynamic selectedBoostingItem;
   late int? selectedBedroomOption = 0;
@@ -43,11 +43,11 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
   final priceEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final areaEditingController = TextEditingController();
-  List<Map<String, String>> housingCategories = [
-    {'categoryName': 'Rental', 'categoryId': '13'},
-    {'categoryName': 'For Sale', 'categoryId': '14'},
-    {'categoryName': 'Lease', 'categoryId': '15'},
-  ];
+  // List<Map<String, String>> housingCategories = [
+  //   {'categoryName': 'Rental', 'categoryId': '13'},
+  //   {'categoryName': 'For Sale', 'categoryId': '14'},
+  //   {'categoryName': 'Lease', 'categoryId': '15'},
+  // ];
 
   List<int> bedrooms = [1, 2, 3, 4, 5];
   List<int> bathrooms = [1, 2, 3, 4, 5];
@@ -84,10 +84,9 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
     _selectedCondition = widget.listingData['furnished'] == 'Yes'
         ? FurnishedConditions.yes
         : FurnishedConditions.no;
-    int categoryIndex = housingCategories.indexWhere((map) =>
-        map['categoryName'] ==
-        widget.listingData['listings_categories']['name']);
-    initialCategoryValue = housingCategories[categoryIndex];
+    int categoryIndex = housingListingCategoriesGV.indexWhere((map) =>
+        map['name'] == widget.listingData['listings_categories']['name']);
+    initialCategoryValue = housingListingCategoriesGV[categoryIndex];
     updateSelectedCategory(initialCategoryValue);
 
     int bedroomsValIndex =
@@ -104,8 +103,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
   }
 
   updateSelectedCategory(value) {
-    selectedCategoryName = value['categoryName'];
-    selectedCategoryId = value['categoryId'];
+    selectedCategoryName = value['name'];
+    selectedCategoryId = value['listings_categories_id'];
     print(selectedCategoryName);
     print(selectedCategoryId);
   }
@@ -201,12 +200,10 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                           hintText: 'Rental',
                           onSelected: updateSelectedCategory,
                           initialSelection: initialCategoryValue,
-                          dropdownMenuEntries: housingCategories
+                          dropdownMenuEntries: housingListingCategoriesGV
                               .map(
-                                (Map<String, String> value) =>
-                                    DropdownMenuEntry<Object?>(
-                                        value: value,
-                                        label: value['categoryName'] ?? ''),
+                                (dynamic value) => DropdownMenuEntry<dynamic>(
+                                    value: value, label: value['name']),
                               )
                               .toList()),
                       SizedBox(

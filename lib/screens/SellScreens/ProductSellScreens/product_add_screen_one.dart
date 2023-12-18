@@ -36,18 +36,18 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
   final descriptionEditingController = TextEditingController();
   final priceEditingController = TextEditingController();
   late Map<String, dynamic> formData;
-  List<Map<String, String>> productCategories = [
-    {'categoryName': 'Electronics', 'categoryId': '1'},
-    {'categoryName': 'Vehicles', 'categoryId': '2'},
-    {'categoryName': 'Fashion', 'categoryId': '3'},
-    {'categoryName': 'Books', 'categoryId': '4'},
-    {'categoryName': 'Furniture', 'categoryId': '5'},
-    {'categoryName': 'Sports', 'categoryId': '6'},
-    {'categoryName': 'Accessories', 'categoryId': '7'},
-  ];
+  // List<Map<String, String>> productCategories = [
+  //   {'categoryName': 'Electronics', 'categoryId': '1'},
+  //   {'categoryName': 'Vehicles', 'categoryId': '2'},
+  //   {'categoryName': 'Fashion', 'categoryId': '3'},
+  //   {'categoryName': 'Books', 'categoryId': '4'},
+  //   {'categoryName': 'Furniture', 'categoryId': '5'},
+  //   {'categoryName': 'Sports', 'categoryId': '6'},
+  //   {'categoryName': 'Accessories', 'categoryId': '7'},
+  // ];
 
   late String? selectedCategoryName = '';
-  late String? selectedCategoryId = '';
+  late int selectedCategoryId;
 
   ProductConditions _selectedProductCondition = ProductConditions.fresh;
 
@@ -148,18 +148,17 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                           hintText: 'Category',
                           onSelected: (value) {
                             setState(() {
-                              selectedCategoryName = value['categoryName'];
+                              selectedCategoryName = value['name'];
                             });
-                            selectedCategoryId = value['categoryId'];
+                            selectedCategoryId =
+                                value['listings_categories_id'];
                             print(selectedCategoryName);
                             print(selectedCategoryId);
                           },
-                          dropdownMenuEntries: productCategories
+                          dropdownMenuEntries: productListingCategoriesGV
                               .map(
-                                (Map<String, String> value) =>
-                                    DropdownMenuEntry<Object?>(
-                                        value: value,
-                                        label: value['categoryName'] ?? ''),
+                                (dynamic value) => DropdownMenuEntry<dynamic>(
+                                    value: value, label: value['name']),
                               )
                               .toList()),
                       SizedBox(

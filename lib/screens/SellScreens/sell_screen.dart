@@ -33,6 +33,7 @@ class SellScreen extends StatefulWidget {
 class _SellScreenState extends State<SellScreen> {
   int selectedPage = 0;
   int selectedListingType = 1;
+  dynamic selectedListingMap;
   int noOfTabs = 3;
   // XFile? _selectedImage;
   // String? selectedImageInBase64 = '';
@@ -81,6 +82,7 @@ class _SellScreenState extends State<SellScreen> {
   }
 
   init() {
+    selectedListingMap = listingTypesGV[0];
     getBoostingPackages();
   }
 
@@ -198,6 +200,7 @@ class _SellScreenState extends State<SellScreen> {
                                 setState(() {
                                   selectedListingType = listingTypesGV[index]
                                       ['listings_types_id'];
+                                  selectedListingMap = listingTypesGV[index];
                                   imagesList = [];
                                   getPageIndicators();
                                 });
@@ -253,32 +256,18 @@ class _SellScreenState extends State<SellScreen> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          if (selectedListingType == 3) {
-                            if (imagesList.length < 20) {
-                              images = await getImage(from: 'camera');
-                              if (images.isNotEmpty) {
-                                imagesList.add(images);
-                                setState(() {});
-                              }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  ErrorSnackBar(
-                                      message:
-                                          'You can add maximum twenty images.'));
+                          if (imagesList.length <
+                              selectedListingMap['max_images']) {
+                            images = await getImage(from: 'camera');
+                            if (images.isNotEmpty) {
+                              imagesList.add(images);
+                              setState(() {});
                             }
                           } else {
-                            if (imagesList.length < 6) {
-                              images = await getImage(from: 'camera');
-                              if (images.isNotEmpty) {
-                                imagesList.add(images);
-                                setState(() {});
-                              }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  ErrorSnackBar(
-                                      message:
-                                          'You can add maximum six images.'));
-                            }
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message:
+                                        'You can add maximum ${selectedListingMap['max_images']} images.'));
                           }
                         },
                         child: SvgPicture.asset('assets/add-pic-button.svg'),
@@ -296,48 +285,28 @@ class _SellScreenState extends State<SellScreen> {
                       borderRadius: BorderRadius.circular(20),
                       child: GestureDetector(
                         onTap: () async {
-                          if (selectedListingType == 3) {
-                            if (imagesList.length < 20) {
-                              List<Map<String, dynamic>> pickedImages =
-                                  await pickMultiImage();
-                              if (pickedImages.isNotEmpty) {
-                                for (int i = 0; i < pickedImages.length; i++) {
-                                  imagesList.add(pickedImages[i]);
-                                }
+                          if (imagesList.length <
+                              selectedListingMap['max_images']) {
+                            List<Map<String, dynamic>> pickedImages =
+                                await pickMultiImage();
+                            if (pickedImages.isNotEmpty) {
+                              for (int i = 0; i < pickedImages.length; i++) {
+                                imagesList.add(pickedImages[i]);
                               }
-                              print(imagesList.length);
-                              if (imagesList.length > 20) {
-                                imagesList = imagesList.sublist(0, 20);
-                              }
-                              print(imagesList.length);
-                              setState(() {});
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  ErrorSnackBar(
-                                      message:
-                                          'You can add maximum twenty images.'));
                             }
+                            print(imagesList.length);
+                            if (imagesList.length >
+                                selectedListingMap['max_images']) {
+                              imagesList = imagesList.sublist(
+                                  0, selectedListingMap['max_images']);
+                            }
+                            print(imagesList.length);
+                            setState(() {});
                           } else {
-                            if (imagesList.length < 6) {
-                              List<Map<String, dynamic>> pickedImages =
-                                  await pickMultiImage();
-                              if (pickedImages.isNotEmpty) {
-                                for (int i = 0; i < pickedImages.length; i++) {
-                                  imagesList.add(pickedImages[i]);
-                                }
-                              }
-                              print(imagesList.length);
-                              if (imagesList.length > 6) {
-                                imagesList = imagesList.sublist(0, 6);
-                              }
-                              print(imagesList.length);
-                              setState(() {});
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  ErrorSnackBar(
-                                      message:
-                                          'You can add maximum six images.'));
-                            }
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message:
+                                        'You can add maximum ${selectedListingMap['max_images']} images.'));
                           }
                         },
                         child: SvgPicture.asset(
@@ -356,7 +325,7 @@ class _SellScreenState extends State<SellScreen> {
                     // alignment: WrapAlignment.center,
                     direction: Axis.horizontal,
                     children: List.generate(
-                        selectedListingType == 3 ? 20 : 6,
+                        selectedListingMap['max_images'],
                         (index) => Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
@@ -418,11 +387,19 @@ class _SellScreenState extends State<SellScreen> {
                       context: context,
                       buttonText: 'Next',
                       onTap: () {
-                        // if (selectedListingType == 3) {
-                        if (imagesList.isEmpty) {
+                        String imagesErrMsg = '';
+                        if (selectedListingMap['min_images'] == 1) {
+                          imagesErrMsg =
+                              'Please add at least ${selectedListingMap['min_images']} image.';
+                        } else if (selectedListingMap['min_images'] > 1) {
+                          imagesErrMsg =
+                              'Please add at least ${selectedListingMap['min_images']} images.';
+                        } else {}
+
+                        if (imagesList.length <
+                            selectedListingMap['min_images']) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              ErrorSnackBar(
-                                  message: 'Please add at least one image'));
+                              ErrorSnackBar(message: imagesErrMsg));
                         } else {
                           Navigator.push(
                             context,
@@ -443,33 +420,6 @@ class _SellScreenState extends State<SellScreen> {
                             ),
                           );
                         }
-                        // }
-                        // else {
-                        //   if (imagesList.length < 6) {
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //         ErrorSnackBar(
-                        //             message: 'Please add six images'));
-                        //   } else {
-                        //     Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) {
-                        //           return selectedListingType == 1
-                        //               ? ProductAddScreenOne(
-                        //                   imagesList: imagesList,
-                        //                 )
-                        //               : selectedListingType == 2
-                        //                   ? ServiceAddScreen(
-                        //                       imagesList: imagesList,
-                        //                     )
-                        //                   : HouseAddScreen(
-                        //                       imagesList: imagesList,
-                        //                     );
-                        //         },
-                        //       ),
-                        //     );
-                        //   }
-                        // }
                       },
                       showLoader: false),
                 ],

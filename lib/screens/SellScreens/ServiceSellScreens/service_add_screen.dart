@@ -32,19 +32,19 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
   String? selectedBoosting;
   dynamic selectedBoostingItem;
   late String? selectedCategoryName = '';
-  late String? selectedCategoryId = '';
+  late int selectedCategoryId;
   final nameEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final locationEditingController = TextEditingController();
   final priceEditingController = TextEditingController();
 
-  List<Map<String, String>> serviceCategories = [
-    {'categoryName': 'Technology', 'categoryId': '8'},
-    {'categoryName': 'Designing', 'categoryId': '9'},
-    {'categoryName': 'Beauty', 'categoryId': '10'},
-    {'categoryName': 'Medical', 'categoryId': '11'},
-    {'categoryName': 'Printing', 'categoryId': '12'},
-  ];
+  // List<Map<String, String>> serviceCategories = [
+  //   {'categoryName': 'Technology', 'categoryId': '8'},
+  //   {'categoryName': 'Designing', 'categoryId': '9'},
+  //   {'categoryName': 'Beauty', 'categoryId': '10'},
+  //   {'categoryName': 'Medical', 'categoryId': '11'},
+  //   {'categoryName': 'Printing', 'categoryId': '12'},
+  // ];
 
   late double latitude;
   late double longitude;
@@ -140,18 +140,17 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           hintText: 'Category',
                           onSelected: (value) {
                             setState(() {
-                              selectedCategoryName = value['categoryName'];
+                              selectedCategoryName = value['name'];
                             });
-                            selectedCategoryId = value['categoryId'];
+                            selectedCategoryId =
+                                value['listings_categories_id'];
                             print(selectedCategoryName);
                             print(selectedCategoryId);
                           },
-                          dropdownMenuEntries: serviceCategories
+                          dropdownMenuEntries: serviceListingCategoriesGV
                               .map(
-                                (Map<String, String> value) =>
-                                    DropdownMenuEntry<Object?>(
-                                        value: value,
-                                        label: value['categoryName'] ?? ''),
+                                (dynamic value) => DropdownMenuEntry<dynamic>(
+                                    value: value, label: value['name'] ?? ''),
                               )
                               .toList()),
                       SizedBox(
