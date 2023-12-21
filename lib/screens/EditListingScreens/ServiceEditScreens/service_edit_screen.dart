@@ -39,44 +39,16 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
   final locationEditingController = TextEditingController();
   final priceEditingController = TextEditingController();
 
-  // List<Map<String, String>> serviceCategories = [
-  //   {'categoryName': 'Technology', 'categoryId': '8'},
-  //   {'categoryName': 'Designing', 'categoryId': '9'},
-  //   {'categoryName': 'Beauty', 'categoryId': '10'},
-  //   {'categoryName': 'Medical', 'categoryId': '11'},
-  //   {'categoryName': 'Printing', 'categoryId': '12'},
-  // ];
-
   late double latitude;
   late double longitude;
   late Position position;
   bool setLoader = false;
   String setButtonStatus = 'Save Changes';
-  Object? initialCategoryValue;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    addDataToFields();
-  }
-
-  addDataToFields() {
-    nameEditingController.text = widget.listingData['name'];
-    descriptionEditingController.text = widget.listingData['description'];
-    priceEditingController.text = widget.listingData['price'];
-    locationEditingController.text = widget.listingData['location'];
-    int index = serviceListingCategoriesGV.indexWhere((map) =>
-        map['name'] == widget.listingData['listings_categories']['name']);
-    initialCategoryValue = serviceListingCategoriesGV[index];
-    updateSelectedCategory(initialCategoryValue);
-  }
-
-  updateSelectedCategory(value) {
-    selectedCategoryName = value['name'];
-    selectedCategoryId = value['listings_categories_id'];
-    print(selectedCategoryName);
-    print(selectedCategoryId);
-  }
+  Map? initialCategoryValue;
+  Map? initialBoostingValue;
+  late int? selectedSubCategoryId;
+  String? selectedSubCategory;
+  List subCategories = [];
 
   List<Widget> getPageIndicators() {
     List<Widget> tabs = [];
@@ -90,6 +62,87 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
       tabs.add(tab);
     }
     return tabs;
+  }
+
+  updateSelectedSubCategory(value) {
+    setState(() {
+      selectedSubCategory = value;
+      print(selectedSubCategory);
+    });
+  }
+
+  updateSelectedBoosting(value) {
+    setState(() {
+      selectedBoosting = '\$${double.parse(value['price'])} ${value['name']}';
+    });
+    print(selectedBoosting);
+    selectedBoostingItem = value;
+    print(selectedBoostingItem);
+  }
+
+  getCategorySubCategories({required int categoryId}) async {
+    subCategories = [];
+    selectedSubCategory = null;
+    selectedSubCategoryId = null;
+    Response response = await sendPostRequest(
+        action: 'get_listings_sub_categories',
+        data: {'listings_categories_id': categoryId});
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+
+    if (mounted) {
+      setState(() {
+        if (status == 'success') {
+          subCategories = decodedResponse['data'];
+          if (widget.listingData['listings_sub_categories'] != null) {
+            print('entered');
+            selectedSubCategory =
+                widget.listingData?['listings_sub_categories']['name'];
+            selectedSubCategoryId =
+                widget.listingData?['listings_sub_categories']
+                    ['listings_sub_categories_id'];
+          } else {
+            print('not entered');
+            selectedSubCategory = subCategories[0]['name'];
+            selectedSubCategoryId =
+                subCategories[0]['listings_sub_categories_id'];
+          }
+        }
+      });
+    }
+    print(subCategories);
+  }
+
+  updateSelectedCategory(value) {
+    selectedCategoryName = value['name'];
+    selectedCategoryId = value['listings_categories_id'];
+    getCategorySubCategories(categoryId: selectedCategoryId);
+  }
+
+  addDataToFields() {
+    nameEditingController.text = widget.listingData['name'];
+    descriptionEditingController.text = widget.listingData['description'];
+    priceEditingController.text = widget.listingData['price'];
+    locationEditingController.text = widget.listingData['location'];
+    int index = serviceListingCategoriesGV.indexWhere((map) =>
+        map['name'] == widget.listingData['listings_categories']['name']);
+    initialCategoryValue = serviceListingCategoriesGV[index];
+    updateSelectedCategory(initialCategoryValue);
+    if (widget.listingData['packages'] != null) {
+      int index = boostingPackagesGV.indexWhere(
+          (map) => map['name'] == widget.listingData['packages']['name']);
+      initialBoostingValue = boostingPackagesGV[index];
+      updateSelectedBoosting(initialBoostingValue);
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    addDataToFields();
   }
 
   @override
@@ -163,10 +216,62 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                           initialSelection: initialCategoryValue,
                           dropdownMenuEntries: serviceListingCategoriesGV
                               .map(
-                                (dynamic value) => DropdownMenuEntry<Object?>(
+                                (dynamic value) => DropdownMenuEntry<dynamic>(
                                     value: value, label: value['name']),
                               )
                               .toList()),
+                      subCategories.isNotEmpty
+                          ? Column(
+                              children: [
+                                SizedBox(
+                                  height: 14.h,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ReusableText(text: 'Seller Type'),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                SizedBox(
+                                  height: 35,
+                                  child: Row(
+                                    children: List.generate(
+                                        subCategories.length, (index) {
+                                      return Row(
+                                        children: [
+                                          Radio(
+                                            activeColor: primaryBlue,
+                                            fillColor: MaterialStatePropertyAll(
+                                                primaryBlue),
+                                            value: subCategories[index]['name'],
+                                            groupValue: selectedSubCategory,
+                                            onChanged: (value) {
+                                              updateSelectedSubCategory(value);
+                                              selectedSubCategoryId =
+                                                  subCategories[index][
+                                                      'listings_sub_categories_id'];
+                                              print(selectedSubCategoryId);
+                                            },
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Text(
+                                            subCategories[index]['name'],
+                                            style: kTextFieldInputStyle,
+                                          ),
+                                          SizedBox(
+                                            width: 40,
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : SizedBox(),
                       SizedBox(
                         height: 14.h,
                       ),
@@ -291,15 +396,8 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                         width: MediaQuery.sizeOf(context).width * 0.887,
                         leadingIconName: 'boost_icon',
                         hintText: 'Select Option',
-                        onSelected: (value) {
-                          setState(() {
-                            selectedBoosting =
-                                '\$${double.parse(value['price'])} ${value['name']}';
-                          });
-                          print(selectedBoosting);
-                          selectedBoostingItem = value;
-                          print(selectedBoostingItem);
-                        },
+                        initialSelection: initialBoostingValue,
+                        onSelected: updateSelectedBoosting,
                         dropdownMenuEntries: boostingPackagesGV
                             .map(
                               (dynamic value) => DropdownMenuEntry<dynamic>(
@@ -376,6 +474,8 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                                         .listingData['listings_services_id'],
                                     'listings_categories_id':
                                         selectedCategoryId,
+                                    'listings_sub_categories_id':
+                                        selectedSubCategoryId ?? '',
                                     'name':
                                         nameEditingController.text.toString(),
                                     'description': descriptionEditingController

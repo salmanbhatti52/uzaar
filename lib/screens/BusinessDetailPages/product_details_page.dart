@@ -19,7 +19,6 @@ import '../../widgets/alert_dialog_reusable.dart';
 import '../ProfileScreens/SellerProfileScreens/seller_profile_screen.dart';
 
 import 'BottomSheetForSendOffer.dart';
-import 'paymnet_screen.dart';
 
 enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 

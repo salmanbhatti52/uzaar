@@ -33,7 +33,7 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
   dynamic selectedBoostingItem;
   bool setLoader = false;
   String setButtonStatus = 'Save Changes';
-
+  Map<dynamic, dynamic>? initialBoostingValue;
   @override
   void initState() {
     // TODO: implement initState
@@ -45,6 +45,21 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
 
   addDataToFields() {
     minPriceEditingController.text = widget.listingData['min_offer_price'];
+    if (widget.listingData['packages'] != null) {
+      int index = boostingPackagesGV.indexWhere(
+          (map) => map['name'] == widget.listingData['packages']['name']);
+      initialBoostingValue = boostingPackagesGV[index];
+      updateSelectedBoosting(initialBoostingValue);
+    }
+  }
+
+  updateSelectedBoosting(value) {
+    setState(() {
+      selectedBoosting = '\$${double.parse(value['price'])} ${value['name']}';
+    });
+    print(selectedBoosting);
+    selectedBoostingItem = value;
+    print(selectedBoostingItem);
   }
 
   List<Widget> getPageIndicators() {
@@ -136,15 +151,8 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
                         width: MediaQuery.sizeOf(context).width * 0.887,
                         leadingIconName: 'boost_icon',
                         hintText: 'Select Option',
-                        onSelected: (value) {
-                          setState(() {
-                            selectedBoosting =
-                                '\$${double.parse(value['price'])} ${value['name']}';
-                          });
-                          print(selectedBoosting);
-                          selectedBoostingItem = value;
-                          print(selectedBoostingItem);
-                        },
+                        onSelected: updateSelectedBoosting,
+                        initialSelection: initialBoostingValue,
                         dropdownMenuEntries: boostingPackagesGV
                             .map(
                               (dynamic value) => DropdownMenuEntry<dynamic>(
@@ -192,6 +200,8 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
                                       .listingData['listings_products_id'],
                                   'listings_categories_id':
                                       widget.formData['categoryId'],
+                                  'listings_sub_categories_id':
+                                      widget.formData['productSubCategoryId'],
                                   'condition':
                                       widget.formData['productCondition'],
                                   'name': widget.formData['productName'],

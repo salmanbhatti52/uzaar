@@ -43,11 +43,7 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
   final priceEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final areaEditingController = TextEditingController();
-  // List<Map<String, String>> housingCategories = [
-  //   {'categoryName': 'Rental', 'categoryId': '13'},
-  //   {'categoryName': 'For Sale', 'categoryId': '14'},
-  //   {'categoryName': 'Lease', 'categoryId': '15'},
-  // ];
+
   List<int> bedrooms = [1, 2, 3, 4, 5];
   List<int> bathrooms = [1, 2, 3, 4, 5];
 
@@ -57,7 +53,45 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
   bool setLoader = false;
   String setButtonStatus = 'Publish';
 
+  late int? selectedSubCategoryId;
+  String? selectedSubCategory;
+  List subCategories = [];
+
   FurnishedConditions? _selectedCondition = FurnishedConditions.no;
+
+  getCategorySubCategories({required int categoryId}) async {
+    subCategories = [];
+    selectedSubCategory = null;
+    selectedSubCategoryId = null;
+    Response response = await sendPostRequest(
+        action: 'get_listings_sub_categories',
+        data: {'listings_categories_id': categoryId});
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+
+    if (mounted) {
+      setState(() {
+        if (status == 'success') {
+          subCategories = decodedResponse['data'];
+          selectedSubCategory = subCategories[0]['name'];
+          selectedSubCategoryId =
+              subCategories[0]['listings_sub_categories_id'];
+          print(selectedSubCategory);
+          print(selectedSubCategoryId);
+        }
+      });
+    }
+    print(subCategories);
+  }
+
+  updateSelectedSubCategory(value) {
+    setState(() {
+      selectedSubCategory = value;
+      print(selectedSubCategory);
+    });
+  }
 
   updateSelectedCondition(value) {
     _selectedCondition = value;
@@ -159,6 +193,9 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                 value['listings_categories_id'];
                             print(selectedCategoryName);
                             print(selectedCategoryId);
+                            getCategorySubCategories(
+                                categoryId: selectedCategoryId);
+                            print(value);
                           },
                           dropdownMenuEntries: housingListingCategoriesGV
                               .map(
@@ -166,6 +203,58 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                     value: value, label: value['name'] ?? ''),
                               )
                               .toList()),
+                      subCategories.isNotEmpty
+                          ? Column(
+                              children: [
+                                SizedBox(
+                                  height: 14.h,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ReusableText(text: 'Seller Type'),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                SizedBox(
+                                  height: 35,
+                                  child: Row(
+                                    children: List.generate(
+                                        subCategories.length, (index) {
+                                      return Row(
+                                        children: [
+                                          Radio(
+                                            activeColor: primaryBlue,
+                                            fillColor: MaterialStatePropertyAll(
+                                                primaryBlue),
+                                            value: subCategories[index]['name'],
+                                            groupValue: selectedSubCategory,
+                                            onChanged: (value) {
+                                              updateSelectedSubCategory(value);
+                                              selectedSubCategoryId =
+                                                  subCategories[index][
+                                                      'listings_sub_categories_id'];
+                                              print(selectedSubCategoryId);
+                                            },
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Text(
+                                            subCategories[index]['name'],
+                                            style: kTextFieldInputStyle,
+                                          ),
+                                          SizedBox(
+                                            width: 40,
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : SizedBox(),
                       SizedBox(
                         height: 14.h,
                       ),
@@ -563,6 +652,8 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                     'listings_types_id': '3',
                                     'listings_categories_id':
                                         selectedCategoryId,
+                                    'listings_sub_categories_id':
+                                        selectedSubCategoryId ?? '',
                                     'name':
                                         nameEditingController.text.toString(),
                                     'description': descriptionEditingController

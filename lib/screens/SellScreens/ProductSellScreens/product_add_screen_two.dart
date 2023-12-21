@@ -204,6 +204,9 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                                   'listings_types_id': "1",
                                   'listings_categories_id':
                                       widget.formData['categoryId'],
+                                  'listings_sub_categories_id':
+                                      widget.formData['productSubCategoryId'] ??
+                                          '',
                                   'condition':
                                       widget.formData['productCondition'],
                                   'name': widget.formData['productName'],

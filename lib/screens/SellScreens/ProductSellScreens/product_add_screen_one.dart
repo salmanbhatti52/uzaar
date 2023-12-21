@@ -36,24 +36,49 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
   final descriptionEditingController = TextEditingController();
   final priceEditingController = TextEditingController();
   late Map<String, dynamic> formData;
-  // List<Map<String, String>> productCategories = [
-  //   {'categoryName': 'Electronics', 'categoryId': '1'},
-  //   {'categoryName': 'Vehicles', 'categoryId': '2'},
-  //   {'categoryName': 'Fashion', 'categoryId': '3'},
-  //   {'categoryName': 'Books', 'categoryId': '4'},
-  //   {'categoryName': 'Furniture', 'categoryId': '5'},
-  //   {'categoryName': 'Sports', 'categoryId': '6'},
-  //   {'categoryName': 'Accessories', 'categoryId': '7'},
-  // ];
 
   late String? selectedCategoryName = '';
   late int selectedCategoryId;
-
+  late int? selectedSubCategoryId;
+  String? selectedSubCategory;
+  List subCategories = [];
   ProductConditions _selectedProductCondition = ProductConditions.fresh;
+
+  getCategorySubCategories({required int categoryId}) async {
+    subCategories = [];
+    selectedSubCategory = null;
+    selectedSubCategoryId = null;
+    Response response = await sendPostRequest(
+        action: 'get_listings_sub_categories',
+        data: {'listings_categories_id': categoryId});
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+
+    if (mounted) {
+      setState(() {
+        if (status == 'success') {
+          subCategories = decodedResponse['data'];
+          selectedSubCategory = subCategories[0]['name'];
+          selectedSubCategoryId =
+              subCategories[0]['listings_sub_categories_id'];
+        }
+      });
+    }
+    print(subCategories);
+  }
 
   updateSelectedCondition(value) {
     _selectedProductCondition = value;
     print(_selectedProductCondition);
+  }
+
+  updateSelectedSubCategory(value) {
+    setState(() {
+      selectedSubCategory = value;
+      print(selectedSubCategory);
+    });
   }
 
   @override
@@ -154,6 +179,9 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                                 value['listings_categories_id'];
                             print(selectedCategoryName);
                             print(selectedCategoryId);
+                            getCategorySubCategories(
+                                categoryId: selectedCategoryId);
+                            print(value);
                           },
                           dropdownMenuEntries: productListingCategoriesGV
                               .map(
@@ -161,6 +189,58 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                                     value: value, label: value['name']),
                               )
                               .toList()),
+                      subCategories.isNotEmpty
+                          ? Column(
+                              children: [
+                                SizedBox(
+                                  height: 14.h,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ReusableText(text: 'Seller Type'),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                SizedBox(
+                                  height: 35,
+                                  child: Row(
+                                    children: List.generate(
+                                        subCategories.length, (index) {
+                                      return Row(
+                                        children: [
+                                          Radio(
+                                            activeColor: primaryBlue,
+                                            fillColor: MaterialStatePropertyAll(
+                                                primaryBlue),
+                                            value: subCategories[index]['name'],
+                                            groupValue: selectedSubCategory,
+                                            onChanged: (value) {
+                                              updateSelectedSubCategory(value);
+                                              selectedSubCategoryId =
+                                                  subCategories[index][
+                                                      'listings_sub_categories_id'];
+                                              print(selectedSubCategoryId);
+                                            },
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Text(
+                                            subCategories[index]['name'],
+                                            style: kTextFieldInputStyle,
+                                          ),
+                                          SizedBox(
+                                            width: 40,
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : SizedBox(),
                       SizedBox(
                         height: 14.h,
                       ),
@@ -307,6 +387,8 @@ class _ProductAddScreenOneState extends State<ProductAddScreenOne> {
                                   nameEditingController.text.toString(),
                               'productCategory': selectedCategoryName,
                               'categoryId': selectedCategoryId,
+                              'productSubCategoryId':
+                                  selectedSubCategoryId ?? '',
                               'productCondition': _selectedProductCondition ==
                                       ProductConditions.fresh
                                   ? 'New'

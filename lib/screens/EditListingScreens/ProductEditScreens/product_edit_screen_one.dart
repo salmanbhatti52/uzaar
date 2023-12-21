@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:Uzaar/screens/EditListingScreens/ProductEditScreens/product_edit_screen_two.dart';
 import 'package:Uzaar/services/restService.dart';
 import 'package:Uzaar/widgets/navigate_back_icon.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/utils/colors.dart';
+import 'package:http/http.dart';
 
 import '../../../widgets/text_form_field_reusable.dart';
 import '../../../widgets/rounded_dropdown_menu.dart';
@@ -35,18 +38,13 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
   final descriptionEditingController = TextEditingController();
   final priceEditingController = TextEditingController();
   late Map<String, dynamic> formData;
-  // List<Map<String, String>> productCategories = [
-  //   {'categoryName': 'Electronics', 'categoryId': '1'},
-  //   {'categoryName': 'Vehicles', 'categoryId': '2'},
-  //   {'categoryName': 'Fashion', 'categoryId': '3'},
-  //   {'categoryName': 'Books', 'categoryId': '4'},
-  //   {'categoryName': 'Furniture', 'categoryId': '5'},
-  //   {'categoryName': 'Sports', 'categoryId': '6'},
-  //   {'categoryName': 'Accessories', 'categoryId': '7'},
-  // ];
+
   late String? selectedCategoryName = '';
   late int selectedCategoryId;
-  Object? initialCategoryValue;
+  late int? selectedSubCategoryId;
+  String? selectedSubCategory;
+  List subCategories = [];
+  Map? initialCategoryValue;
   ProductConditions _selectedProductCondition = ProductConditions.fresh;
 
   updateSelectedCondition(value) {
@@ -54,11 +52,52 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
     print(_selectedProductCondition);
   }
 
+  updateSelectedSubCategory(value) {
+    setState(() {
+      selectedSubCategory = value;
+      print(selectedSubCategory);
+    });
+  }
+
+  getCategorySubCategories({required int categoryId}) async {
+    subCategories = [];
+    selectedSubCategory = null;
+    selectedSubCategoryId = null;
+    Response response = await sendPostRequest(
+        action: 'get_listings_sub_categories',
+        data: {'listings_categories_id': categoryId});
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+
+    if (mounted) {
+      setState(() {
+        if (status == 'success') {
+          subCategories = decodedResponse['data'];
+          if (widget.listingData['listings_sub_categories'] != null) {
+            print('entered');
+            selectedSubCategory =
+                widget.listingData?['listings_sub_categories']['name'];
+            selectedSubCategoryId =
+                widget.listingData?['listings_sub_categories']
+                    ['listings_sub_categories_id'];
+          } else {
+            print('not entered');
+            selectedSubCategory = subCategories[0]['name'];
+            selectedSubCategoryId =
+                subCategories[0]['listings_sub_categories_id'];
+          }
+        }
+      });
+    }
+    print(subCategories);
+  }
+
   updateSelectedCategory(value) {
     selectedCategoryName = value['name'];
     selectedCategoryId = value['listings_categories_id'];
-    print(selectedCategoryName);
-    print(selectedCategoryId);
+    getCategorySubCategories(categoryId: selectedCategoryId);
   }
 
   @override
@@ -77,6 +116,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
     _selectedProductCondition = widget.listingData['condition'] == 'New'
         ? ProductConditions.fresh
         : ProductConditions.used;
+
     int index = productListingCategoriesGV.indexWhere((map) =>
         map['name'] == widget.listingData['listings_categories']['name']);
     initialCategoryValue = productListingCategoriesGV[index];
@@ -173,6 +213,58 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                                     value: value, label: value['name']),
                               )
                               .toList()),
+                      subCategories.isNotEmpty
+                          ? Column(
+                              children: [
+                                SizedBox(
+                                  height: 14.h,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ReusableText(text: 'Seller Type'),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                SizedBox(
+                                  height: 35,
+                                  child: Row(
+                                    children: List.generate(
+                                        subCategories.length, (index) {
+                                      return Row(
+                                        children: [
+                                          Radio(
+                                            activeColor: primaryBlue,
+                                            fillColor: MaterialStatePropertyAll(
+                                                primaryBlue),
+                                            value: subCategories[index]['name'],
+                                            groupValue: selectedSubCategory,
+                                            onChanged: (value) {
+                                              updateSelectedSubCategory(value);
+                                              selectedSubCategoryId =
+                                                  subCategories[index][
+                                                      'listings_sub_categories_id'];
+                                              print(selectedSubCategoryId);
+                                            },
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Text(
+                                            subCategories[index]['name'],
+                                            style: kTextFieldInputStyle,
+                                          ),
+                                          SizedBox(
+                                            width: 40,
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : SizedBox(),
                       SizedBox(
                         height: 14.h,
                       ),
@@ -319,6 +411,8 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                                   nameEditingController.text.toString(),
                               'productCategory': selectedCategoryName,
                               'categoryId': selectedCategoryId,
+                              'productSubCategoryId':
+                                  selectedSubCategoryId ?? '',
                               'productCondition': _selectedProductCondition ==
                                       ProductConditions.fresh
                                   ? 'New'

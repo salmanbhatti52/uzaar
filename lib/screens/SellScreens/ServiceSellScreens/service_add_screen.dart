@@ -33,22 +33,17 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
   dynamic selectedBoostingItem;
   late String? selectedCategoryName = '';
   late int selectedCategoryId;
+  late int? selectedSubCategoryId;
   final nameEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final locationEditingController = TextEditingController();
   final priceEditingController = TextEditingController();
 
-  // List<Map<String, String>> serviceCategories = [
-  //   {'categoryName': 'Technology', 'categoryId': '8'},
-  //   {'categoryName': 'Designing', 'categoryId': '9'},
-  //   {'categoryName': 'Beauty', 'categoryId': '10'},
-  //   {'categoryName': 'Medical', 'categoryId': '11'},
-  //   {'categoryName': 'Printing', 'categoryId': '12'},
-  // ];
-
   late double latitude;
   late double longitude;
   late Position position;
+  String? selectedSubCategory;
+  List subCategories = [];
   bool setLoader = false;
   String setButtonStatus = 'Publish';
   @override
@@ -69,6 +64,38 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
       tabs.add(tab);
     }
     return tabs;
+  }
+
+  getCategorySubCategories({required int categoryId}) async {
+    subCategories = [];
+    selectedSubCategory = null;
+    selectedSubCategoryId = null;
+    Response response = await sendPostRequest(
+        action: 'get_listings_sub_categories',
+        data: {'listings_categories_id': categoryId});
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+
+    if (mounted) {
+      setState(() {
+        if (status == 'success') {
+          subCategories = decodedResponse['data'];
+          selectedSubCategory = subCategories[0]['name'];
+          selectedSubCategoryId =
+              subCategories[0]['listings_sub_categories_id'];
+        }
+      });
+    }
+    print(subCategories);
+  }
+
+  updateSelectedSubCategory(value) {
+    setState(() {
+      selectedSubCategory = value;
+      print(selectedSubCategory);
+    });
   }
 
   @override
@@ -146,6 +173,8 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                 value['listings_categories_id'];
                             print(selectedCategoryName);
                             print(selectedCategoryId);
+                            getCategorySubCategories(
+                                categoryId: selectedCategoryId);
                           },
                           dropdownMenuEntries: serviceListingCategoriesGV
                               .map(
@@ -153,6 +182,58 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                     value: value, label: value['name'] ?? ''),
                               )
                               .toList()),
+                      subCategories.isNotEmpty
+                          ? Column(
+                              children: [
+                                SizedBox(
+                                  height: 14.h,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ReusableText(text: 'Seller Type'),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                SizedBox(
+                                  height: 35,
+                                  child: Row(
+                                    children: List.generate(
+                                        subCategories.length, (index) {
+                                      return Row(
+                                        children: [
+                                          Radio(
+                                            activeColor: primaryBlue,
+                                            fillColor: MaterialStatePropertyAll(
+                                                primaryBlue),
+                                            value: subCategories[index]['name'],
+                                            groupValue: selectedSubCategory,
+                                            onChanged: (value) {
+                                              updateSelectedSubCategory(value);
+                                              selectedSubCategoryId =
+                                                  subCategories[index][
+                                                      'listings_sub_categories_id'];
+                                              print(selectedSubCategoryId);
+                                            },
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Text(
+                                            subCategories[index]['name'],
+                                            style: kTextFieldInputStyle,
+                                          ),
+                                          SizedBox(
+                                            width: 40,
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : SizedBox(),
                       SizedBox(
                         height: 14.h,
                       ),
@@ -379,6 +460,8 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                     'listings_types_id': '2',
                                     'listings_categories_id':
                                         selectedCategoryId,
+                                    'listings_sub_categories_id':
+                                        selectedSubCategoryId ?? '',
                                     'name':
                                         nameEditingController.text.toString(),
                                     'description': descriptionEditingController
