@@ -97,7 +97,9 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
 
   init() async {
     await getASellerOtherFeaturedServices();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

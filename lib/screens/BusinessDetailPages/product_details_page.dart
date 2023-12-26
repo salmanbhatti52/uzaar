@@ -102,7 +102,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   init() async {
     await getASellerOtherFeaturedProducts();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   String? selectedValue;

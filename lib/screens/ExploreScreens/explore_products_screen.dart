@@ -32,6 +32,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
   String? selectedCondition;
   String? selectedPrice;
   List<dynamic> allListingsProducts = [...allListingsProductsGV];
+  List allListingProductsWithSubCategory = [];
   String allListingProductsErrMsg = '';
   // List<String> categories = [...productListingCategoriesNamesGV];
   dynamic selectedPriceRange;
@@ -64,6 +65,11 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
       if (mounted) {
         setState(() {
           allListingsProducts = allListingsProductsGV;
+          for (var product in allListingsProducts) {
+            if (product['listings_sub_categories'] != null) {
+              allListingProductsWithSubCategory.add(product);
+            }
+          }
         });
       }
     }
@@ -119,12 +125,10 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     print('selectedPriceRange: $selectedPriceRange');
     print('selectedCategory: $selectedCategory');
     print('productCondition: $selectedCondition');
-
     for (var product in allListingsProducts) {
       productCategoryName = product['listings_categories']['name'];
       productPrice = double.parse(product['price']);
       productCondition = product['condition'];
-
       if (selectedCategory != null &&
           selectedPriceRange != null &&
           selectedCondition != null) {
@@ -153,6 +157,131 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
         }
       } else if (selectedCategory != null) {
         if (productCategoryName.contains(selectedCategory)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedCondition != null) {
+        if (productCondition.contains(selectedCondition)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedPriceRange != null) {
+        if (productPrice >= selectedPriceRange['range_from'] &&
+            productPrice <= selectedPriceRange['range_to']) {
+          filteredProducts.add(product);
+        }
+      } else {}
+    }
+
+    setState(() {
+      allListingsProducts = filteredProducts;
+      if (allListingsProducts.isEmpty) {
+        allListingProductsErrMsg = 'No listing found.';
+      } else {
+        allListingProductsErrMsg = '';
+      }
+    });
+  }
+
+  filterProductsHavingSubCategory() {
+    dynamic productCategoryName;
+    dynamic productCondition;
+    double productPrice;
+    dynamic productSubCategory;
+    // allListingsProducts = allListingsProductsGV;
+    List<dynamic> filteredProducts = [];
+    print('selectedPriceRange: $selectedPriceRange');
+    print('selectedCategory: $selectedCategory');
+    print('productCondition: $selectedCondition');
+    print('selectedSubCategory: $selectedSubCategory');
+    for (var product in allListingProductsWithSubCategory) {
+      productCategoryName = product['listings_categories']['name'];
+      productPrice = double.parse(product['price']);
+      productCondition = product['condition'];
+      productSubCategory = product['listings_sub_categories']['name'];
+      if (selectedCategory != null &&
+          selectedPriceRange != null &&
+          selectedCondition != null &&
+          selectedSubCategory != null) {
+        if (productCategoryName.contains(selectedCategory) &&
+            (productPrice >= selectedPriceRange['range_from'] &&
+                productPrice <= selectedPriceRange['range_to']) &&
+            productCondition.contains(selectedCondition) &&
+            productSubCategory.contains(selectedSubCategory)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedCategory != null &&
+          selectedSubCategory != null &&
+          selectedPriceRange != null) {
+        if (productCategoryName.contains(selectedCategory) &&
+            (productPrice >= selectedPriceRange['range_from'] &&
+                productPrice <= selectedPriceRange['range_to']) &&
+            productSubCategory.contains(selectedSubCategory)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedCategory != null &&
+          selectedSubCategory != null &&
+          selectedCondition != null) {
+        if (productCategoryName.contains(selectedCategory) &&
+            productSubCategory.contains(selectedSubCategory) &&
+            productCondition.contains(selectedCondition)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedCategory != null &&
+          selectedPriceRange != null &&
+          selectedCondition != null) {
+        if (productCategoryName.contains(selectedCategory) &&
+            (productPrice >= selectedPriceRange['range_from'] &&
+                productPrice <= selectedPriceRange['range_to']) &&
+            productCondition.contains(selectedCondition)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedPriceRange != null &&
+          selectedSubCategory != null &&
+          selectedCondition != null) {
+        if ((productPrice >= selectedPriceRange['range_from'] &&
+                productPrice <= selectedPriceRange['range_to']) &&
+            productSubCategory.contains(selectedSubCategory) &&
+            productCondition.contains(selectedCondition)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedCategory != null && selectedSubCategory != null) {
+        if (productCategoryName.contains(selectedCategory) &&
+            productSubCategory.contains(selectedSubCategory)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedCategory != null && selectedPriceRange != null) {
+        if (productCategoryName.contains(selectedCategory) &&
+            (productPrice >= selectedPriceRange['range_from'] &&
+                productPrice <= selectedPriceRange['range_to'])) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedCategory != null && selectedCondition != null) {
+        if (productCategoryName.contains(selectedCategory) &&
+            productCondition.contains(selectedCondition)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedSubCategory != null && selectedPriceRange != null) {
+        if (productSubCategory.contains(selectedSubCategory) &&
+            (productPrice >= selectedPriceRange['range_from'] &&
+                productPrice <= selectedPriceRange['range_to'])) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedSubCategory != null && selectedCondition != null) {
+        if (productSubCategory.contains(selectedSubCategory) &&
+            productCondition.contains(selectedCondition)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedPriceRange != null && selectedCondition != null) {
+        if ((productPrice >= selectedPriceRange['range_from'] &&
+                productPrice <= selectedPriceRange['range_to']) &&
+            productCondition.contains(selectedCondition)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedCategory != null) {
+        if (productCategoryName.contains(selectedCategory)) {
+          filteredProducts.add(product);
+        }
+      } else if (selectedSubCategory != null) {
+        if (productSubCategory.contains(selectedSubCategory)) {
           filteredProducts.add(product);
         }
       } else if (selectedCondition != null) {
@@ -208,6 +337,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
         }
       });
     }
+
     print(subCategories);
   }
 
@@ -293,8 +423,9 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                                       setState(() {
                                         selectedSubCategory = value['name'];
                                       });
+                                      print(selectedSubCategory);
                                       print(value);
-                                      // filterProducts();
+                                      filterProductsHavingSubCategory();
                                     },
                                     dropdownMenuEntries: subCategories
                                         .map(
@@ -321,8 +452,11 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                             setState(() {
                               selectedCondition = value;
                             });
-
-                            filterProducts();
+                            if (selectedSubCategory != null) {
+                              filterProductsHavingSubCategory();
+                            } else {
+                              filterProducts();
+                            }
                           },
                           dropdownMenuEntries: productConditions
                               .map(
@@ -348,7 +482,11 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                             print(selectedPrice);
                             // findMatchedPriceItems(value);
                             selectedPriceRange = value;
-                            filterProducts();
+                            if (selectedSubCategory != null) {
+                              filterProductsHavingSubCategory();
+                            } else {
+                              filterProducts();
+                            }
                           },
                           dropdownMenuEntries: productsPriceRangesGV
                               .map(

@@ -101,7 +101,9 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
 
   init() async {
     await getASellerOtherFeaturedHouses();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
