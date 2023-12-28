@@ -56,7 +56,7 @@ class FeaturedProductsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 10, top: 2, bottom: 2, left: 1),
+      margin: const EdgeInsets.only(right: 10, top: 2, bottom: 2, left: 1),
       width: 154,
       decoration: kCardBoxDecoration,
       child: Column(
@@ -65,7 +65,7 @@ class FeaturedProductsWidget extends StatelessWidget {
             fit: StackFit.passthrough,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(10),
                   topLeft: Radius.circular(10),
                 ),
@@ -93,7 +93,7 @@ class FeaturedProductsWidget extends StatelessWidget {
                 top: 5,
                 child: GestureDetector(
                   onTap: onOptionTap,
-                  child: Icon(
+                  child: const Icon(
                     Icons.more_vert,
                     color: Colors.white,
                   ),
@@ -119,7 +119,7 @@ class FeaturedProductsWidget extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 6,
           ),
           Padding(
@@ -136,7 +136,7 @@ class FeaturedProductsWidget extends StatelessWidget {
                     style: kCardHeadingTextStyle,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Row(
@@ -175,11 +175,11 @@ class FeaturedProductsWidget extends StatelessWidget {
                           width: 14,
                           height: 14,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 3,
                         ),
                         Container(
-                          constraints: BoxConstraints(maxWidth: 54),
+                          constraints: const BoxConstraints(maxWidth: 54),
                           child: Text('\$$productPrice',
                               style: kPriceTextStyle,
                               overflow: TextOverflow.ellipsis,
@@ -205,14 +205,14 @@ class FeaturedProductsDummy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 10, top: 2, bottom: 2, left: 1),
+      margin: const EdgeInsets.only(right: 10, top: 2, bottom: 2, left: 1),
       width: 154,
       decoration: kCardBoxDecoration,
-      child: Column(
+      child: const Column(
         children: [
           Stack(
             children: [
-              const ClipRRect(
+              ClipRRect(
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(10),
                   topLeft: Radius.circular(10),
@@ -225,7 +225,7 @@ class FeaturedProductsDummy extends StatelessWidget {
             height: 6,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 7.0, right: 7.0),
+            padding: EdgeInsets.only(left: 7.0, right: 7.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [],

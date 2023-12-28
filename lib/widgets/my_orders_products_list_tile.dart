@@ -37,8 +37,8 @@ class MyOrdersProductsListTile extends StatelessWidget {
   final void Function()? onTapPayNow;
   final bool? allowPay;
   final String? offerStatus;
-  MyOrdersProductsListTile(
-      {required this.productImage,
+  const MyOrdersProductsListTile(
+      {super.key, required this.productImage,
       required this.productName,
       // required this.productLocation,
       required this.productPrice,
@@ -51,9 +51,9 @@ class MyOrdersProductsListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
+      padding: const EdgeInsets.all(10),
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: white,
         boxShadow: [
@@ -75,7 +75,7 @@ class MyOrdersProductsListTile extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 8.0,
           ),
           Expanded(
@@ -85,7 +85,7 @@ class MyOrdersProductsListTile extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.sizeOf(context).width * 0.38,
                       child: Text(
                         productName,
@@ -102,13 +102,13 @@ class MyOrdersProductsListTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         // SvgPicture.asset(
                         //   'assets/address-icon.svg',
@@ -134,7 +134,7 @@ class MyOrdersProductsListTile extends StatelessWidget {
                         : const SizedBox()
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Row(
@@ -150,7 +150,7 @@ class MyOrdersProductsListTile extends StatelessWidget {
                               width: 14,
                               height: 14,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 2,
                             ),
                             Text(
@@ -160,10 +160,10 @@ class MyOrdersProductsListTile extends StatelessWidget {
                           ],
                         ),
                         offeredPrice != null
-                            ? SizedBox(
+                            ? const SizedBox(
                                 height: 4,
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                         offeredPrice != null
                             ? Row(
                                 children: [
@@ -171,7 +171,7 @@ class MyOrdersProductsListTile extends StatelessWidget {
                                     offeredPrice!,
                                     style: priceTextStyle,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 2,
                                   ),
                                   Text(
@@ -180,7 +180,7 @@ class MyOrdersProductsListTile extends StatelessWidget {
                                   )
                                 ],
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                       ],
                     ),
                     offerStatus != null
@@ -204,7 +204,7 @@ class MyOrdersProductsListTile extends StatelessWidget {
                               ),
                             ),
                           )
-                        : SizedBox()
+                        : const SizedBox()
                   ],
                 ),
               ],
@@ -217,18 +217,18 @@ class MyOrdersProductsListTile extends StatelessWidget {
 }
 
 class MyOrdersProductsListTileDummy extends StatelessWidget {
-  MyOrdersProductsListTileDummy({super.key});
+  const MyOrdersProductsListTileDummy({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 80,
-      margin: EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
+      margin: const EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
       // padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
         color: Colors.grey.withOpacity(0.3),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Color.fromRGBO(0, 0, 0, 0.14),
             blurRadius: 4.0,

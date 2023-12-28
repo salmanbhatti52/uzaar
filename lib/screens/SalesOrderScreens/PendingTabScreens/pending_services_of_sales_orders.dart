@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../sales_order_detail.dart';
 
 class PendingServicesOfSalesOrders extends StatefulWidget {
-  const PendingServicesOfSalesOrders({Key? key}) : super(key: key);
+  const PendingServicesOfSalesOrders({super.key});
 
   @override
   State<PendingServicesOfSalesOrders> createState() =>
@@ -23,7 +23,7 @@ class _PendingServicesOfSalesOrdersState
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => SalesOrderDetailScreen(),
+                builder: (context) => const SalesOrderDetailScreen(),
               ));
             },
             child: SalesOrdersServicesListTile(
@@ -48,7 +48,7 @@ class _PendingServicesOfSalesOrdersState
         itemCount: 10,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
       ),
     );
   }

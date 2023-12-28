@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../utils/Colors.dart';
 
 class ApplyForVerificationScreen extends StatefulWidget {
-  const ApplyForVerificationScreen({Key? key}) : super(key: key);
+  const ApplyForVerificationScreen({super.key});
 
   @override
   State<ApplyForVerificationScreen> createState() =>
@@ -39,7 +39,7 @@ class _ApplyForVerificationScreenState
         padding: const EdgeInsets.symmetric(horizontal: 22),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Padding(
@@ -50,7 +50,7 @@ class _ApplyForVerificationScreenState
                 textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 35,
             ),
             Align(
@@ -61,7 +61,7 @@ class _ApplyForVerificationScreenState
                 textAlign: TextAlign.left,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
@@ -78,9 +78,9 @@ class _ApplyForVerificationScreenState
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Container(
-                margin: EdgeInsets.only(bottom: 25),
+                margin: const EdgeInsets.only(bottom: 25),
                 child: primaryButton(
                     context: context,
                     buttonText: 'Submit',

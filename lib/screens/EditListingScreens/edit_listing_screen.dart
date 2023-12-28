@@ -77,7 +77,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: black),
+        iconTheme: const IconThemeData(color: black),
         elevation: 0.0,
         backgroundColor: Colors.white,
         leadingWidth: 70,
@@ -90,13 +90,13 @@ class _EditListingScreenState extends State<EditListingScreen> {
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 20),
+            padding: const EdgeInsets.only(right: 20),
             child: Row(
               children: [
                 GestureDetector(
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => MessagesScreen(),
+                      builder: (context) => const MessagesScreen(),
                     ),
                   ),
                   child: SvgPicture.asset(
@@ -110,7 +110,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                 GestureDetector(
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => NotificationScreen(),
+                      builder: (context) => const NotificationScreen(),
                     ),
                   ),
                   child: SvgPicture.asset(
@@ -178,7 +178,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                 Container(
                   height: 140,
                   width: double.infinity,
-                  margin: EdgeInsets.only(bottom: 20),
+                  margin: const EdgeInsets.only(bottom: 20),
                   decoration: kUploadImageBoxBorderShadow,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
@@ -246,7 +246,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                         listedImages[index]
                                                     ['listings_images_id'] !=
                                                 null
-                                            ? Container(
+                                            ? SizedBox(
                                                 height: 94,
                                                 width: 94,
                                                 child: ClipRRect(
@@ -260,7 +260,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                                                   ),
                                                 ),
                                               )
-                                            : Container(
+                                            : SizedBox(
                                                 height: 94,
                                                 width: 94,
                                                 child: ClipRRect(
@@ -322,7 +322,7 @@ class _EditListingScreenState extends State<EditListingScreen> {
                   height: MediaQuery.sizeOf(context).height * 0.11,
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 20),
                   // padding: EdgeInsets.only(bottom: 20.0),
                   child: primaryButton(
                       context: context,

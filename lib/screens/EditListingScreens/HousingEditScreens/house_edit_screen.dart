@@ -222,7 +222,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'House Name'),
                       ),
@@ -236,7 +236,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                           controller: nameEditingController,
                           textInputType: TextInputType.text,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/list_icon.svg'),
+                              const SvgIcon(imageName: 'assets/list_icon.svg'),
                           hintText: 'House Name',
                           obscureText: null,
                         ),
@@ -244,7 +244,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Category'),
                       ),
@@ -269,7 +269,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                 SizedBox(
                                   height: 14.h,
                                 ),
-                                Align(
+                                const Align(
                                   alignment: Alignment.centerLeft,
                                   child: ReusableText(text: 'Seller Type'),
                                 ),
@@ -285,7 +285,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                         children: [
                                           Radio(
                                             activeColor: primaryBlue,
-                                            fillColor: MaterialStatePropertyAll(
+                                            fillColor: const MaterialStatePropertyAll(
                                                 primaryBlue),
                                             value: subCategories[index]['name'],
                                             groupValue: selectedSubCategory,
@@ -297,14 +297,14 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                               print(selectedSubCategoryId);
                                             },
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 12,
                                           ),
                                           Text(
                                             subCategories[index]['name'],
                                             style: kTextFieldInputStyle,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 40,
                                           ),
                                         ],
@@ -314,11 +314,11 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                 ),
                               ],
                             )
-                          : SizedBox(),
+                          : const SizedBox(),
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Furnished'),
                       ),
@@ -334,7 +334,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                 Radio(
                                   activeColor: primaryBlue,
                                   fillColor:
-                                      MaterialStatePropertyAll(primaryBlue),
+                                      const MaterialStatePropertyAll(primaryBlue),
                                   value: FurnishedConditions.yes,
                                   groupValue: _selectedCondition,
                                   onChanged: (value) {
@@ -343,7 +343,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                     });
                                   },
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 12,
                                 ),
                                 Text(
@@ -352,7 +352,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 40,
                             ),
                             Row(
@@ -360,7 +360,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                 Radio(
                                   activeColor: primaryBlue,
                                   fillColor:
-                                      MaterialStatePropertyAll(primaryBlue),
+                                      const MaterialStatePropertyAll(primaryBlue),
                                   value: FurnishedConditions.no,
                                   groupValue: _selectedCondition,
                                   onChanged: (value) {
@@ -369,7 +369,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                     });
                                   },
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 12,
                                 ),
                                 Text(
@@ -384,7 +384,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Location'),
                       ),
@@ -398,7 +398,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                           controller: locationEditingController,
                           textInputType: TextInputType.streetAddress,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/address-icon.svg'),
+                              const SvgIcon(imageName: 'assets/address-icon.svg'),
                           suffixIcon: GestureDetector(
                             onTap: () async {
                               try {
@@ -429,7 +429,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                 //             'we need permission to access your location'));
                               }
                             },
-                            child: SvgIcon(
+                            child: const SvgIcon(
                               imageName: 'assets/address-icon.svg',
                               colorFilter: ColorFilter.mode(
                                   primaryBlue, BlendMode.srcIn),
@@ -442,7 +442,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Price'),
                       ),
@@ -456,7 +456,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                           controller: priceEditingController,
                           textInputType: TextInputType.number,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/tag_price_bold.svg'),
+                              const SvgIcon(imageName: 'assets/tag_price_bold.svg'),
                           hintText: 'Enter Price',
                           obscureText: null,
                         ),
@@ -464,7 +464,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Description'),
                       ),
@@ -478,7 +478,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                           controller: descriptionEditingController,
                           textInputType: TextInputType.text,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/description_icon.svg'),
+                              const SvgIcon(imageName: 'assets/description_icon.svg'),
                           hintText: 'Description here',
                           obscureText: null,
                         ),
@@ -486,7 +486,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Area'),
                       ),
@@ -500,7 +500,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                           controller: areaEditingController,
                           textInputType: TextInputType.number,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/area_icon.svg'),
+                              const SvgIcon(imageName: 'assets/area_icon.svg'),
                           hintText: 'Area ( Sq.ft)',
                           obscureText: null,
                         ),
@@ -514,7 +514,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Align(
+                                const Align(
                                   alignment: Alignment.centerLeft,
                                   child: ReusableText(text: 'Bedroom'),
                                 ),
@@ -538,14 +538,14 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 16,
                           ),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Align(
+                                const Align(
                                   alignment: Alignment.centerLeft,
                                   child: ReusableText(text: 'Bathroom'),
                                 ),
@@ -581,7 +581,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child:
                             ReusableText(text: 'Boosting Options (Optional)'),
@@ -730,7 +730,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return BottomNavBar(
+                                      return const BottomNavBar(
                                         requiredScreenIndex: 0,
                                       );
                                     },

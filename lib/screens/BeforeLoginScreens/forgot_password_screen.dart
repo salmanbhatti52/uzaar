@@ -14,7 +14,7 @@ import '../../widgets/text.dart';
 import '../../widgets/text_form_field_reusable.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({Key? key}) : super(key: key);
+  const ForgotPasswordScreen({super.key});
 
   @override
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
@@ -51,7 +51,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           padding: EdgeInsets.symmetric(horizontal: 22.0.w),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Text(
@@ -59,10 +59,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 style: kSimpleTextStyle,
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: ReusableText(text: 'Email'),
               ),
@@ -75,12 +75,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   focusedBorder: kRoundedActiveBorderStyle,
                   controller: emailController,
                   textInputType: TextInputType.emailAddress,
-                  prefixIcon: SvgIcon(imageName: 'assets/email-icon.svg'),
+                  prefixIcon: const SvgIcon(imageName: 'assets/email-icon.svg'),
                   hintText: 'username@gmail.com',
                   obscureText: null,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               primaryButton(
                   context: context,
                   buttonText: setButtonStatus,

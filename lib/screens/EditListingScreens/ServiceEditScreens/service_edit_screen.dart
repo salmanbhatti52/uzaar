@@ -179,7 +179,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Service Name'),
                       ),
@@ -193,7 +193,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                           controller: nameEditingController,
                           textInputType: TextInputType.text,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/service_icon.svg'),
+                              const SvgIcon(imageName: 'assets/service_icon.svg'),
                           hintText: 'Service Name',
                           obscureText: null,
                         ),
@@ -201,7 +201,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Category'),
                       ),
@@ -226,7 +226,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                                 SizedBox(
                                   height: 14.h,
                                 ),
-                                Align(
+                                const Align(
                                   alignment: Alignment.centerLeft,
                                   child: ReusableText(text: 'Seller Type'),
                                 ),
@@ -242,7 +242,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                                         children: [
                                           Radio(
                                             activeColor: primaryBlue,
-                                            fillColor: MaterialStatePropertyAll(
+                                            fillColor: const MaterialStatePropertyAll(
                                                 primaryBlue),
                                             value: subCategories[index]['name'],
                                             groupValue: selectedSubCategory,
@@ -254,14 +254,14 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                                               print(selectedSubCategoryId);
                                             },
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 12,
                                           ),
                                           Text(
                                             subCategories[index]['name'],
                                             style: kTextFieldInputStyle,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 40,
                                           ),
                                         ],
@@ -271,11 +271,11 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                                 ),
                               ],
                             )
-                          : SizedBox(),
+                          : const SizedBox(),
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Service Description'),
                       ),
@@ -289,7 +289,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                           controller: descriptionEditingController,
                           textInputType: TextInputType.text,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/description_icon.svg'),
+                              const SvgIcon(imageName: 'assets/description_icon.svg'),
                           hintText: 'Description here',
                           obscureText: null,
                         ),
@@ -297,7 +297,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Location'),
                       ),
@@ -311,7 +311,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                           controller: locationEditingController,
                           textInputType: TextInputType.streetAddress,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/address-icon.svg'),
+                              const SvgIcon(imageName: 'assets/address-icon.svg'),
                           suffixIcon: GestureDetector(
                             onTap: () async {
                               try {
@@ -342,7 +342,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                                 //             'we need permission to access your location'));
                               }
                             },
-                            child: SvgIcon(
+                            child: const SvgIcon(
                               imageName: 'assets/address-icon.svg',
                               colorFilter: ColorFilter.mode(
                                   primaryBlue, BlendMode.srcIn),
@@ -355,7 +355,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Price'),
                       ),
@@ -369,7 +369,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                           controller: priceEditingController,
                           textInputType: TextInputType.number,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/tag_price_bold.svg'),
+                              const SvgIcon(imageName: 'assets/tag_price_bold.svg'),
                           hintText: 'Enter Price',
                           obscureText: null,
                         ),
@@ -384,7 +384,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child:
                             ReusableText(text: 'Boosting Options (Optional)'),
@@ -511,7 +511,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return BottomNavBar(
+                                      return const BottomNavBar(
                                         requiredScreenIndex: 0,
                                       );
                                     },

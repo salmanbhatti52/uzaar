@@ -95,23 +95,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   key: _key,
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 22),
+                        margin: const EdgeInsets.only(left: 22),
                         height: 54,
                         child: ListView(
                           padding:
-                              EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+                              const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           children: paymentMethods != null
                               ? List.generate(
                                   paymentMethods?['data'].length,
                                   (index) => paymentWidget(
-                                      margin: EdgeInsets.only(right: 10),
+                                      margin: const EdgeInsets.only(right: 10),
                                       onTap: () {
                                         setState(() {
                                           selectedPaymentMethod =
@@ -138,15 +138,17 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 )
                               : [
                                   Shimmer.fromColors(
+                                      baseColor: Colors.grey[500]!,
+                                      highlightColor: Colors.grey[100]!,
                                       child: ListView.builder(
                                         itemCount: 3,
                                         shrinkWrap: true,
-                                        physics: BouncingScrollPhysics(),
+                                        physics: const BouncingScrollPhysics(),
                                         scrollDirection: Axis.horizontal,
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           return Container(
-                                            margin: EdgeInsets.only(right: 10),
+                                            margin: const EdgeInsets.only(right: 10),
                                             width: 146,
                                             height: 54,
                                             decoration:
@@ -155,24 +157,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                         grey.withOpacity(0.3)),
                                           );
                                         },
-                                      ),
-                                      baseColor: Colors.grey[500]!,
-                                      highlightColor: Colors.grey[100]!),
+                                      )),
                                 ],
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 22),
+                        margin: const EdgeInsets.symmetric(horizontal: 22),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
-                            Align(
+                            const Align(
                                 alignment: Alignment.centerLeft,
                                 child: ReusableText(text: 'Email')),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             SizedBox(
@@ -189,13 +189,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 obscureText: null,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
-                            Align(
+                            const Align(
                                 alignment: Alignment.centerLeft,
                                 child: ReusableText(text: 'Password')),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             SizedBox(
@@ -204,7 +204,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 focusedBorder: kRoundedActiveBorderStyle,
                                 controller: passwordController,
                                 textInputType: TextInputType.visiblePassword,
-                                prefixIcon: SvgIcon(
+                                prefixIcon: const SvgIcon(
                                     imageName: 'assets/password-icon.svg'),
                                 suffixIcon: GestureDetector(
                                   onTap: () {
@@ -213,12 +213,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     });
                                   },
                                   child: isHidden
-                                      ? SvgIcon(
+                                      ? const SvgIcon(
                                           imageName: 'assets/show-pass.svg',
                                           colorFilter: ColorFilter.mode(
                                               primaryBlue, BlendMode.srcIn),
                                         )
-                                      : SvgIcon(
+                                      : const SvgIcon(
                                           imageName:
                                               'assets/hide-pass-icon.svg',
                                           colorFilter: ColorFilter.mode(
@@ -233,7 +233,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               height: MediaQuery.of(context).size.height * 0.33,
                             ),
                             Container(
-                              margin: EdgeInsets.only(
+                              margin: const EdgeInsets.only(
                                 bottom: 20,
                               ),
                               child: primaryButton(
@@ -242,7 +242,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   onTap: () => Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              OrderPlacedScreen(),
+                                              const OrderPlacedScreen(),
                                         ),
                                       ),
                                   showLoader: false),

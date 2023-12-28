@@ -67,7 +67,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
         },
         child: Scaffold(
           appBar: AppBar(
-            iconTheme: IconThemeData(color: black),
+            iconTheme: const IconThemeData(color: black),
             elevation: 0.0,
             backgroundColor: Colors.white,
             leadingWidth: 70,
@@ -84,7 +84,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
             ),
             actions: [
               Padding(
-                padding: EdgeInsets.only(right: 20),
+                padding: const EdgeInsets.only(right: 20),
                 child: Row(
                   children: [
                     // Column(
@@ -102,7 +102,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => MessagesScreen(),
+                          builder: (context) => const MessagesScreen(),
                         ),
                       ),
                       child: SvgPicture.asset(
@@ -116,7 +116,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => NotificationScreen(),
+                          builder: (context) => const NotificationScreen(),
                         ),
                       ),
                       child: SvgPicture.asset(
@@ -166,7 +166,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   },
                                   child: BusinessTypeButton(
                                       margin: index < listingTypesGV.length - 1
-                                          ? EdgeInsets.only(right: 10)
+                                          ? const EdgeInsets.only(right: 10)
                                           : null,
                                       businessName: listingTypesGV[index]
                                           ['name'],
@@ -190,25 +190,25 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             : List.generate(
                                 3,
                                 (index) => Shimmer.fromColors(
+                                    baseColor: Colors.grey[500]!,
+                                    highlightColor: Colors.grey[100]!,
                                     child: BusinessTypeButton(
                                         margin:
-                                            EdgeInsets.only(left: 5, right: 5),
+                                            const EdgeInsets.only(left: 5, right: 5),
                                         businessName: '',
                                         gradient: null,
                                         buttonBackground: grey.withOpacity(0.3),
-                                        textColor: grey),
-                                    baseColor: Colors.grey[500]!,
-                                    highlightColor: Colors.grey[100]!),
+                                        textColor: grey)),
                               ),
                       ),
                     ],
                   ),
                 ),
                 selectedListingType == 1
-                    ? ExploreProductsScreen()
+                    ? const ExploreProductsScreen()
                     : selectedListingType == 2
-                        ? ExploreServicesScreen()
-                        : ExploreHousingScreen()
+                        ? const ExploreServicesScreen()
+                        : const ExploreHousingScreen()
                 // : Container(),
               ],
             ),

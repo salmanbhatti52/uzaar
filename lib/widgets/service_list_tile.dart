@@ -32,7 +32,7 @@ class ServiceListTile extends StatelessWidget {
   final List<PopupMenuEntry<dynamic>> Function(BuildContext) itemBuilder;
   final dynamic initialValue;
 
-  const ServiceListTile({
+  const ServiceListTile({super.key, 
     required this.serviceImage,
     required this.serviceName,
     required this.serviceLocation,
@@ -45,9 +45,9 @@ class ServiceListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 2, bottom: 14),
-      padding: EdgeInsets.only(left: 9, top: 9, bottom: 9),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(top: 2, bottom: 14),
+      padding: const EdgeInsets.only(left: 9, top: 9, bottom: 9),
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: white,
         boxShadow: [
@@ -62,7 +62,7 @@ class ServiceListTile extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: 74,
                 height: 60,
                 child: ClipRRect(
@@ -73,7 +73,7 @@ class ServiceListTile extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8.0,
               ),
               Column(
@@ -89,7 +89,7 @@ class ServiceListTile extends StatelessWidget {
                       style: productNameTextStyle,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   Row(
@@ -99,7 +99,7 @@ class ServiceListTile extends StatelessWidget {
                         width: 14,
                         height: 14,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 4,
                       ),
                       SizedBox(
@@ -114,7 +114,7 @@ class ServiceListTile extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   Row(
@@ -124,7 +124,7 @@ class ServiceListTile extends StatelessWidget {
                         width: 14,
                         height: 14,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 2,
                       ),
                       Text(
@@ -137,7 +137,7 @@ class ServiceListTile extends StatelessWidget {
               ),
             ],
           ),
-          Row(
+          const Row(
             children: [
               // SvgIcon(imageName: 'assets/edit_list_tile.svg'),
               // SizedBox(width: 6),

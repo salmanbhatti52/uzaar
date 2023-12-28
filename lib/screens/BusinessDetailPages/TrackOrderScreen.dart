@@ -132,7 +132,7 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                Divider(
+                const Divider(
                   color: grey,
                   height: 3,
                   thickness: 1,
@@ -145,7 +145,7 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                 SvgPicture.asset('assets/divider.svg'),
                 trackOrder(context, 'Order processed', 'Your order in progress',
                     '30,August 2023', '10:00am'),
-                VerticalDivider(
+                const VerticalDivider(
                   width: 20,
                   thickness: 1,
                   indent: 20,
@@ -158,7 +158,7 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                     'We have processed your order',
                     '30,August 2023',
                     '10:00am'),
-                VerticalDivider(
+                const VerticalDivider(
                   width: 20,
                   thickness: 1,
                   indent: 20,
@@ -167,7 +167,7 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                 ),
                 trackOrder(
                     context, 'Order Complete', '', '30,August 2023', '10:00am'),
-                VerticalDivider(
+                const VerticalDivider(
                   width: 20,
                   thickness: 1,
                   indent: 20,

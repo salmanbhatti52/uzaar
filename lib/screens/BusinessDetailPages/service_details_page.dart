@@ -229,7 +229,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                                 height: 16,
                                 // fit: BoxFit.scaleDown,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 4,
                               ),
                               SizedBox(
@@ -252,7 +252,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                                 height: 16,
                                 // fit: BoxFit.scaleDown,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 4,
                               ),
                               Text(
@@ -263,28 +263,28 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 14,
                       ),
                       Text(
                         'Description',
                         style: kBodyHeadingTextStyle,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 14,
                       ),
                       Text(
                         widget.serviceData['description'],
                         style: kTextFieldHintStyle,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 14,
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                   color: f7f8f8,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -318,7 +318,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                               height: 24,
                               // fit: BoxFit.scaleDown,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Text(
@@ -332,7 +332,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
 
@@ -343,7 +343,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
 
@@ -351,7 +351,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SellerProfileScreen(),
+                        builder: (context) => const SellerProfileScreen(),
                       ));
                     },
                     child: Container(
@@ -399,7 +399,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Column(
@@ -409,7 +409,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                                     '${widget.serviceData['users_customers']['first_name']} ${widget.serviceData['users_customers']['last_name']}',
                                     style: kBodyTextStyle,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 4.5,
                                   ),
                                   Row(
@@ -420,7 +420,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                                         height: 14,
                                         // fit: BoxFit.scaleDown,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 4,
                                       ),
                                       SizedBox(
@@ -450,7 +450,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                                 height: 17,
                                 width: 17,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 6,
                               ),
                               Text(
@@ -468,7 +468,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
                 HorizontalPadding(
@@ -477,13 +477,13 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                     style: kBodyHeadingTextStyle,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
                 HorizontalPadding(
                   child: Image.asset('assets/details_map.png'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
                 HorizontalPadding(
@@ -505,7 +505,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                             itemCount: aSellerOtherFeaturedServices.length,
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return FeaturedServicesWidget(
                                 image: imgBaseUrl +
@@ -675,6 +675,8 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                         : aSellerOtherFeaturedServices.isEmpty &&
                                 featuredServicesErrMsg.isEmpty
                             ? Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
                                 child: ListView.builder(
                                   itemBuilder: (context, index) {
                                     return const FeaturedProductsDummy();
@@ -682,16 +684,14 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                                   itemCount: 6,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
-                                  physics: BouncingScrollPhysics(),
-                                ),
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!)
+                                  physics: const BouncingScrollPhysics(),
+                                ))
                             : Center(
                                 child: Text(featuredServicesErrMsg),
                               ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
 

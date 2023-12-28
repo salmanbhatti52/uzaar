@@ -12,10 +12,9 @@ import '../../../widgets/my_orders_products_list_tile.dart';
 
 class OfferedProductsOfSalesOrders extends StatefulWidget {
   OfferedProductsOfSalesOrders(
-      {Key? key,
+      {super.key,
       required this.salesOrderedProductOffers,
-      required this.salesProductOffersErrMsg})
-      : super(key: key);
+      required this.salesProductOffersErrMsg});
   final List<dynamic> salesOrderedProductOffers;
   String salesProductOffersErrMsg;
   @override
@@ -36,7 +35,7 @@ class _OfferedProductsOfSalesOrdersState
                 return GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => SalesOrderDetailScreen(),
+                      builder: (context) => const SalesOrderDetailScreen(),
                     ));
                   },
                   child: SalesOrdersProductsListTile(
@@ -145,34 +144,34 @@ class _OfferedProductsOfSalesOrdersState
               itemCount: widget.salesOrderedProductOffers.length,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
             )
           : widget.salesOrderedProductOffers.isEmpty &&
                   widget.salesProductOffersErrMsg == ''
               ? ListView.builder(
                   itemBuilder: (context, index) {
                     return Shimmer.fromColors(
+                        baseColor: Colors.grey[500]!,
+                        highlightColor: Colors.grey[100]!,
                         child: Column(
                           children: [
                             Container(
                                 // margin: EdgeInsets.only(bottom: 15),
-                                child: MyOrdersProductsListTileDummy()),
+                                child: const MyOrdersProductsListTileDummy()),
                           ],
-                        ),
-                        baseColor: Colors.grey[500]!,
-                        highlightColor: Colors.grey[100]!);
+                        ));
                   },
                   itemCount: 5,
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                 )
               : widget.salesOrderedProductOffers.isEmpty &&
                       widget.salesProductOffersErrMsg != ''
                   ? Center(
                       child: Text(widget.salesProductOffersErrMsg),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
     );
   }
 }

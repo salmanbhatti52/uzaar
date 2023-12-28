@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../sales_order_detail.dart';
 
 class OfferedServicesOfSalesOrders extends StatefulWidget {
-  const OfferedServicesOfSalesOrders({Key? key}) : super(key: key);
+  const OfferedServicesOfSalesOrders({super.key});
 
   @override
   State<OfferedServicesOfSalesOrders> createState() =>
@@ -23,7 +23,7 @@ class _OfferedServicesOfSalesOrdersState
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => SalesOrderDetailScreen(),
+                builder: (context) => const SalesOrderDetailScreen(),
               ));
             },
             child: SalesOrdersServicesListTile(
@@ -49,7 +49,7 @@ class _OfferedServicesOfSalesOrdersState
         itemCount: 10,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
       ),
     );
   }

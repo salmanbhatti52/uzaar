@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomSplash extends StatefulWidget {
   static const String id = 'custom_splash';
-  const CustomSplash({Key? key}) : super(key: key);
+  const CustomSplash({super.key});
 
   @override
   State<CustomSplash> createState() => _CustomSplashState();
@@ -38,16 +38,16 @@ class _CustomSplashState extends State<CustomSplash> {
         Navigator.pushReplacement(context, MaterialPageRoute(
           builder: (context) {
             return userId != null && loginAsGuest == false
-                ? BottomNavBar(
+                ? const BottomNavBar(
                     requiredScreenIndex: 0,
                     loginAsGuest: false,
                   )
                 : loginAsGuest == true
-                    ? BottomNavBar(
+                    ? const BottomNavBar(
                         requiredScreenIndex: 0,
                         loginAsGuest: true,
                       )
-                    : OnBoardingScreen();
+                    : const OnBoardingScreen();
           },
         ));
       },

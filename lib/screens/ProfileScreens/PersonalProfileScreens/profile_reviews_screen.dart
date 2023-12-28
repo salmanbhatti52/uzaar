@@ -5,7 +5,7 @@ import 'package:Uzaar/widgets/review_tile_widget.dart';
 import 'package:flutter/material.dart';
 
 class ProfileReviewsScreen extends StatefulWidget {
-  const ProfileReviewsScreen({Key? key}) : super(key: key);
+  const ProfileReviewsScreen({super.key});
 
   @override
   State<ProfileReviewsScreen> createState() => _ProfileReviewsScreenState();
@@ -18,7 +18,7 @@ class _ProfileReviewsScreenState extends State<ProfileReviewsScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
         Align(
@@ -40,7 +40,7 @@ class _ProfileReviewsScreenState extends State<ProfileReviewsScreen> {
               hintText: 'Added By You',
               leadingIconName: null),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         //height for sized box
@@ -49,13 +49,13 @@ class _ProfileReviewsScreenState extends State<ProfileReviewsScreen> {
           axisDirection: AxisDirection.down,
           color: primaryBlue,
           child: ListView.builder(
-            padding: EdgeInsets.only(bottom: 15),
+            padding: const EdgeInsets.only(bottom: 15),
             shrinkWrap: true,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemCount: 6,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
-              return ReviewListTile(
+              return const ReviewListTile(
                 imageName: 'assets/chat_image.png',
                 title: 'John Doe',
                 detail: 'Lorem ipsum dolor sit amet consectetur.',

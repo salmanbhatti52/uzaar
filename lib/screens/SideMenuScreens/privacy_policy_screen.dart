@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../utils/Colors.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {
-  const PrivacyPolicyScreen({Key? key}) : super(key: key);
+  const PrivacyPolicyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),

@@ -68,7 +68,7 @@ class TextFormFieldWidget extends StatelessWidget {
         obscureText: obscureText ?? false,
         autofillHints: [autofillHints ?? ''],
         decoration: InputDecoration(
-          constraints: BoxConstraints(minHeight: 46),
+          constraints: const BoxConstraints(minHeight: 46),
           filled: true,
           fillColor: white,
           suffixIcon: suffixIcon,
@@ -88,7 +88,7 @@ class TextFormFieldWidget extends StatelessWidget {
           //     )),
           prefixIcon: prefixIcon,
           contentPadding:
-              EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+              const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         ),
       ),
     );

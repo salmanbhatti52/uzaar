@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../utils/Colors.dart';
 
 class MyOrderDetailScreen extends StatefulWidget {
-  const MyOrderDetailScreen({Key? key}) : super(key: key);
+  const MyOrderDetailScreen({super.key});
 
   @override
   State<MyOrderDetailScreen> createState() => _MyOrderDetailScreenState();
@@ -75,7 +75,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                                   height: 16,
                                   // fit: BoxFit.scaleDown,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 4,
                                 ),
                                 Text(
@@ -94,7 +94,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                               height: 16,
                               // fit: BoxFit.scaleDown,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 4,
                             ),
                             Text(
@@ -105,7 +105,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 6,
                     ),
                     Row(
@@ -117,7 +117,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                               offeredPrice,
                               style: kFontSixteenSixHPB,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 2,
                             ),
                             Text(
@@ -148,14 +148,14 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
                       'Order Status',
                       style: kBodyHeadingTextStyle,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
@@ -178,20 +178,20 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
                       'Seller',
                       style: kBodyHeadingTextStyle,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SellerProfileScreen(),
+                          builder: (context) => const SellerProfileScreen(),
                         ));
                       },
                       child: Container(
@@ -210,7 +210,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                                     Container(
                                       width: 40,
                                       height: 40,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
                                       ),
                                       child: Image.asset(
@@ -226,7 +226,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Column(
@@ -236,7 +236,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                                       'Lisa Fernandes',
                                       style: kBodyTextStyle,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 4.5,
                                     ),
                                     Row(
@@ -247,7 +247,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                                           height: 14,
                                           // fit: BoxFit.scaleDown,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 4,
                                         ),
                                         SizedBox(
@@ -276,7 +276,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                                   height: 17,
                                   width: 17,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 6,
                                 ),
                                 Text(
@@ -293,7 +293,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
                   ],

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../utils/colors.dart';
 
 class HeadingAndDetail extends StatelessWidget {
-  const HeadingAndDetail({required this.title, required this.description});
+  const HeadingAndDetail({super.key, required this.title, required this.description});
   final String title;
   final String description;
 
@@ -18,7 +18,7 @@ class HeadingAndDetail extends StatelessWidget {
             style: kFontSixteenSixHB,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 14,
         ),
         Text(

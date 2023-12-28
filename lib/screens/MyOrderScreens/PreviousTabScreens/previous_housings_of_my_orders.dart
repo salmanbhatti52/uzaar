@@ -6,7 +6,7 @@ import '../../../widgets/get_stars_tile.dart';
 import '../../../widgets/message_text_field.dart';
 
 class PreviousHousingsOfMyOrders extends StatefulWidget {
-  const PreviousHousingsOfMyOrders({Key? key}) : super(key: key);
+  const PreviousHousingsOfMyOrders({super.key});
 
   @override
   State<PreviousHousingsOfMyOrders> createState() =>
@@ -30,7 +30,7 @@ class _PreviousHousingsOfMyOrdersState
                 context: context,
                 builder: (context) {
                   return AddReviewDialog(
-                    content: StarsTile(
+                    content: const StarsTile(
                         noOfStars: 5, alignment: MainAxisAlignment.center),
                     title: Image.asset('assets/order_complete.png'),
                     textField: MessageTextField(
@@ -43,7 +43,7 @@ class _PreviousHousingsOfMyOrdersState
                 },
               );
             },
-            child: MyOrdersHousingsListTile(
+            child: const MyOrdersHousingsListTile(
               houseImage: 'assets/listed_house_img.png',
               houseName: '2 bedroom house ',
               houseLocation: 'Los Angeles',
@@ -60,7 +60,7 @@ class _PreviousHousingsOfMyOrdersState
         itemCount: 10,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
       ),
     );
   }

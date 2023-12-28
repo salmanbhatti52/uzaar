@@ -88,7 +88,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   callRepeatingFunction() {
-    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       getMessages();
     });
   }
@@ -132,7 +132,7 @@ class _ChatScreenState extends State<ChatScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 20),
           child: RefreshIndicator(
             onRefresh: () async {},
             color: primaryBlue,
@@ -186,37 +186,37 @@ class _ChatScreenState extends State<ChatScreen> {
                           controller: _scrollController,
                           reverse: true,
                           itemCount: messages.length,
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true)
                       : messages.isEmpty && errorMessage == ''
                           ? ListView.builder(
                               itemBuilder: (context, index) {
                                 return Shimmer.fromColors(
+                                    baseColor: Colors.grey[500]!,
+                                    highlightColor: Colors.grey[100]!,
                                     child: Column(
                                       children: [
                                         Container(
-                                            margin: EdgeInsets.only(bottom: 15),
-                                            child: UserMsgWidgetDummy()),
+                                            margin: const EdgeInsets.only(bottom: 15),
+                                            child: const UserMsgWidgetDummy()),
                                         Container(
-                                            margin: EdgeInsets.only(bottom: 15),
-                                            child: OtherUserMsgWidgetDummy())
+                                            margin: const EdgeInsets.only(bottom: 15),
+                                            child: const OtherUserMsgWidgetDummy())
                                       ],
-                                    ),
-                                    baseColor: Colors.grey[500]!,
-                                    highlightColor: Colors.grey[100]!);
+                                    ));
                               },
                               itemCount: 3,
-                              physics: BouncingScrollPhysics(),
+                              physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true)
                           : messages.isEmpty && errorMessage != ''
                               ? const Center(
                                   child: Text('No message found.'),
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 MessageTextField(
@@ -252,7 +252,7 @@ class OtherUserMsgWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CircleAvatar(
-          backgroundColor: Color(0xFFD9D9D9),
+          backgroundColor: const Color(0xFFD9D9D9),
           maxRadius: 12,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(100),
@@ -267,9 +267,9 @@ class OtherUserMsgWidget extends StatelessWidget {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(left: 4),
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
+          margin: const EdgeInsets.only(left: 4),
+          padding: const EdgeInsets.all(10),
+          decoration: const BoxDecoration(
               color: f7f8f8,
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(14),
@@ -280,11 +280,11 @@ class OtherUserMsgWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: image != null ? EdgeInsets.only(bottom: 4) : null,
+                margin: image != null ? const EdgeInsets.only(bottom: 4) : null,
                 child: image,
               ),
               Container(
-                constraints: BoxConstraints(maxWidth: 215),
+                constraints: const BoxConstraints(maxWidth: 215),
                 child: Text(
                   msgText,
                   overflow: TextOverflow.visible,
@@ -292,7 +292,7 @@ class OtherUserMsgWidget extends StatelessWidget {
                   style: kTextFieldInputStyle,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 4,
               ),
               image == null
@@ -300,7 +300,7 @@ class OtherUserMsgWidget extends StatelessWidget {
                       date,
                       style: kFontTwelveFourHG,
                     )
-                  : SizedBox()
+                  : const SizedBox()
             ],
           ),
         )
@@ -322,12 +322,12 @@ class OtherUserMsgWidgetDummy extends StatelessWidget {
           maxRadius: 12,
         ),
         Container(
-          margin: EdgeInsets.only(left: 4),
-          padding: EdgeInsets.all(10),
-          constraints: BoxConstraints(maxHeight: 50, maxWidth: 150),
+          margin: const EdgeInsets.only(left: 4),
+          padding: const EdgeInsets.all(10),
+          constraints: const BoxConstraints(maxHeight: 50, maxWidth: 150),
           decoration: BoxDecoration(
               color: Colors.grey.withOpacity(0.3),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   bottomRight: Radius.circular(14),
                   topRight: Radius.circular(14),
                   topLeft: Radius.circular(14),
@@ -357,11 +357,11 @@ class UserMsgWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
-          margin: EdgeInsets.only(right: 4),
-          padding: EdgeInsets.all(10),
+          margin: const EdgeInsets.only(right: 4),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
               color: primaryBlue.withOpacity(0.9),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   bottomRight: Radius.zero,
                   topRight: Radius.circular(14),
                   topLeft: Radius.circular(14),
@@ -370,11 +370,11 @@ class UserMsgWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: image != null ? EdgeInsets.only(bottom: 4) : null,
+                margin: image != null ? const EdgeInsets.only(bottom: 4) : null,
                 child: image,
               ),
               Container(
-                constraints: BoxConstraints(maxWidth: 214),
+                constraints: const BoxConstraints(maxWidth: 214),
                 child: Text(
                   msgText,
                   overflow: TextOverflow.visible,
@@ -382,7 +382,7 @@ class UserMsgWidget extends StatelessWidget {
                   style: kFontFourteenFourHW,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 4,
               ),
               image == null
@@ -390,12 +390,12 @@ class UserMsgWidget extends StatelessWidget {
                       date,
                       style: kFontTwelveFourHW,
                     )
-                  : SizedBox()
+                  : const SizedBox()
             ],
           ),
         ),
         CircleAvatar(
-          backgroundColor: Color(0xFFD9D9D9),
+          backgroundColor: const Color(0xFFD9D9D9),
           maxRadius: 12,
           child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
@@ -425,12 +425,12 @@ class UserMsgWidgetDummy extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
-          margin: EdgeInsets.only(right: 4),
-          padding: EdgeInsets.all(10),
-          constraints: BoxConstraints(maxHeight: 50, maxWidth: 150),
+          margin: const EdgeInsets.only(right: 4),
+          padding: const EdgeInsets.all(10),
+          constraints: const BoxConstraints(maxHeight: 50, maxWidth: 150),
           decoration: BoxDecoration(
               color: Colors.grey.withOpacity(0.3),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   bottomRight: Radius.zero,
                   topRight: Radius.circular(14),
                   topLeft: Radius.circular(14),

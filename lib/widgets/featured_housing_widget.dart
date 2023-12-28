@@ -64,7 +64,7 @@ class FeaturedHousingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 10, top: 2, bottom: 2, left: 1),
+      margin: const EdgeInsets.only(right: 10, top: 2, bottom: 2, left: 1),
       width: 154,
       decoration: kCardBoxDecoration,
       child: Column(
@@ -72,7 +72,7 @@ class FeaturedHousingWidget extends StatelessWidget {
           Stack(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(10),
                   topLeft: Radius.circular(10),
                 ),
@@ -100,7 +100,7 @@ class FeaturedHousingWidget extends StatelessWidget {
                 top: 5,
                 child: GestureDetector(
                   onTap: onOptionTap,
-                  child: Icon(
+                  child: const Icon(
                     Icons.more_vert,
                     color: Colors.white,
                   ),
@@ -126,7 +126,7 @@ class FeaturedHousingWidget extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 6,
           ),
           Padding(
@@ -143,7 +143,7 @@ class FeaturedHousingWidget extends StatelessWidget {
                     style: kCardHeadingTextStyle,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 3,
                 ),
                 Row(
@@ -156,7 +156,7 @@ class FeaturedHousingWidget extends StatelessWidget {
                           width: 14,
                           height: 14,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 2,
                         ),
                         SizedBox(
@@ -178,11 +178,11 @@ class FeaturedHousingWidget extends StatelessWidget {
                           width: 14,
                           height: 14,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 3,
                         ),
                         Container(
-                            constraints: BoxConstraints(maxWidth: 50),
+                            constraints: const BoxConstraints(maxWidth: 50),
                             child: Text(
                               '\$$housingPrice',
                               style: kPriceTextStyle,
@@ -194,14 +194,14 @@ class FeaturedHousingWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 3,
                 ),
                 Text(
                   furnishedStatus,
                   style: kFontEightFiveHPB,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Row(

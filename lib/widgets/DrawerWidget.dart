@@ -42,7 +42,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Drawer(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
         ),
@@ -53,12 +53,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               loginAsGuestGV == true
-                  ? SizedBox(
+                  ? const SizedBox(
                       height: 50,
                     )
                   : DrawerHeader(
                       // padding: EdgeInsets.zero,
-                      margin: EdgeInsets.only(top: 16),
+                      margin: const EdgeInsets.only(top: 16),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.white,
@@ -67,7 +67,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ),
                       child: userDataGV['profilePic'] != ''
                           ? CircleAvatar(
-                              backgroundColor: Color(0xFFD9D9D9),
+                              backgroundColor: const Color(0xFFD9D9D9),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
                                 child: Image.network(
@@ -79,7 +79,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               ),
                             )
                           : Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Color(0xFFD9D9D9),
                                 shape: BoxShape.circle,
                               ),
@@ -92,7 +92,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       width: 0,
                     ),
                     color: white),
-                margin: EdgeInsets.only(left: 40, top: 15),
+                margin: const EdgeInsets.only(left: 40, top: 15),
                 // color: white,
                 // width: MediaQuery.sizeOf(context).width,
                 height: MediaQuery.sizeOf(context).height * 0.79,
@@ -102,89 +102,89 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     DrawerListTile(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => MyOrdersScreen()
+                              builder: (context) => const MyOrdersScreen()
                               // SalesProfileMain(),
                               ));
                         },
                         tileImageName: 'order-icon.svg',
                         tileTitle: 'My Orders'),
 
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     DrawerListTile(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SalesOrdersScreen(),
+                          builder: (context) => const SalesOrdersScreen(),
                         ));
                       },
                       tileImageName: 'order-icon.svg',
                       tileTitle: 'Sales Orders',
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     DrawerListTile(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => SettingScreen(),
+                            builder: (context) => const SettingScreen(),
                           ));
                         },
                         tileImageName: 'settings-icon.svg',
                         tileTitle: 'Settings'),
 
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     DrawerListTile(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => TermsOfUseScreen(),
+                          builder: (context) => const TermsOfUseScreen(),
                         ));
                       },
                       tileImageName: 'terms_of_use_icon.svg',
                       tileTitle: 'Terms of Use',
                     ),
 
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     DrawerListTile(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => PrivacyPolicyScreen(),
+                          builder: (context) => const PrivacyPolicyScreen(),
                         ));
                       },
                       tileImageName: 'safety_and_privacy_icon.svg',
                       tileTitle: 'Safety & Privacy',
                     ),
 
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     DrawerListTile(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ContactUsScreen(),
+                            builder: (context) => const ContactUsScreen(),
                           ));
                         },
                         tileImageName: 'contact_us_icon.svg',
                         tileTitle: 'Contact Us'),
 
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     DrawerListTile(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => AboutUsScreen(),
+                          builder: (context) => const AboutUsScreen(),
                         ));
                       },
                       tileImageName: 'about_us_icon.svg',
                       tileTitle: 'About Us',
                     ),
 
-                    SizedBox(
+                    const SizedBox(
                       height: 35,
                     ),
                     DrawerListTile(
@@ -192,7 +192,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           removeDataFormSharedPreferences();
                           Navigator.pushReplacement(context, MaterialPageRoute(
                             builder: (context) {
-                              return LogInScreen();
+                              return const LogInScreen();
                             },
                           ));
                         },
@@ -202,7 +202,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     // SizedBox(
                     //   height: 40,
                     // ),
-                    Spacer(),
+                    const Spacer(),
 
                     ListTile(
                       onTap: null,
@@ -212,7 +212,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         style: kBodyTextStyle,
                       ),
                       visualDensity: VisualDensity.compact,
-                      contentPadding: EdgeInsets.only(bottom: 20),
+                      contentPadding: const EdgeInsets.only(bottom: 20),
                       dense: true,
                     ),
                   ],

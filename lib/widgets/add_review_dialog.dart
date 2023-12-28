@@ -16,10 +16,10 @@ class AddReviewDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      actionsPadding: EdgeInsets.only(top: 25, left: 6, right: 6, bottom: 15),
-      titlePadding: EdgeInsets.symmetric(vertical: 0, horizontal: 30),
-      contentPadding: EdgeInsets.only(top: 0, left: 6, right: 6),
-      insetPadding: EdgeInsets.symmetric(horizontal: 18),
+      actionsPadding: const EdgeInsets.only(top: 25, left: 6, right: 6, bottom: 15),
+      titlePadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+      contentPadding: const EdgeInsets.only(top: 0, left: 6, right: 6),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 18),
       titleTextStyle: kBodyPrimaryBoldTextStyle,
       elevation: 3,
       contentTextStyle: kSimpleTextStyle,

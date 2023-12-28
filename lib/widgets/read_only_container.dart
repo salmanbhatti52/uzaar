@@ -6,7 +6,7 @@ import '../utils/colors.dart';
 
 Widget readOnlyContainer(String objectIcon, String objectText) {
   return Container(
-    padding: EdgeInsets.only(left: 13),
+    padding: const EdgeInsets.only(left: 13),
     width: double.infinity,
     height: 46,
     decoration: kContainerBoxDecoration,

@@ -260,7 +260,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 height: 16,
                                 // fit: BoxFit.scaleDown,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 4,
                               ),
                               Text(
@@ -313,28 +313,28 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       //     ),
                       //   ],
                       // ),
-                      SizedBox(
+                      const SizedBox(
                         height: 14,
                       ),
                       Text(
                         'Description',
                         style: kBodyHeadingTextStyle,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 14,
                       ),
                       Text(
                         widget.productData['description'],
                         style: kTextFieldHintStyle,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 14,
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                   color: f7f8f8,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -368,7 +368,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               height: 24,
                               // fit: BoxFit.scaleDown,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Text(
@@ -387,7 +387,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     message: 'You can only see your listing'));
                           } else {
                             showModalBottomSheet(
-                              shape: RoundedRectangleBorder(
+                              shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(20)),
                               ),
@@ -429,7 +429,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
 
@@ -440,7 +440,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
 
@@ -448,7 +448,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SellerProfileScreen(),
+                        builder: (context) => const SellerProfileScreen(),
                       ));
                     },
                     child: Container(
@@ -495,7 +495,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Column(
@@ -505,7 +505,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     '${widget.productData['users_customers']['first_name']} ${widget.productData['users_customers']['last_name']}',
                                     style: kBodyTextStyle,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 4.5,
                                   ),
                                   Row(
@@ -516,7 +516,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                         height: 14,
                                         // fit: BoxFit.scaleDown,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 4,
                                       ),
                                       SizedBox(
@@ -546,7 +546,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 height: 17,
                                 width: 17,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 6,
                               ),
                               Text(
@@ -565,7 +565,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
                 HorizontalPadding(
@@ -587,7 +587,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             itemCount: aSellerOtherFeaturedProducts.length,
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return FeaturedProductsWidget(
                                 productCondition:
@@ -760,6 +760,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         : aSellerOtherFeaturedProducts.isEmpty &&
                                 featuredProductsErrMsg.isEmpty
                             ? Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
                                 child: ListView.builder(
                                   itemBuilder: (context, index) {
                                     return const FeaturedProductsDummy();
@@ -767,16 +769,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   itemCount: 6,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
-                                  physics: BouncingScrollPhysics(),
-                                ),
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!)
+                                  physics: const BouncingScrollPhysics(),
+                                ))
                             : Center(
                                 child: Text(featuredProductsErrMsg),
                               ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
 

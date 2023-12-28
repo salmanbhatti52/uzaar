@@ -67,7 +67,7 @@ class _BottomSheetForSendOfferState extends State<BottomSheetForSendOffer> {
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 20.h),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           color: white,
         ),
@@ -79,14 +79,14 @@ class _BottomSheetForSendOfferState extends State<BottomSheetForSendOffer> {
               textAlign: TextAlign.center,
               style: kBodyHeadingTextStyle,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: ReusableText(text: 'Enter Offer Price'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             SizedBox(
@@ -95,17 +95,17 @@ class _BottomSheetForSendOfferState extends State<BottomSheetForSendOffer> {
                 focusedBorder: kRoundedActiveBorderStyle,
                 controller: priceEditingController,
                 textInputType: TextInputType.number,
-                prefixIcon: SvgIcon(imageName: 'assets/service_icon.svg'),
+                prefixIcon: const SvgIcon(imageName: 'assets/service_icon.svg'),
                 hintText:
                     'Amount not less than \$${widget.listingData['min_offer_price']} ',
                 obscureText: null,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Center(
-              child: Container(
+              child: SizedBox(
                   width: MediaQuery.sizeOf(context).width * 0.8,
                   child: primaryButton(
                       context: context,

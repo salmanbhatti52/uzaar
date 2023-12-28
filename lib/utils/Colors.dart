@@ -98,7 +98,7 @@ final kColoredBodyTextStyle = GoogleFonts.outfit(
   fontSize: 14,
   fontWeight: FontWeight.w500,
   color: primaryBlue,
-  textStyle: TextStyle(overflow: TextOverflow.ellipsis),
+  textStyle: const TextStyle(overflow: TextOverflow.ellipsis),
 );
 
 final kColoredTextStyle = GoogleFonts.outfit(

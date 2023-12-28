@@ -30,7 +30,7 @@ class _SellerProfileDetailScreenState extends State<SellerProfileDetailScreen> {
       child: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 22.0.w, vertical: 20),
-          child: Column(
+          child: const Column(
             children: [
               ProfileInfoTile(
                   imageName: 'email-icon.svg',

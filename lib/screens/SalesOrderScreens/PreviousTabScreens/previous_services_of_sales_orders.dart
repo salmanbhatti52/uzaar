@@ -7,7 +7,7 @@ import '../../../widgets/get_stars_tile.dart';
 import '../../../widgets/message_text_field.dart';
 
 class PreviousServicesOfSalesOrders extends StatefulWidget {
-  const PreviousServicesOfSalesOrders({Key? key}) : super(key: key);
+  const PreviousServicesOfSalesOrders({super.key});
 
   @override
   State<PreviousServicesOfSalesOrders> createState() =>
@@ -31,7 +31,7 @@ class _PreviousServicesOfSalesOrdersState
                 context: context,
                 builder: (context) {
                   return AddReviewDialog(
-                    content: StarsTile(
+                    content: const StarsTile(
                         noOfStars: 5, alignment: MainAxisAlignment.center),
                     title: Image.asset('assets/order_complete.png'),
                     textField: MessageTextField(
@@ -44,7 +44,7 @@ class _PreviousServicesOfSalesOrdersState
                 },
               );
             },
-            child: MyOrdersServicesListTile(
+            child: const MyOrdersServicesListTile(
               serviceImage: 'assets/listed_service_img.png',
               serviceName: 'Graphic Design ',
               serviceLocation: 'Los Angeles',
@@ -56,7 +56,7 @@ class _PreviousServicesOfSalesOrdersState
         itemCount: 10,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
       ),
     );
   }

@@ -5,8 +5,8 @@ import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 import '../utils/colors.dart';
 
 final kDropDownMenuInputDecoration = InputDecorationTheme(
-  constraints: BoxConstraints(maxHeight: 46),
-  contentPadding: EdgeInsets.only(left: 14),
+  constraints: const BoxConstraints(maxHeight: 46),
+  contentPadding: const EdgeInsets.only(left: 14),
   border: kRoundedWhiteBorderStyle,
   enabledBorder: kRoundedWhiteBorderStyle,
   focusedBorder: kRoundedActiveBorderStyle,
@@ -17,7 +17,7 @@ final kDropDownMenuInputDecoration = InputDecorationTheme(
 );
 final kDropDownMenuStyle = MenuStyle(
     shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-        side: BorderSide(
+        side: const BorderSide(
           color: Colors.white,
           width: 1,
           style: BorderStyle.solid,
@@ -47,7 +47,7 @@ class RoundedDropdownMenu extends StatelessWidget {
         menuHeight: 150,
         textStyle: kTextFieldInputStyle,
         hintText: hintText,
-        trailingIcon: SvgIcon(imageName: 'assets/dropdown_icon.svg'),
+        trailingIcon: const SvgIcon(imageName: 'assets/dropdown_icon.svg'),
         leadingIcon: SvgIcon(imageName: 'assets/$leadingIconName.svg'),
         inputDecorationTheme: kDropDownMenuInputDecoration,
         menuStyle: kDropDownMenuStyle,

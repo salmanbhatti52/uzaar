@@ -32,9 +32,9 @@ class MessageTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(40),
       ),
       child: Container(
-        margin: EdgeInsets.only(right: 12),
+        margin: const EdgeInsets.only(right: 12),
         // width: MediaQuery.sizeOf(context).width,
-        padding: EdgeInsets.only(left: 20),
+        padding: const EdgeInsets.only(left: 20),
 
         height: 46,
         // width: MediaQuery.sizeOf(context).width,
@@ -57,7 +57,7 @@ class MessageTextField extends StatelessWidget {
                   // border: kRoundedWhiteBorderStyle,
                   // enabledBorder: kRoundedWhiteBorderStyle,
                   // focusedBorder: kRoundedActiveBorderStyle,
-                  contentPadding: EdgeInsets.only(
+                  contentPadding: const EdgeInsets.only(
                       // left: 15.0,
                       top: 10.0,
                       bottom: 13,
@@ -66,11 +66,11 @@ class MessageTextField extends StatelessWidget {
               ),
             ),
             SvgPicture.asset('assets/attachment_icon.svg'),
-            SizedBox(
+            const SizedBox(
               width: 6,
             ),
             SvgPicture.asset('assets/emoji_icon.svg'),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             GestureDetector(

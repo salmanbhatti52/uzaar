@@ -64,7 +64,7 @@ class _OtpScreenState extends State<OtpScreen> {
               // blur: 0.0,
               inAsyncCall: showSpinner,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 22.0),
+                padding: const EdgeInsets.symmetric(horizontal: 22.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -85,14 +85,14 @@ class _OtpScreenState extends State<OtpScreen> {
                           'Enter code below to verify.',
                           style: kTextFieldHintStyle,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 35,
                         ),
                         CustomOTPField(
                           length: 4, // Adjust the length as needed
                           onSubmitted: onSubmitted,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 70,
                         ),
                         Align(

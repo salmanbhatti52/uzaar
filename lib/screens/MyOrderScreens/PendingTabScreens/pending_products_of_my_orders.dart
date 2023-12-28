@@ -4,7 +4,7 @@ import 'package:Uzaar/widgets/my_orders_products_list_tile.dart';
 import 'package:flutter/material.dart';
 
 class PendingProductsOfMyOrders extends StatefulWidget {
-  const PendingProductsOfMyOrders({Key? key}) : super(key: key);
+  const PendingProductsOfMyOrders({super.key});
 
   @override
   State<PendingProductsOfMyOrders> createState() =>
@@ -20,10 +20,10 @@ class _PendingProductsOfMyOrdersState extends State<PendingProductsOfMyOrders> {
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => MyOrderDetailScreen(),
+                builder: (context) => const MyOrderDetailScreen(),
               ));
             },
-            child: MyOrdersProductsListTile(
+            child: const MyOrdersProductsListTile(
               productImage: 'uploads/listings_images/17013232441588376617.jpeg',
               productName: 'Iphone 14',
               // productLocation: 'Los Angeles',
@@ -35,7 +35,7 @@ class _PendingProductsOfMyOrdersState extends State<PendingProductsOfMyOrders> {
         itemCount: 10,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
       ),
     );
   }

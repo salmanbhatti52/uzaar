@@ -42,13 +42,13 @@ class _MyAppState extends State<MyApp> {
         // home: CustomSplash(),
         initialRoute: CustomSplash.id,
         routes: {
-          CustomSplash.id: (context) => CustomSplash(),
-          OnBoardingScreen.id: (context) => OnBoardingScreen(),
-          SignUpScreen.id: (context) => SignUpScreen(),
+          CustomSplash.id: (context) => const CustomSplash(),
+          OnBoardingScreen.id: (context) => const OnBoardingScreen(),
+          SignUpScreen.id: (context) => const SignUpScreen(),
           // VerifyEmail.id: (context) => VerifyEmail(),
           // CompleteProfileScreen.id: (context) => CompleteProfileScreen(),
-          LogInScreen.id: (context) => LogInScreen(),
-          HomeScreen.id: (context) => HomeScreen(),
+          LogInScreen.id: (context) => const LogInScreen(),
+          HomeScreen.id: (context) => const HomeScreen(),
           // ResetPasswordScreen.id: (context) => ResetPasswordScreen(),
           // BottomNavBar.id: (context) => BottomNavBar(
           //       loginAsGuest: false,

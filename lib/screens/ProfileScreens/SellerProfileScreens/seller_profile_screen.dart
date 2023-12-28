@@ -54,7 +54,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen>
             // crossAxisAlignment: CrossAxisAlignment.center,
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Stack(
@@ -78,21 +78,21 @@ class _SellerProfileScreenState extends State<SellerProfileScreen>
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 14,
               ),
               Text(
                 'Lisa Fernandes',
                 style: kBodyHeadingTextStyle,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 14,
               ),
-              StarsTile(
+              const StarsTile(
                 noOfStars: 5,
                 alignment: MainAxisAlignment.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 4,
               ),
               Text(
@@ -121,11 +121,11 @@ class _SellerProfileScreenState extends State<SellerProfileScreen>
               //   onRatingUpdate: (double value) {},
               // ),
 
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
                 // color: f7f8f8,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -140,7 +140,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen>
                             height: 24,
                             // fit: BoxFit.scaleDown,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
@@ -153,7 +153,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen>
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 22,
               ),
               Row(
@@ -213,10 +213,10 @@ class _SellerProfileScreenState extends State<SellerProfileScreen>
                 ],
               ),
               selectedCategory == 1
-                  ? SellerProfileDetailScreen()
+                  ? const SellerProfileDetailScreen()
                   : selectedCategory == 2
-                      ? SellerListingsScreen()
-                      : SellerReviewsScreen()
+                      ? const SellerListingsScreen()
+                      : const SellerReviewsScreen()
               // Container(
               //   padding: EdgeInsets.all(10),
               //   margin: EdgeInsets.symmetric(horizontal: 22.w, vertical: 20.h),

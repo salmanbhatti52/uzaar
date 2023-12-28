@@ -9,7 +9,7 @@ import '../../widgets/text.dart';
 import '../../widgets/text_form_field_reusable.dart';
 
 class ContactUsScreen extends StatefulWidget {
-  const ContactUsScreen({Key? key}) : super(key: key);
+  const ContactUsScreen({super.key});
 
   @override
   State<ContactUsScreen> createState() => _ContactUsScreenState();
@@ -55,36 +55,36 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
           child: Form(
             key: _key,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  SvgIcon(imageName: 'assets/app_logo.svg'),
-                  SizedBox(
+                  const SvgIcon(imageName: 'assets/app_logo.svg'),
+                  const SizedBox(
                     height: 15,
                   ),
                   Text(
                     'Uzaar Market',
                     style: kAppBarTitleStyle,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 6,
                   ),
                   Text(
                     'info@uzaar.com',
                     style: kSimpleTextStyle,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 6,
                   ),
-                  Align(
+                  const Align(
                     alignment: Alignment.centerLeft,
                     child: ReusableText(text: 'Name'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   SizedBox(
@@ -96,18 +96,18 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       },
                       controller: nameController,
                       textInputType: TextInputType.name,
-                      prefixIcon: SvgIcon(imageName: 'assets/person-icon.svg'),
+                      prefixIcon: const SvgIcon(imageName: 'assets/person-icon.svg'),
                       hintText: 'Name',
                       obscureText: null,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 14,
                   ),
-                  Align(
+                  const Align(
                       alignment: Alignment.centerLeft,
                       child: ReusableText(text: 'Email')),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   SizedBox(
@@ -119,23 +119,23 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       },
                       controller: emailController,
                       textInputType: TextInputType.emailAddress,
-                      prefixIcon: SvgIcon(imageName: 'assets/email-icon.svg'),
+                      prefixIcon: const SvgIcon(imageName: 'assets/email-icon.svg'),
                       hintText: 'username@gmail.com',
                       obscureText: null,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 14,
                   ),
-                  Align(
+                  const Align(
                       alignment: Alignment.centerLeft,
                       child: ReusableText(text: 'Message')),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   Container(
                     padding:
-                        EdgeInsets.only(left: 10, right: 10, top: 2, bottom: 2),
+                        const EdgeInsets.only(left: 10, right: 10, top: 2, bottom: 2),
                     height: 80,
                     decoration: BoxDecoration(
                         boxShadow: const [
@@ -159,9 +159,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       // mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                            padding: EdgeInsets.only(left: 5, top: 10),
-                            child: SvgIcon(imageName: 'assets/msg_icon.svg')),
-                        SizedBox(
+                            padding: const EdgeInsets.only(left: 5, top: 10),
+                            child: const SvgIcon(imageName: 'assets/msg_icon.svg')),
+                        const SizedBox(
                           width: 0,
                         ),
                         Expanded(
@@ -184,13 +184,13 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                 border: InputBorder.none),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         )
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   primaryButton(
@@ -203,7 +203,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       // ),
                       onTap: () => null,
                       showLoader: false),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ],

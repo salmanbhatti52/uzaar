@@ -19,7 +19,7 @@ import '../chat_list_screen.dart';
 import '../notifications_screen.dart';
 
 class ListingsScreen extends StatefulWidget {
-  const ListingsScreen({Key? key}) : super(key: key);
+  const ListingsScreen({super.key});
 
   @override
   State<ListingsScreen> createState() => _ListingsScreenState();
@@ -75,7 +75,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: black),
+          iconTheme: const IconThemeData(color: black),
           elevation: 0.0,
           backgroundColor: Colors.white,
           leadingWidth: 70,
@@ -92,13 +92,13 @@ class _ListingsScreenState extends State<ListingsScreen> {
           ),
           actions: [
             Padding(
-              padding: EdgeInsets.only(right: 20),
+              padding: const EdgeInsets.only(right: 20),
               child: Row(
                 children: [
                   GestureDetector(
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => MessagesScreen(),
+                        builder: (context) => const MessagesScreen(),
                       ),
                     ),
                     child: SvgPicture.asset(
@@ -112,7 +112,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                   GestureDetector(
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => NotificationScreen(),
+                        builder: (context) => const NotificationScreen(),
                       ),
                     ),
                     child: SvgPicture.asset(
@@ -156,7 +156,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                           },
                           child: BusinessTypeButton(
                               margin: index < listingTypesGV.length - 1
-                                  ? EdgeInsets.only(right: 10)
+                                  ? const EdgeInsets.only(right: 10)
                                   : null,
                               businessName: listingTypesGV[index]['name'],
                               gradient: selectedListingType ==
@@ -176,17 +176,17 @@ class _ListingsScreenState extends State<ListingsScreen> {
                     : List.generate(
                         3,
                         (index) => Shimmer.fromColors(
+                            baseColor: Colors.grey[500]!,
+                            highlightColor: Colors.grey[100]!,
                             child: BusinessTypeButton(
-                                margin: EdgeInsets.only(left: 5, right: 5),
+                                margin: const EdgeInsets.only(left: 5, right: 5),
                                 businessName: '',
                                 gradient: null,
                                 buttonBackground: grey.withOpacity(0.3),
-                                textColor: grey),
-                            baseColor: Colors.grey[500]!,
-                            highlightColor: Colors.grey[100]!),
+                                textColor: grey)),
                       ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               selectedListingType == 1 && boostingPackages.isNotEmpty
@@ -206,17 +206,19 @@ class _ListingsScreenState extends State<ListingsScreen> {
                             )
                           : Expanded(
                               child: Shimmer.fromColors(
+                                  baseColor: Colors.grey[500]!,
+                                  highlightColor: Colors.grey[100]!,
                                   child: ListView.builder(
                                     itemBuilder: (context, index) {
                                       return Container(
                                         height: 80,
-                                        margin: EdgeInsets.only(
+                                        margin: const EdgeInsets.only(
                                             top: 2,
                                             left: 5,
                                             right: 5,
                                             bottom: 14),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
+                                          borderRadius: const BorderRadius.all(
                                               Radius.circular(10)),
                                           color: Colors.grey.withOpacity(0.3),
                                         ),
@@ -225,10 +227,8 @@ class _ListingsScreenState extends State<ListingsScreen> {
                                     itemCount: 5,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
-                                    physics: BouncingScrollPhysics(),
-                                  ),
-                                  baseColor: Colors.grey[500]!,
-                                  highlightColor: Colors.grey[100]!),
+                                    physics: const BouncingScrollPhysics(),
+                                  )),
                             ),
               // SizedBox(
               //   height: 10,

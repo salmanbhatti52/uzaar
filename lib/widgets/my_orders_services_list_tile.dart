@@ -36,7 +36,7 @@ class MyOrdersServicesListTile extends StatelessWidget {
   final String? offeredPrice;
 
   const MyOrdersServicesListTile(
-      {required this.serviceImage,
+      {super.key, required this.serviceImage,
       required this.serviceName,
       required this.serviceLocation,
       required this.servicePrice,
@@ -46,9 +46,9 @@ class MyOrdersServicesListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
+      padding: const EdgeInsets.all(10),
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: white,
         boxShadow: [
@@ -61,7 +61,7 @@ class MyOrdersServicesListTile extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(serviceImage),
-          SizedBox(
+          const SizedBox(
             width: 8.0,
           ),
           Expanded(
@@ -71,7 +71,7 @@ class MyOrdersServicesListTile extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.sizeOf(context).width * 0.4,
                       child: Text(
                         serviceName,
@@ -88,7 +88,7 @@ class MyOrdersServicesListTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Row(
@@ -98,7 +98,7 @@ class MyOrdersServicesListTile extends StatelessWidget {
                       width: 14,
                       height: 14,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 4,
                     ),
                     Text(
@@ -107,7 +107,7 @@ class MyOrdersServicesListTile extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Row(
@@ -117,7 +117,7 @@ class MyOrdersServicesListTile extends StatelessWidget {
                       width: 14,
                       height: 14,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 2,
                     ),
                     Text(
@@ -127,10 +127,10 @@ class MyOrdersServicesListTile extends StatelessWidget {
                   ],
                 ),
                 offeredPrice != null
-                    ? SizedBox(
+                    ? const SizedBox(
                         height: 4,
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
                 offeredPrice != null
                     ? Row(
                         children: [
@@ -138,7 +138,7 @@ class MyOrdersServicesListTile extends StatelessWidget {
                             offeredPrice!,
                             style: priceTextStyle,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 2,
                           ),
                           Text(
@@ -147,7 +147,7 @@ class MyOrdersServicesListTile extends StatelessWidget {
                           )
                         ],
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
               ],
             ),
           ),

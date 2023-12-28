@@ -76,7 +76,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       SizedBox(
                         height: 57.h,
                       ),
-                      SvgIcon(imageName: 'assets/app_logo.svg'),
+                      const SvgIcon(imageName: 'assets/app_logo.svg'),
                       SizedBox(
                         height: 20.h,
                       ),
@@ -87,7 +87,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Email'),
                       ),
@@ -101,7 +101,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           controller: emailController,
                           textInputType: TextInputType.emailAddress,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/email-icon.svg'),
+                              const SvgIcon(imageName: 'assets/email-icon.svg'),
                           hintText: 'username@gmail.com',
                           obscureText: null,
                         ),
@@ -109,7 +109,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Password'),
                       ),
@@ -123,7 +123,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           controller: passwordController,
                           textInputType: TextInputType.visiblePassword,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/password-icon.svg'),
+                              const SvgIcon(imageName: 'assets/password-icon.svg'),
                           suffixIcon: GestureDetector(
                             onTap: () {
                               setState(() {
@@ -131,12 +131,12 @@ class _LogInScreenState extends State<LogInScreen> {
                               });
                             },
                             child: isHidden
-                                ? SvgIcon(
+                                ? const SvgIcon(
                                     imageName: 'assets/show-pass.svg',
                                     colorFilter: ColorFilter.mode(
                                         primaryBlue, BlendMode.srcIn),
                                   )
-                                : SvgIcon(
+                                : const SvgIcon(
                                     imageName: 'assets/hide-pass-icon.svg',
                                     colorFilter: ColorFilter.mode(
                                         primaryBlue, BlendMode.srcIn),
@@ -163,7 +163,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              ForgotPasswordScreen(),
+                                              const ForgotPasswordScreen(),
                                         ));
                                     // Navigator.pushNamed(
                                     //     context, ResetPasswordScreen.id);
@@ -281,7 +281,7 @@ class _LogInScreenState extends State<LogInScreen> {
 
                                 Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
-                                        builder: (context) => BottomNavBar(
+                                        builder: (context) => const BottomNavBar(
                                               requiredScreenIndex: 0,
                                               loginAsGuest: false,
                                             )),
@@ -343,7 +343,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             await preferences.setBool('loginAsGuest', true);
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
-                                    builder: (context) => BottomNavBar(
+                                    builder: (context) => const BottomNavBar(
                                           requiredScreenIndex: 0,
                                           loginAsGuest: true,
                                         )),
@@ -360,7 +360,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         height: 25.h,
                       ),
                       Container(
-                        margin: EdgeInsets.only(bottom: 22),
+                        margin: const EdgeInsets.only(bottom: 22),
                         child: RichText(
                           text: TextSpan(
                             text: 'Don\'t have an account?  ',
@@ -373,7 +373,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => SignUpScreen(),
+                                          builder: (context) => const SignUpScreen(),
                                         ));
                                   },
                                 text: 'Signup',

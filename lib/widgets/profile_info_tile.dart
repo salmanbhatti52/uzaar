@@ -15,15 +15,15 @@ class ProfileInfoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.all(10),
+      decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(width: 1, color: f5f5f5))),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SvgPicture.asset('assets/$imageName'),
-          SizedBox(
+          const SizedBox(
             width: 20,
           ),
           Column(
@@ -33,7 +33,7 @@ class ProfileInfoTile extends StatelessWidget {
                 title,
                 style: kSimpleTextStyle,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 7,
               ),
               Text(

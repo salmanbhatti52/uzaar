@@ -130,7 +130,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
       final tab = TabIndicator(
         color: i == 2 ? null : grey,
         gradient: i == 2 ? gradient : null,
-        margin: i == noOfTabs ? null : EdgeInsets.only(right: 10),
+        margin: i == noOfTabs ? null : const EdgeInsets.only(right: 10),
       );
       tabs.add(tab);
     }
@@ -172,7 +172,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Product Name'),
                       ),
@@ -186,7 +186,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                           controller: nameEditingController,
                           textInputType: TextInputType.text,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/product_icon.svg'),
+                              const SvgIcon(imageName: 'assets/product_icon.svg'),
                           hintText: 'Product Name',
                           obscureText: null,
                         ),
@@ -194,7 +194,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Category'),
                       ),
@@ -219,7 +219,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                                 SizedBox(
                                   height: 14.h,
                                 ),
-                                Align(
+                                const Align(
                                   alignment: Alignment.centerLeft,
                                   child: ReusableText(text: 'Seller Type'),
                                 ),
@@ -235,7 +235,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                                         children: [
                                           Radio(
                                             activeColor: primaryBlue,
-                                            fillColor: MaterialStatePropertyAll(
+                                            fillColor: const MaterialStatePropertyAll(
                                                 primaryBlue),
                                             value: subCategories[index]['name'],
                                             groupValue: selectedSubCategory,
@@ -247,14 +247,14 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                                               print(selectedSubCategoryId);
                                             },
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 12,
                                           ),
                                           Text(
                                             subCategories[index]['name'],
                                             style: kTextFieldInputStyle,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 40,
                                           ),
                                         ],
@@ -264,11 +264,11 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                                 ),
                               ],
                             )
-                          : SizedBox(),
+                          : const SizedBox(),
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Condition'),
                       ),
@@ -284,7 +284,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                                 Radio(
                                   activeColor: primaryBlue,
                                   fillColor:
-                                      MaterialStatePropertyAll(primaryBlue),
+                                      const MaterialStatePropertyAll(primaryBlue),
                                   value: ProductConditions.fresh,
                                   groupValue: _selectedProductCondition,
                                   onChanged: (value) {
@@ -293,7 +293,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                                     });
                                   },
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 12,
                                 ),
                                 Text(
@@ -302,7 +302,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 40,
                             ),
                             Row(
@@ -310,7 +310,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                                 Radio(
                                   activeColor: primaryBlue,
                                   fillColor:
-                                      MaterialStatePropertyAll(primaryBlue),
+                                      const MaterialStatePropertyAll(primaryBlue),
                                   value: ProductConditions.used,
                                   groupValue: _selectedProductCondition,
                                   onChanged: (value) {
@@ -319,7 +319,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                                     });
                                   },
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 12,
                                 ),
                                 Text(
@@ -334,7 +334,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Product Description'),
                       ),
@@ -348,7 +348,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                           controller: descriptionEditingController,
                           textInputType: TextInputType.text,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/description_icon.svg'),
+                              const SvgIcon(imageName: 'assets/description_icon.svg'),
                           hintText: 'Description here',
                           obscureText: null,
                         ),
@@ -356,7 +356,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Price'),
                       ),
@@ -370,7 +370,7 @@ class _ProductEditScreenOneState extends State<ProductEditScreenOne> {
                           controller: priceEditingController,
                           textInputType: TextInputType.number,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/tag_price_bold.svg'),
+                              const SvgIcon(imageName: 'assets/tag_price_bold.svg'),
                           hintText: 'Enter Price',
                           obscureText: null,
                         ),

@@ -1,13 +1,11 @@
 import 'package:Uzaar/screens/beforeLoginScreens/signup_screen.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/widgets/alert_dialog_reusable.dart';
-import 'package:flutter/services.dart';
 
 import 'package:Uzaar/screens/ListingsScreens/listings.dart';
 
 import '../screens/ProfileScreens/PersonalProfileScreens/profile_screen.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,7 +21,7 @@ class BottomNavBar extends StatefulWidget {
   final bool? loginAsGuest;
   final int requiredScreenIndex;
   final int? requiredListingTypeIndex;
-  BottomNavBar(
+  const BottomNavBar(
       {super.key,
       this.loginAsGuest,
       required this.requiredScreenIndex,
@@ -237,7 +235,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 onTap: () =>
                     Navigator.pushReplacement(context, MaterialPageRoute(
                   builder: (context) {
-                    return SignUpScreen();
+                    return const SignUpScreen();
                   },
                 )),
                 showLoader: false,
@@ -245,7 +243,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             )
           : _pages[_currentIndex],
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
@@ -258,7 +256,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
           ),

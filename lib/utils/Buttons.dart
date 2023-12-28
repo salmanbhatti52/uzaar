@@ -11,7 +11,7 @@ Widget primaryButton(
   return GestureDetector(
     onTap: onTap,
     child: Container(
-      margin: EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 20),
       width: MediaQuery.sizeOf(context).width,
       height: 54,
       decoration: BoxDecoration(
@@ -24,12 +24,12 @@ Widget primaryButton(
           Text(buttonText, style: kPrimaryButtonTextStyle),
           showLoader
               ? Container(
-                  padding: EdgeInsets.only(left: 10),
-                  child: CircularProgressIndicator(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: const CircularProgressIndicator(
                     color: Colors.white,
                   ),
                 )
-              : SizedBox()
+              : const SizedBox()
         ],
       ),
     ),
@@ -59,7 +59,7 @@ Widget googleButton(context) {
             'Login with Google',
             style: kOutlinedButtonTextStyle,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           SvgPicture.asset('assets/google-logo.svg'),
@@ -93,7 +93,7 @@ Widget facebookButton(context) {
             'Login with Facebook',
             style: kOutlinedButtonTextStyle,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           SvgPicture.asset('assets/facebook-logo.svg'),
@@ -133,12 +133,12 @@ Widget outlinedButton(
             ),
             showLoader
                 ? Container(
-                    padding: EdgeInsets.only(left: 10),
-                    child: CircularProgressIndicator(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: const CircularProgressIndicator(
                       color: primaryBlue,
                     ),
                   )
-                : SizedBox()
+                : const SizedBox()
           ],
         ),
       ),

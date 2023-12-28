@@ -8,7 +8,7 @@ SnackBar SuccessSnackBar({String? message}) {
       message ?? 'Success',
       style: kToastTextStyle,
     ),
-    duration: Duration(seconds: 1),
+    duration: const Duration(seconds: 1),
     backgroundColor: primaryBlue,
   );
 }
@@ -19,7 +19,7 @@ SnackBar ErrorSnackBar({String? message}) {
       message ?? 'API Error',
       style: kToastTextStyle,
     ),
-    duration: Duration(seconds: 2),
+    duration: const Duration(seconds: 2),
     backgroundColor: Colors.red,
   );
 }
@@ -30,7 +30,7 @@ SnackBar AlertSnackBar({String? message}) {
       message ?? 'API Error',
       style: kToastTextStyle,
     ),
-    duration: Duration(seconds: 2),
+    duration: const Duration(seconds: 2),
     backgroundColor: Colors.green,
   );
 }

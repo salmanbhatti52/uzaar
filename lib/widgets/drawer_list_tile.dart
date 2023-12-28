@@ -21,7 +21,7 @@ class DrawerListTile extends StatelessWidget {
       style: ListTileStyle.drawer,
       leading: SvgPicture.asset(
         'assets/$tileImageName',
-        colorFilter: ColorFilter.mode(primaryBlue, BlendMode.srcIn),
+        colorFilter: const ColorFilter.mode(primaryBlue, BlendMode.srcIn),
       ),
       title: Text(
         tileTitle,

@@ -73,7 +73,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   SizedBox(
                     height: 50.h,
                   ),
-                  ReusableText(text: 'New Password'),
+                  const ReusableText(text: 'New Password'),
                   SizedBox(
                     height: 7.h,
                   ),
@@ -84,7 +84,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       controller: newPassController,
                       textInputType: TextInputType.visiblePassword,
                       prefixIcon:
-                          SvgIcon(imageName: 'assets/password-icon.svg'),
+                          const SvgIcon(imageName: 'assets/password-icon.svg'),
                       suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
@@ -92,12 +92,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           });
                         },
                         child: isHiddenNew
-                            ? SvgIcon(
+                            ? const SvgIcon(
                                 imageName: 'assets/show-pass.svg',
                                 colorFilter: ColorFilter.mode(
                                     primaryBlue, BlendMode.srcIn),
                               )
-                            : SvgIcon(
+                            : const SvgIcon(
                                 imageName: 'assets/hide-pass-icon.svg',
                                 colorFilter: ColorFilter.mode(
                                     primaryBlue, BlendMode.srcIn),
@@ -110,7 +110,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   SizedBox(
                     height: 20.h,
                   ),
-                  ReusableText(text: 'Confirm New Password'),
+                  const ReusableText(text: 'Confirm New Password'),
                   SizedBox(
                     height: 7.h,
                   ),
@@ -121,7 +121,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       controller: confirmNewPassController,
                       textInputType: TextInputType.visiblePassword,
                       prefixIcon:
-                          SvgIcon(imageName: 'assets/password-icon.svg'),
+                          const SvgIcon(imageName: 'assets/password-icon.svg'),
                       suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
@@ -129,12 +129,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           });
                         },
                         child: isHiddenConfirm
-                            ? SvgIcon(
+                            ? const SvgIcon(
                                 imageName: 'assets/show-pass.svg',
                                 colorFilter: ColorFilter.mode(
                                     primaryBlue, BlendMode.srcIn),
                               )
-                            : SvgIcon(
+                            : const SvgIcon(
                                 imageName: 'assets/hide-pass-icon.svg',
                                 colorFilter: ColorFilter.mode(
                                     primaryBlue, BlendMode.srcIn),
@@ -144,7 +144,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       obscureText: isHiddenConfirm,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   primaryButton(
                       context: context,
                       buttonText: setButtonStatus,
@@ -204,7 +204,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 )));
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) {
-                                return LogInScreen();
+                                return const LogInScreen();
                               },
                             ));
                             // ignore: use_build_context_synchronously

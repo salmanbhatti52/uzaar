@@ -293,7 +293,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -369,7 +369,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                                   ),
                                 ],
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                         SizedBox(
                           width: 10.w,
                         ),
@@ -446,7 +446,9 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                       ],
                     )
                   : Shimmer.fromColors(
-                      child: Row(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: const Row(
                         children: [
                           RoundedSmallDropdownMenuDummy(),
                           SizedBox(
@@ -458,9 +460,7 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                           ),
                           RoundedSmallDropdownMenuDummy(),
                         ],
-                      ),
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[100]!),
+                      )),
             ),
           ),
           SizedBox(
@@ -476,18 +476,18 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
           SizedBox(
             height: 20.h,
           ),
-          Container(
+          SizedBox(
             height: MediaQuery.sizeOf(context).height * 0.46,
             child: GlowingOverscrollIndicator(
               axisDirection: AxisDirection.down,
               color: primaryBlue,
               child: allListingsHousings.isNotEmpty
                   ? GridView.builder(
-                      padding: EdgeInsets.only(bottom: 33, left: 2),
-                      physics: BouncingScrollPhysics(),
+                      padding: const EdgeInsets.only(bottom: 33, left: 2),
+                      physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
@@ -660,13 +660,15 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                   : allListingsHousings.isEmpty &&
                           allListingHousingsErrMsg.isEmpty
                       ? Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
                           child: GridView.builder(
-                            padding: EdgeInsets.only(bottom: 33, left: 2),
-                            physics: BouncingScrollPhysics(),
+                            padding: const EdgeInsets.only(bottom: 33, left: 2),
+                            physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               crossAxisSpacing: 10,
                               mainAxisSpacing: 10,
@@ -674,11 +676,9 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                             ),
                             itemCount: 10,
                             itemBuilder: (context, index) {
-                              return FeaturedProductsDummy();
+                              return const FeaturedProductsDummy();
                             },
-                          ),
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[100]!)
+                          ))
                       : Center(
                           child: Text(allListingHousingsErrMsg),
                         ),

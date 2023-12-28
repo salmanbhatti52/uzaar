@@ -6,7 +6,7 @@ class CustomOTPField extends StatefulWidget {
   final int length;
   final Function(String) onSubmitted;
 
-  CustomOTPField({required this.length, required this.onSubmitted});
+  const CustomOTPField({super.key, required this.length, required this.onSubmitted});
 
   @override
   _CustomOTPFieldState createState() => _CustomOTPFieldState();
@@ -47,7 +47,7 @@ class _CustomOTPFieldState extends State<CustomOTPField> {
         widget.length,
         (index) => Container(
           width: 50,
-          margin: EdgeInsets.only(left: 7, right: 7),
+          margin: const EdgeInsets.only(left: 7, right: 7),
           decoration: kOtpBoxDecoration,
           child: TextField(
             controller: _textControllers[index],

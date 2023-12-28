@@ -142,7 +142,7 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                     height: 35,
                                     child: ListTile(
                                       contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 5),
+                                          const EdgeInsets.symmetric(horizontal: 5),
                                       horizontalTitleGap: 5,
                                       title: Text(
                                         '\$${widget.boostingPackages[index]['price']} ${widget.boostingPackages[index]['name']}',
@@ -150,7 +150,7 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                       ),
                                       leading: Radio(
                                         activeColor: primaryBlue,
-                                        fillColor: MaterialStatePropertyAll(
+                                        fillColor: const MaterialStatePropertyAll(
                                             primaryBlue),
                                         value: widget.boostingPackages[index]
                                             ['packages_id'],
@@ -204,18 +204,20 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
               itemCount: listedHousings.length,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
             )
           : listedHousings.isEmpty && listedHousingsErrMsg.isEmpty
               ? Shimmer.fromColors(
+                  baseColor: Colors.grey[500]!,
+                  highlightColor: Colors.grey[100]!,
                   child: ListView.builder(
                     itemBuilder: (context, index) {
                       return Container(
                         height: 80,
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                             top: 2, left: 5, right: 5, bottom: 14),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
                           color: Colors.grey.withOpacity(0.3),
                         ),
                       );
@@ -223,10 +225,8 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                     itemCount: 5,
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
-                    physics: BouncingScrollPhysics(),
-                  ),
-                  baseColor: Colors.grey[500]!,
-                  highlightColor: Colors.grey[100]!)
+                    physics: const BouncingScrollPhysics(),
+                  ))
               : Center(
                   child: Text(listedHousingsErrMsg),
                 ),

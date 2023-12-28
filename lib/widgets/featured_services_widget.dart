@@ -61,7 +61,7 @@ class FeaturedServicesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 10, top: 2, bottom: 2, left: 1),
+      margin: const EdgeInsets.only(right: 10, top: 2, bottom: 2, left: 1),
       width: 154,
       decoration: kCardBoxDecoration,
       child: Column(
@@ -69,7 +69,7 @@ class FeaturedServicesWidget extends StatelessWidget {
           Stack(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(10),
                   topLeft: Radius.circular(10),
                 ),
@@ -97,7 +97,7 @@ class FeaturedServicesWidget extends StatelessWidget {
                 top: 5,
                 child: GestureDetector(
                   onTap: onOptionTap,
-                  child: Icon(
+                  child: const Icon(
                     Icons.more_vert,
                     color: Colors.white,
                   ),
@@ -127,12 +127,12 @@ class FeaturedServicesWidget extends StatelessWidget {
                 bottom: 10,
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.star_rate_rounded,
                       color: Colors.yellow,
                       size: 14,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 2,
                     ),
                     Text(
@@ -144,7 +144,7 @@ class FeaturedServicesWidget extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 6,
           ),
           Padding(
@@ -162,7 +162,7 @@ class FeaturedServicesWidget extends StatelessWidget {
                     style: kCardHeadingTextStyle,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 1,
                 ),
                 Row(
@@ -171,7 +171,7 @@ class FeaturedServicesWidget extends StatelessWidget {
                     Row(
                       // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 2,
                         ),
                         SvgPicture.asset(
@@ -179,7 +179,7 @@ class FeaturedServicesWidget extends StatelessWidget {
                           width: 14,
                           height: 14,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 2,
                         ),
                         SizedBox(
@@ -201,7 +201,7 @@ class FeaturedServicesWidget extends StatelessWidget {
                           'From',
                           style: kFromTagTextStyle,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 2.5,
                         ),
                         Row(
@@ -211,11 +211,11 @@ class FeaturedServicesWidget extends StatelessWidget {
                               width: 14,
                               height: 14,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 3,
                             ),
                             Container(
-                              constraints: BoxConstraints(maxWidth: 50),
+                              constraints: const BoxConstraints(maxWidth: 50),
                               child: Text(
                                 '\$$servicePrice',
                                 style: kPriceTextStyle,

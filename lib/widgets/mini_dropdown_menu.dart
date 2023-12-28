@@ -24,9 +24,9 @@ final TextStyle dropDownTextStyle = GoogleFonts.outfit(
   color: black,
 );
 final kDropDownMenuStyle = MenuStyle(
-    maximumSize: MaterialStatePropertyAll(Size.fromHeight(200)),
+    maximumSize: const MaterialStatePropertyAll(Size.fromHeight(200)),
     shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-        side: BorderSide(
+        side: const BorderSide(
           color: Colors.white,
           width: 1,
           style: BorderStyle.solid,
@@ -76,8 +76,8 @@ class RoundedMiniDropdownMenu extends StatelessWidget {
             ? null
             : SvgIcon(imageName: 'assets/$leadingIconName.svg'),
         inputDecorationTheme: InputDecorationTheme(
-          constraints: BoxConstraints(maxHeight: 30),
-          contentPadding: EdgeInsets.only(
+          constraints: const BoxConstraints(maxHeight: 30),
+          contentPadding: const EdgeInsets.only(
             left: 15,
           ),
           border: kDropDownBorderStyle,

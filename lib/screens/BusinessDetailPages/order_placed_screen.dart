@@ -29,7 +29,7 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
         padding: EdgeInsets.symmetric(horizontal: 22.w),
         width: double.infinity,
         height: MediaQuery.sizeOf(context).height,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: gradient,
         ),
         child: SafeArea(
@@ -41,7 +41,7 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
                 child: NavigateBack(
                     buildContext: context,
                     colorFilter:
-                        ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+                        const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
               ),
               SizedBox(
                 height: 60.h,

@@ -8,7 +8,7 @@ import '../../widgets/mini_dropdown_menu.dart';
 import '../../widgets/profile_info_tile.dart';
 
 class SalesOrderDetailScreen extends StatefulWidget {
-  const SalesOrderDetailScreen({Key? key}) : super(key: key);
+  const SalesOrderDetailScreen({super.key});
 
   @override
   State<SalesOrderDetailScreen> createState() => _SalesOrderDetailScreenState();
@@ -80,7 +80,7 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                                   height: 16,
                                   // fit: BoxFit.scaleDown,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 4,
                                 ),
                                 Text(
@@ -99,7 +99,7 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                               height: 16,
                               // fit: BoxFit.scaleDown,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 4,
                             ),
                             Text(
@@ -110,7 +110,7 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 6,
                     ),
                     Row(
@@ -122,7 +122,7 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                               offeredPrice,
                               style: kFontSixteenSixHPB,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 2,
                             ),
                             Text(
@@ -148,19 +148,19 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                           textStyle: kFontTwelveSixHW,
                           // hintText: 'Products',
                           leadingIconName: null,
-                          colorFilter: ColorFilter.mode(white, BlendMode.srcIn),
+                          colorFilter: const ColorFilter.mode(white, BlendMode.srcIn),
                           // trailingIconName: 'grid_icon',
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
                       'Order Status',
                       style: kBodyHeadingTextStyle,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     RoundedMiniDropdownMenu(
@@ -180,20 +180,20 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                       textStyle: kFontTwelveSixHW,
                       // hintText: 'Products',
                       leadingIconName: null,
-                      colorFilter: ColorFilter.mode(white, BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(white, BlendMode.srcIn),
                       // trailingIconName: 'grid_icon',
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
                       'Buyer Details',
                       style: kBodyHeadingTextStyle,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
-                    Column(
+                    const Column(
                       children: [
                         ProfileInfoTile(
                             imageName: 'profile_icon.svg',
@@ -213,7 +213,7 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                             description: 'Los Angelus')
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
                   ],

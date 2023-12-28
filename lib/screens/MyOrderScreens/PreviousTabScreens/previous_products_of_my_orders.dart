@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../widgets/message_text_field.dart';
 
 class PreviousProductsOfMyOrders extends StatefulWidget {
-  const PreviousProductsOfMyOrders({Key? key}) : super(key: key);
+  const PreviousProductsOfMyOrders({super.key});
 
   @override
   State<PreviousProductsOfMyOrders> createState() =>
@@ -27,7 +27,7 @@ class _PreviousProductsOfMyOrdersState
                 context: context,
                 builder: (context) {
                   return AddReviewDialog(
-                    content: StarsTile(
+                    content: const StarsTile(
                         noOfStars: 5, alignment: MainAxisAlignment.center),
                     title: Image.asset('assets/order_complete.png'),
                     textField: MessageTextField(
@@ -43,7 +43,7 @@ class _PreviousProductsOfMyOrdersState
               //   builder: (context) => MyOrderDetailScreen(),
               // ));
             },
-            child: MyOrdersProductsListTile(
+            child: const MyOrdersProductsListTile(
               productImage: 'uploads/listings_images/17013232441588376617.jpeg',
               productName: 'Iphone 14',
               // productLocation: 'Los Angeles',
@@ -56,7 +56,7 @@ class _PreviousProductsOfMyOrdersState
         itemCount: 10,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
       ),
     );
   }

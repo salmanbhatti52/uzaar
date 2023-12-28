@@ -4,7 +4,7 @@ import 'package:Uzaar/widgets/suffix_svg_icon.dart';
 class NavigateBack extends StatelessWidget {
   final BuildContext buildContext;
   final ColorFilter? colorFilter;
-  NavigateBack({required this.buildContext, this.colorFilter});
+  const NavigateBack({super.key, required this.buildContext, this.colorFilter});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

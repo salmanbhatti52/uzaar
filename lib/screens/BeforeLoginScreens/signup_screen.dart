@@ -69,14 +69,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Form(
                 key: _formKey,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 22.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 22.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
                         height: 57.h,
                       ),
-                      SvgIcon(imageName: 'assets/app_logo.svg'),
+                      const SvgIcon(imageName: 'assets/app_logo.svg'),
                       SizedBox(
                         height: 20.h,
                       ),
@@ -87,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'First Name'),
                       ),
@@ -102,14 +102,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: firstNameController,
                         textInputType: TextInputType.name,
                         prefixIcon:
-                            SvgIcon(imageName: 'assets/person-icon.svg'),
+                            const SvgIcon(imageName: 'assets/person-icon.svg'),
                         hintText: 'First Name',
                         obscureText: null,
                       ),
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: ReusableText(text: 'Last Name')),
                       SizedBox(
@@ -123,14 +123,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: lastNameController,
                         textInputType: TextInputType.name,
                         prefixIcon:
-                            SvgIcon(imageName: 'assets/person-icon.svg'),
+                            const SvgIcon(imageName: 'assets/person-icon.svg'),
                         hintText: 'Last Name',
                         obscureText: null,
                       ),
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: ReusableText(text: 'Email')),
                       SizedBox(
@@ -143,14 +143,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                         controller: emailController,
                         textInputType: TextInputType.emailAddress,
-                        prefixIcon: SvgIcon(imageName: 'assets/email-icon.svg'),
+                        prefixIcon: const SvgIcon(imageName: 'assets/email-icon.svg'),
                         hintText: 'username@gmail.com',
                         obscureText: null,
                       ),
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: ReusableText(text: 'Password')),
                       SizedBox(
@@ -164,7 +164,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: passwordController,
                         textInputType: TextInputType.visiblePassword,
                         prefixIcon:
-                            SvgIcon(imageName: 'assets/password-icon.svg'),
+                            const SvgIcon(imageName: 'assets/password-icon.svg'),
                         suffixIcon: GestureDetector(
                           onTap: () {
                             setState(() {
@@ -172,12 +172,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             });
                           },
                           child: isHidden
-                              ? SvgIcon(
+                              ? const SvgIcon(
                                   imageName: 'assets/show-pass.svg',
                                   colorFilter: ColorFilter.mode(
                                       primaryBlue, BlendMode.srcIn),
                                 )
-                              : SvgIcon(
+                              : const SvgIcon(
                                   imageName: 'assets/hide-pass-icon.svg',
                                   colorFilter: ColorFilter.mode(
                                       primaryBlue, BlendMode.srcIn),
@@ -310,7 +310,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           showLoader: setLoader),
                       Container(
-                        margin: EdgeInsets.only(bottom: 22),
+                        margin: const EdgeInsets.only(bottom: 22),
                         child: RichText(
                           text: TextSpan(
                             text: 'Already have an account?  ',
@@ -328,7 +328,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                LogInScreen()));
+                                                const LogInScreen()));
                                   },
                                 text: 'Login',
                                 style: kColoredBodyTextStyle.copyWith(

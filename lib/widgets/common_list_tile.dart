@@ -23,8 +23,8 @@ class CommonListTile extends StatelessWidget {
   final String detail;
   final String duration;
   final String title;
-  CommonListTile(
-      {required this.imageName,
+  const CommonListTile(
+      {super.key, required this.imageName,
       required this.title,
       required this.detail,
       required this.duration,
@@ -33,8 +33,8 @@ class CommonListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 7, horizontal: 2),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 2),
+      padding: const EdgeInsets.all(10),
       width: MediaQuery.sizeOf(context).width,
       // height: 80.h,
       // decoration: BoxDecoration(
@@ -49,7 +49,7 @@ class CommonListTile extends StatelessWidget {
           notificationImage == null
               ? CircleAvatar(
                   maxRadius: 30,
-                  backgroundColor: Color(0xFFD9D9D9),
+                  backgroundColor: const Color(0xFFD9D9D9),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(100),
                     child: imageName.isNotEmpty
@@ -67,7 +67,7 @@ class CommonListTile extends StatelessWidget {
                   height: 60,
                   width: 60,
                 ),
-          SizedBox(
+          const SizedBox(
             width: 9,
           ),
           Expanded(
@@ -88,7 +88,7 @@ class CommonListTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SizedBox(
@@ -116,8 +116,8 @@ class CommonListTileDummy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.all(10),
       width: MediaQuery.sizeOf(context).width,
       height: 80,
       // decoration: BoxDecoration(

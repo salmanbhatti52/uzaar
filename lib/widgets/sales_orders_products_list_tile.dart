@@ -44,8 +44,8 @@ class SalesOrdersProductsListTile extends StatelessWidget {
   // final bool? allowPay;
   // final String? offerStatus;
 
-  SalesOrdersProductsListTile(
-      {required this.productImage,
+  const SalesOrdersProductsListTile(
+      {super.key, required this.productImage,
       required this.productName,
       // required this.productLocation,
       required this.productPrice,
@@ -62,9 +62,9 @@ class SalesOrdersProductsListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
+      padding: const EdgeInsets.all(10),
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: white,
         boxShadow: [
@@ -86,7 +86,7 @@ class SalesOrdersProductsListTile extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 8.0,
           ),
           Expanded(
@@ -96,7 +96,7 @@ class SalesOrdersProductsListTile extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.sizeOf(context).width * 0.38,
                       child: Text(
                         productName,
@@ -113,7 +113,7 @@ class SalesOrdersProductsListTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 // Row(
@@ -145,7 +145,7 @@ class SalesOrdersProductsListTile extends StatelessWidget {
                 //         : const SizedBox()
                 //   ],
                 // ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Row(
@@ -161,7 +161,7 @@ class SalesOrdersProductsListTile extends StatelessWidget {
                               width: 14,
                               height: 14,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 2,
                             ),
                             Text(
@@ -171,10 +171,10 @@ class SalesOrdersProductsListTile extends StatelessWidget {
                           ],
                         ),
                         offeredPrice != null
-                            ? SizedBox(
+                            ? const SizedBox(
                                 height: 4,
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                         offeredPrice != null
                             ? Row(
                                 children: [
@@ -182,7 +182,7 @@ class SalesOrdersProductsListTile extends StatelessWidget {
                                     offeredPrice!,
                                     style: priceTextStyle,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 2,
                                   ),
                                   Text(
@@ -191,7 +191,7 @@ class SalesOrdersProductsListTile extends StatelessWidget {
                                   )
                                 ],
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                       ],
                     ),
                     // offerStatus != null?
@@ -205,7 +205,7 @@ class SalesOrdersProductsListTile extends StatelessWidget {
                       textStyle: kFontTwelveSixHW,
                       // hintText: 'Products',
                       leadingIconName: null,
-                      colorFilter: ColorFilter.mode(white, BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(white, BlendMode.srcIn),
                       // trailingIconName: 'grid_icon',
                     )
                     // : SizedBox()

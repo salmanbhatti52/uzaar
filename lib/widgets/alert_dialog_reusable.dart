@@ -15,9 +15,9 @@ class AlertDialogReusable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      actionsPadding: EdgeInsets.symmetric(horizontal: 6, vertical: 15),
-      contentPadding: EdgeInsets.only(top: 30, left: 36, right: 36),
-      insetPadding: EdgeInsets.symmetric(horizontal: 18),
+      actionsPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 15),
+      contentPadding: const EdgeInsets.only(top: 30, left: 36, right: 36),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 18),
       titleTextStyle: kBodyPrimaryBoldTextStyle,
       elevation: 3,
       contentTextStyle: kSimpleTextStyle,
@@ -35,7 +35,7 @@ class AlertDialogReusable extends StatelessWidget {
       actions: [
         itemsList != null
             ? Container(
-                margin: EdgeInsets.only(bottom: 35),
+                margin: const EdgeInsets.only(bottom: 35),
                 child: Column(
                   children: itemsList ?? [],
                 ),

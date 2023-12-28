@@ -12,7 +12,7 @@ import 'package:Uzaar/utils/Buttons.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   static const String id = 'onboarding_screen';
-  const OnBoardingScreen({Key? key}) : super(key: key);
+  const OnBoardingScreen({super.key});
 
   @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
@@ -100,7 +100,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       curve: Curves.easeInCubic,
                     ),
                     axisDirection: Axis.horizontal,
-                    effect: ExpandingDotsEffect(
+                    effect: const ExpandingDotsEffect(
                       activeDotColor: primaryBlue,
                       dotColor: grey,
                     ),
@@ -156,7 +156,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       curve: Curves.easeInCubic,
                     ),
                     axisDirection: Axis.horizontal,
-                    effect: ExpandingDotsEffect(
+                    effect: const ExpandingDotsEffect(
                         activeDotColor: primaryBlue,
                         dotColor: grey,
                         spacing: 15),
@@ -210,7 +210,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       curve: Curves.easeInCubic,
                     ),
                     axisDirection: Axis.horizontal,
-                    effect: ExpandingDotsEffect(
+                    effect: const ExpandingDotsEffect(
                       activeDotColor: primaryBlue,
                       dotColor: grey,
                     ),

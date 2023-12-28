@@ -78,7 +78,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
           child: GlowingOverscrollIndicator(
             axisDirection: AxisDirection.down,
             color: primaryBlue,
@@ -90,7 +90,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       itemCount: notificationsList.length,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return CommonListTile(
                           imageName: '',
@@ -105,25 +105,25 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       ? ListView.builder(
                           itemBuilder: (context, index) {
                             return Shimmer.fromColors(
+                                baseColor: Colors.grey[500]!,
+                                highlightColor: Colors.grey[100]!,
                                 child: Column(
                                   children: [
                                     Container(
-                                        margin: EdgeInsets.only(bottom: 15),
-                                        child: CommonListTileDummy()),
+                                        margin: const EdgeInsets.only(bottom: 15),
+                                        child: const CommonListTileDummy()),
                                   ],
-                                ),
-                                baseColor: Colors.grey[500]!,
-                                highlightColor: Colors.grey[100]!);
+                                ));
                           },
                           itemCount: 4,
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true)
                       : notificationsList.isEmpty && errorMessage != ''
                           ? const Center(
                               child: Text('No notification found.'),
                             )
-                          : SizedBox(),
+                          : const SizedBox(),
             ),
           ),
         ),

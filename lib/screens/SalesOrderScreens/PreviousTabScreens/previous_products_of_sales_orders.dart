@@ -6,7 +6,7 @@ import '../../../widgets/get_stars_tile.dart';
 import '../../../widgets/message_text_field.dart';
 
 class PreviousProductsOfSalesOrders extends StatefulWidget {
-  const PreviousProductsOfSalesOrders({Key? key}) : super(key: key);
+  const PreviousProductsOfSalesOrders({super.key});
 
   @override
   State<PreviousProductsOfSalesOrders> createState() =>
@@ -33,7 +33,7 @@ class _PreviousProductsOfSalesOrdersState
                 context: context,
                 builder: (context) {
                   return AddReviewDialog(
-                    content: StarsTile(
+                    content: const StarsTile(
                         noOfStars: 5, alignment: MainAxisAlignment.center),
                     title: Image.asset('assets/order_complete.png'),
                     textField: MessageTextField(
@@ -46,7 +46,7 @@ class _PreviousProductsOfSalesOrdersState
                 },
               );
             },
-            child: MyOrdersProductsListTile(
+            child: const MyOrdersProductsListTile(
               productImage: 'uploads/listings_images/17013232441588376617.jpeg',
               productName: 'Iphone 14',
               // productLocation: 'Los Angeles',
@@ -58,7 +58,7 @@ class _PreviousProductsOfSalesOrdersState
         itemCount: 10,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
       ),
     );
   }

@@ -65,7 +65,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
             // blur: 0.0,
             inAsyncCall: showSpinner,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 22.0),
+              padding: const EdgeInsets.symmetric(horizontal: 22.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -86,7 +86,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                         'Enter code below to verify.',
                         style: kTextFieldHintStyle,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 35,
                       ),
 
@@ -94,7 +94,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                         length: 4, // Adjust the length as needed
                         onSubmitted: onSubmitted,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 70,
                       ),
                       Align(
@@ -265,8 +265,8 @@ class OtpInputField extends StatelessWidget {
   final void Function(String)? onChanged;
   final void Function()? onEditingComplete;
 
-  OtpInputField(
-      {required this.padding, this.onChanged, this.onEditingComplete});
+  const OtpInputField(
+      {super.key, required this.padding, this.onChanged, this.onEditingComplete});
 
   @override
   Widget build(BuildContext context) {

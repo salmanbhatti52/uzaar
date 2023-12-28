@@ -18,8 +18,8 @@ final TextStyle kDropDownTextStyle = GoogleFonts.outfit(
   color: primaryBlue,
 );
 final kDropDownMenuInputDecoration = InputDecorationTheme(
-  constraints: BoxConstraints(maxHeight: 36),
-  contentPadding: EdgeInsets.only(
+  constraints: const BoxConstraints(maxHeight: 36),
+  contentPadding: const EdgeInsets.only(
     left: 15,
   ),
   border: kDropDownActiveBorderStyle,
@@ -31,9 +31,9 @@ final kDropDownMenuInputDecoration = InputDecorationTheme(
   hintStyle: kDropDownTextStyle,
 );
 final kDropDownMenuStyle = MenuStyle(
-    maximumSize: MaterialStatePropertyAll(Size.fromHeight(200)),
+    maximumSize: const MaterialStatePropertyAll(Size.fromHeight(200)),
     shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-        side: BorderSide(
+        side: const BorderSide(
           color: Colors.white,
           width: 1,
           style: BorderStyle.solid,
@@ -79,7 +79,7 @@ class RoundedSmallDropdownMenu extends StatelessWidget {
 }
 
 class RoundedSmallDropdownMenuDummy extends StatelessWidget {
-  const RoundedSmallDropdownMenuDummy();
+  const RoundedSmallDropdownMenuDummy({super.key});
 
   @override
   Widget build(BuildContext context) {

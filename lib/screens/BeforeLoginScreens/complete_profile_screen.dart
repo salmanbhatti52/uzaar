@@ -112,7 +112,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           Container(
                             width: 100,
                             height: 100,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Color(0xFFD9D9D9),
                               shape: BoxShape.circle,
                             ),
@@ -123,7 +123,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                       File(_selectedImage!.path),
                                       fit: BoxFit.cover,
                                     )
-                                  : SizedBox(),
+                                  : const SizedBox(),
                             ),
                           ),
                           Positioned(
@@ -163,7 +163,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                       images['image']['imageInBase64'];
                                 }
                               },
-                              child: SvgIcon(
+                              child: const SvgIcon(
                                   imageName: 'assets/add-pic-button.svg'),
                             ),
                           ),
@@ -172,7 +172,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'First Name'),
                       ),
@@ -183,7 +183,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: ReusableText(text: 'Last Name')),
                       SizedBox(
@@ -193,7 +193,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: ReusableText(text: 'Email')),
                       SizedBox(
@@ -203,7 +203,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: ReusableText(text: 'Phone Number')),
                       SizedBox(
@@ -216,7 +216,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           controller: phoneNumberController,
                           textInputType: TextInputType.phone,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/phone-fill.svg'),
+                              const SvgIcon(imageName: 'assets/phone-fill.svg'),
                           hintText: '+4156565662',
                           obscureText: null,
                         ),
@@ -224,7 +224,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: ReusableText(text: 'Address')),
                       SizedBox(
@@ -237,7 +237,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           controller: addressController,
                           textInputType: TextInputType.streetAddress,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/address-icon.svg'),
+                              const SvgIcon(imageName: 'assets/address-icon.svg'),
                           suffixIcon: GestureDetector(
                             onTap: () async {
                               try {
@@ -268,7 +268,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                 //             'we need permission to access your location'));
                               }
                             },
-                            child: SvgIcon(
+                            child: const SvgIcon(
                               imageName: 'assets/address-icon.svg',
                               colorFilter: ColorFilter.mode(
                                   primaryBlue, BlendMode.srcIn),
@@ -278,7 +278,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           obscureText: null,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                       GestureDetector(
@@ -296,7 +296,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                             builder: (context) {
-                              return BottomNavBar(
+                              return const BottomNavBar(
                                 requiredScreenIndex: 0,
                                 loginAsGuest: false,
                               );
@@ -309,7 +309,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                               decoration: TextDecoration.underline),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       primaryButton(
@@ -414,7 +414,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                   Navigator.of(context).pushAndRemoveUntil(
                                       MaterialPageRoute(
                                     builder: (context) {
-                                      return BottomNavBar(
+                                      return const BottomNavBar(
                                         requiredScreenIndex: 0,
                                         loginAsGuest: false,
                                       );

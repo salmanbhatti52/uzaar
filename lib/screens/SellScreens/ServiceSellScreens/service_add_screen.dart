@@ -132,7 +132,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Service Name'),
                       ),
@@ -146,7 +146,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           controller: nameEditingController,
                           textInputType: TextInputType.text,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/service_icon.svg'),
+                              const SvgIcon(imageName: 'assets/service_icon.svg'),
                           hintText: 'Service Name',
                           obscureText: null,
                         ),
@@ -154,7 +154,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Category'),
                       ),
@@ -188,7 +188,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                 SizedBox(
                                   height: 14.h,
                                 ),
-                                Align(
+                                const Align(
                                   alignment: Alignment.centerLeft,
                                   child: ReusableText(text: 'Seller Type'),
                                 ),
@@ -204,7 +204,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                         children: [
                                           Radio(
                                             activeColor: primaryBlue,
-                                            fillColor: MaterialStatePropertyAll(
+                                            fillColor: const MaterialStatePropertyAll(
                                                 primaryBlue),
                                             value: subCategories[index]['name'],
                                             groupValue: selectedSubCategory,
@@ -216,14 +216,14 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                               print(selectedSubCategoryId);
                                             },
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 12,
                                           ),
                                           Text(
                                             subCategories[index]['name'],
                                             style: kTextFieldInputStyle,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 40,
                                           ),
                                         ],
@@ -233,11 +233,11 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                 ),
                               ],
                             )
-                          : SizedBox(),
+                          : const SizedBox(),
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Service Description'),
                       ),
@@ -251,7 +251,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           controller: descriptionEditingController,
                           textInputType: TextInputType.text,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/description_icon.svg'),
+                              const SvgIcon(imageName: 'assets/description_icon.svg'),
                           hintText: 'Description here',
                           obscureText: null,
                         ),
@@ -259,7 +259,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Location'),
                       ),
@@ -273,7 +273,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           controller: locationEditingController,
                           textInputType: TextInputType.streetAddress,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/address-icon.svg'),
+                              const SvgIcon(imageName: 'assets/address-icon.svg'),
                           suffixIcon: GestureDetector(
                             onTap: () async {
                               try {
@@ -304,7 +304,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                 //             'we need permission to access your location'));
                               }
                             },
-                            child: SvgIcon(
+                            child: const SvgIcon(
                               imageName: 'assets/address-icon.svg',
                               colorFilter: ColorFilter.mode(
                                   primaryBlue, BlendMode.srcIn),
@@ -317,7 +317,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Price'),
                       ),
@@ -331,7 +331,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           controller: priceEditingController,
                           textInputType: TextInputType.number,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/tag_price_bold.svg'),
+                              const SvgIcon(imageName: 'assets/tag_price_bold.svg'),
                           hintText: 'Enter Price',
                           obscureText: null,
                         ),
@@ -346,7 +346,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child:
                             ReusableText(text: 'Boosting Options (Optional)'),
@@ -499,7 +499,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return BottomNavBar(
+                                      return const BottomNavBar(
                                         requiredScreenIndex: 0,
                                       );
                                     },

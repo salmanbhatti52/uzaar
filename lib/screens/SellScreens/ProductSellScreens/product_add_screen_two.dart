@@ -91,7 +91,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Add Minimum Offer Price '),
                       ),
@@ -105,7 +105,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                           controller: minPriceEditingController,
                           textInputType: TextInputType.number,
                           prefixIcon:
-                              SvgIcon(imageName: 'assets/tag_price_bold.svg'),
+                              const SvgIcon(imageName: 'assets/tag_price_bold.svg'),
                           hintText: 'Enter Minimum Price',
                           obscureText: null,
                         ),
@@ -120,7 +120,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                       SizedBox(
                         height: 14.h,
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child:
                             ReusableText(text: 'Boosting Options (Optional)'),
@@ -238,7 +238,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return BottomNavBar(
+                                    return const BottomNavBar(
                                       requiredScreenIndex: 0,
                                     );
                                   },

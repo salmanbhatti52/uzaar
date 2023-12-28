@@ -61,9 +61,9 @@ class HousingListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
-      padding: EdgeInsets.only(left: 9, top: 9, bottom: 9),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
+      padding: const EdgeInsets.only(left: 9, top: 9, bottom: 9),
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: white,
         boxShadow: [
@@ -80,7 +80,7 @@ class HousingListTile extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: 86,
                 height: 94,
                 child: ClipRRect(
@@ -91,7 +91,7 @@ class HousingListTile extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8.0,
               ),
               Column(
@@ -108,14 +108,14 @@ class HousingListTile extends StatelessWidget {
                       style: productNameTextStyle,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   Text(
                     furnishedStatus,
                     style: houseTypeTextStyle,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   Row(
@@ -125,7 +125,7 @@ class HousingListTile extends StatelessWidget {
                         width: 14,
                         height: 14,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 4,
                       ),
                       SizedBox(
@@ -140,7 +140,7 @@ class HousingListTile extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   Row(
@@ -150,7 +150,7 @@ class HousingListTile extends StatelessWidget {
                         width: 14,
                         height: 14,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 2,
                       ),
                       Text(
@@ -159,7 +159,7 @@ class HousingListTile extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   Row(
@@ -169,14 +169,14 @@ class HousingListTile extends StatelessWidget {
                         imageName: 'area_icon',
                         text: '$houseArea sq.ft',
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 18,
                       ),
                       IconTextReusable(
                         imageName: 'bath_icon',
                         text: noOfBaths,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 18,
                       ),
                       IconTextReusable(

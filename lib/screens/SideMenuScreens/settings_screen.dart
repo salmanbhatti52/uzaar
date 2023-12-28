@@ -12,7 +12,7 @@ import '../../services/restService.dart';
 import '../../utils/Colors.dart';
 
 class SettingScreen extends StatefulWidget {
-  const SettingScreen({Key? key}) : super(key: key);
+  const SettingScreen({super.key});
 
   @override
   State<SettingScreen> createState() => _SettingScreenState();
@@ -171,7 +171,7 @@ class _SettingScreenState extends State<SettingScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
           child: ModalProgressHUD(
             color: Colors.white,
             dismissible: true,

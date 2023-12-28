@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PopupMenuButtonReusable extends StatelessWidget {
-  PopupMenuButtonReusable(
-      {required this.itemBuilder, required this.onSelected, this.initialValue});
+  const PopupMenuButtonReusable(
+      {super.key, required this.itemBuilder, required this.onSelected, this.initialValue});
   final void Function(dynamic)? onSelected;
   final List<PopupMenuEntry<dynamic>> Function(BuildContext) itemBuilder;
   final dynamic initialValue;

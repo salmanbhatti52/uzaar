@@ -22,8 +22,8 @@ class SettingsListTile extends StatelessWidget {
   final String title;
   final void Function(bool)? onChanged;
   final bool toggleValue;
-  SettingsListTile(
-      {required this.title,
+  const SettingsListTile(
+      {super.key, required this.title,
       required this.detail,
       required this.onChanged,
       required this.toggleValue});
@@ -31,8 +31,8 @@ class SettingsListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 7),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 7),
+      padding: const EdgeInsets.all(10),
       width: MediaQuery.sizeOf(context).width,
       // height: 80.h,
       // decoration: BoxDecoration(
@@ -60,8 +60,8 @@ class SettingsListTile extends StatelessWidget {
                       width: 40,
                       child: Switch(
                         // trackColor: MaterialStatePropertyAll(primaryBlue),
-                        thumbColor: MaterialStatePropertyAll(white),
-                        inactiveTrackColor: Color(0xffD9D9D9),
+                        thumbColor: const MaterialStatePropertyAll(white),
+                        inactiveTrackColor: const Color(0xffD9D9D9),
                         activeTrackColor: primaryBlue,
 
                         activeColor: primaryBlue,
@@ -76,7 +76,7 @@ class SettingsListTile extends StatelessWidget {
                     // ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SizedBox(

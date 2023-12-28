@@ -20,7 +20,7 @@ import '../chat_list_screen.dart';
 import '../notifications_screen.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  EditProfileScreen({Key? key}) : super(key: key);
+  const EditProfileScreen({super.key});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -67,7 +67,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: black),
+          iconTheme: const IconThemeData(color: black),
           elevation: 0.0,
           backgroundColor: Colors.white,
           leadingWidth: 70,
@@ -80,13 +80,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
           actions: [
             Padding(
-              padding: EdgeInsets.only(right: 20),
+              padding: const EdgeInsets.only(right: 20),
               child: Row(
                 children: [
                   GestureDetector(
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => MessagesScreen(),
+                        builder: (context) => const MessagesScreen(),
                       ),
                     ),
                     child: SvgPicture.asset(
@@ -100,7 +100,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   GestureDetector(
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => NotificationScreen(),
+                        builder: (context) => const NotificationScreen(),
                       ),
                     ),
                     child: SvgPicture.asset(
@@ -126,14 +126,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               children: [
                 Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 22,
                     ),
-                    Align(
+                    const Align(
                       alignment: Alignment.centerLeft,
                       child: ReusableText(text: 'First Name'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     SizedBox(
@@ -150,13 +150,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         obscureText: null,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
-                    Align(
+                    const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Last Name')),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     SizedBox(
@@ -173,13 +173,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         obscureText: null,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
-                    Align(
+                    const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Email')),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     SizedBox(
@@ -197,13 +197,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         obscureText: null,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
-                    Align(
+                    const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Phone Number')),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     SizedBox(
@@ -212,18 +212,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         focusedBorder: kRoundedActiveBorderStyle,
                         controller: phoneNumberController,
                         textInputType: TextInputType.phone,
-                        prefixIcon: SvgIcon(imageName: 'assets/phone-fill.svg'),
+                        prefixIcon: const SvgIcon(imageName: 'assets/phone-fill.svg'),
                         hintText: '+4156565662',
                         obscureText: null,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
-                    Align(
+                    const Align(
                         alignment: Alignment.centerLeft,
                         child: ReusableText(text: 'Address')),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     SizedBox(
@@ -274,7 +274,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             'assets/address-icon.svg',
                             fit: BoxFit.scaleDown,
                             colorFilter:
-                                ColorFilter.mode(primaryBlue, BlendMode.srcIn),
+                                const ColorFilter.mode(primaryBlue, BlendMode.srcIn),
                           ),
                         ),
                         hintText: 'Address',
@@ -288,7 +288,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   height: MediaQuery.sizeOf(context).height * 0.17,
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 20),
+                  margin: const EdgeInsets.only(bottom: 20),
                   child: primaryButton(
                       context: context,
                       buttonText: setButtonStatus,

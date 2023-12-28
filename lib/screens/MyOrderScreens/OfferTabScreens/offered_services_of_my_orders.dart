@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../my_order_detail.dart';
 
 class OfferedServicesOfMyOrders extends StatefulWidget {
-  const OfferedServicesOfMyOrders({Key? key}) : super(key: key);
+  const OfferedServicesOfMyOrders({super.key});
 
   @override
   State<OfferedServicesOfMyOrders> createState() =>
@@ -20,10 +20,10 @@ class _OfferedServicesOfMyOrdersState extends State<OfferedServicesOfMyOrders> {
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => MyOrderDetailScreen(),
+                builder: (context) => const MyOrderDetailScreen(),
               ));
             },
-            child: MyOrdersServicesListTile(
+            child: const MyOrdersServicesListTile(
               serviceImage: 'assets/listed_service_img.png',
               serviceName: 'Graphic Design ',
               serviceLocation: 'Los Angeles',
@@ -36,7 +36,7 @@ class _OfferedServicesOfMyOrdersState extends State<OfferedServicesOfMyOrders> {
         itemCount: 10,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
       ),
     );
   }

@@ -54,7 +54,7 @@ class _SellerListingsScreenState extends State<SellerListingsScreen> {
                 height: 20.h,
               ),
               Container(
-                decoration: BoxDecoration(color: Colors.white),
+                decoration: const BoxDecoration(color: Colors.white),
                 height: 187,
                 child: ListView.builder(
                   itemBuilder: (context, index) {
@@ -209,7 +209,7 @@ class _SellerListingsScreenState extends State<SellerListingsScreen> {
                   itemCount: 6,
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                 ),
               ),
               SizedBox(
@@ -234,7 +234,7 @@ class _SellerListingsScreenState extends State<SellerListingsScreen> {
                   // ),
                   child: ListView.builder(
                     itemBuilder: (context, index) {
-                      return FeaturedServicesWidget(
+                      return const FeaturedServicesWidget(
                         image: 'assets/service-ph.png',
                         serviceCategory: 'Designing',
                         serviceName: 'Graphic Design',
@@ -247,7 +247,7 @@ class _SellerListingsScreenState extends State<SellerListingsScreen> {
                     itemCount: 6,
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                   ),
                 ),
               ),

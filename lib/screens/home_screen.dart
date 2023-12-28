@@ -448,7 +448,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: Scaffold(
           appBar: AppBar(
-            iconTheme: IconThemeData(color: black),
+            iconTheme: const IconThemeData(color: black),
             elevation: 0.0,
             backgroundColor: Colors.white,
             leadingWidth: 70,
@@ -465,7 +465,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             actions: [
               Padding(
-                padding: EdgeInsets.only(right: 20),
+                padding: const EdgeInsets.only(right: 20),
                 child: Row(
                   children: [
                     // Column(
@@ -483,7 +483,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => MessagesScreen(),
+                          builder: (context) => const MessagesScreen(),
                         ),
                       ),
                       child: SvgPicture.asset(
@@ -497,7 +497,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => NotificationScreen(),
+                          builder: (context) => const NotificationScreen(),
                         ),
                       ),
                       child: SvgPicture.asset(
@@ -524,7 +524,7 @@ class _HomeScreenState extends State<HomeScreen> {
             color: primaryBlue,
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 22),
+                padding: const EdgeInsets.symmetric(horizontal: 22),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -590,7 +590,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: BusinessTypeButton(
                                     margin: index < listingTypesGV.length - 1
-                                        ? EdgeInsets.only(right: 10)
+                                        ? const EdgeInsets.only(right: 10)
                                         : null,
                                     businessName: listingTypesGV[index]['name'],
                                     gradient: selectedListingType ==
@@ -613,15 +613,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           : List.generate(
                               3,
                               (index) => Shimmer.fromColors(
+                                  baseColor: Colors.grey[500]!,
+                                  highlightColor: Colors.grey[100]!,
                                   child: BusinessTypeButton(
                                       margin:
-                                          EdgeInsets.only(left: 5, right: 5),
+                                          const EdgeInsets.only(left: 5, right: 5),
                                       businessName: '',
                                       gradient: null,
                                       buttonBackground: grey.withOpacity(0.3),
-                                      textColor: grey),
-                                  baseColor: Colors.grey[500]!,
-                                  highlightColor: Colors.grey[100]!),
+                                      textColor: grey)),
                             ),
                     ),
 
@@ -636,7 +636,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? ListView.builder(
                               itemCount: productListingCategoriesGV.length,
                               shrinkWrap: true,
-                              physics: BouncingScrollPhysics(),
+                              physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
@@ -684,7 +684,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ? ListView.builder(
                                   itemCount: serviceListingCategoriesGV.length,
                                   shrinkWrap: true,
-                                  physics: BouncingScrollPhysics(),
+                                  physics: const BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
@@ -734,7 +734,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       itemCount:
                                           housingListingCategoriesGV.length,
                                       shrinkWrap: true,
-                                      physics: BouncingScrollPhysics(),
+                                      physics: const BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder: (context, index) {
                                         return GestureDetector(
@@ -782,14 +782,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                       },
                                     )
                                   : Shimmer.fromColors(
+                                      baseColor: Colors.grey[500]!,
+                                      highlightColor: Colors.grey[100]!,
                                       child: ListView.builder(
                                         itemCount: 5,
                                         shrinkWrap: true,
-                                        physics: BouncingScrollPhysics(),
+                                        physics: const BouncingScrollPhysics(),
                                         scrollDirection: Axis.horizontal,
                                         itemBuilder: (context, index) {
                                           return Container(
-                                            margin: EdgeInsets.only(right: 20),
+                                            margin: const EdgeInsets.only(right: 20),
                                             child: Column(
                                               children: [
                                                 Container(
@@ -801,7 +803,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           grey.withOpacity(0.3),
                                                       shape: BoxShape.circle),
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 15,
                                                 ),
                                                 Container(
@@ -817,9 +819,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           );
                                         },
-                                      ),
-                                      baseColor: Colors.grey[500]!,
-                                      highlightColor: Colors.grey[100]!),
+                                      )),
                     ),
                     SizedBox(
                       height: 30.h,
@@ -840,7 +840,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onTap: () {
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
-                                        builder: (context) => BottomNavBar(
+                                        builder: (context) => const BottomNavBar(
                                           requiredScreenIndex: 1,
                                           requiredListingTypeIndex: 1,
                                         ),
@@ -857,7 +857,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 20.h,
                               ),
                               Container(
-                                decoration: BoxDecoration(color: Colors.white),
+                                decoration: const BoxDecoration(color: Colors.white),
                                 height: 180,
                                 child: featuredProducts.isNotEmpty
                                     ? ListView.builder(
@@ -1059,11 +1059,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                         itemCount: featuredProducts.length,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.horizontal,
-                                        physics: BouncingScrollPhysics(),
+                                        physics: const BouncingScrollPhysics(),
                                       )
                                     : featuredProducts.isEmpty &&
                                             featuredProductsErrMsg.isEmpty
                                         ? Shimmer.fromColors(
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!,
                                             child: ListView.builder(
                                               itemBuilder: (context, index) {
                                                 return const FeaturedProductsDummy();
@@ -1071,10 +1073,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               itemCount: 6,
                                               shrinkWrap: true,
                                               scrollDirection: Axis.horizontal,
-                                              physics: BouncingScrollPhysics(),
-                                            ),
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!)
+                                              physics: const BouncingScrollPhysics(),
+                                            ))
                                         : Center(
                                             child: Text(featuredProductsErrMsg),
                                           ),
@@ -1084,7 +1084,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
 
                     selectedListingType == 2
                         ? Column(
@@ -1102,7 +1102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onTap: () {
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
-                                        builder: (context) => BottomNavBar(
+                                        builder: (context) => const BottomNavBar(
                                           requiredScreenIndex: 1,
                                           requiredListingTypeIndex: 2,
                                         ),
@@ -1312,11 +1312,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                         itemCount: featuredServices.length,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.horizontal,
-                                        physics: BouncingScrollPhysics(),
+                                        physics: const BouncingScrollPhysics(),
                                       )
                                     : featuredServices.isEmpty &&
                                             featuredServicesErrMsg.isEmpty
                                         ? Shimmer.fromColors(
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!,
                                             child: ListView.builder(
                                               itemBuilder: (context, index) {
                                                 return const FeaturedProductsDummy();
@@ -1324,10 +1326,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               itemCount: 6,
                                               shrinkWrap: true,
                                               scrollDirection: Axis.horizontal,
-                                              physics: BouncingScrollPhysics(),
-                                            ),
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!)
+                                              physics: const BouncingScrollPhysics(),
+                                            ))
                                         : Center(
                                             child: Text(featuredServicesErrMsg),
                                           ),
@@ -1337,7 +1337,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
 
                     selectedListingType == 3
                         ? Column(
@@ -1355,7 +1355,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onTap: () {
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
-                                        builder: (context) => BottomNavBar(
+                                        builder: (context) => const BottomNavBar(
                                           requiredScreenIndex: 1,
                                           requiredListingTypeIndex: 3,
                                         ),
@@ -1577,11 +1577,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                         itemCount: featuredHousings.length,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.horizontal,
-                                        physics: BouncingScrollPhysics(),
+                                        physics: const BouncingScrollPhysics(),
                                       )
                                     : featuredHousings.isEmpty &&
                                             featuredHousingsErrMsg.isEmpty
                                         ? Shimmer.fromColors(
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!,
                                             child: ListView.builder(
                                               itemBuilder: (context, index) {
                                                 return const FeaturedProductsDummy();
@@ -1589,10 +1591,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               itemCount: 6,
                                               shrinkWrap: true,
                                               scrollDirection: Axis.horizontal,
-                                              physics: BouncingScrollPhysics(),
-                                            ),
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!)
+                                              physics: const BouncingScrollPhysics(),
+                                            ))
                                         : Center(
                                             child: Text(featuredHousingsErrMsg),
                                           ),
@@ -1602,7 +1602,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
                   ],
                 ),
               ),
@@ -1627,7 +1627,7 @@ class BusinessListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 7),
+      margin: const EdgeInsets.only(right: 7),
       child: SizedBox(
         width: 80,
         child: Column(

@@ -20,7 +20,7 @@ import '../../widgets/business_type_button.dart';
 import '../../widgets/mini_dropdown_menu.dart';
 
 class SalesOrdersScreen extends StatefulWidget {
-  const SalesOrdersScreen({Key? key}) : super(key: key);
+  const SalesOrdersScreen({super.key});
 
   @override
   State<SalesOrdersScreen> createState() => _SalesOrdersScreenState();
@@ -145,7 +145,7 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -174,7 +174,7 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
                     leadingIconName: null),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             if (selectedCategory == 1 && selectedBusiness == 'Products')
@@ -182,23 +182,23 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
                   salesOrderedProductOffers: salesOrderedProductOffers,
                   salesProductOffersErrMsg: salesProductOffersErrMsg)
             else if (selectedCategory == 1 && selectedBusiness == 'Services')
-              OfferedServicesOfSalesOrders()
+              const OfferedServicesOfSalesOrders()
             else if (selectedCategory == 1 && selectedBusiness == 'Housing')
-              OfferedHousingsOfSalesOrders()
+              const OfferedHousingsOfSalesOrders()
             else if (selectedCategory == 2 && selectedBusiness == 'Products')
-              PendingProductsOfSalesOrders()
+              const PendingProductsOfSalesOrders()
             else if (selectedCategory == 2 && selectedBusiness == 'Services')
-              PendingServicesOfSalesOrders()
+              const PendingServicesOfSalesOrders()
             else if (selectedCategory == 2 && selectedBusiness == 'Housing')
-              PendingHousingsOfSalesOrders()
+              const PendingHousingsOfSalesOrders()
             else if (selectedCategory == 3 && selectedBusiness == 'Products')
-              PreviousProductsOfSalesOrders()
+              const PreviousProductsOfSalesOrders()
             else if (selectedCategory == 3 && selectedBusiness == 'Services')
-              PreviousServicesOfSalesOrders()
+              const PreviousServicesOfSalesOrders()
             else if (selectedCategory == 3 && selectedBusiness == 'Housing')
-              PreviousHousingsOfSalesOrders()
+              const PreviousHousingsOfSalesOrders()
             else
-              SizedBox(
+              const SizedBox(
                 height: 10,
               )
           ],

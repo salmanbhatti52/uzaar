@@ -26,7 +26,7 @@ class SearchField extends StatelessWidget {
         focusedBorder: kRoundedActiveBorderStyle,
         controller: searchController,
         textInputType: TextInputType.name,
-        prefixIcon: SvgIcon(imageName: 'assets/search-button.svg'),
+        prefixIcon: const SvgIcon(imageName: 'assets/search-button.svg'),
         hintText: 'Search Here',
         obscureText: null,
       ),

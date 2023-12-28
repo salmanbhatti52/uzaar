@@ -5,7 +5,7 @@ import '../../utils/Colors.dart';
 import '../../widgets/heading_and_detail.dart';
 
 class AboutUsScreen extends StatelessWidget {
-  const AboutUsScreen({Key? key}) : super(key: key);
+  const AboutUsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class AboutUsScreen extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),

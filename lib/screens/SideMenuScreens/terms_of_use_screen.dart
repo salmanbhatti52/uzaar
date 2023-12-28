@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../widgets/heading_and_detail.dart';
 
 class TermsOfUseScreen extends StatelessWidget {
-  const TermsOfUseScreen({Key? key}) : super(key: key);
+  const TermsOfUseScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class TermsOfUseScreen extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),

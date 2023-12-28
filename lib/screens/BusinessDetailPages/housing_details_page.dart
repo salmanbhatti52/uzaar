@@ -23,8 +23,7 @@ import '../chat_screen.dart';
 enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 
 class HousingDetailsPage extends StatefulWidget {
-  const HousingDetailsPage({Key? key, required this.houseData})
-      : super(key: key);
+  const HousingDetailsPage({super.key, required this.houseData});
   final dynamic houseData;
   @override
   State<HousingDetailsPage> createState() => _HousingDetailsPageState();
@@ -237,7 +236,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                                 height: 16,
                                 // fit: BoxFit.scaleDown,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 4,
                               ),
                               SizedBox(
@@ -263,7 +262,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                                 height: 16,
                                 // fit: BoxFit.scaleDown,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 4,
                               ),
                               Text(
@@ -287,7 +286,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                             width: 16,
                             style: kSimpleTextStyle,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 18,
                           ),
                           IconTextReusable(
@@ -297,7 +296,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                             width: 16,
                             style: kSimpleTextStyle,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 18,
                           ),
                           IconTextReusable(
@@ -309,28 +308,28 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 14,
                       ),
                       Text(
                         'Description',
                         style: kBodyHeadingTextStyle,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 14,
                       ),
                       Text(
                         widget.houseData['description'],
                         style: kTextFieldHintStyle,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 14,
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                   color: f7f8f8,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -364,7 +363,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                               height: 24,
                               // fit: BoxFit.scaleDown,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Text(
@@ -378,7 +377,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
 
@@ -389,7 +388,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
 
@@ -397,7 +396,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SellerProfileScreen(),
+                        builder: (context) => const SellerProfileScreen(),
                       ));
                     },
                     child: Container(
@@ -445,7 +444,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Column(
@@ -455,7 +454,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                                     '${widget.houseData['users_customers']['first_name']} ${widget.houseData['users_customers']['last_name']}',
                                     style: kBodyTextStyle,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 4.5,
                                   ),
                                   Row(
@@ -466,7 +465,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                                         height: 14,
                                         // fit: BoxFit.scaleDown,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 4,
                                       ),
                                       SizedBox(
@@ -496,7 +495,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                                 height: 17,
                                 width: 17,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 6,
                               ),
                               Text(
@@ -514,7 +513,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
                 HorizontalPadding(
@@ -523,13 +522,13 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                     style: kBodyHeadingTextStyle,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
                 HorizontalPadding(
                   child: Image.asset('assets/details_map.png'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
                 HorizontalPadding(
@@ -551,7 +550,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                             itemCount: aSellerOtherFeaturedHouses.length,
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return FeaturedHousingWidget(
                                 furnishedStatus:
@@ -733,6 +732,8 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                         : aSellerOtherFeaturedHouses.isEmpty &&
                                 featuredHousesErrMsg.isEmpty
                             ? Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
                                 child: ListView.builder(
                                   itemBuilder: (context, index) {
                                     return const FeaturedProductsDummy();
@@ -740,16 +741,14 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                                   itemCount: 6,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
-                                  physics: BouncingScrollPhysics(),
-                                ),
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!)
+                                  physics: const BouncingScrollPhysics(),
+                                ))
                             : Center(
                                 child: Text(featuredHousesErrMsg),
                               ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
 

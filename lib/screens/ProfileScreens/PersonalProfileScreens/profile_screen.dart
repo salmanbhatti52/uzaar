@@ -117,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
-            iconTheme: IconThemeData(color: black),
+            iconTheme: const IconThemeData(color: black),
             elevation: 0.0,
             backgroundColor: Colors.white,
             leadingWidth: 70,
@@ -134,13 +134,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             actions: [
               Padding(
-                padding: EdgeInsets.only(right: 20),
+                padding: const EdgeInsets.only(right: 20),
                 child: Row(
                   children: [
                     GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => MessagesScreen(),
+                          builder: (context) => const MessagesScreen(),
                         ),
                       ),
                       child: SvgPicture.asset(
@@ -154,7 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => NotificationScreen(),
+                          builder: (context) => const NotificationScreen(),
                         ),
                       ),
                       child: SvgPicture.asset(
@@ -186,7 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Container(
@@ -195,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           onTap: () async {
                             var data = await Navigator.of(context)
                                 .push(MaterialPageRoute(
-                              builder: (context) => EditProfileScreen(),
+                              builder: (context) => const EditProfileScreen(),
                             ));
                             print('Data Recieved: $data');
 
@@ -219,7 +219,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Container(
                             width: 100,
                             height: 100,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Color(0xFFD9D9D9),
                               shape: BoxShape.circle,
                             ),
@@ -230,7 +230,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       userProfile,
                                       fit: BoxFit.cover,
                                     )
-                                  : SizedBox(),
+                                  : const SizedBox(),
                             ),
                           ),
                           Positioned(
@@ -257,7 +257,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             bottom: MediaQuery.of(context)
                                                 .viewInsets
                                                 .bottom),
-                                        child: AddImageScreen()),
+                                        child: const AddImageScreen()),
                                   ),
                                 );
                                 print(result);
@@ -316,13 +316,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       GestureDetector(
                         onTap: () =>
                             Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ApplyForVerificationScreen(),
+                          builder: (context) => const ApplyForVerificationScreen(),
                         )),
                         child: Text(
                           'Apply for Verification',
@@ -330,21 +330,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           style: kFontSixteenSixHPB,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 7,
                       ),
-                      StarsTile(
+                      const StarsTile(
                         noOfStars: 5,
                         alignment: MainAxisAlignment.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 4,
                       ),
                       Text(
                         '(14)',
                         style: kFontSixteenSixHB,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
@@ -387,19 +387,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       selectedCategory == 1
                           ? Container(
-                              margin: EdgeInsets.only(bottom: 22),
+                              margin: const EdgeInsets.only(bottom: 22),
                               child: Column(
                                 children: [
-                                  Align(
+                                  const Align(
                                     alignment: Alignment.centerLeft,
                                     child: ReusableText(text: 'First Name'),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 8,
                                   ),
                                   SizedBox(
@@ -417,13 +417,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       obscureText: null,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 14,
                                   ),
-                                  Align(
+                                  const Align(
                                       alignment: Alignment.centerLeft,
                                       child: ReusableText(text: 'Last Name')),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 8,
                                   ),
                                   SizedBox(
@@ -441,13 +441,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       obscureText: null,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 14,
                                   ),
-                                  Align(
+                                  const Align(
                                       alignment: Alignment.centerLeft,
                                       child: ReusableText(text: 'Email')),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 8,
                                   ),
                                   SizedBox(
@@ -465,14 +465,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       obscureText: null,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 14,
                                   ),
-                                  Align(
+                                  const Align(
                                       alignment: Alignment.centerLeft,
                                       child:
                                           ReusableText(text: 'Phone Number')),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 8,
                                   ),
                                   SizedBox(
@@ -482,19 +482,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       readOnly: true,
                                       controller: phoneNumberController,
                                       textInputType: TextInputType.phone,
-                                      prefixIcon: SvgIcon(
+                                      prefixIcon: const SvgIcon(
                                           imageName: 'assets/phone-fill.svg'),
                                       hintText: '+4156565662',
                                       obscureText: null,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 14,
                                   ),
-                                  Align(
+                                  const Align(
                                       alignment: Alignment.centerLeft,
                                       child: ReusableText(text: 'Address')),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 8,
                                   ),
                                   SizedBox(
@@ -512,7 +512,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       suffixIcon: SvgPicture.asset(
                                         'assets/address-icon.svg',
                                         fit: BoxFit.scaleDown,
-                                        colorFilter: ColorFilter.mode(
+                                        colorFilter: const ColorFilter.mode(
                                             primaryBlue, BlendMode.srcIn),
                                       ),
                                       hintText: 'Address',
@@ -522,7 +522,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ],
                               ),
                             )
-                          : ProfileReviewsScreen()
+                          : const ProfileReviewsScreen()
                     ],
                   ),
                 ),

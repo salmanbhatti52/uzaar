@@ -43,7 +43,7 @@ class SalesOrdersServicesListTile extends StatelessWidget {
   final List<DropdownMenuEntry<String>> dropdownMenuEntries;
 
   const SalesOrdersServicesListTile(
-      {required this.serviceImage,
+      {super.key, required this.serviceImage,
       required this.serviceName,
       required this.serviceLocation,
       required this.servicePrice,
@@ -56,9 +56,9 @@ class SalesOrdersServicesListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
+      padding: const EdgeInsets.all(10),
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: white,
         boxShadow: [
@@ -71,7 +71,7 @@ class SalesOrdersServicesListTile extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(serviceImage),
-          SizedBox(
+          const SizedBox(
             width: 8.0,
           ),
           Expanded(
@@ -81,7 +81,7 @@ class SalesOrdersServicesListTile extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.sizeOf(context).width * 0.4,
                       child: Text(
                         serviceName,
@@ -98,7 +98,7 @@ class SalesOrdersServicesListTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Row(
@@ -108,7 +108,7 @@ class SalesOrdersServicesListTile extends StatelessWidget {
                       width: 14,
                       height: 14,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 4,
                     ),
                     Text(
@@ -117,7 +117,7 @@ class SalesOrdersServicesListTile extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Row(
@@ -132,7 +132,7 @@ class SalesOrdersServicesListTile extends StatelessWidget {
                               width: 14,
                               height: 14,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 2,
                             ),
                             Text(
@@ -142,10 +142,10 @@ class SalesOrdersServicesListTile extends StatelessWidget {
                           ],
                         ),
                         offeredPrice != null
-                            ? SizedBox(
+                            ? const SizedBox(
                                 height: 4,
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                         offeredPrice != null
                             ? Row(
                                 children: [
@@ -153,7 +153,7 @@ class SalesOrdersServicesListTile extends StatelessWidget {
                                     offeredPrice!,
                                     style: priceTextStyle,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 2,
                                   ),
                                   Text(
@@ -162,7 +162,7 @@ class SalesOrdersServicesListTile extends StatelessWidget {
                                   )
                                 ],
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                       ],
                     ),
                     RoundedMiniDropdownMenu(
@@ -175,7 +175,7 @@ class SalesOrdersServicesListTile extends StatelessWidget {
                       textStyle: kFontTwelveSixHW,
                       // hintText: 'Products',
                       leadingIconName: null,
-                      colorFilter: ColorFilter.mode(white, BlendMode.srcIn),
+                      colorFilter: const ColorFilter.mode(white, BlendMode.srcIn),
                       // trailingIconName: 'grid_icon',
                     )
                   ],

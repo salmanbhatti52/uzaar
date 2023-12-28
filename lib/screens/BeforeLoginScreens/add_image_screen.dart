@@ -18,7 +18,7 @@ class AddImageScreen extends StatelessWidget {
             'Photo',
             style: kTextFieldHintStyle,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           GestureDetector(
@@ -30,7 +30,7 @@ class AddImageScreen extends StatelessWidget {
               style: kTextFieldInputStyle,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           GestureDetector(
@@ -42,7 +42,7 @@ class AddImageScreen extends StatelessWidget {
               style: kTextFieldInputStyle,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
         ],

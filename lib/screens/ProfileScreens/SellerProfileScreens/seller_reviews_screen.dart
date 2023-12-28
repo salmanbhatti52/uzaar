@@ -15,7 +15,7 @@ class _SellerReviewsScreenState extends State<SellerReviewsScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 20),
       child: GlowingOverscrollIndicator(
         axisDirection: AxisDirection.down,
         color: primaryBlue,
@@ -23,13 +23,13 @@ class _SellerReviewsScreenState extends State<SellerReviewsScreen> {
           onRefresh: () async {},
           color: primaryBlue,
           child: ListView.builder(
-            padding: EdgeInsets.only(bottom: 15),
+            padding: const EdgeInsets.only(bottom: 15),
             shrinkWrap: true,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemCount: 6,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
-              return ReviewListTile(
+              return const ReviewListTile(
                 imageName: 'assets/chat_image.png',
                 title: 'John Doe',
                 detail: 'Lorem ipsum dolor sit amet consectetur.',

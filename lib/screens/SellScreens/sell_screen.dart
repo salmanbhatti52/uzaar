@@ -108,7 +108,7 @@ class _SellScreenState extends State<SellScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: black),
+          iconTheme: const IconThemeData(color: black),
           elevation: 0.0,
           backgroundColor: Colors.white,
           leadingWidth: 70,
@@ -125,13 +125,13 @@ class _SellScreenState extends State<SellScreen> {
           ),
           actions: [
             Padding(
-              padding: EdgeInsets.only(right: 20),
+              padding: const EdgeInsets.only(right: 20),
               child: Row(
                 children: [
                   GestureDetector(
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => MessagesScreen(),
+                        builder: (context) => const MessagesScreen(),
                       ),
                     ),
                     child: SvgPicture.asset(
@@ -145,7 +145,7 @@ class _SellScreenState extends State<SellScreen> {
                   GestureDetector(
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => NotificationScreen(),
+                        builder: (context) => const NotificationScreen(),
                       ),
                     ),
                     child: SvgPicture.asset(
@@ -209,7 +209,7 @@ class _SellScreenState extends State<SellScreen> {
                               },
                               child: BusinessTypeButton(
                                   margin: index < listingTypesGV.length - 1
-                                      ? EdgeInsets.only(right: 10)
+                                      ? const EdgeInsets.only(right: 10)
                                       : null,
                                   businessName: listingTypesGV[index]['name'],
                                   gradient: selectedListingType ==
@@ -274,7 +274,7 @@ class _SellScreenState extends State<SellScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
@@ -316,7 +316,7 @@ class _SellScreenState extends State<SellScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Wrap(
@@ -337,7 +337,7 @@ class _SellScreenState extends State<SellScreen> {
                             child: index < imagesList.length
                                 ? Stack(
                                     children: [
-                                      Container(
+                                      SizedBox(
                                           height: 94,
                                           width: 94,
                                           child: ClipRRect(
@@ -371,7 +371,7 @@ class _SellScreenState extends State<SellScreen> {
                                       )
                                     ],
                                   )
-                                : Icon(
+                                : const Icon(
                                     Icons.image,
                                     size: 94,
                                     color: Colors.grey,

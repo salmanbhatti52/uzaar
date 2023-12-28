@@ -30,7 +30,7 @@ class ProductListTile extends StatelessWidget {
   final List<PopupMenuEntry<dynamic>> Function(BuildContext) itemBuilder;
   final dynamic initialValue;
 
-  ProductListTile({
+  const ProductListTile({super.key, 
     required this.productImage,
     required this.productName,
     required this.productCondition,
@@ -43,9 +43,9 @@ class ProductListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
-      padding: EdgeInsets.only(left: 9, top: 9, bottom: 9),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
+      padding: const EdgeInsets.only(left: 9, top: 9, bottom: 9),
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: white,
         boxShadow: [
@@ -60,7 +60,7 @@ class ProductListTile extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: 74,
                 height: 60,
                 child: ClipRRect(
@@ -71,7 +71,7 @@ class ProductListTile extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8.0,
               ),
               Column(
@@ -87,7 +87,7 @@ class ProductListTile extends StatelessWidget {
                       style: productNameTextStyle,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   Row(
@@ -112,7 +112,7 @@ class ProductListTile extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   Row(
@@ -122,7 +122,7 @@ class ProductListTile extends StatelessWidget {
                         width: 14,
                         height: 14,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 2,
                       ),
                       Text(

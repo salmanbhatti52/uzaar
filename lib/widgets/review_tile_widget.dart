@@ -23,8 +23,8 @@ class ReviewListTile extends StatelessWidget {
   final String date;
   final String title;
   final bool? showProductImage;
-  ReviewListTile(
-      {required this.imageName,
+  const ReviewListTile(
+      {super.key, required this.imageName,
       required this.title,
       required this.detail,
       required this.date,
@@ -33,8 +33,8 @@ class ReviewListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 7, horizontal: 2),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 2),
+      padding: const EdgeInsets.all(10),
       width: MediaQuery.sizeOf(context).width,
       // height: 80.h,
       // decoration: BoxDecoration(
@@ -48,7 +48,7 @@ class ReviewListTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset(imageName),
-          SizedBox(
+          const SizedBox(
             width: 9,
           ),
           Expanded(
@@ -69,16 +69,16 @@ class ReviewListTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
-                StarsTile(
+                const StarsTile(
                   noOfStars: 5,
                   width: 16,
                   height: 16,
                   alignment: MainAxisAlignment.start,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 SizedBox(
@@ -91,12 +91,12 @@ class ReviewListTile extends StatelessWidget {
                     style: kTextFieldHintStyle,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 showProductImage == true
                     ? Image.asset('assets/review_item.png')
-                    : SizedBox(),
+                    : const SizedBox(),
               ],
             ),
           ),

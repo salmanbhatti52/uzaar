@@ -46,7 +46,7 @@ class MyOrdersHousingsListTile extends StatelessWidget {
   final String? offeredPrice;
 
   const MyOrdersHousingsListTile(
-      {required this.houseImage,
+      {super.key, required this.houseImage,
       required this.houseName,
       required this.houseLocation,
       required this.housePrice,
@@ -60,9 +60,9 @@ class MyOrdersHousingsListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
+      padding: const EdgeInsets.all(10),
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: white,
         boxShadow: [
@@ -75,7 +75,7 @@ class MyOrdersHousingsListTile extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(houseImage),
-          SizedBox(
+          const SizedBox(
             width: 8.0,
           ),
           Expanded(
@@ -86,7 +86,7 @@ class MyOrdersHousingsListTile extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.sizeOf(context).width * 0.35,
                       child: Text(
                         houseName,
@@ -103,14 +103,14 @@ class MyOrdersHousingsListTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Text(
                   houseType,
                   style: houseTypeTextStyle,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Row(
@@ -120,7 +120,7 @@ class MyOrdersHousingsListTile extends StatelessWidget {
                       width: 14,
                       height: 14,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 4,
                     ),
                     Text(
@@ -129,7 +129,7 @@ class MyOrdersHousingsListTile extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Row(
@@ -139,7 +139,7 @@ class MyOrdersHousingsListTile extends StatelessWidget {
                       width: 14,
                       height: 14,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 2,
                     ),
                     Text(
@@ -148,7 +148,7 @@ class MyOrdersHousingsListTile extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Row(
@@ -158,14 +158,14 @@ class MyOrdersHousingsListTile extends StatelessWidget {
                       imageName: 'area_icon',
                       text: '$houseArea sq.mt',
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 18,
                     ),
                     IconTextReusable(
                       imageName: 'bath_icon',
                       text: noOfBaths,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 18,
                     ),
                     IconTextReusable(
@@ -175,10 +175,10 @@ class MyOrdersHousingsListTile extends StatelessWidget {
                   ],
                 ),
                 offeredPrice != null
-                    ? SizedBox(
+                    ? const SizedBox(
                         height: 4,
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
                 offeredPrice != null
                     ? Row(
                         children: [
@@ -186,7 +186,7 @@ class MyOrdersHousingsListTile extends StatelessWidget {
                             offeredPrice!,
                             style: priceTextStyle,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 2,
                           ),
                           Text(
@@ -195,7 +195,7 @@ class MyOrdersHousingsListTile extends StatelessWidget {
                           )
                         ],
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
               ],
             ),
           ),

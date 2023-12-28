@@ -12,7 +12,7 @@ Widget paymentWidget(
     onTap: onTap,
     child: Container(
       margin: margin,
-      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
       width: 146,
       height: 54,
       decoration: decoration,
@@ -22,7 +22,7 @@ Widget paymentWidget(
             image,
             // fit: BoxFit.cover,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Text(
