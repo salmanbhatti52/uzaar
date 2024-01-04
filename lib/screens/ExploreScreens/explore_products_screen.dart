@@ -322,6 +322,9 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
   getCategorySubCategories({required int categoryId}) async {
     subCategories = [];
     selectedSubCategory = null;
+    selectedCondition = null;
+    selectedPrice = null;
+    selectedPriceRange = null;
     Response response = await sendPostRequest(
         action: 'get_listings_sub_categories',
         data: {'listings_categories_id': categoryId});
@@ -544,7 +547,8 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,

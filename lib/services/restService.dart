@@ -1,8 +1,11 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-const apiBaseUrl = 'https://uzaar.eigix.net/api/';
-const imgBaseUrl = 'https://uzaar.eigix.net/public/';
+// const apiBaseUrl = 'https://uzaar.eigix.net/api/';
+// const imgBaseUrl = 'https://uzaar.eigix.net/public/';
+
+const apiBaseUrl = 'https://b1gpraiseel.net/portal/api/';
+const imgBaseUrl = 'https://b1gpraiseel.net/portal/public/';
 
 //GV : GlobalVariable
 List<dynamic> featuredProductsGV = [];

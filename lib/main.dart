@@ -38,6 +38,7 @@ class _MyAppState extends State<MyApp> {
         // locale: DevicePreview.locale(context),
         // builder: DevicePreview.appBuilder,
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(useMaterial3: false),
         title: 'Uzaar',
         // home: CustomSplash(),
         initialRoute: CustomSplash.id,
