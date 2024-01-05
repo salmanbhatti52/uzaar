@@ -1,3 +1,4 @@
+import 'package:Uzaar/models/app_data.dart';
 import 'package:Uzaar/screens/SideMenuScreens/about_us_screen.dart';
 import 'package:Uzaar/screens/SideMenuScreens/contact_us_screen.dart';
 import 'package:Uzaar/screens/SideMenuScreens/privacy_policy_screen.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:Uzaar/utils/colors.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/login_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/SideMenuScreens/my_orders_screen.dart';
@@ -26,7 +28,7 @@ class DrawerWidget extends StatefulWidget {
 class _DrawerWidgetState extends State<DrawerWidget> {
   late SharedPreferences sharedPref;
 
-  removeDataFormSharedPreferences() async {
+  clearSharedPreferences() async {
     sharedPref = await SharedPreferences.getInstance();
     await sharedPref.clear();
     setState(() {});
@@ -189,7 +191,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     ),
                     DrawerListTile(
                         onTap: () {
-                          removeDataFormSharedPreferences();
+                          clearSharedPreferences();
+                          Provider.of<AppData>(context, listen: false)
+                              .clearData();
                           Navigator.pushReplacement(context, MaterialPageRoute(
                             builder: (context) {
                               return const LogInScreen();

@@ -21,12 +21,8 @@ List<dynamic> housingListingCategoriesGV = [];
 List<dynamic> productsPriceRangesGV = [];
 List<dynamic> servicesPriceRangesGV = [];
 List<dynamic> housingsPriceRangesGV = [];
-List<dynamic> listedProductsGV = [];
-List<dynamic> listedServicesGV = [];
-List<dynamic> listedHousingsGV = [];
 List<dynamic> boostingPackagesGV = [];
 Map<String, dynamic> userDataGV = {};
-Map<String, dynamic> guestUserDataGV = {};
 bool loginAsGuestGV = false;
 String listingSelectedCategoryGV = '';
 

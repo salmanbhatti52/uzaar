@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:Uzaar/models/app_data.dart';
 import 'package:Uzaar/widgets/housing_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../services/restService.dart';
@@ -28,7 +30,8 @@ class HousingListingScreen extends StatefulWidget {
 class _HousingListingScreenState extends State<HousingListingScreen> {
   late int _selectedPackage;
   dynamic selectedOption;
-  List<dynamic> listedHousings = [...listedHousingsGV];
+  late AppData appData;
+  List<dynamic> listedHousings = [];
   String listedHousingsErrMsg = '';
   updateSelectedPackage(value) {
     _selectedPackage = value;
@@ -44,12 +47,12 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     String status = decodedResponse['status'];
-    listedHousingsGV = [];
+    appData.listedHousingsGV = [];
     if (status == 'success') {
-      listedHousingsGV = decodedResponse['data'];
+      appData.listedHousingsGV = decodedResponse['data'];
       if (mounted) {
         setState(() {
-          listedHousings = listedHousingsGV;
+          listedHousings = appData.listedHousingsGV;
         });
       }
     }
@@ -104,6 +107,8 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    appData = Provider.of<AppData>(context);
+    listedHousings = [...appData.listedHousingsGV];
     return Expanded(
       child: listedHousings.isNotEmpty
           ? ListView.builder(
@@ -142,7 +147,8 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                     height: 35,
                                     child: ListTile(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(horizontal: 5),
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 5),
                                       horizontalTitleGap: 5,
                                       title: Text(
                                         '\$${widget.boostingPackages[index]['price']} ${widget.boostingPackages[index]['name']}',
@@ -150,8 +156,9 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                       ),
                                       leading: Radio(
                                         activeColor: primaryBlue,
-                                        fillColor: const MaterialStatePropertyAll(
-                                            primaryBlue),
+                                        fillColor:
+                                            const MaterialStatePropertyAll(
+                                                primaryBlue),
                                         value: widget.boostingPackages[index]
                                             ['packages_id'],
                                         groupValue: _selectedPackage,
@@ -217,7 +224,8 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                         margin: const EdgeInsets.only(
                             top: 2, left: 5, right: 5, bottom: 14),
                         decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
                           color: Colors.grey.withOpacity(0.3),
                         ),
                       );

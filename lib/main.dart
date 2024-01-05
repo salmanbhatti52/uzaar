@@ -1,3 +1,4 @@
+import 'package:Uzaar/models/app_data.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,11 +7,17 @@ import 'package:Uzaar/screens/beforeLoginScreens/login_screen.dart';
 import 'package:Uzaar/screens/beforeLoginScreens/OnboardingScreen.dart';
 
 import 'package:Uzaar/screens/beforeLoginScreens/signup_screen.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/custom_splash.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AppData(),
+      child: const MyApp(),
+    ),
+  );
 
   // runApp(
   //   DevicePreview(

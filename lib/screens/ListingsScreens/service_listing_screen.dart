@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:Uzaar/models/app_data.dart';
 import 'package:Uzaar/utils/reusable_data.dart';
 import 'package:Uzaar/widgets/service_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../services/restService.dart';
@@ -27,7 +29,8 @@ class ServiceListingScreen extends StatefulWidget {
 class _ServiceListingScreenState extends State<ServiceListingScreen> {
   late int _selectedPackage;
   dynamic selectedOption;
-  List<dynamic> listedServices = [...listedServicesGV];
+  late AppData appData;
+  List<dynamic> listedServices = [];
   String listedServicesErrMsg = '';
   updateSelectedPackage(value) {
     _selectedPackage = value;
@@ -47,12 +50,12 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
     String status = decodedResponse['status'];
-    listedServicesGV = [];
+    appData.listedServicesGV = [];
     if (status == 'success') {
-      listedServicesGV = decodedResponse['data'];
+      appData.listedServicesGV = decodedResponse['data'];
       if (mounted) {
         setState(() {
-          listedServices = listedServicesGV;
+          listedServices = appData.listedServicesGV;
         });
       }
     }
@@ -103,6 +106,8 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    appData = Provider.of<AppData>(context);
+    listedServices = [...appData.listedServicesGV];
     return Expanded(
       child: listedServices.isNotEmpty
           ? ListView.builder(
@@ -136,7 +141,8 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                                     height: 35,
                                     child: ListTile(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(horizontal: 5),
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 5),
                                       horizontalTitleGap: 5,
                                       title: Text(
                                         '\$${widget.boostingPackages[index]['price']} ${widget.boostingPackages[index]['name']}',
@@ -144,8 +150,9 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                                       ),
                                       leading: Radio(
                                         activeColor: primaryBlue,
-                                        fillColor: const MaterialStatePropertyAll(
-                                            primaryBlue),
+                                        fillColor:
+                                            const MaterialStatePropertyAll(
+                                                primaryBlue),
                                         value: widget.boostingPackages[index]
                                             ['packages_id'],
                                         groupValue: _selectedPackage,
@@ -211,7 +218,8 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                         margin: const EdgeInsets.only(
                             top: 2, left: 5, right: 5, bottom: 14),
                         decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
                           color: Colors.grey.withOpacity(0.3),
                         ),
                       );

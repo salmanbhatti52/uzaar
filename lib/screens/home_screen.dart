@@ -616,8 +616,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   baseColor: Colors.grey[500]!,
                                   highlightColor: Colors.grey[100]!,
                                   child: BusinessTypeButton(
-                                      margin:
-                                          const EdgeInsets.only(left: 5, right: 5),
+                                      margin: const EdgeInsets.only(
+                                          left: 5, right: 5),
                                       businessName: '',
                                       gradient: null,
                                       buttonBackground: grey.withOpacity(0.3),
@@ -791,7 +791,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         scrollDirection: Axis.horizontal,
                                         itemBuilder: (context, index) {
                                           return Container(
-                                            margin: const EdgeInsets.only(right: 20),
+                                            margin: const EdgeInsets.only(
+                                                right: 20),
                                             child: Column(
                                               children: [
                                                 Container(
@@ -840,7 +841,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onTap: () {
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
-                                        builder: (context) => const BottomNavBar(
+                                        builder: (context) =>
+                                            const BottomNavBar(
                                           requiredScreenIndex: 1,
                                           requiredListingTypeIndex: 1,
                                         ),
@@ -857,7 +859,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 20.h,
                               ),
                               Container(
-                                decoration: const BoxDecoration(color: Colors.white),
+                                decoration:
+                                    const BoxDecoration(color: Colors.white),
                                 height: 180,
                                 child: featuredProducts.isNotEmpty
                                     ? ListView.builder(
@@ -1073,7 +1076,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               itemCount: 6,
                                               shrinkWrap: true,
                                               scrollDirection: Axis.horizontal,
-                                              physics: const BouncingScrollPhysics(),
+                                              physics:
+                                                  const BouncingScrollPhysics(),
                                             ))
                                         : Center(
                                             child: Text(featuredProductsErrMsg),
@@ -1102,7 +1106,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onTap: () {
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
-                                        builder: (context) => const BottomNavBar(
+                                        builder: (context) =>
+                                            const BottomNavBar(
                                           requiredScreenIndex: 1,
                                           requiredListingTypeIndex: 2,
                                         ),
@@ -1326,7 +1331,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               itemCount: 6,
                                               shrinkWrap: true,
                                               scrollDirection: Axis.horizontal,
-                                              physics: const BouncingScrollPhysics(),
+                                              physics:
+                                                  const BouncingScrollPhysics(),
                                             ))
                                         : Center(
                                             child: Text(featuredServicesErrMsg),
@@ -1355,7 +1361,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onTap: () {
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
-                                        builder: (context) => const BottomNavBar(
+                                        builder: (context) =>
+                                            const BottomNavBar(
                                           requiredScreenIndex: 1,
                                           requiredListingTypeIndex: 3,
                                         ),
@@ -1591,7 +1598,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               itemCount: 6,
                                               shrinkWrap: true,
                                               scrollDirection: Axis.horizontal,
-                                              physics: const BouncingScrollPhysics(),
+                                              physics:
+                                                  const BouncingScrollPhysics(),
                                             ))
                                         : Center(
                                             child: Text(featuredHousingsErrMsg),
