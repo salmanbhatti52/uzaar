@@ -20,7 +20,7 @@ class _OfferedServicesOfMyOrdersState extends State<OfferedServicesOfMyOrders> {
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const MyOrderDetailScreen(),
+                builder: (context) => MyOrderDetailScreen(),
               ));
             },
             child: const MyOrdersServicesListTile(

@@ -20,7 +20,7 @@ class _PendingServicesOfMyOrdersState extends State<PendingServicesOfMyOrders> {
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const MyOrderDetailScreen(),
+                builder: (context) => MyOrderDetailScreen(),
               ));
             },
             child: const MyOrdersServicesListTile(

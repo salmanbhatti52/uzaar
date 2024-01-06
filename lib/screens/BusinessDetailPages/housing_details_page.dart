@@ -48,8 +48,8 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
     print(selectedReasons);
   }
 
-  List aSellerOtherFeaturedHouses = [];
-  getASellerOtherFeaturedHouses() async {
+  List aSellerOtherListingHouses = [];
+  getASellerOtherListingHouses() async {
     Response response =
         await sendPostRequest(action: 'get_listings_housings', data: {
       'users_customers_id': widget.houseData['users_customers_id'],
@@ -57,18 +57,18 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    aSellerOtherFeaturedHouses = decodedResponse['data'];
-    for (var house in aSellerOtherFeaturedHouses) {
+    aSellerOtherListingHouses = decodedResponse['data'];
+    for (var house in aSellerOtherListingHouses) {
       if (house['listings_housings_id'] ==
           widget.houseData['listings_housings_id']) {
-        aSellerOtherFeaturedHouses.remove(house);
+        aSellerOtherListingHouses.remove(house);
         break;
       }
     }
-    if (aSellerOtherFeaturedHouses.isEmpty) {
+    if (aSellerOtherListingHouses.isEmpty) {
       featuredHousesErrMsg = 'No more listings found.';
     }
-    print('aSellerOtherFeaturedHouses: $aSellerOtherFeaturedHouses');
+    print('aSellerOtherListingHouses: $aSellerOtherListingHouses');
   }
 
   Future<String?> startChat() async {
@@ -99,7 +99,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
   bool showSpinner = false;
 
   init() async {
-    await getASellerOtherFeaturedHouses();
+    await getASellerOtherListingHouses();
     if (mounted) {
       setState(() {});
     }
@@ -329,7 +329,8 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                   color: f7f8f8,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -396,7 +397,8 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SellerProfileScreen(),
+                        builder: (context) => SellerProfileScreen(
+                            sellerData: widget.houseData['users_customers']),
                       ));
                     },
                     child: Container(
@@ -545,42 +547,42 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                   ),
                   child: SizedBox(
                     height: 206,
-                    child: aSellerOtherFeaturedHouses.isNotEmpty
+                    child: aSellerOtherListingHouses.isNotEmpty
                         ? ListView.builder(
-                            itemCount: aSellerOtherFeaturedHouses.length,
+                            itemCount: aSellerOtherListingHouses.length,
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return FeaturedHousingWidget(
                                 furnishedStatus:
-                                    aSellerOtherFeaturedHouses[index]
+                                    aSellerOtherListingHouses[index]
                                                 ['furnished'] ==
                                             'Yes'
                                         ? 'Furnished'
                                         : 'Not Furnished',
                                 image: imgBaseUrl +
-                                    aSellerOtherFeaturedHouses[index]
+                                    aSellerOtherListingHouses[index]
                                         ['listings_images'][0]['image'],
                                 housingCategory:
-                                    aSellerOtherFeaturedHouses[index]
+                                    aSellerOtherListingHouses[index]
                                         ['listings_categories']['name'],
-                                housingName: aSellerOtherFeaturedHouses[index]
+                                housingName: aSellerOtherListingHouses[index]
                                     ['name'],
                                 housingLocation:
-                                    aSellerOtherFeaturedHouses[index]['name'],
-                                housingPrice: aSellerOtherFeaturedHouses[index]
+                                    aSellerOtherListingHouses[index]['name'],
+                                housingPrice: aSellerOtherListingHouses[index]
                                     ['price'],
-                                area: aSellerOtherFeaturedHouses[index]['area'],
-                                bedrooms: aSellerOtherFeaturedHouses[index]
+                                area: aSellerOtherListingHouses[index]['area'],
+                                bedrooms: aSellerOtherListingHouses[index]
                                     ['bedroom'],
-                                bathrooms: aSellerOtherFeaturedHouses[index]
+                                bathrooms: aSellerOtherListingHouses[index]
                                     ['bathroom'],
                                 onImageTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => HousingDetailsPage(
                                       houseData:
-                                          aSellerOtherFeaturedHouses[index],
+                                          aSellerOtherListingHouses[index],
                                     ),
                                   ));
                                 },
@@ -729,7 +731,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                               );
                             },
                           )
-                        : aSellerOtherFeaturedHouses.isEmpty &&
+                        : aSellerOtherListingHouses.isEmpty &&
                                 featuredHousesErrMsg.isEmpty
                             ? Shimmer.fromColors(
                                 baseColor: Colors.grey[300]!,

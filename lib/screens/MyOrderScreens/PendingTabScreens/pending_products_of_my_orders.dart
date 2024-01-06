@@ -20,7 +20,7 @@ class _PendingProductsOfMyOrdersState extends State<PendingProductsOfMyOrders> {
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const MyOrderDetailScreen(),
+                builder: (context) => MyOrderDetailScreen(),
               ));
             },
             child: const MyOrdersProductsListTile(

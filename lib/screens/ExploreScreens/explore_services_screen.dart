@@ -193,6 +193,9 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
   getCategorySubCategories({required int categoryId}) async {
     subCategories = [];
     selectedSubCategory = null;
+    selectedLocation = null;
+    selectedPrice = null;
+    selectedPriceRange = null;
     Response response = await sendPostRequest(
         action: 'get_listings_sub_categories',
         data: {'listings_categories_id': categoryId});
@@ -397,7 +400,8 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
@@ -566,7 +570,8 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
                             baseColor: Colors.grey[300]!,
                             highlightColor: Colors.grey[100]!,
                             child: GridView.builder(
-                              padding: const EdgeInsets.only(bottom: 33, left: 2),
+                              padding:
+                                  const EdgeInsets.only(bottom: 33, left: 2),
                               physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,

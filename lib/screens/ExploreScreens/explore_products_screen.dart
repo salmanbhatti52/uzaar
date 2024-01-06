@@ -186,7 +186,7 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     dynamic productCondition;
     double productPrice;
     dynamic productSubCategory;
-    // allListingsProducts = allListingsProductsGV;
+
     List<dynamic> filteredProducts = [];
     print('selectedPriceRange: $selectedPriceRange');
     print('selectedCategory: $selectedCategory');

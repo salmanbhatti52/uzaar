@@ -6,8 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import '../../utils/Colors.dart';
 
 class MyOrderDetailScreen extends StatefulWidget {
-  const MyOrderDetailScreen({super.key});
-
+  MyOrderDetailScreen({super.key, this.orderData});
+  dynamic orderData;
   @override
   State<MyOrderDetailScreen> createState() => _MyOrderDetailScreenState();
 }
@@ -191,7 +191,7 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SellerProfileScreen(),
+                          builder: (context) => SellerProfileScreen(),
                         ));
                       },
                       child: Container(

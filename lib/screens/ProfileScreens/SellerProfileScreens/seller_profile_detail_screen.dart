@@ -6,7 +6,8 @@ import 'package:Uzaar/utils/colors.dart';
 import '../../../widgets/profile_info_tile.dart';
 
 class SellerProfileDetailScreen extends StatefulWidget {
-  const SellerProfileDetailScreen({super.key});
+  SellerProfileDetailScreen({super.key, this.sellerData});
+  dynamic sellerData;
 
   @override
   State<SellerProfileDetailScreen> createState() =>
@@ -30,20 +31,20 @@ class _SellerProfileDetailScreenState extends State<SellerProfileDetailScreen> {
       child: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 22.0.w, vertical: 20),
-          child: const Column(
+          child: Column(
             children: [
               ProfileInfoTile(
                   imageName: 'email-icon.svg',
                   title: 'Email',
-                  description: 'lisafernandes@gamil.com'),
+                  description: widget.sellerData['email'] ?? ''),
               ProfileInfoTile(
                   imageName: 'phone-fill.svg',
                   title: 'Contact Number',
-                  description: '+1656565565'),
+                  description: widget.sellerData['phone'] ?? ''),
               ProfileInfoTile(
                   imageName: 'address-icon.svg',
                   title: 'Address',
-                  description: 'Los Angelus')
+                  description: widget.sellerData['address'] ?? '')
             ],
           ),
         ),

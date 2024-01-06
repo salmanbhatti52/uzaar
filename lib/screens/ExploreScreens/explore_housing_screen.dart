@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Uzaar/utils/colors.dart';
-import 'package:Uzaar/widgets/featured_products_widget.dart';
+
 import 'package:http/http.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -14,6 +14,7 @@ import '../../services/restService.dart';
 import '../../utils/Buttons.dart';
 import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/featured_housing_widget.dart';
+import '../../widgets/featured_products_widget.dart';
 import '../../widgets/rounded_small_dropdown_menu.dart';
 import '../../widgets/search_field.dart';
 
@@ -35,6 +36,8 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
   String? selectedLocation;
   String? selectedFurnishingStatus;
   List<dynamic> allListingsHousings = [...allListingsHousingsGV];
+  List allListingHousingsWithSubCategory = [];
+
   String allListingHousingsErrMsg = '';
   // final List<String> categories = [...housingListingCategoriesNamesGV];
   dynamic selectedPriceRange;
@@ -72,6 +75,11 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
       if (mounted) {
         setState(() {
           allListingsHousings = allListingsHousingsGV;
+          for (var house in allListingsHousings) {
+            if (house['listings_sub_categories'] != null) {
+              allListingHousingsWithSubCategory.add(house);
+            }
+          }
         });
       }
     }
@@ -244,6 +252,268 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
     });
   }
 
+  filterHousingsHavingSubCategory() {
+    dynamic houseCategoryName;
+    dynamic houseLocation;
+    dynamic houseFurnishingStatus;
+    double housePrice;
+    dynamic houseSubCategory;
+
+    List<dynamic> filteredHousings = [];
+    print('selectedPriceRange: $selectedPriceRange');
+    print('selectedCategory: $selectedCategory');
+    print('selectedLocation: $selectedLocation');
+    print('selectedFurnishingStatus: $selectedFurnishingStatus');
+    print('selectedSubCategory: $selectedSubCategory');
+    for (var house in allListingHousingsWithSubCategory) {
+      houseCategoryName = house['listings_categories']['name'];
+      housePrice = double.parse(house['price']);
+      houseLocation = house['location'];
+      houseSubCategory = house['listings_sub_categories']['name'];
+      houseFurnishingStatus = house['furnished'];
+      if (selectedCategory != null &&
+          selectedPriceRange != null &&
+          selectedLocation != null &&
+          selectedSubCategory != null &&
+          selectedFurnishingStatus != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            (housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseLocation.contains(selectedLocation) &&
+            houseSubCategory.contains(selectedSubCategory) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null &&
+          selectedPriceRange != null &&
+          selectedLocation != null &&
+          selectedSubCategory != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            (housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseLocation.contains(selectedLocation) &&
+            houseSubCategory.contains(selectedSubCategory)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null &&
+          selectedPriceRange != null &&
+          selectedSubCategory != null &&
+          selectedFurnishingStatus != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            (housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseSubCategory.contains(selectedSubCategory) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null &&
+          selectedLocation != null &&
+          selectedSubCategory != null &&
+          selectedFurnishingStatus != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            houseLocation.contains(selectedLocation) &&
+            houseSubCategory.contains(selectedSubCategory) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null &&
+          selectedPriceRange != null &&
+          selectedLocation != null &&
+          selectedFurnishingStatus != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            (housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseLocation.contains(selectedLocation) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedPriceRange != null &&
+          selectedLocation != null &&
+          selectedSubCategory != null &&
+          selectedFurnishingStatus != null) {
+        if ((housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseLocation.contains(selectedLocation) &&
+            houseSubCategory.contains(selectedSubCategory) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null &&
+          selectedSubCategory != null &&
+          selectedPriceRange != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            (housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseSubCategory.contains(selectedSubCategory)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null &&
+          selectedSubCategory != null &&
+          selectedLocation != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            houseSubCategory.contains(selectedSubCategory) &&
+            houseLocation.contains(selectedLocation)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null &&
+          selectedSubCategory != null &&
+          selectedFurnishingStatus != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            houseSubCategory.contains(selectedSubCategory) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null &&
+          selectedPriceRange != null &&
+          selectedLocation != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            (housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseLocation.contains(selectedLocation)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null &&
+          selectedPriceRange != null &&
+          selectedFurnishingStatus != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            (housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null &&
+          selectedLocation != null &&
+          selectedFurnishingStatus != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            houseLocation.contains(selectedLocation) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedPriceRange != null &&
+          selectedSubCategory != null &&
+          selectedLocation != null) {
+        if ((housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseSubCategory.contains(selectedSubCategory) &&
+            houseLocation.contains(selectedLocation)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedPriceRange != null &&
+          selectedSubCategory != null &&
+          selectedFurnishingStatus != null) {
+        if ((housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseSubCategory.contains(selectedSubCategory) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedLocation != null &&
+          selectedSubCategory != null &&
+          selectedFurnishingStatus != null) {
+        if (houseLocation.contains(selectedLocation) &&
+            houseSubCategory.contains(selectedSubCategory) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedPriceRange != null &&
+          selectedLocation != null &&
+          selectedFurnishingStatus != null) {
+        if ((housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseLocation.contains(selectedLocation) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null && selectedSubCategory != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            houseSubCategory.contains(selectedSubCategory)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null && selectedPriceRange != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            (housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to'])) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null && selectedLocation != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            houseLocation.contains(selectedLocation)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null && selectedFurnishingStatus != null) {
+        if (houseCategoryName.contains(selectedCategory) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedSubCategory != null && selectedPriceRange != null) {
+        if (houseSubCategory.contains(selectedSubCategory) &&
+            (housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to'])) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedSubCategory != null && selectedLocation != null) {
+        if (houseSubCategory.contains(selectedSubCategory) &&
+            houseLocation.contains(selectedLocation)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedSubCategory != null &&
+          selectedFurnishingStatus != null) {
+        if (houseSubCategory.contains(selectedSubCategory) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedPriceRange != null && selectedLocation != null) {
+        if ((housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseLocation.contains(selectedLocation)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedPriceRange != null &&
+          selectedFurnishingStatus != null) {
+        if ((housePrice >= selectedPriceRange['range_from'] &&
+                housePrice <= selectedPriceRange['range_to']) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedLocation != null && selectedFurnishingStatus != null) {
+        if (houseLocation.contains(selectedLocation) &&
+            houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedCategory != null) {
+        if (houseCategoryName.contains(selectedCategory)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedSubCategory != null) {
+        if (houseSubCategory.contains(selectedSubCategory)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedLocation != null) {
+        if (houseLocation.contains(selectedLocation)) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedPriceRange != null) {
+        if (housePrice >= selectedPriceRange['range_from'] &&
+            housePrice <= selectedPriceRange['range_to']) {
+          filteredHousings.add(house);
+        }
+      } else if (selectedFurnishingStatus != null) {
+        if (houseFurnishingStatus.contains(selectedFurnishingStatus)) {
+          filteredHousings.add(house);
+        }
+      } else {}
+    }
+
+    setState(() {
+      allListingsHousings = filteredHousings;
+      if (allListingsHousings.isEmpty) {
+        allListingHousingsErrMsg = 'No listing found.';
+      } else {
+        allListingHousingsErrMsg = '';
+      }
+    });
+  }
+
   getHousingsPriceRanges() async {
     Response response = await sendPostRequest(
         action: 'listings_types_prices_ranges',
@@ -260,6 +530,10 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
   getCategorySubCategories({required int categoryId}) async {
     subCategories = [];
     selectedSubCategory = null;
+    selectedLocation = null;
+    selectedPrice = null;
+    selectedPriceRange = null;
+    selectedFurnishingStatus = null;
     Response response = await sendPostRequest(
         action: 'get_listings_sub_categories',
         data: {'listings_categories_id': categoryId});
@@ -355,8 +629,9 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                                       setState(() {
                                         selectedSubCategory = value['name'];
                                       });
+                                      print(selectedSubCategory);
                                       print(value);
-                                      // filterHousings();
+                                      filterHousingsHavingSubCategory();
                                     },
                                     dropdownMenuEntries: subCategories
                                         .map(
@@ -386,7 +661,11 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                             });
                             print(selectedPrice);
                             selectedPriceRange = value;
-                            filterHousings();
+                            if (selectedSubCategory != null) {
+                              filterHousingsHavingSubCategory();
+                            } else {
+                              filterHousings();
+                            }
                           },
                           dropdownMenuEntries: housingsPriceRangesGV
                               .map(
@@ -411,7 +690,11 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                             setState(() {
                               selectedLocation = value;
                             });
-                            filterHousings();
+                            if (selectedSubCategory != null) {
+                              filterHousingsHavingSubCategory();
+                            } else {
+                              filterHousings();
+                            }
                           },
                           dropdownMenuEntries: locations
                               .map(
@@ -434,7 +717,11 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                             setState(() {
                               selectedFurnishingStatus = value;
                             });
-                            filterHousings();
+                            if (selectedSubCategory != null) {
+                              filterHousingsHavingSubCategory();
+                            } else {
+                              filterHousings();
+                            }
                           },
                           dropdownMenuEntries: furnished
                               .map(

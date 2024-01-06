@@ -148,7 +148,8 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                           textStyle: kFontTwelveSixHW,
                           // hintText: 'Products',
                           leadingIconName: null,
-                          colorFilter: const ColorFilter.mode(white, BlendMode.srcIn),
+                          colorFilter:
+                              const ColorFilter.mode(white, BlendMode.srcIn),
                           // trailingIconName: 'grid_icon',
                         )
                       ],
@@ -180,7 +181,8 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                       textStyle: kFontTwelveSixHW,
                       // hintText: 'Products',
                       leadingIconName: null,
-                      colorFilter: const ColorFilter.mode(white, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(white, BlendMode.srcIn),
                       // trailingIconName: 'grid_icon',
                     ),
                     const SizedBox(
@@ -193,7 +195,7 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                     const SizedBox(
                       height: 14,
                     ),
-                    const Column(
+                    Column(
                       children: [
                         ProfileInfoTile(
                             imageName: 'profile_icon.svg',

@@ -4,14 +4,14 @@ import 'package:flutter_svg/svg.dart';
 import '../utils/Colors.dart';
 
 class ProfileInfoTile extends StatelessWidget {
-  const ProfileInfoTile(
+  ProfileInfoTile(
       {super.key,
       required this.imageName,
       required this.title,
       required this.description});
-  final String imageName;
-  final String title;
-  final String description;
+  String imageName;
+  String title;
+  String description;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,9 +36,15 @@ class ProfileInfoTile extends StatelessWidget {
               const SizedBox(
                 height: 7,
               ),
-              Text(
-                description,
-                style: kFontSixteenSixHB,
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width * 0.68,
+                child: Text(
+                  description,
+                  style: kFontSixteenSixHB,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+                  maxLines: 3,
+                ),
               )
             ],
           )

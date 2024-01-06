@@ -38,8 +38,8 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
     );
   }
 
-  List aSellerOtherFeaturedServices = [];
-  getASellerOtherFeaturedServices() async {
+  List aSellerOtherListingServices = [];
+  getASellerOtherListingServices() async {
     Response response =
         await sendPostRequest(action: 'get_listings_services', data: {
       'users_customers_id': widget.serviceData['users_customers_id'],
@@ -47,18 +47,18 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    aSellerOtherFeaturedServices = decodedResponse['data'];
-    for (var service in aSellerOtherFeaturedServices) {
+    aSellerOtherListingServices = decodedResponse['data'];
+    for (var service in aSellerOtherListingServices) {
       if (service['listings_services_id'] ==
           widget.serviceData['listings_services_id']) {
-        aSellerOtherFeaturedServices.remove(service);
+        aSellerOtherListingServices.remove(service);
         break;
       }
     }
-    if (aSellerOtherFeaturedServices.isEmpty) {
+    if (aSellerOtherListingServices.isEmpty) {
       featuredServicesErrMsg = 'No more listings found.';
     }
-    print('aSellerOtherFeaturedServices: $aSellerOtherFeaturedServices');
+    print('aSellerOtherListingServices: $aSellerOtherListingServices');
   }
 
   handleOptionSelection(ReportReason reason) {
@@ -96,7 +96,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
   }
 
   init() async {
-    await getASellerOtherFeaturedServices();
+    await getASellerOtherListingServices();
     if (mounted) {
       setState(() {});
     }
@@ -284,7 +284,8 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                   color: f7f8f8,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -351,7 +352,8 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SellerProfileScreen(),
+                        builder: (context) => SellerProfileScreen(
+                            sellerData: widget.serviceData['users_customers']),
                       ));
                     },
                     child: Container(
@@ -500,33 +502,32 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                   ),
                   child: SizedBox(
                     height: 187,
-                    child: aSellerOtherFeaturedServices.isNotEmpty
+                    child: aSellerOtherListingServices.isNotEmpty
                         ? ListView.builder(
-                            itemCount: aSellerOtherFeaturedServices.length,
+                            itemCount: aSellerOtherListingServices.length,
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return FeaturedServicesWidget(
                                 image: imgBaseUrl +
-                                    aSellerOtherFeaturedServices[index]
+                                    aSellerOtherListingServices[index]
                                         ['listings_images'][0]['image'],
                                 serviceCategory:
-                                    aSellerOtherFeaturedServices[index]
+                                    aSellerOtherListingServices[index]
                                         ['listings_categories']['name'],
-                                serviceName: aSellerOtherFeaturedServices[index]
+                                serviceName: aSellerOtherListingServices[index]
                                     ['name'],
                                 serviceLocation:
-                                    aSellerOtherFeaturedServices[index]
+                                    aSellerOtherListingServices[index]
                                         ['location'],
-                                servicePrice:
-                                    aSellerOtherFeaturedServices[index]
-                                        ['price'],
+                                servicePrice: aSellerOtherListingServices[index]
+                                    ['price'],
                                 onImageTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => ServiceDetailsPage(
                                       serviceData:
-                                          aSellerOtherFeaturedServices[index],
+                                          aSellerOtherListingServices[index],
                                     ),
                                   ));
                                 },
@@ -672,7 +673,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                               );
                             },
                           )
-                        : aSellerOtherFeaturedServices.isEmpty &&
+                        : aSellerOtherListingServices.isEmpty &&
                                 featuredServicesErrMsg.isEmpty
                             ? Shimmer.fromColors(
                                 baseColor: Colors.grey[300]!,

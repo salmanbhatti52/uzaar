@@ -40,10 +40,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
-  List<dynamic> aSellerOtherFeaturedProducts = [];
+  List<dynamic> aSellerOtherListingProducts = [];
 
   // To get other featured products of a user. Not confirm now
-  getASellerOtherFeaturedProducts() async {
+  getASellerOtherListingProducts() async {
     Response response =
         await sendPostRequest(action: 'get_listings_products', data: {
       'users_customers_id': widget.productData['users_customers_id'],
@@ -51,19 +51,19 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
-    aSellerOtherFeaturedProducts = decodedResponse['data'];
-    for (var product in aSellerOtherFeaturedProducts) {
+    aSellerOtherListingProducts = decodedResponse['data'];
+    for (var product in aSellerOtherListingProducts) {
       if (product['listings_products_id'] ==
           widget.productData['listings_products_id']) {
-        aSellerOtherFeaturedProducts.remove(product);
+        aSellerOtherListingProducts.remove(product);
         break;
       }
     }
-    if (aSellerOtherFeaturedProducts.isEmpty) {
+    if (aSellerOtherListingProducts.isEmpty) {
       featuredProductsErrMsg = 'No more listings found.';
     }
 
-    print('aSellerOtherFeaturedProducts: $aSellerOtherFeaturedProducts');
+    print('aSellerOtherListingProducts: $aSellerOtherListingProducts');
   }
 
   Future<String?> startChat() async {
@@ -101,7 +101,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   }
 
   init() async {
-    await getASellerOtherFeaturedProducts();
+    await getASellerOtherListingProducts();
     if (mounted) {
       setState(() {});
     }
@@ -334,7 +334,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                   color: f7f8f8,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -448,7 +449,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SellerProfileScreen(),
+                        builder: (context) => SellerProfileScreen(
+                            sellerData: widget.productData['users_customers']),
                       ));
                     },
                     child: Container(
@@ -582,35 +584,34 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   ),
                   child: SizedBox(
                     height: 180,
-                    child: aSellerOtherFeaturedProducts.isNotEmpty
+                    child: aSellerOtherListingProducts.isNotEmpty
                         ? ListView.builder(
-                            itemCount: aSellerOtherFeaturedProducts.length,
+                            itemCount: aSellerOtherListingProducts.length,
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return FeaturedProductsWidget(
                                 productCondition:
-                                    aSellerOtherFeaturedProducts[index]
+                                    aSellerOtherListingProducts[index]
                                         ['condition'],
                                 image: imgBaseUrl +
-                                    aSellerOtherFeaturedProducts[index]
+                                    aSellerOtherListingProducts[index]
                                         ['listings_images'][0]['image'],
                                 productCategory:
-                                    aSellerOtherFeaturedProducts[index]
+                                    aSellerOtherListingProducts[index]
                                         ['listings_categories']['name'],
-                                productName: aSellerOtherFeaturedProducts[index]
+                                productName: aSellerOtherListingProducts[index]
                                     ['name'],
                                 // productLocation: 'California',
-                                productPrice:
-                                    aSellerOtherFeaturedProducts[index]
-                                        ['price'],
+                                productPrice: aSellerOtherListingProducts[index]
+                                    ['price'],
                                 onImageTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => ProductDetailsPage(
                                         productData:
-                                            aSellerOtherFeaturedProducts[index],
+                                            aSellerOtherListingProducts[index],
                                       ),
                                     ),
                                   );
@@ -757,7 +758,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               );
                             },
                           )
-                        : aSellerOtherFeaturedProducts.isEmpty &&
+                        : aSellerOtherListingProducts.isEmpty &&
                                 featuredProductsErrMsg.isEmpty
                             ? Shimmer.fromColors(
                                 baseColor: Colors.grey[300]!,
