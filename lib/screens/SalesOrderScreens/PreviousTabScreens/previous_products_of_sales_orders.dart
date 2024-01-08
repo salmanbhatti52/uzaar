@@ -47,6 +47,7 @@ class _PreviousProductsOfSalesOrdersState
               );
             },
             child: const MyOrdersProductsListTile(
+              productCondition: 'Used',
               productImage: 'uploads/listings_images/17013232441588376617.jpeg',
               productName: 'Iphone 14',
               // productLocation: 'Los Angeles',

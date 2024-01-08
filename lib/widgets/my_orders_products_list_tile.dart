@@ -35,10 +35,14 @@ class MyOrdersProductsListTile extends StatelessWidget {
   final String date;
   final String? offeredPrice;
   final void Function()? onTapPayNow;
+
   final bool? allowPay;
   final String? offerStatus;
+  final String? productCondition;
+
   const MyOrdersProductsListTile(
-      {super.key, required this.productImage,
+      {super.key,
+      required this.productImage,
       required this.productName,
       // required this.productLocation,
       required this.productPrice,
@@ -46,7 +50,8 @@ class MyOrdersProductsListTile extends StatelessWidget {
       this.offeredPrice,
       this.onTapPayNow,
       this.allowPay,
-      this.offerStatus});
+      this.offerStatus,
+      this.productCondition});
 
   @override
   Widget build(BuildContext context) {
@@ -108,16 +113,28 @@ class MyOrdersProductsListTile extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Row(
+                    Row(
                       children: [
+                        productCondition != null
+                            ? SizedBox(
+                                width: 60,
+                                child: Text(
+                                  productCondition ?? '',
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: true,
+                                  style: kColoredTextStyle,
+                                ),
+                              )
+                            : const SizedBox()
                         // SvgPicture.asset(
                         //   'assets/address-icon.svg',
                         //   width: 14,
                         //   height: 14,
                         // ),
-                        SizedBox(
-                          width: 4,
-                        ),
+                        // SizedBox(
+                        //   width: 4,
+                        // ),
                         // Text(
                         //   productLocation,
                         //   style: locationNameTextStyle,
@@ -125,12 +142,25 @@ class MyOrdersProductsListTile extends StatelessWidget {
                       ],
                     ),
                     allowPay == true
-                        ? GestureDetector(
-                            onTap: onTapPayNow,
-                            child: Text(
-                              'Pay Now',
-                              style: kFontTwelveSixHPB,
-                            ))
+                        ? Row(
+                            children: [
+                              GestureDetector(
+                                  onTap: onTapPayNow,
+                                  child: Text(
+                                    'Meet-up',
+                                    style: kFontFourteenSixHPB,
+                                  )),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              GestureDetector(
+                                  onTap: onTapPayNow,
+                                  child: Text(
+                                    'Ship',
+                                    style: kFontFourteenSixHPB,
+                                  )),
+                            ],
+                          )
                         : const SizedBox()
                   ],
                 ),

@@ -30,7 +30,7 @@ class MyOrdersScreen extends StatefulWidget {
 class _MyOrdersScreenState extends State<MyOrdersScreen> {
   int selectedCategory = 2;
   String selectedBusiness = 'Products';
-  final List<String> businessTypes = ['Products', 'Services', 'Housing'];
+  List<String> businessTypes = ['Products', 'Services', 'Housing'];
   String orderedProductOffersErrMsg = '';
   List<dynamic> myOrderedProductOffers = [];
   getMyProductOrdersOffers() async {
@@ -107,6 +107,8 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   onTap: () {
                     setState(() {
                       selectedCategory = 1;
+                      businessTypes = ['Products'];
+                      selectedBusiness = 'Products';
                     });
                   },
                   child: BusinessTypeButton(
@@ -123,6 +125,8 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   onTap: () {
                     setState(() {
                       selectedCategory = 2;
+                      businessTypes = ['Products', 'Services', 'Housing'];
+                      selectedBusiness = 'Products';
                     });
                   },
                   child: BusinessTypeButton(
@@ -139,6 +143,8 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   onTap: () {
                     setState(() {
                       selectedCategory = 3;
+                      businessTypes = ['Products', 'Services', 'Housing'];
+                      selectedBusiness = 'Products';
                     });
                   },
                   child: BusinessTypeButton(
@@ -187,10 +193,10 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                 myOrderedProductOffers: myOrderedProductOffers,
                 orderedProductOffersErrMsg: orderedProductOffersErrMsg,
               )
-            else if (selectedCategory == 1 && selectedBusiness == 'Services')
-              const OfferedServicesOfMyOrders()
-            else if (selectedCategory == 1 && selectedBusiness == 'Housing')
-              const OfferedHousingsOfMyOrders()
+            // else if (selectedCategory == 1 && selectedBusiness == 'Services')
+            //   const OfferedServicesOfMyOrders()
+            // else if (selectedCategory == 1 && selectedBusiness == 'Housing')
+            //   const OfferedHousingsOfMyOrders()
             else if (selectedCategory == 2 && selectedBusiness == 'Products')
               const PendingProductsOfMyOrders()
             else if (selectedCategory == 2 && selectedBusiness == 'Services')

@@ -48,6 +48,8 @@ class _OfferedProductsOfMyOrdersState extends State<OfferedProductsOfMyOrders> {
                             'Pending'
                         ? widget.myOrderedProductOffers[index]['date_added']
                         : widget.myOrderedProductOffers[index]['date_modified'],
+                    productCondition: widget.myOrderedProductOffers[index]
+                        ['listings_products']['condition'],
                     offeredPrice:
                         '\$${widget.myOrderedProductOffers[index]['offer_price']}',
                     allowPay: widget.myOrderedProductOffers[index]['status'] ==

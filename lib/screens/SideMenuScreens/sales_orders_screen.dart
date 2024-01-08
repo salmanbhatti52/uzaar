@@ -29,7 +29,7 @@ class SalesOrdersScreen extends StatefulWidget {
 class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
   int selectedCategory = 2;
   String selectedBusiness = 'Products';
-  final List<String> businessTypes = ['Products', 'Services', 'Housing'];
+  List<String> businessTypes = ['Products', 'Services', 'Housing'];
   String salesProductOffersErrMsg = '';
   List<dynamic> salesOrderedProductOffers = [];
 
@@ -102,6 +102,8 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
                   onTap: () {
                     setState(() {
                       selectedCategory = 1;
+                      businessTypes = ['Products'];
+                      selectedBusiness = 'Products';
                     });
                   },
                   child: BusinessTypeButton(
@@ -118,6 +120,8 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
                   onTap: () {
                     setState(() {
                       selectedCategory = 2;
+                      businessTypes = ['Products', 'Services', 'Housing'];
+                      selectedBusiness = 'Products';
                     });
                   },
                   child: BusinessTypeButton(
@@ -134,6 +138,8 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
                   onTap: () {
                     setState(() {
                       selectedCategory = 3;
+                      businessTypes = ['Products', 'Services', 'Housing'];
+                      selectedBusiness = 'Products';
                     });
                   },
                   child: BusinessTypeButton(
@@ -181,10 +187,10 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
               OfferedProductsOfSalesOrders(
                   salesOrderedProductOffers: salesOrderedProductOffers,
                   salesProductOffersErrMsg: salesProductOffersErrMsg)
-            else if (selectedCategory == 1 && selectedBusiness == 'Services')
-              const OfferedServicesOfSalesOrders()
-            else if (selectedCategory == 1 && selectedBusiness == 'Housing')
-              const OfferedHousingsOfSalesOrders()
+            // else if (selectedCategory == 1 && selectedBusiness == 'Services')
+            //   const OfferedServicesOfSalesOrders()
+            // else if (selectedCategory == 1 && selectedBusiness == 'Housing')
+            //   const OfferedHousingsOfSalesOrders()
             else if (selectedCategory == 2 && selectedBusiness == 'Products')
               const PendingProductsOfSalesOrders()
             else if (selectedCategory == 2 && selectedBusiness == 'Services')
