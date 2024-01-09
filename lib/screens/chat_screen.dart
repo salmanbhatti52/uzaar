@@ -13,9 +13,13 @@ import '../widgets/message_text_field.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen(
-      {super.key, required this.otherUserId, required this.otherUserName});
+      {super.key,
+      required this.otherUserId,
+      required this.otherUserName,
+      this.typeOfChat});
   final int otherUserId;
   final String otherUserName;
+  final String? typeOfChat;
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -97,6 +101,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print('chatType: ${widget.typeOfChat}');
     getMessages();
     callRepeatingFunction();
   }
@@ -198,11 +203,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                     child: Column(
                                       children: [
                                         Container(
-                                            margin: const EdgeInsets.only(bottom: 15),
+                                            margin: const EdgeInsets.only(
+                                                bottom: 15),
                                             child: const UserMsgWidgetDummy()),
                                         Container(
-                                            margin: const EdgeInsets.only(bottom: 15),
-                                            child: const OtherUserMsgWidgetDummy())
+                                            margin: const EdgeInsets.only(
+                                                bottom: 15),
+                                            child:
+                                                const OtherUserMsgWidgetDummy())
                                       ],
                                     ));
                               },

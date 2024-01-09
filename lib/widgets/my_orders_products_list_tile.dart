@@ -34,7 +34,7 @@ class MyOrdersProductsListTile extends StatelessWidget {
   final String productPrice;
   final String date;
   final String? offeredPrice;
-  final void Function()? onTapPayNow;
+  final Future<String> Function(String)? onTapArrange;
 
   final bool? allowPay;
   final String? offerStatus;
@@ -48,7 +48,7 @@ class MyOrdersProductsListTile extends StatelessWidget {
       required this.productPrice,
       required this.date,
       this.offeredPrice,
-      this.onTapPayNow,
+      this.onTapArrange,
       this.allowPay,
       this.offerStatus,
       this.productCondition});
@@ -145,7 +145,9 @@ class MyOrdersProductsListTile extends StatelessWidget {
                         ? Row(
                             children: [
                               GestureDetector(
-                                  onTap: onTapPayNow,
+                                  onTap: () {
+                                    onTapArrange!('meetup');
+                                  },
                                   child: Text(
                                     'Meet-up',
                                     style: kFontFourteenSixHPB,
@@ -154,7 +156,9 @@ class MyOrdersProductsListTile extends StatelessWidget {
                                 width: 10,
                               ),
                               GestureDetector(
-                                  onTap: onTapPayNow,
+                                  onTap: () {
+                                    onTapArrange!('shipping');
+                                  },
                                   child: Text(
                                     'Ship',
                                     style: kFontFourteenSixHPB,
