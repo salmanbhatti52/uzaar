@@ -6,7 +6,7 @@ import 'package:Uzaar/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:Uzaar/screens/SellScreens/ProductSellScreens/product_add_screen_two.dart';
+import 'package:Uzaar/screens/AddListingScreens/ProductAddScreens/product_add_screen_two.dart';
 import 'package:Uzaar/utils/Buttons.dart';
 import 'package:Uzaar/utils/colors.dart';
 import 'package:http/http.dart';

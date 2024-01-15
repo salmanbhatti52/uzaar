@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:Uzaar/screens/SalesOrderScreens/OfferTabScreens/offered_housings_of_sales_orders.dart';
 import 'package:Uzaar/screens/SalesOrderScreens/OfferTabScreens/offered_products_of_sales_orders.dart';
-import 'package:Uzaar/screens/SalesOrderScreens/OfferTabScreens/offered_services_of_sales_orders.dart';
 import 'package:Uzaar/screens/SalesOrderScreens/PendingTabScreens/pending_Housings_of_sales_orders.dart';
 import 'package:Uzaar/screens/SalesOrderScreens/PendingTabScreens/pending_products_of_sales_orders.dart';
 import 'package:Uzaar/screens/SalesOrderScreens/PendingTabScreens/pending_services_of_sales_orders.dart';

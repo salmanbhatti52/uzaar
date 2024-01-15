@@ -15,6 +15,7 @@ import '../../widgets/payment_button.dart';
 import '../../widgets/text.dart';
 import 'order_placed_screen.dart';
 import 'package:shimmer/shimmer.dart';
+// import 'package:flutter_paypal/flutter_paypal.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -55,6 +56,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
       // showSpinner = false;
     });
   }
+
+  payWithPayPal() {}
 
   @override
   Widget build(BuildContext context) {
@@ -102,8 +105,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         margin: const EdgeInsets.only(left: 22),
                         height: 54,
                         child: ListView(
-                          padding:
-                              const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 2, horizontal: 2),
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
@@ -148,7 +151,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           return Container(
-                                            margin: const EdgeInsets.only(right: 10),
+                                            margin: const EdgeInsets.only(
+                                                right: 10),
                                             width: 146,
                                             height: 54,
                                             decoration:
@@ -239,12 +243,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               child: primaryButton(
                                   context: context,
                                   buttonText: 'Continue',
-                                  onTap: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const OrderPlacedScreen(),
-                                        ),
+                                  onTap: () {
+                                    // payWithPayPal();
+                                    return Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const OrderPlacedScreen(),
                                       ),
+                                    );
+                                  },
                                   showLoader: false),
                             ),
                           ],

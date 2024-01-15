@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:Uzaar/screens/BusinessDetailPages/paymnet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -106,6 +107,22 @@ class _ChatScreenState extends State<ChatScreen> {
     callRepeatingFunction();
   }
 
+  DateTime? selectedDate;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+    );
+    if (pickedDate != null && pickedDate != selectedDate) {
+      setState(() {
+        selectedDate = pickedDate;
+      });
+    }
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -133,6 +150,88 @@ class _ChatScreenState extends State<ChatScreen> {
           widget.otherUserName,
           style: kAppBarTitleStyle,
         ),
+        actions: [
+          widget.typeOfChat == 'shipping'
+              ? GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) {
+                        return const PaymentScreen();
+                      },
+                    ));
+                  },
+                  child: SizedBox(
+                    height: 27,
+                    child: Container(
+                      width: 80,
+                      height: 27,
+                      margin: const EdgeInsets.fromLTRB(0, 14, 12, 9),
+                      decoration: BoxDecoration(
+                          color: primaryBlue,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Center(
+                          child: Text(
+                        'Pay Now',
+                        style: kFontThirteenFiveHW,
+                      )),
+                    ),
+                  ),
+                )
+              :
+              // Column(
+              //   children: [
+              Container(
+                  margin: const EdgeInsets.fromLTRB(0, 14, 12, 9),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _selectDate(context);
+                        },
+                        child: Container(
+                          // height: 27,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              color: primaryBlue,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Center(
+                            child: Text(
+                              'Meet-up',
+                              style: kFontThirteenFiveHW,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            _selectDate(context);
+                          },
+                          child: const Icon(
+                            Icons.calendar_month,
+                            color: primaryBlue,
+                          ))
+                    ],
+                  ),
+                ),
+          // Text(
+          //   selectedDate != null
+          //       ? '${selectedDate.toString().split(' ')[0]}'
+          //       : 'Select Date',
+          //   style: TextStyle(
+          //     color: selectedDate != null
+          //         ? Colors.black
+          //         : Color.fromRGBO(167, 169, 183, 1),
+          //     fontFamily: "Outfit",
+          //     fontWeight: FontWeight.w300,
+          //     fontSize: 14,
+          //   ),
+          // ),
+          // ],
+          // )
+        ],
       ),
       backgroundColor: Colors.white,
       body: SafeArea(

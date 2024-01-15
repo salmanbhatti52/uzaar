@@ -45,9 +45,9 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
 
   addDataToFields() {
     minPriceEditingController.text = widget.listingData['min_offer_price'];
-    if (widget.listingData['packages'] != null) {
+    if (widget.listingData['users_customers_packages'] != null) {
       int index = boostingPackagesGV.indexWhere(
-          (map) => map['name'] == widget.listingData['packages']['name']);
+          (map) => map['name'] == widget.listingData['users_customers_packages']['packages']['name']);
       initialBoostingValue = boostingPackagesGV[index];
       updateSelectedBoosting(initialBoostingValue);
     }

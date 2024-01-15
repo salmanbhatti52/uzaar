@@ -130,9 +130,9 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
         map['name'] == widget.listingData['listings_categories']['name']);
     initialCategoryValue = serviceListingCategoriesGV[index];
     updateSelectedCategory(initialCategoryValue);
-    if (widget.listingData['packages'] != null) {
+    if (widget.listingData['users_customers_packages'] != null) {
       int index = boostingPackagesGV.indexWhere(
-          (map) => map['name'] == widget.listingData['packages']['name']);
+          (map) => map['name'] == widget.listingData['users_customers_packages']['packages']['name']);
       initialBoostingValue = boostingPackagesGV[index];
       updateSelectedBoosting(initialBoostingValue);
     }

@@ -193,6 +193,12 @@ final TextStyle kFontFourteenFourHW = GoogleFonts.outfit(
   color: white,
 );
 
+final TextStyle kFontThirteenFiveHW = GoogleFonts.outfit(
+  fontSize: 13,
+  fontWeight: FontWeight.w500,
+  color: white,
+);
+
 final kFontFourteenSixHPB = GoogleFonts.outfit(
   fontSize: 14,
   fontWeight: FontWeight.w600,

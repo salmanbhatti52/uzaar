@@ -13,7 +13,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../screens/ExploreScreens/explore_screen.dart';
 import '../screens/home_screen.dart';
-import '../screens/SellScreens/sell_screen.dart';
+import '../screens/AddListingScreens/add_listing_screen.dart';
 import 'package:Uzaar/utils/colors.dart';
 
 class BottomNavBar extends StatefulWidget {

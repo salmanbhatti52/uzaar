@@ -152,7 +152,7 @@ class MyOrdersProductsListTile extends StatelessWidget {
                                     'Meet-up',
                                     style: kFontFourteenSixHPB,
                                   )),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               GestureDetector(
