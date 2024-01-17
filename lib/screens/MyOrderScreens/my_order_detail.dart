@@ -1,4 +1,4 @@
-import 'package:Uzaar/screens/ProfileScreens/SellerProfileScreens/seller_profile_screen.dart';
+import 'package:uzaar/screens/ProfileScreens/SellerProfileScreens/seller_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';

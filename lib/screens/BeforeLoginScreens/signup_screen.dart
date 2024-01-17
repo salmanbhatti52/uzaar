@@ -1,18 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/gestures.dart';
-import 'package:Uzaar/screens/beforeLoginScreens/verify_email_screen.dart';
-import 'package:Uzaar/widgets/text_form_field_reusable.dart';
+import 'package:uzaar/screens/beforeLoginScreens/verify_email_screen.dart';
+import 'package:uzaar/widgets/text_form_field_reusable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:Uzaar/widgets/text.dart';
+import 'package:uzaar/widgets/text.dart';
 import 'package:http/http.dart';
 
 import '../../services/restService.dart';
 import '../../widgets/suffix_svg_icon.dart';
 import 'login_screen.dart';
-import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/utils/colors.dart';
+import 'package:uzaar/utils/Buttons.dart';
+import 'package:uzaar/utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpScreen extends StatefulWidget {

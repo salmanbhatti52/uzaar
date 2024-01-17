@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:Uzaar/screens/BeforeLoginScreens/otp_screen.dart';
+import 'package:uzaar/screens/BeforeLoginScreens/otp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart';

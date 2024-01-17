@@ -1,17 +1,17 @@
 import 'dart:convert';
 
-import 'package:Uzaar/screens/ProfileScreens/PersonalProfileScreens/profile_reviews_screen.dart';
-import 'package:Uzaar/screens/ProfileScreens/edit_profile_screen.dart';
-import 'package:Uzaar/screens/ProfileScreens/apply_for_verification_screen.dart';
+import 'package:uzaar/screens/ProfileScreens/PersonalProfileScreens/profile_reviews_screen.dart';
+import 'package:uzaar/screens/ProfileScreens/edit_profile_screen.dart';
+import 'package:uzaar/screens/ProfileScreens/apply_for_verification_screen.dart';
 
-import 'package:Uzaar/widgets/get_stars_tile.dart';
-import 'package:Uzaar/widgets/snackbars.dart';
+import 'package:uzaar/widgets/get_stars_tile.dart';
+import 'package:uzaar/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:Uzaar/utils/colors.dart';
+import 'package:uzaar/utils/colors.dart';
 import 'package:http/http.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';

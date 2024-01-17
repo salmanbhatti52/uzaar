@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:Uzaar/utils/colors.dart';
+import 'package:uzaar/utils/colors.dart';
 import 'package:http/http.dart';
 import 'package:shimmer/shimmer.dart';
 

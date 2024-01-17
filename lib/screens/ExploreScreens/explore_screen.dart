@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:Uzaar/screens/ExploreScreens/explore_housing_screen.dart';
+import 'package:uzaar/screens/ExploreScreens/explore_housing_screen.dart';
 
-import 'package:Uzaar/utils/colors.dart';
+import 'package:uzaar/utils/colors.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shimmer/shimmer.dart';
 

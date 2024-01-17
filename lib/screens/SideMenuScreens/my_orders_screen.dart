@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:Uzaar/screens/MyOrderScreens/OfferTabScreens/offered_products_of_my_orders.dart';
-import 'package:Uzaar/screens/MyOrderScreens/PendingTabScreens/pending_Housings_of_my_orders.dart';
-import 'package:Uzaar/screens/MyOrderScreens/PendingTabScreens/pending_products_of_my_orders.dart';
-import 'package:Uzaar/screens/MyOrderScreens/PendingTabScreens/pending_services_of_my_orders.dart';
-import 'package:Uzaar/screens/MyOrderScreens/PreviousTabScreens/previous_housings_of_my_orders.dart';
-import 'package:Uzaar/screens/MyOrderScreens/PreviousTabScreens/previous_products_of_my_orders.dart';
-import 'package:Uzaar/screens/MyOrderScreens/PreviousTabScreens/previous_services_of_my_orders.dart';
+import 'package:uzaar/screens/MyOrderScreens/OfferTabScreens/offered_products_of_my_orders.dart';
+import 'package:uzaar/screens/MyOrderScreens/PendingTabScreens/pending_Housings_of_my_orders.dart';
+import 'package:uzaar/screens/MyOrderScreens/PendingTabScreens/pending_products_of_my_orders.dart';
+import 'package:uzaar/screens/MyOrderScreens/PendingTabScreens/pending_services_of_my_orders.dart';
+import 'package:uzaar/screens/MyOrderScreens/PreviousTabScreens/previous_housings_of_my_orders.dart';
+import 'package:uzaar/screens/MyOrderScreens/PreviousTabScreens/previous_products_of_my_orders.dart';
+import 'package:uzaar/screens/MyOrderScreens/PreviousTabScreens/previous_services_of_my_orders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';

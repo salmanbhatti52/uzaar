@@ -1,8 +1,8 @@
-import 'package:Uzaar/screens/beforeLoginScreens/signup_screen.dart';
-import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/widgets/alert_dialog_reusable.dart';
+import 'package:uzaar/screens/beforeLoginScreens/signup_screen.dart';
+import 'package:uzaar/utils/Buttons.dart';
+import 'package:uzaar/widgets/alert_dialog_reusable.dart';
 
-import 'package:Uzaar/screens/ListingsScreens/listings.dart';
+import 'package:uzaar/screens/ListingsScreens/listings.dart';
 
 import '../screens/ProfileScreens/PersonalProfileScreens/profile_screen.dart';
 
@@ -14,7 +14,7 @@ import 'package:flutter_svg/svg.dart';
 import '../screens/ExploreScreens/explore_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/AddListingScreens/add_listing_screen.dart';
-import 'package:Uzaar/utils/colors.dart';
+import 'package:uzaar/utils/colors.dart';
 
 class BottomNavBar extends StatefulWidget {
   static const String id = 'bottom_navbar';

@@ -1,6 +1,6 @@
-import 'package:Uzaar/screens/MyOrderScreens/my_order_detail.dart';
+import 'package:uzaar/screens/MyOrderScreens/my_order_detail.dart';
 
-import 'package:Uzaar/widgets/my_orders_products_list_tile.dart';
+import 'package:uzaar/widgets/my_orders_products_list_tile.dart';
 import 'package:flutter/material.dart';
 
 class PendingProductsOfMyOrders extends StatefulWidget {

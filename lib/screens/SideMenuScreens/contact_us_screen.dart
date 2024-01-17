@@ -1,4 +1,4 @@
-import 'package:Uzaar/utils/colors.dart';
+import 'package:uzaar/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -67,7 +67,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     height: 15,
                   ),
                   Text(
-                    'Uzaar Market',
+                    'uzaar Market',
                     style: kAppBarTitleStyle,
                   ),
                   const SizedBox(

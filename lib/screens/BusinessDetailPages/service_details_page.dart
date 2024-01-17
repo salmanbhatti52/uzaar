@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:Uzaar/utils/colors.dart';
-import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/widgets/featured_products_widget.dart';
+import 'package:uzaar/utils/colors.dart';
+import 'package:uzaar/utils/Buttons.dart';
+import 'package:uzaar/widgets/featured_products_widget.dart';
 import 'package:http/http.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shimmer/shimmer.dart';

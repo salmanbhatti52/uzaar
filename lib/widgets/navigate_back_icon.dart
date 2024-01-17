@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:Uzaar/widgets/suffix_svg_icon.dart';
+import 'package:uzaar/widgets/suffix_svg_icon.dart';
 
 class NavigateBack extends StatelessWidget {
   final BuildContext buildContext;

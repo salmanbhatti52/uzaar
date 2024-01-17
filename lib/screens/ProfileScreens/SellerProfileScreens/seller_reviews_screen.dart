@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:Uzaar/utils/colors.dart';
+import 'package:uzaar/utils/colors.dart';
 
 import '../../../widgets/review_tile_widget.dart';
 

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:Uzaar/widgets/navigate_back_icon.dart';
+import 'package:uzaar/widgets/navigate_back_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';

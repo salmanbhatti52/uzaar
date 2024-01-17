@@ -1,4 +1,4 @@
-import 'package:Uzaar/widgets/get_stars_tile.dart';
+import 'package:uzaar/widgets/get_stars_tile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';

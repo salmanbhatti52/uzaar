@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:Uzaar/services/restService.dart';
+import 'package:uzaar/services/restService.dart';
 import 'package:flutter/material.dart';
-import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/utils/colors.dart';
-import 'package:Uzaar/widgets/navigate_back_icon.dart';
+import 'package:uzaar/utils/Buttons.dart';
+import 'package:uzaar/utils/colors.dart';
+import 'package:uzaar/widgets/navigate_back_icon.dart';
 import 'package:http/http.dart';
 import '../../widgets/custom_otp_field.dart';
 import 'complete_profile_screen.dart';

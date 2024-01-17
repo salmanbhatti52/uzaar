@@ -1,19 +1,19 @@
 import 'dart:convert';
 
-import 'package:Uzaar/screens/BeforeLoginScreens/forgot_password_screen.dart';
-import 'package:Uzaar/services/restService.dart';
-import 'package:Uzaar/widgets/snackbars.dart';
+import 'package:uzaar/screens/BeforeLoginScreens/forgot_password_screen.dart';
+import 'package:uzaar/services/restService.dart';
+import 'package:uzaar/widgets/snackbars.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:Uzaar/widgets/BottomNaviBar.dart';
-import 'package:Uzaar/utils/colors.dart';
-import 'package:Uzaar/utils/Buttons.dart';
+import 'package:uzaar/widgets/BottomNaviBar.dart';
+import 'package:uzaar/utils/colors.dart';
+import 'package:uzaar/utils/Buttons.dart';
 
-import 'package:Uzaar/widgets/text_form_field_reusable.dart';
-import 'package:Uzaar/widgets/suffix_svg_icon.dart';
-import 'package:Uzaar/widgets/text.dart';
+import 'package:uzaar/widgets/text_form_field_reusable.dart';
+import 'package:uzaar/widgets/suffix_svg_icon.dart';
+import 'package:uzaar/widgets/text.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

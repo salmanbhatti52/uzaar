@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:Uzaar/screens/BeforeLoginScreens/add_image_screen.dart';
-import 'package:Uzaar/services/location.dart';
-import 'package:Uzaar/services/restService.dart';
-import 'package:Uzaar/widgets/BottomNaviBar.dart';
-import 'package:Uzaar/widgets/suffix_svg_icon.dart';
-import 'package:Uzaar/widgets/text.dart';
+import 'package:uzaar/screens/BeforeLoginScreens/add_image_screen.dart';
+import 'package:uzaar/services/location.dart';
+import 'package:uzaar/services/restService.dart';
+import 'package:uzaar/widgets/BottomNaviBar.dart';
+import 'package:uzaar/widgets/suffix_svg_icon.dart';
+import 'package:uzaar/widgets/text.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
@@ -18,11 +18,11 @@ import '../../widgets/text_form_field_reusable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:Uzaar/utils/colors.dart';
+import 'package:uzaar/utils/colors.dart';
 
 import '../../utils/Buttons.dart';
 import '../../widgets/read_only_container.dart';
-import 'package:Uzaar/services/getImage.dart';
+import 'package:uzaar/services/getImage.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
   static const String id = 'complete_profile_screen';

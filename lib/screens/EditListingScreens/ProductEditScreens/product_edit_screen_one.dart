@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:Uzaar/screens/EditListingScreens/ProductEditScreens/product_edit_screen_two.dart';
-import 'package:Uzaar/services/restService.dart';
-import 'package:Uzaar/widgets/navigate_back_icon.dart';
-import 'package:Uzaar/widgets/snackbars.dart';
+import 'package:uzaar/screens/EditListingScreens/ProductEditScreens/product_edit_screen_two.dart';
+import 'package:uzaar/services/restService.dart';
+import 'package:uzaar/widgets/navigate_back_icon.dart';
+import 'package:uzaar/widgets/snackbars.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/utils/colors.dart';
+import 'package:uzaar/utils/Buttons.dart';
+import 'package:uzaar/utils/colors.dart';
 import 'package:http/http.dart';
 
 import '../../../widgets/text_form_field_reusable.dart';

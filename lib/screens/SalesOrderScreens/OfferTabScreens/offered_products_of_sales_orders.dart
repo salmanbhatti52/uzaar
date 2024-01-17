@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:Uzaar/screens/SalesOrderScreens/sales_order_detail.dart';
-import 'package:Uzaar/widgets/sales_orders_products_list_tile.dart';
-import 'package:Uzaar/widgets/snackbars.dart';
+import 'package:uzaar/screens/SalesOrderScreens/sales_order_detail.dart';
+import 'package:uzaar/widgets/sales_orders_products_list_tile.dart';
+import 'package:uzaar/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shimmer/shimmer.dart';

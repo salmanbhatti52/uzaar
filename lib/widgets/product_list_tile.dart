@@ -1,8 +1,8 @@
-import 'package:Uzaar/widgets/popup_menu_button.dart';
+import 'package:uzaar/widgets/popup_menu_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:Uzaar/utils/colors.dart';
+import 'package:uzaar/utils/colors.dart';
 
 final productNameTextStyle = GoogleFonts.outfit(
   fontSize: 16,

@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:Uzaar/models/app_data.dart';
-import 'package:Uzaar/screens/EditListingScreens/edit_listing_screen.dart';
-import 'package:Uzaar/services/restService.dart';
-import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/utils/Colors.dart';
-import 'package:Uzaar/widgets/alert_dialog_reusable.dart';
-import 'package:Uzaar/widgets/snackbars.dart';
+import 'package:uzaar/models/app_data.dart';
+import 'package:uzaar/screens/EditListingScreens/edit_listing_screen.dart';
+import 'package:uzaar/services/restService.dart';
+import 'package:uzaar/utils/Buttons.dart';
+import 'package:uzaar/utils/Colors.dart';
+import 'package:uzaar/widgets/alert_dialog_reusable.dart';
+import 'package:uzaar/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';

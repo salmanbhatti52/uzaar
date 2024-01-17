@@ -1,4 +1,4 @@
-import 'package:Uzaar/widgets/heading_and_detail.dart';
+import 'package:uzaar/widgets/heading_and_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

@@ -1,6 +1,6 @@
-import 'package:Uzaar/widgets/add_review_dialog.dart';
-import 'package:Uzaar/widgets/get_stars_tile.dart';
-import 'package:Uzaar/widgets/my_orders_products_list_tile.dart';
+import 'package:uzaar/widgets/add_review_dialog.dart';
+import 'package:uzaar/widgets/get_stars_tile.dart';
+import 'package:uzaar/widgets/my_orders_products_list_tile.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widgets/message_text_field.dart';

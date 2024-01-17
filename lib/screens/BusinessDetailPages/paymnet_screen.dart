@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:Uzaar/widgets/suffix_svg_icon.dart';
+import 'package:uzaar/widgets/suffix_svg_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:Uzaar/utils/colors.dart';
-import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/widgets/text_form_field_reusable.dart';
+import 'package:uzaar/utils/colors.dart';
+import 'package:uzaar/utils/Buttons.dart';
+import 'package:uzaar/widgets/text_form_field_reusable.dart';
 import 'package:http/http.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 

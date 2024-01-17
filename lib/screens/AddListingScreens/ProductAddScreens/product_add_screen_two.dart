@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:Uzaar/services/restService.dart';
-import 'package:Uzaar/widgets/navigate_back_icon.dart';
+import 'package:uzaar/services/restService.dart';
+import 'package:uzaar/widgets/navigate_back_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:Uzaar/widgets/BottomNaviBar.dart';
-import 'package:Uzaar/widgets/rounded_dropdown_menu.dart';
+import 'package:uzaar/widgets/BottomNaviBar.dart';
+import 'package:uzaar/widgets/rounded_dropdown_menu.dart';
 import 'package:http/http.dart';
 
 import '../../../utils/Buttons.dart';

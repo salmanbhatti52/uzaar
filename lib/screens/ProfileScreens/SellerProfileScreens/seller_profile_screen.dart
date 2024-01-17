@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:Uzaar/services/restService.dart';
+import 'package:uzaar/services/restService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:Uzaar/utils/colors.dart';
+import 'package:uzaar/utils/colors.dart';
 import 'package:http/http.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../../../widgets/business_type_button.dart';

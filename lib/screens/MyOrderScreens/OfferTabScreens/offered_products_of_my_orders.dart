@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:Uzaar/widgets/my_orders_products_list_tile.dart';
+import 'package:uzaar/widgets/my_orders_products_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';

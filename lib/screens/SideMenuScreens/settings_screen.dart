@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:Uzaar/widgets/settings_list_tile.dart';
-import 'package:Uzaar/widgets/snackbars.dart';
+import 'package:uzaar/widgets/settings_list_tile.dart';
+import 'package:uzaar/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart';

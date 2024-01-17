@@ -1,4 +1,4 @@
-package com.eigix.Uzaar
+package com.eigix.uzaar
 
 import io.flutter.embedding.android.FlutterActivity
 

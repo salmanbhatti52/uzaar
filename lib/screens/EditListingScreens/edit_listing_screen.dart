@@ -1,7 +1,7 @@
-import 'package:Uzaar/screens/EditListingScreens/HousingEditScreens/house_edit_screen.dart';
-import 'package:Uzaar/screens/EditListingScreens/ProductEditScreens/product_edit_screen_one.dart';
-import 'package:Uzaar/screens/EditListingScreens/ServiceEditScreens/service_edit_screen.dart';
-import 'package:Uzaar/services/restService.dart';
+import 'package:uzaar/screens/EditListingScreens/HousingEditScreens/house_edit_screen.dart';
+import 'package:uzaar/screens/EditListingScreens/ProductEditScreens/product_edit_screen_one.dart';
+import 'package:uzaar/screens/EditListingScreens/ServiceEditScreens/service_edit_screen.dart';
+import 'package:uzaar/services/restService.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

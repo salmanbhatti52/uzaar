@@ -1,4 +1,4 @@
-import 'package:Uzaar/utils/Buttons.dart';
+import 'package:uzaar/utils/Buttons.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:Uzaar/services/restService.dart';
-import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/widgets/snackbars.dart';
+import 'package:uzaar/services/restService.dart';
+import 'package:uzaar/utils/Buttons.dart';
+import 'package:uzaar/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';

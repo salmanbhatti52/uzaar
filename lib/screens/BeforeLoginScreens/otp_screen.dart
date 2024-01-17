@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:Uzaar/screens/BeforeLoginScreens/reset_password_screen.dart';
-import 'package:Uzaar/services/restService.dart';
+import 'package:uzaar/screens/BeforeLoginScreens/reset_password_screen.dart';
+import 'package:uzaar/services/restService.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:Uzaar/utils/Buttons.dart';
-import 'package:Uzaar/utils/colors.dart';
-import 'package:Uzaar/widgets/navigate_back_icon.dart';
+import 'package:uzaar/utils/Buttons.dart';
+import 'package:uzaar/utils/colors.dart';
+import 'package:uzaar/widgets/navigate_back_icon.dart';
 import 'package:http/http.dart';
 import '../../widgets/custom_otp_field.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';

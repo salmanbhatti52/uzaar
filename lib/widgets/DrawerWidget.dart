@@ -1,15 +1,15 @@
-import 'package:Uzaar/models/app_data.dart';
-import 'package:Uzaar/screens/SideMenuScreens/about_us_screen.dart';
-import 'package:Uzaar/screens/SideMenuScreens/contact_us_screen.dart';
-import 'package:Uzaar/screens/SideMenuScreens/privacy_policy_screen.dart';
-import 'package:Uzaar/screens/SideMenuScreens/terms_of_use_screen.dart';
+import 'package:uzaar/models/app_data.dart';
+import 'package:uzaar/screens/SideMenuScreens/about_us_screen.dart';
+import 'package:uzaar/screens/SideMenuScreens/contact_us_screen.dart';
+import 'package:uzaar/screens/SideMenuScreens/privacy_policy_screen.dart';
+import 'package:uzaar/screens/SideMenuScreens/terms_of_use_screen.dart';
 
-import 'package:Uzaar/screens/SideMenuScreens/settings_screen.dart';
-import 'package:Uzaar/services/restService.dart';
+import 'package:uzaar/screens/SideMenuScreens/settings_screen.dart';
+import 'package:uzaar/services/restService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:Uzaar/utils/colors.dart';
-import 'package:Uzaar/screens/beforeLoginScreens/login_screen.dart';
+import 'package:uzaar/utils/colors.dart';
+import 'package:uzaar/screens/beforeLoginScreens/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

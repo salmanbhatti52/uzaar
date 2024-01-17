@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:Uzaar/screens/BusinessDetailPages/product_details_page.dart';
-import 'package:Uzaar/widgets/rounded_small_dropdown_menu.dart';
+import 'package:uzaar/screens/BusinessDetailPages/product_details_page.dart';
+import 'package:uzaar/widgets/rounded_small_dropdown_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:Uzaar/utils/colors.dart';
-import 'package:Uzaar/widgets/featured_products_widget.dart';
+import 'package:uzaar/utils/colors.dart';
+import 'package:uzaar/widgets/featured_products_widget.dart';
 import 'package:http/http.dart';
 import 'package:shimmer/shimmer.dart';
 

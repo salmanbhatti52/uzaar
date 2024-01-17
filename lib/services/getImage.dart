@@ -1,4 +1,4 @@
-import 'package:Uzaar/services/xFiletoBase64.dart';
+import 'package:uzaar/services/xFiletoBase64.dart';
 import 'package:image_picker/image_picker.dart';
 
 Future getImage({required String from}) async {

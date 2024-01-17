@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:Uzaar/utils/colors.dart';
-import 'package:Uzaar/widgets/featured_services_widget.dart';
+import 'package:uzaar/utils/colors.dart';
+import 'package:uzaar/widgets/featured_services_widget.dart';
 
-import 'package:Uzaar/widgets/featured_products_widget.dart';
+import 'package:uzaar/widgets/featured_products_widget.dart';
 
 import '../../../utils/Buttons.dart';
 import '../../../widgets/alert_dialog_reusable.dart';

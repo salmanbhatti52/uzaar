@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:Uzaar/screens/ListingsScreens/housing_listing_screen.dart';
-import 'package:Uzaar/screens/ListingsScreens/product_listing_screen.dart';
-import 'package:Uzaar/screens/ListingsScreens/service_listing_screen.dart';
-import 'package:Uzaar/services/restService.dart';
-import 'package:Uzaar/widgets/business_type_button.dart';
+import 'package:uzaar/screens/ListingsScreens/housing_listing_screen.dart';
+import 'package:uzaar/screens/ListingsScreens/product_listing_screen.dart';
+import 'package:uzaar/screens/ListingsScreens/service_listing_screen.dart';
+import 'package:uzaar/services/restService.dart';
+import 'package:uzaar/widgets/business_type_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:Uzaar/utils/colors.dart';
+import 'package:uzaar/utils/colors.dart';
 import 'package:http/http.dart';
 
 import 'package:shimmer/shimmer.dart';

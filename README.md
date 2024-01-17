@@ -1,4 +1,4 @@
-# Uzaar
+# uzaar
 
 A new Flutter project.
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:Uzaar/widgets/suffix_svg_icon.dart';
+import 'package:uzaar/widgets/suffix_svg_icon.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/colors.dart';

@@ -1,4 +1,4 @@
-import 'package:Uzaar/widgets/my_orders_services_list_tile.dart';
+import 'package:uzaar/widgets/my_orders_services_list_tile.dart';
 
 import 'package:flutter/material.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:Uzaar/models/app_data.dart';
-import 'package:Uzaar/widgets/housing_list_tile.dart';
+import 'package:uzaar/models/app_data.dart';
+import 'package:uzaar/widgets/housing_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';

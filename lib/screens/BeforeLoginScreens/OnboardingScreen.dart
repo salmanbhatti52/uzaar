@@ -1,5 +1,5 @@
-import 'package:Uzaar/services/location.dart';
-import 'package:Uzaar/widgets/snackbars.dart';
+import 'package:uzaar/services/location.dart';
+import 'package:uzaar/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,8 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'signup_screen.dart';
-import 'package:Uzaar/utils/colors.dart';
-import 'package:Uzaar/utils/Buttons.dart';
+import 'package:uzaar/utils/colors.dart';
+import 'package:uzaar/utils/Buttons.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   static const String id = 'onboarding_screen';
