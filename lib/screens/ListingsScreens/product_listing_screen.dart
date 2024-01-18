@@ -43,6 +43,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   }
 
   init() {
+
     getSellerProductsListing();
   }
 
@@ -109,7 +110,10 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   @override
   Widget build(BuildContext context) {
     appData = Provider.of<AppData>(context);
-    listedProducts = [...appData.listedProductsGV];
+
+    // setState(() {
+      listedProducts = [...appData.listedProductsGV];
+    // });
     return Expanded(
       child: listedProducts.isNotEmpty
           ? ListView.builder(
@@ -189,9 +193,12 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                       String result = await deleteSelectedProduct(
                           productListingId: listedProducts[index]
                               ['listings_products_id']);
+
                       if (result == 'success') {
-                        listedProducts.removeAt(index);
+
                         setState(() {
+                          listedProducts.removeAt(index);
+                          appData.listedProductsGV = listedProducts;
                           if (listedProducts.isEmpty) {
                             listedProductsErrMsg = 'No listing found.';
                           }

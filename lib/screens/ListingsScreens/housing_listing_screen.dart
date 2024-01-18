@@ -193,8 +193,10 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                           houseListingId: listedHousings[index]
                               ['listings_housings_id']);
                       if (result == 'success') {
-                        listedHousings.removeAt(index);
+
                         setState(() {
+                          listedHousings.removeAt(index);
+                          appData.listedHousingsGV = listedHousings;
                           if (listedHousings.isEmpty) {
                             listedHousingsErrMsg = 'No listing found.';
                           }

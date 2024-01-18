@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:uzaar/widgets/BottomNaviBar.dart';
 import 'package:uzaar/widgets/suffix_svg_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -61,203 +62,218 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: white,
-          leading: GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
-            child: SvgPicture.asset(
-              'assets/back-arrow-button.svg',
-              fit: BoxFit.scaleDown,
+    return WillPopScope(onWillPop:  () async{
+     Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => BottomNavBar(requiredScreenIndex: 0)),
+    );
+     return false;
+    },
+      child: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            elevation: 0.0,
+            backgroundColor: white,
+            leading: GestureDetector(
+              onTap: () {
+                // Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => BottomNavBar(requiredScreenIndex: 0)),
+                );
+
+              },
+              child: SvgPicture.asset(
+                'assets/back-arrow-button.svg',
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+            centerTitle: false,
+            title: Text(
+              'Payment',
+              style: kAppBarTitleStyle,
             ),
           ),
-          centerTitle: false,
-          title: Text(
-            'Payment',
-            style: kAppBarTitleStyle,
-          ),
-        ),
-        body: ModalProgressHUD(
-          color: Colors.white,
-          inAsyncCall: showSpinner,
-          child: SafeArea(
-            child: GlowingOverscrollIndicator(
-              axisDirection: AxisDirection.down,
-              color: primaryBlue,
-              child: SingleChildScrollView(
-                child: Form(
-                  key: _key,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 22),
-                        height: 54,
-                        child: ListView(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 2, horizontal: 2),
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          children: paymentMethods != null
-                              ? List.generate(
-                                  paymentMethods?['data'].length,
-                                  (index) => paymentWidget(
-                                      margin: const EdgeInsets.only(right: 10),
-                                      onTap: () {
-                                        setState(() {
-                                          selectedPaymentMethod =
-                                              paymentMethods?['data'][index]
-                                                  ['name'];
-                                        });
-                                      },
-                                      image: paymentMethods?['data'][index]
-                                                  ['name'] ==
-                                              'PayPal'
-                                          ? 'assets/paypal_logo.png'
-                                          : paymentMethods?['data'][index]
-                                                      ['name'] ==
-                                                  'Zelle'
-                                              ? 'assets/zelle_logo.png'
-                                              : 'assets/cash_app.png',
-                                      text: paymentMethods?['data'][index]
-                                          ['name'],
-                                      decoration: selectedPaymentMethod ==
-                                              paymentMethods?['data'][index]
-                                                  ['name']
-                                          ? kCardBoxBorder
-                                          : kCardBoxDecoration),
-                                )
-                              : [
-                                  Shimmer.fromColors(
-                                      baseColor: Colors.grey[500]!,
-                                      highlightColor: Colors.grey[100]!,
-                                      child: ListView.builder(
-                                        itemCount: 3,
-                                        shrinkWrap: true,
-                                        physics: const BouncingScrollPhysics(),
-                                        scrollDirection: Axis.horizontal,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return Container(
-                                            margin: const EdgeInsets.only(
-                                                right: 10),
-                                            width: 146,
-                                            height: 54,
-                                            decoration:
-                                                kCardBoxDecoration.copyWith(
-                                                    color:
-                                                        grey.withOpacity(0.3)),
-                                          );
+          body: ModalProgressHUD(
+            color: Colors.white,
+            inAsyncCall: showSpinner,
+            child: SafeArea(
+              child: GlowingOverscrollIndicator(
+                axisDirection: AxisDirection.down,
+                color: primaryBlue,
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: _key,
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 22),
+                          height: 54,
+                          child: ListView(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 2),
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            children: paymentMethods != null
+                                ? List.generate(
+                                    paymentMethods?['data'].length,
+                                    (index) => paymentWidget(
+                                        margin: const EdgeInsets.only(right: 10),
+                                        onTap: () {
+                                          setState(() {
+                                            selectedPaymentMethod =
+                                                paymentMethods?['data'][index]
+                                                    ['name'];
+                                          });
                                         },
-                                      )),
-                                ],
+                                        image: paymentMethods?['data'][index]
+                                                    ['name'] ==
+                                                'PayPal'
+                                            ? 'assets/paypal_logo.png'
+                                            : paymentMethods?['data'][index]
+                                                        ['name'] ==
+                                                    'Zelle'
+                                                ? 'assets/zelle_logo.png'
+                                                : 'assets/cash_app.png',
+                                        text: paymentMethods?['data'][index]
+                                            ['name'],
+                                        decoration: selectedPaymentMethod ==
+                                                paymentMethods?['data'][index]
+                                                    ['name']
+                                            ? kCardBoxBorder
+                                            : kCardBoxDecoration),
+                                  )
+                                : [
+                                    Shimmer.fromColors(
+                                        baseColor: Colors.grey[500]!,
+                                        highlightColor: Colors.grey[100]!,
+                                        child: ListView.builder(
+                                          itemCount: 3,
+                                          shrinkWrap: true,
+                                          physics: const BouncingScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder:
+                                              (BuildContext context, int index) {
+                                            return Container(
+                                              margin: const EdgeInsets.only(
+                                                  right: 10),
+                                              width: 146,
+                                              height: 54,
+                                              decoration:
+                                                  kCardBoxDecoration.copyWith(
+                                                      color:
+                                                          grey.withOpacity(0.3)),
+                                            );
+                                          },
+                                        )),
+                                  ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 22),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const Align(
-                                alignment: Alignment.centerLeft,
-                                child: ReusableText(text: 'Email')),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(
-                              height: 46,
-                              child: TextFormFieldWidget(
-                                focusedBorder: kRoundedActiveBorderStyle,
-                                controller: emailController,
-                                textInputType: TextInputType.emailAddress,
-                                prefixIcon: SvgPicture.asset(
-                                  'assets/email-icon.svg',
-                                  fit: BoxFit.scaleDown,
-                                ),
-                                hintText: 'username@gmail.com',
-                                obscureText: null,
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 22),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                height: 20,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const Align(
-                                alignment: Alignment.centerLeft,
-                                child: ReusableText(text: 'Password')),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(
-                              height: 46,
-                              child: TextFormFieldWidget(
-                                focusedBorder: kRoundedActiveBorderStyle,
-                                controller: passwordController,
-                                textInputType: TextInputType.visiblePassword,
-                                prefixIcon: const SvgIcon(
-                                    imageName: 'assets/password-icon.svg'),
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      isHidden = !isHidden;
-                                    });
-                                  },
-                                  child: isHidden
-                                      ? const SvgIcon(
-                                          imageName: 'assets/show-pass.svg',
-                                          colorFilter: ColorFilter.mode(
-                                              primaryBlue, BlendMode.srcIn),
-                                        )
-                                      : const SvgIcon(
-                                          imageName:
-                                              'assets/hide-pass-icon.svg',
-                                          colorFilter: ColorFilter.mode(
-                                              primaryBlue, BlendMode.srcIn),
+                              const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ReusableText(text: 'Email')),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                height: 46,
+                                child: TextFormFieldWidget(
+                                  focusedBorder: kRoundedActiveBorderStyle,
+                                  controller: emailController,
+                                  textInputType: TextInputType.emailAddress,
+                                  prefixIcon: SvgPicture.asset(
+                                    'assets/email-icon.svg',
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                  hintText: 'username@gmail.com',
+                                  obscureText: null,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ReusableText(text: 'Password')),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                height: 46,
+                                child: TextFormFieldWidget(
+                                  focusedBorder: kRoundedActiveBorderStyle,
+                                  controller: passwordController,
+                                  textInputType: TextInputType.visiblePassword,
+                                  prefixIcon: const SvgIcon(
+                                      imageName: 'assets/password-icon.svg'),
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isHidden = !isHidden;
+                                      });
+                                    },
+                                    child: isHidden
+                                        ? const SvgIcon(
+                                            imageName: 'assets/show-pass.svg',
+                                            colorFilter: ColorFilter.mode(
+                                                primaryBlue, BlendMode.srcIn),
+                                          )
+                                        : const SvgIcon(
+                                            imageName:
+                                                'assets/hide-pass-icon.svg',
+                                            colorFilter: ColorFilter.mode(
+                                                primaryBlue, BlendMode.srcIn),
+                                          ),
+                                  ),
+                                  hintText: '***************',
+                                  obscureText: isHidden,
+                                ),
+                              ),
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height * 0.33,
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                  bottom: 20,
+                                ),
+                                child: primaryButton(
+                                    context: context,
+                                    buttonText: 'Continue',
+                                    onTap: () {
+                                      // payWithPayPal();
+                                      return Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const OrderPlacedScreen(),
                                         ),
-                                ),
-                                hintText: '***************',
-                                obscureText: isHidden,
+                                      );
+                                    },
+                                    showLoader: false),
                               ),
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.33,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                bottom: 20,
-                              ),
-                              child: primaryButton(
-                                  context: context,
-                                  buttonText: 'Continue',
-                                  onTap: () {
-                                    // payWithPayPal();
-                                    return Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const OrderPlacedScreen(),
-                                      ),
-                                    );
-                                  },
-                                  showLoader: false),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

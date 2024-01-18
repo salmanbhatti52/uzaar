@@ -90,6 +90,7 @@ class _SellScreenState extends State<SellScreen> {
     // TODO: implement initState
     super.initState();
     init();
+
   }
 
   @override

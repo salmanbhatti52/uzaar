@@ -187,8 +187,9 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                           serviceListingId: listedServices[index]
                               ['listings_services_id']);
                       if (result == 'success') {
-                        listedServices.removeAt(index);
                         setState(() {
+                        listedServices.removeAt(index);
+                        appData.listedServicesGV = listedServices;
                           if (listedServices.isEmpty) {
                             listedServicesErrMsg = 'No listing found.';
                           }

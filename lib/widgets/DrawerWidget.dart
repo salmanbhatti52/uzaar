@@ -192,7 +192,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     DrawerListTile(
                         onTap: () {
                           clearSharedPreferences();
-                          Provider.of<AppData>(context, listen: false)
+                          Provider.of<AppData>(context,)
                               .clearData();
                           Navigator.pushReplacement(context, MaterialPageRoute(
                             builder: (context) {

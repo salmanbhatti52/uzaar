@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:uzaar/screens/BusinessDetailPages/paymnet_screen.dart';
 import 'package:uzaar/services/restService.dart';
 import 'package:uzaar/widgets/navigate_back_icon.dart';
 import 'package:flutter/material.dart';
@@ -168,6 +169,10 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
                                     message: 'Please add minimum offer price'));
+                          }else if(int.parse(minPriceEditingController.text) > int.parse(widget.formData['productPrice'])){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                ErrorSnackBar(
+                                    message: 'Minimum offer price should not be greater than actual price'));
                           } else {
                             FocusScopeNode currentFocus =
                                 FocusScope.of(context);
@@ -234,27 +239,29 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                             if (status == 'success') {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SuccessSnackBar());
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return const BottomNavBar(
-                                      requiredScreenIndex: 0,
-                                    );
-                                  },
-                                ),
-                                (route) => false,
-                              );
+                              if(selectedBoostingItem?['packages_id'] != null){
+                                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => PaymentScreen()), (route) => false);
+                              }
+                              else{
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return const BottomNavBar(
+                                        requiredScreenIndex: 0,
+                                      );
+                                    },
+                                  ),
+                                      (route) => false,
+                                );
+                              }
+
+
                             }
                             if (status == 'error') {
                               String message = decodedResponse?['message'];
                               ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                      backgroundColor: Colors.red,
-                                      content: Text(
-                                        message,
-                                        style: kToastTextStyle,
-                                      )));
+                                  .showSnackBar(ErrorSnackBar(message: message));
                             }
                           }
                         },

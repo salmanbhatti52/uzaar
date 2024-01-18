@@ -28,6 +28,8 @@ import 'BusinessDetailPages/product_details_page.dart';
 import 'BusinessDetailPages/service_details_page.dart';
 import 'chat_list_screen.dart';
 import 'notifications_screen.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:uzaar/services/paypalPayment.dart';
 
 enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 
@@ -52,6 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
   String featuredHousingsErrMsg = '';
   int selectedListingType = 1;
   int _tapCount = 0;
+
+  // TextStyle style = const TextStyle(fontFamily: 'Open Sans', fontSize: 15.0);
+  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     // TODO: implement initState
@@ -447,6 +452,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
         child: Scaffold(
+          // key: _scaffoldKey,
           appBar: AppBar(
             iconTheme: const IconThemeData(color: black),
             elevation: 0.0,
@@ -518,6 +524,7 @@ class _HomeScreenState extends State<HomeScreen> {
           drawer: DrawerWidget(
             buildContext: context,
           ),
+
           backgroundColor: Colors.white,
           body: GlowingOverscrollIndicator(
             axisDirection: AxisDirection.down,
@@ -528,6 +535,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // TextButton(
+                    //   onPressed: (){
+                    //
+                    //     // make PayPal payment
+                    //
+                    //     Navigator.of(context).push(
+                    //       MaterialPageRoute(
+                    //         builder: (BuildContext context) => PaypalPayment(
+                    //           onFinish: (number) async {
+                    //
+                    //             // payment done
+                    //             print('order id: '+number);
+                    //
+                    //           },
+                    //         ),
+                    //       ),
+                    //     );
+                    //
+                    //
+                    //   },
+                    //   child: Text('Pay with Paypal', textAlign: TextAlign.center,),
+                    // ),
                     // RichText(
                     //   text: TextSpan(
                     //     children: [

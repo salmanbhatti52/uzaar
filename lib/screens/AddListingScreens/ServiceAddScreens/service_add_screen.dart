@@ -18,6 +18,7 @@ import '../../../widgets/rounded_dropdown_menu.dart';
 import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
+import '../../BusinessDetailPages/paymnet_screen.dart';
 
 class ServiceAddScreen extends StatefulWidget {
   const ServiceAddScreen({super.key, required this.imagesList});
@@ -489,33 +490,29 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                               String status = decodedResponse['status'];
                               if (status == 'success') {
                                 ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                        backgroundColor: primaryBlue,
-                                        content: Text(
-                                          'Success',
-                                          style: kToastTextStyle,
-                                        )));
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return const BottomNavBar(
-                                        requiredScreenIndex: 0,
-                                      );
-                                    },
-                                  ),
-                                  (route) => false,
-                                );
+                                    .showSnackBar(SuccessSnackBar(message: null)
+                                        );
+                                if(selectedBoostingItem?['packages_id'] != null){
+                                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => PaymentScreen()), (route) => false);
+                                }else{
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return const BottomNavBar(
+                                          requiredScreenIndex: 0,
+                                        );
+                                      },
+                                    ),
+                                        (route) => false,
+                                  );
+                                }
+
                               }
                               if (status == 'error') {
                                 String message = decodedResponse?['message'];
                                 ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                        backgroundColor: Colors.red,
-                                        content: Text(
-                                          message,
-                                          style: kToastTextStyle,
-                                        )));
+                                    .showSnackBar(ErrorSnackBar(message: message));
                               }
                             } catch (e) {
                               print(e);
@@ -524,12 +521,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                 setButtonStatus = 'Publish';
                               });
                               ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                      backgroundColor: Colors.red,
-                                      content: Text(
-                                        'Plz enter a valid address',
-                                        style: kToastTextStyle,
-                                      )));
+                                  .showSnackBar(ErrorSnackBar(message: 'Plz enter a valid address'));
                             }
                           }
                         },
