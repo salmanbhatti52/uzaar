@@ -18,7 +18,7 @@ import '../../../widgets/rounded_dropdown_menu.dart';
 import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
-import '../../BusinessDetailPages/paymnet_screen.dart';
+import '../../BusinessDetailPages/payment_screen.dart';
 
 enum FurnishedConditions { yes, no }
 

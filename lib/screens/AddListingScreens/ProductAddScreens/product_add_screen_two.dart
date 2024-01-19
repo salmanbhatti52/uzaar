@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:uzaar/screens/BusinessDetailPages/paymnet_screen.dart';
+import 'package:uzaar/screens/BusinessDetailPages/payment_screen.dart';
 import 'package:uzaar/services/restService.dart';
 import 'package:uzaar/widgets/navigate_back_icon.dart';
 import 'package:flutter/material.dart';

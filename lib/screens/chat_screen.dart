@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:uzaar/screens/BusinessDetailPages/paymnet_screen.dart';
+import 'package:uzaar/screens/BusinessDetailPages/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

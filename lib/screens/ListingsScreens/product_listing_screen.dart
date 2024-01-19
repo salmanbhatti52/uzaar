@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:uzaar/models/app_data.dart';
+import 'package:uzaar/screens/BusinessDetailPages/payment_screen.dart';
 import 'package:uzaar/screens/EditListingScreens/edit_listing_screen.dart';
 import 'package:uzaar/services/restService.dart';
 import 'package:uzaar/utils/Buttons.dart';
@@ -175,7 +176,10 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                                 button: primaryButton(
                                     context: context,
                                     buttonText: 'Boost Now',
-                                    onTap: () => Navigator.of(context).pop(),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentScreen(),));
+                                    },
                                     showLoader: false),
                               );
                             },

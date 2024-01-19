@@ -12,15 +12,20 @@ import 'package:http/http.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../services/restService.dart';
+import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/payment_button.dart';
 import '../../widgets/text.dart';
+import '../BeforeLoginScreens/signup_screen.dart';
 import 'order_placed_screen.dart';
 import 'package:shimmer/shimmer.dart';
 // import 'package:flutter_paypal/flutter_paypal.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key});
-
+  const PaymentScreen({super.key,
+    // required this.listingItemId, required this.packageId
+  });
+  // final int listingItemId;
+  // final int packageId;
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
@@ -33,6 +38,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   bool isHidden = true;
   late String selectedPaymentMethod;
+  late int selectedPaymentMethodId;
   bool showSpinner = false;
   dynamic paymentMethods;
 
@@ -54,6 +60,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     paymentMethods = jsonDecode(response.body);
     setState(() {
       selectedPaymentMethod = paymentMethods?['data'][0]['name'];
+      selectedPaymentMethodId = paymentMethods?['data'][0]['payment_gateways_id'];
       // showSpinner = false;
     });
   }
@@ -83,6 +90,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
             backgroundColor: white,
             leading: GestureDetector(
               onTap: () {
+                // showDialog(context: context, builder: (context) => StatefulBuilder(builder: (context, setState) => AlertDialogReusable(
+                //   title: 'Can not Complete Action',
+                //   description:
+                //   'You can not sell anything on platform in guest mode. Signup now if you want to list any item.',
+                //   button: primaryButton(
+                //     context: context,
+                //     buttonText: 'Signup',
+                //     onTap: () =>
+                //         Navigator.pushReplacement(context, MaterialPageRoute(
+                //           builder: (context) {
+                //             return const SignUpScreen();
+                //           },
+                //         )),
+                //     showLoader: false,
+                //   ),
+                // ),),);
                 // Navigator.of(context).pop();
                 Navigator.pushReplacement(
                   context,
@@ -135,6 +158,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                             selectedPaymentMethod =
                                                 paymentMethods?['data'][index]
                                                     ['name'];
+                                            selectedPaymentMethodId = paymentMethods?['data'][index]
+                                            ['payment_gateways_id'];
+                                            print(selectedPaymentMethodId);
                                           });
                                         },
                                         image: paymentMethods?['data'][index]
