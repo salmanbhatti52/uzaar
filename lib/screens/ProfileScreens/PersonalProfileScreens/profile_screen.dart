@@ -320,12 +320,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 15,
                       ),
                       GestureDetector(
-                        onTap: () =>
+                        onTap: () {
+                          if(profileVerificationStatusGV.isEmpty){
                             Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ApplyForVerificationScreen(),
-                        )),
-                        child: Text(
-                          'Apply for Verification',
+                              builder: (context) => const ApplyForVerificationScreen(),
+                            ));
+                          }
+                        },
+                        child:  Text(profileVerificationStatusGV.isEmpty?
+                          'Apply for Verification':'Applied for Verification',
                           textAlign: TextAlign.center,
                           style: kFontSixteenSixHPB,
                         ),

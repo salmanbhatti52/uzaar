@@ -25,6 +25,7 @@ List<dynamic> boostingPackagesGV = [];
 Map<String, dynamic> userDataGV = {};
 bool loginAsGuestGV = false;
 String listingSelectedCategoryGV = '';
+String profileVerificationStatusGV = '';
 
 Future<http.Response> sendGetRequest(String action) {
   return http.get(Uri.parse(apiBaseUrl + action));

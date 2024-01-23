@@ -21,6 +21,7 @@ class AppData extends ChangeNotifier {
   Map<String, dynamic> userDataGV = {};
   bool loginAsGuestGV = false;
   String listingSelectedCategoryGV = '';
+  String profileVerificationStatusGV = '';
 
   void clearData() {
     featuredProductsGV.clear();
@@ -43,6 +44,7 @@ class AppData extends ChangeNotifier {
     userDataGV.clear();
     loginAsGuestGV = false;
     listingSelectedCategoryGV = '';
+    profileVerificationStatusGV = '';
 
     notifyListeners();
   }

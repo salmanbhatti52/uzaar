@@ -13,6 +13,7 @@ const Color yellow = Color(0xffFEBC5A);
 const Color red = Color(0xffFB4B40);
 const Color f5f5f5 = Color(0xffF5F5F5);
 const Color d9d9d9 = Color(0xffD9D9D9);
+const Color paypalHeaderBg = Color(0xFF003087);
 
 const LinearGradient gradient = LinearGradient(
   colors: [

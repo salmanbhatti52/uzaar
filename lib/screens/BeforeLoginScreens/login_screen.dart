@@ -252,7 +252,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                     'last_name', data['last_name']);
                                 await preferences.setString(
                                     'email', data['email']);
-
+                                // await preferences.setBool('badge_verified', data['badge_verified']?? false);
                                 await preferences.setString(
                                     'profile_pic',
                                     data['profile_pic'] != null

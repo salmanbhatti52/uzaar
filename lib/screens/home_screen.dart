@@ -28,8 +28,8 @@ import 'BusinessDetailPages/product_details_page.dart';
 import 'BusinessDetailPages/service_details_page.dart';
 import 'chat_list_screen.dart';
 import 'notifications_screen.dart';
-// import 'package:flutter/cupertino.dart';
-// import 'package:uzaar/services/paypalPayment.dart';
+// import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
+
 
 enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 
@@ -55,8 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedListingType = 1;
   int _tapCount = 0;
 
-  // TextStyle style = const TextStyle(fontFamily: 'Open Sans', fontSize: 15.0);
-  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     // TODO: implement initState
@@ -536,47 +534,86 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // TextButton(
-                    //   onPressed: (){
+                    //     onPressed: () async {
+                    //       Navigator.of(context).push(
+                    //         MaterialPageRoute(
+                    //           builder: (context) => PaypalCheckout(
+                    //             note: "PAYMENT_NOTE",
+                    //             onSuccess: (Map params) async {
+                    //               print("onSuccess: $params");
+                    //             },
+                    //             onError: (error) {
+                    //               print("onError: $error");
+                    //               Navigator.pop(context);
+                    //             },
+                    //             onCancel: () {
+                    //               print('cancelled:');
+                    //             },
+                    //             sandboxMode: true,
+                    //             returnURL: "success.snippetcoder.com",
+                    //             cancelURL: "cancel.snippetcoder.com",
+                    //             transactions: const [
+                    //               {
+                    //                 "amount": {
+                    //                   "total": '70',
+                    //                   "currency": "USD",
+                    //                   "details": {
+                    //                     "subtotal": '70',
+                    //                     "shipping": '0',
+                    //                     "shipping_discount": 0
+                    //                   }
+                    //                 },
+                    //                 "description":
+                    //                     "The payment transaction description.",
+                    //                 // "payment_options": {
+                    //                 //   "allowed_payment_method":
+                    //                 //       "INSTANT_FUNDING_SOURCE"
+                    //                 // },
+                    //                 "item_list": {
+                    //                   "items": [
+                    //                     {
+                    //                       "name": "Apple",
+                    //                       "quantity": 4,
+                    //                       "price": '5',
+                    //                       "currency": "USD"
+                    //                     },
+                    //                     {
+                    //                       "name": "Pineapple",
+                    //                       "quantity": 5,
+                    //                       "price": '10',
+                    //                       "currency": "USD"
+                    //                     }
+                    //                   ],
                     //
-                    //     // make PayPal payment
+                    //                   // shipping address is not required though
+                    //                     "shipping_address": {
+                    //                       "recipient_name": "Raman Singh",
+                    //                       "line1": "Delhi",
+                    //                       "line2": "",
+                    //                       "city": "Delhi",
+                    //                       "country_code": "IN",
+                    //                       "postal_code": "11001",
+                    //                       "phone": "+00000000",
+                    //                       "state": "Texas"
+                    //                    },
+                    //                 }
+                    //               }
+                    //             ],
                     //
-                    //     Navigator.of(context).push(
-                    //       MaterialPageRoute(
-                    //         builder: (BuildContext context) => PaypalPayment(
-                    //           onFinish: (number) async {
+                    //             // client ids
+                    //             //  clientId: 'ATkBD6J5eLYdsDnjmNRJieWhlDyFl_3tk0qlRfUln4_OQ4D4Z-HeHwMblMyb87coB64_Z2V4tFHhDpy7',
+                    //             //  secretKey: 'EF-jLXtL3p4QXHRXHQaDeMJ6Ifex5xn1bzukc5mBzuczOl8ZqKm_qn4kctC32vnLnznXfSCW_ePh9ylA'
                     //
-                    //             // payment done
-                    //             print('order id: '+number);
-                    //
-                    //           },
+                    //             // my ids
+                    //             clientId:
+                    //                 'AYA5Xg9t0RnixQN7yyN82YcQD-58pKMbU6j6AlN3sFuuK0n5o9CImA0Dvqx25ZaZ0P0ifLsrR8R2Fgn9',
+                    //             secretKey:
+                    //                 'ELvU84r_EZBJHu47e7IEqdJ5IxyAlyx8EtFwtuT9MAinYM2N5Gh_m-WAMD1olGQRqifLCFALnIKNWvMe',
+                    //           ),
                     //         ),
-                    //       ),
-                    //     );
-                    //
-                    //
-                    //   },
-                    //   child: Text('Pay with Paypal', textAlign: TextAlign.center,),
-                    // ),
-                    // RichText(
-                    //   text: TextSpan(
-                    //     children: [
-                    //       TextSpan(
-                    //         text: 'John',
-                    //         style: GoogleFonts.outfit(
-                    //           fontSize: 16,
-                    //           fontWeight: FontWeight.w500,
-                    //           color: black,
-                    //         ),
-                    //       )
-                    //     ],
-                    //     text: 'Good Morning!   ',
-                    //     style: GoogleFonts.outfit(
-                    //       fontSize: 24,
-                    //       fontWeight: FontWeight.w600,
-                    //       color: black,
-                    //     ),
-                    //   ),
-                    // ),
+                    //       );
+                    //     },
+                    //     child: Text('checkout')),
                     SizedBox(
                       height: 20.h,
                     ),

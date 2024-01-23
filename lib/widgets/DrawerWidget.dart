@@ -192,8 +192,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     DrawerListTile(
                         onTap: () {
                           clearSharedPreferences();
-                          Provider.of<AppData>(context,)
+                          Provider.of<AppData>(context,listen: false)
                               .clearData();
+                          profileVerificationStatusGV = '';
                           Navigator.pushReplacement(context, MaterialPageRoute(
                             builder: (context) {
                               return const LogInScreen();
