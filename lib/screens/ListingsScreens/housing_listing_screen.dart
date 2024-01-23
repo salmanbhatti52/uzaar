@@ -13,6 +13,7 @@ import '../../utils/Buttons.dart';
 import '../../utils/Colors.dart';
 import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/snackbars.dart';
+import '../BusinessDetailPages/payment_screen.dart';
 import '../EditListingScreens/edit_listing_screen.dart';
 
 class HousingListingScreen extends StatefulWidget {
@@ -174,7 +175,10 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                 button: primaryButton(
                                     context: context,
                                     buttonText: 'Boost Now',
-                                    onTap: () => Navigator.of(context).pop(),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentScreen(),));
+                                    },
                                     showLoader: false),
                               );
                             },
