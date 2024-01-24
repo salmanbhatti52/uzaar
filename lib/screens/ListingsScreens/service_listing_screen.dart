@@ -28,14 +28,22 @@ class ServiceListingScreen extends StatefulWidget {
 }
 
 class _ServiceListingScreenState extends State<ServiceListingScreen> {
-  late int _selectedPackage;
+  late int _selectedPackageId;
+  late Map selectedPackage;
   dynamic selectedOption;
   late AppData appData;
   List<dynamic> listedServices = [];
   String listedServicesErrMsg = '';
-  updateSelectedPackage(value) {
-    _selectedPackage = value;
-    print(_selectedPackage);
+
+  updateSelectedPackage(selectedPackageId) {
+    for (Map package in widget.boostingPackages) {
+      if (package['packages_id'] == selectedPackageId) {
+        selectedPackage = package;
+        break;
+      }
+    }
+    _selectedPackageId = selectedPackageId;
+    print(_selectedPackageId);
   }
 
   init() {
@@ -101,7 +109,8 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _selectedPackage = widget.boostingPackages[0]['packages_id'];
+    _selectedPackageId = widget.boostingPackages[0]['packages_id'];
+    selectedPackage = widget.boostingPackages[0];
     init();
   }
 
@@ -156,10 +165,10 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                                                 primaryBlue),
                                         value: widget.boostingPackages[index]
                                             ['packages_id'],
-                                        groupValue: _selectedPackage,
-                                        onChanged: (value) {
+                                        groupValue: _selectedPackageId,
+                                        onChanged: (selectedPackageId) {
                                           stateSetterObject(() {
-                                            updateSelectedPackage(value);
+                                            updateSelectedPackage(selectedPackageId);
                                           });
                                         },
                                       ),
@@ -171,7 +180,13 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                                     buttonText: 'Boost Now',
                                     onTap: () {
                                       Navigator.of(context).pop();
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentScreen(),));
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => PaymentScreen(
+                                            listingItemId: listedServices[index]
+                                                ['listings_services_id'],
+                                            selectedPackage: selectedPackage),
+                                      ));
                                     },
                                     showLoader: false),
                               );
@@ -192,8 +207,8 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                               ['listings_services_id']);
                       if (result == 'success') {
                         setState(() {
-                        listedServices.removeAt(index);
-                        appData.listedServicesGV = listedServices;
+                          listedServices.removeAt(index);
+                          appData.listedServicesGV = listedServices;
                           if (listedServices.isEmpty) {
                             listedServicesErrMsg = 'No listing found.';
                           }

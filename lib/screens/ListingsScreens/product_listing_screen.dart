@@ -30,7 +30,8 @@ class ProductListingScreen extends StatefulWidget {
 }
 
 class _ProductListingScreenState extends State<ProductListingScreen> {
-  late int _selectedPackage;
+  late int _selectedPackageId;
+  late Map selectedPackage;
   dynamic selectedOption;
   late AppData appData;
   List<dynamic> listedProducts = [];
@@ -39,18 +40,24 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _selectedPackage = widget.boostingPackages[0]['packages_id'];
+    _selectedPackageId = widget.boostingPackages[0]['packages_id'];
+    selectedPackage = widget.boostingPackages[0];
     init();
   }
 
   init() {
-
     getSellerProductsListing();
   }
 
-  updateSelectedPackage(value) {
-    _selectedPackage = value;
-    print(_selectedPackage);
+  updateSelectedPackage(selectedPackageId) {
+    for (Map package in widget.boostingPackages) {
+      if (package['packages_id'] == selectedPackageId) {
+        selectedPackage = package;
+        break;
+      }
+    }
+    _selectedPackageId = selectedPackageId;
+    print(_selectedPackageId);
   }
 
   getSellerProductsListing() async {
@@ -113,7 +120,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
     appData = Provider.of<AppData>(context);
 
     // setState(() {
-      listedProducts = [...appData.listedProductsGV];
+    listedProducts = [...appData.listedProductsGV];
     // });
     return Expanded(
       child: listedProducts.isNotEmpty
@@ -163,10 +170,11 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                                                 primaryBlue),
                                         value: widget.boostingPackages[index]
                                             ['packages_id'],
-                                        groupValue: _selectedPackage,
-                                        onChanged: (value) {
+                                        groupValue: _selectedPackageId,
+                                        onChanged: (selectedPackageId) {
                                           stateSetterObject(() {
-                                            updateSelectedPackage(value);
+                                            updateSelectedPackage(
+                                                selectedPackageId);
                                           });
                                         },
                                       ),
@@ -178,7 +186,15 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                                     buttonText: 'Boost Now',
                                     onTap: () {
                                       Navigator.of(context).pop();
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentScreen(),));
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => PaymentScreen(
+                                          listingItemId: listedProducts[index]
+                                              ['listings_products_id'],
+                                          selectedPackage: selectedPackage,
+                                          // userCustomerPackagesId: listedProducts[index]['users_customers_packages']['users_customers_packages_id']
+                                        ),
+                                      ));
                                     },
                                     showLoader: false),
                               );
@@ -199,7 +215,6 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                               ['listings_products_id']);
 
                       if (result == 'success') {
-
                         setState(() {
                           listedProducts.removeAt(index);
                           appData.listedProductsGV = listedProducts;

@@ -18,14 +18,24 @@ import '../../widgets/text.dart';
 import '../BeforeLoginScreens/signup_screen.dart';
 import 'order_placed_screen.dart';
 import 'package:shimmer/shimmer.dart';
-// import 'package:flutter_paypal/flutter_paypal.dart';
+import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key,
-    // required this.listingItemId, required this.packageId
+  PaymentScreen({
+    super.key,
+    // required this.listingItemId,
+    // required this.packageId,
+    // required this.userCustomerPackagesId,
+    this.listingItemId,
+    this.selectedPackage,
+    // this.packagePrice
+    // this.userCustomerPackagesId,
   });
-  // final int listingItemId;
-  // final int packageId;
+  int? listingItemId;
+  Map? selectedPackage;
+  // double? packagePrice;
+  //  int? userCustomerPackagesId;
+
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
@@ -38,7 +48,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   bool isHidden = true;
   late String selectedPaymentMethod;
-  late int selectedPaymentMethodId;
+   int selectedPaymentMethodId = 1;
   bool showSpinner = false;
   dynamic paymentMethods;
 
@@ -60,7 +70,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
     paymentMethods = jsonDecode(response.body);
     setState(() {
       selectedPaymentMethod = paymentMethods?['data'][0]['name'];
-      selectedPaymentMethodId = paymentMethods?['data'][0]['payment_gateways_id'];
+      selectedPaymentMethodId =
+          paymentMethods?['data'][0]['payment_gateways_id'];
       // showSpinner = false;
     });
   }
@@ -69,13 +80,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(onWillPop:  () async{
-     Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => BottomNavBar(requiredScreenIndex: 0)),
-    );
-     return false;
-    },
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => BottomNavBar(requiredScreenIndex: 0)),
+        );
+        return false;
+      },
       child: GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
@@ -109,9 +122,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 // Navigator.of(context).pop();
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => BottomNavBar(requiredScreenIndex: 0)),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          BottomNavBar(requiredScreenIndex: 0)),
                 );
-
               },
               child: SvgPicture.asset(
                 'assets/back-arrow-button.svg',
@@ -152,14 +166,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 ? List.generate(
                                     paymentMethods?['data'].length,
                                     (index) => paymentWidget(
-                                        margin: const EdgeInsets.only(right: 10),
+                                        margin:
+                                            const EdgeInsets.only(right: 10),
                                         onTap: () {
                                           setState(() {
                                             selectedPaymentMethod =
                                                 paymentMethods?['data'][index]
                                                     ['name'];
-                                            selectedPaymentMethodId = paymentMethods?['data'][index]
-                                            ['payment_gateways_id'];
+                                            selectedPaymentMethodId =
+                                                paymentMethods?['data'][index]
+                                                    ['payment_gateways_id'];
                                             print(selectedPaymentMethodId);
                                           });
                                         },
@@ -187,10 +203,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         child: ListView.builder(
                                           itemCount: 3,
                                           shrinkWrap: true,
-                                          physics: const BouncingScrollPhysics(),
+                                          physics:
+                                              const BouncingScrollPhysics(),
                                           scrollDirection: Axis.horizontal,
-                                          itemBuilder:
-                                              (BuildContext context, int index) {
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
                                             return Container(
                                               margin: const EdgeInsets.only(
                                                   right: 10),
@@ -198,8 +215,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                               height: 54,
                                               decoration:
                                                   kCardBoxDecoration.copyWith(
-                                                      color:
-                                                          grey.withOpacity(0.3)),
+                                                      color: grey
+                                                          .withOpacity(0.3)),
                                             );
                                           },
                                         )),
@@ -211,71 +228,93 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: ReusableText(text: 'Email')),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              SizedBox(
-                                height: 46,
-                                child: TextFormFieldWidget(
-                                  focusedBorder: kRoundedActiveBorderStyle,
-                                  controller: emailController,
-                                  textInputType: TextInputType.emailAddress,
-                                  prefixIcon: SvgPicture.asset(
-                                    'assets/email-icon.svg',
-                                    fit: BoxFit.scaleDown,
-                                  ),
-                                  hintText: 'username@gmail.com',
-                                  obscureText: null,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: ReusableText(text: 'Password')),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              SizedBox(
-                                height: 46,
-                                child: TextFormFieldWidget(
-                                  focusedBorder: kRoundedActiveBorderStyle,
-                                  controller: passwordController,
-                                  textInputType: TextInputType.visiblePassword,
-                                  prefixIcon: const SvgIcon(
-                                      imageName: 'assets/password-icon.svg'),
-                                  suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isHidden = !isHidden;
-                                      });
-                                    },
-                                    child: isHidden
-                                        ? const SvgIcon(
-                                            imageName: 'assets/show-pass.svg',
-                                            colorFilter: ColorFilter.mode(
-                                                primaryBlue, BlendMode.srcIn),
-                                          )
-                                        : const SvgIcon(
-                                            imageName:
-                                                'assets/hide-pass-icon.svg',
-                                            colorFilter: ColorFilter.mode(
-                                                primaryBlue, BlendMode.srcIn),
+                              selectedPaymentMethodId != 1
+                                  ? Column(
+                                      children: [
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        const Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: ReusableText(text: 'Email')),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        SizedBox(
+                                          height: 46,
+                                          child: TextFormFieldWidget(
+                                            focusedBorder:
+                                                kRoundedActiveBorderStyle,
+                                            controller: emailController,
+                                            textInputType:
+                                                TextInputType.emailAddress,
+                                            prefixIcon: SvgPicture.asset(
+                                              'assets/email-icon.svg',
+                                              fit: BoxFit.scaleDown,
+                                            ),
+                                            hintText: 'username@gmail.com',
+                                            obscureText: null,
                                           ),
-                                  ),
-                                  hintText: '***************',
-                                  obscureText: isHidden,
-                                ),
-                              ),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        const Align(
+                                            alignment: Alignment.centerLeft,
+                                            child:
+                                                ReusableText(text: 'Password')),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        SizedBox(
+                                          height: 46,
+                                          child: TextFormFieldWidget(
+                                            focusedBorder:
+                                                kRoundedActiveBorderStyle,
+                                            controller: passwordController,
+                                            textInputType:
+                                                TextInputType.visiblePassword,
+                                            prefixIcon: const SvgIcon(
+                                                imageName:
+                                                    'assets/password-icon.svg'),
+                                            suffixIcon: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  isHidden = !isHidden;
+                                                });
+                                              },
+                                              child: isHidden
+                                                  ? const SvgIcon(
+                                                      imageName:
+                                                          'assets/show-pass.svg',
+                                                      colorFilter:
+                                                          ColorFilter.mode(
+                                                              primaryBlue,
+                                                              BlendMode.srcIn),
+                                                    )
+                                                  : const SvgIcon(
+                                                      imageName:
+                                                          'assets/hide-pass-icon.svg',
+                                                      colorFilter:
+                                                          ColorFilter.mode(
+                                                              primaryBlue,
+                                                              BlendMode.srcIn),
+                                                    ),
+                                            ),
+                                            hintText: '***************',
+                                            obscureText: isHidden,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : SizedBox(
+                                      height:
+                                          MediaQuery.sizeOf(context).height *
+                                              0.33,
+                                    ),
                               SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.33,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.33,
                               ),
                               Container(
                                 margin: const EdgeInsets.only(
@@ -284,14 +323,92 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 child: primaryButton(
                                     context: context,
                                     buttonText: 'Continue',
-                                    onTap: () {
-                                      // payWithPayPal();
-                                      return Navigator.of(context).push(
+                                    onTap: () async {
+                                      Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              const OrderPlacedScreen(),
+                                          builder: (context) => PaypalCheckout(
+                                            note: "PAYMENT_NOTE",
+                                            onSuccess: (Map params) async {
+                                              // print("onSuccess: $params");
+                                              var data = jsonEncode(params);
+                                              print("onSuccess123: $data");
+                                            },
+                                            onError: (error) {
+                                              print("onError: $error");
+                                              Navigator.pop(context);
+                                            },
+                                            onCancel: () {
+                                              print('cancelled:');
+                                            },
+                                            sandboxMode: true,
+                                            returnURL: "success.snippetcoder.com",
+                                            cancelURL: "cancel.snippetcoder.com",
+                                            transactions:   [
+                                              {
+                                                "amount": {
+                                                  "total": double.parse(widget.selectedPackage?['price']),
+                                                  "currency": "USD",
+                                                  "details": {
+                                                    "subtotal": double.parse(widget.selectedPackage?['price']),
+                                                    "shipping": '0',
+                                                    "shipping_discount": 0
+                                                  }
+                                                },
+                                                "description":
+                                                "The payment transaction description.",
+                                                // "payment_options": {
+                                                //   "allowed_payment_method":
+                                                //       "INSTANT_FUNDING_SOURCE"
+                                                // },
+                                                "item_list": {
+                                                  "items": [
+                                                    {
+                                                      "name": widget.selectedPackage?['name'],
+                                                      "quantity": '1',
+                                                      "price": widget.selectedPackage?['price'],
+                                                      "currency": "USD"
+                                                    },
+                                                    // {
+                                                    //   "name": "Pineapple",
+                                                    //   "quantity": 5,
+                                                    //   "price": '10',
+                                                    //   "currency": "USD"
+                                                    // }
+                                                  ],
+
+                                                  // shipping address is not required though
+                                                  // "shipping_address": {
+                                                  //   "recipient_name": "Raman Singh",
+                                                  //   "line1": "Delhi",
+                                                  //   "line2": "",
+                                                  //   "city": "Delhi",
+                                                  //   "country_code": "IN",
+                                                  //   "postal_code": "11001",
+                                                  //   "phone": "+00000000",
+                                                  //   "state": "Texas"
+                                                  // },
+                                                }
+                                              }
+                                            ],
+
+                                            // client ids
+                                            //  clientId: 'ATkBD6J5eLYdsDnjmNRJieWhlDyFl_3tk0qlRfUln4_OQ4D4Z-HeHwMblMyb87coB64_Z2V4tFHhDpy7',
+                                            //  secretKey: 'EF-jLXtL3p4QXHRXHQaDeMJ6Ifex5xn1bzukc5mBzuczOl8ZqKm_qn4kctC32vnLnznXfSCW_ePh9ylA'
+
+                                            // my ids
+                                            clientId:
+                                            'AYA5Xg9t0RnixQN7yyN82YcQD-58pKMbU6j6AlN3sFuuK0n5o9CImA0Dvqx25ZaZ0P0ifLsrR8R2Fgn9',
+                                            secretKey:
+                                            'ELvU84r_EZBJHu47e7IEqdJ5IxyAlyx8EtFwtuT9MAinYM2N5Gh_m-WAMD1olGQRqifLCFALnIKNWvMe',
+                                          ),
                                         ),
                                       );
+                                      // return Navigator.of(context).push(
+                                      //         MaterialPageRoute(
+                                      //           builder: (context) =>
+                                      //               const OrderPlacedScreen(),
+                                      //         ),
+                                      //       );
                                     },
                                     showLoader: false),
                               ),

@@ -146,8 +146,8 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: nameEditingController,
                           textInputType: TextInputType.text,
-                          prefixIcon:
-                              const SvgIcon(imageName: 'assets/service_icon.svg'),
+                          prefixIcon: const SvgIcon(
+                              imageName: 'assets/service_icon.svg'),
                           hintText: 'Service Name',
                           obscureText: null,
                         ),
@@ -205,8 +205,9 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                         children: [
                                           Radio(
                                             activeColor: primaryBlue,
-                                            fillColor: const MaterialStatePropertyAll(
-                                                primaryBlue),
+                                            fillColor:
+                                                const MaterialStatePropertyAll(
+                                                    primaryBlue),
                                             value: subCategories[index]['name'],
                                             groupValue: selectedSubCategory,
                                             onChanged: (value) {
@@ -251,8 +252,8 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: descriptionEditingController,
                           textInputType: TextInputType.text,
-                          prefixIcon:
-                              const SvgIcon(imageName: 'assets/description_icon.svg'),
+                          prefixIcon: const SvgIcon(
+                              imageName: 'assets/description_icon.svg'),
                           hintText: 'Description here',
                           obscureText: null,
                         ),
@@ -273,8 +274,8 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: locationEditingController,
                           textInputType: TextInputType.streetAddress,
-                          prefixIcon:
-                              const SvgIcon(imageName: 'assets/address-icon.svg'),
+                          prefixIcon: const SvgIcon(
+                              imageName: 'assets/address-icon.svg'),
                           suffixIcon: GestureDetector(
                             onTap: () async {
                               try {
@@ -331,8 +332,8 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: priceEditingController,
                           textInputType: TextInputType.number,
-                          prefixIcon:
-                              const SvgIcon(imageName: 'assets/tag_price_bold.svg'),
+                          prefixIcon: const SvgIcon(
+                              imageName: 'assets/tag_price_bold.svg'),
                           hintText: 'Enter Price',
                           obscureText: null,
                         ),
@@ -488,13 +489,26 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                               print(response.body);
                               var decodedResponse = jsonDecode(response.body);
                               String status = decodedResponse['status'];
+                              Map data = decodedResponse['data'];
                               if (status == 'success') {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SuccessSnackBar(message: null)
-                                        );
-                                if(selectedBoostingItem?['packages_id'] != null){
-                                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => PaymentScreen()), (route) => false);
-                                }else{
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SuccessSnackBar(message: null));
+                                if (selectedBoostingItem?['packages_id'] !=
+                                    null) {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => PaymentScreen(
+                                                listingItemId: data[
+                                                    'listings_services_id'],
+                                            selectedPackage: data[
+                                            'users_customers_packages']['packages'],
+                                              // packagePrice:  double.parse(data[
+                                              // 'users_customers_packages']
+                                              // ['packages']['price']),
+                                                // userCustomerPackagesId: data['users_customers_packages']['users_customers_packages_id']
+                                              )),
+                                      (route) => false);
+                                } else {
                                   Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
@@ -504,15 +518,14 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                         );
                                       },
                                     ),
-                                        (route) => false,
+                                    (route) => false,
                                   );
                                 }
-
                               }
                               if (status == 'error') {
                                 String message = decodedResponse?['message'];
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(ErrorSnackBar(message: message));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    ErrorSnackBar(message: message));
                               }
                             } catch (e) {
                               print(e);
@@ -520,8 +533,9 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                 setLoader = false;
                                 setButtonStatus = 'Publish';
                               });
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(ErrorSnackBar(message: 'Plz enter a valid address'));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  ErrorSnackBar(
+                                      message: 'Plz enter a valid address'));
                             }
                           }
                         },

@@ -29,14 +29,22 @@ class HousingListingScreen extends StatefulWidget {
 }
 
 class _HousingListingScreenState extends State<HousingListingScreen> {
-  late int _selectedPackage;
+  late int _selectedPackageId;
+  late Map selectedPackage;
   dynamic selectedOption;
   late AppData appData;
   List<dynamic> listedHousings = [];
   String listedHousingsErrMsg = '';
-  updateSelectedPackage(value) {
-    _selectedPackage = value;
-    print(_selectedPackage);
+
+  updateSelectedPackage(selectedPackageId) {
+    for (Map package in widget.boostingPackages) {
+      if (package['packages_id'] == selectedPackageId) {
+        selectedPackage = package;
+        break;
+      }
+    }
+    _selectedPackageId = selectedPackageId;
+    print(_selectedPackageId);
   }
 
   getSellerHousingListing() async {
@@ -98,7 +106,8 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _selectedPackage = widget.boostingPackages[0]['packages_id'];
+    _selectedPackageId = widget.boostingPackages[0]['packages_id'];
+    selectedPackage = widget.boostingPackages[0];
     init();
   }
 
@@ -162,10 +171,10 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                                 primaryBlue),
                                         value: widget.boostingPackages[index]
                                             ['packages_id'],
-                                        groupValue: _selectedPackage,
-                                        onChanged: (value) {
+                                        groupValue: _selectedPackageId,
+                                        onChanged: (selectedPackageId) {
                                           stateSetterObject(() {
-                                            updateSelectedPackage(value);
+                                            updateSelectedPackage(selectedPackageId);
                                           });
                                         },
                                       ),
@@ -177,7 +186,9 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                     buttonText: 'Boost Now',
                                     onTap: () {
                                       Navigator.of(context).pop();
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentScreen(),));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentScreen(listingItemId: listedHousings[index]
+                                      ['listings_housings_id'],
+                                          selectedPackage: selectedPackage),));
                                     },
                                     showLoader: false),
                               );

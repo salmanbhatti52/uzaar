@@ -156,7 +156,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) {
-                        return const PaymentScreen();
+                        return  PaymentScreen();
                       },
                     ));
                   },

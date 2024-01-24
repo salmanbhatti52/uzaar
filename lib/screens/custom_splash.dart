@@ -1,9 +1,10 @@
 import 'package:uzaar/widgets/BottomNaviBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:uzaar/screens/beforeLoginScreens/OnboardingScreen.dart';
 import 'package:uzaar/utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'BeforeLoginScreens/onboarding_screen.dart';
 
 class CustomSplash extends StatefulWidget {
   static const String id = 'custom_splash';

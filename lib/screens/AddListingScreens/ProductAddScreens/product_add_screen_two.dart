@@ -105,8 +105,8 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: minPriceEditingController,
                           textInputType: TextInputType.number,
-                          prefixIcon:
-                              const SvgIcon(imageName: 'assets/tag_price_bold.svg'),
+                          prefixIcon: const SvgIcon(
+                              imageName: 'assets/tag_price_bold.svg'),
                           hintText: 'Enter Minimum Price',
                           obscureText: null,
                         ),
@@ -169,10 +169,12 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
                                     message: 'Please add minimum offer price'));
-                          }else if(int.parse(minPriceEditingController.text) > int.parse(widget.formData['productPrice'])){
+                          } else if (int.parse(minPriceEditingController.text) >
+                              int.parse(widget.formData['productPrice'])) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
-                                    message: 'Minimum offer price should not be greater than actual price'));
+                                    message:
+                                        'Minimum offer price should not be greater than actual price'));
                           } else {
                             FocusScopeNode currentFocus =
                                 FocusScope.of(context);
@@ -236,13 +238,28 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                             print(response.body);
                             var decodedResponse = jsonDecode(response.body);
                             String status = decodedResponse['status'];
+                            Map data = decodedResponse['data'];
+
                             if (status == 'success') {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SuccessSnackBar());
-                              if(selectedBoostingItem?['packages_id'] != null){
-                                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => PaymentScreen()), (route) => false);
-                              }
-                              else{
+                              if (selectedBoostingItem?['packages_id'] !=
+                                  null) {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => PaymentScreen(
+                                              listingItemId:
+                                                  data['listings_products_id'],
+                                          selectedPackage: data[
+                                          'users_customers_packages']['packages'],
+                                              // packagePrice:  double.parse(data[
+                                              // 'users_customers_packages']
+                                              // ['packages']['price'])
+                                              // ,
+                                              // userCustomerPackagesId: data['users_customers_packages']['users_customers_packages_id'],
+                                            )),
+                                    (route) => false);
+                              } else {
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
@@ -252,16 +269,14 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                                       );
                                     },
                                   ),
-                                      (route) => false,
+                                  (route) => false,
                                 );
                               }
-
-
                             }
                             if (status == 'error') {
                               String message = decodedResponse?['message'];
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(ErrorSnackBar(message: message));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  ErrorSnackBar(message: message));
                             }
                           }
                         },
