@@ -25,7 +25,7 @@ class PaymentScreen extends StatefulWidget {
     super.key,
     // required this.listingItemId,
     // required this.packageId,
-    // required this.userCustomerPackagesId,
+    this.userCustomerPackagesId,
     this.listingItemId,
     this.selectedPackage,
     // this.packagePrice
@@ -34,7 +34,7 @@ class PaymentScreen extends StatefulWidget {
   int? listingItemId;
   Map? selectedPackage;
   // double? packagePrice;
-  //  int? userCustomerPackagesId;
+   int? userCustomerPackagesId;
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -76,7 +76,39 @@ class _PaymentScreenState extends State<PaymentScreen> {
     });
   }
 
-  payWithPayPal() {}
+  payWithPayPal({required String paymentStatus, required String payerEmail, required String payeeEmail, required String payerName, required String paymentId}) async{
+    
+    print(widget.selectedPackage);
+    print(widget.userCustomerPackagesId);
+
+    int? packagesId;
+    int? usersCustomersPackagesId;
+
+    if(widget.userCustomerPackagesId != null){
+      usersCustomersPackagesId = widget.userCustomerPackagesId;
+      packagesId = null;
+    }else{
+      packagesId = widget.selectedPackage?['packages_id'];
+      usersCustomersPackagesId = null;
+    }
+
+    Response response = await sendPostRequest(action: 'boost_listings_products_by_paypal',data: {
+      "listings_products_id": widget.listingItemId,
+      "packages_id": packagesId,
+      "users_customers_packages_id": usersCustomersPackagesId,
+      "payment_gateways_id": selectedPaymentMethodId,
+      // "payment_status": "Paid",
+      "payment_status": paymentStatus,
+      "payer_email": payerEmail,
+      "payer_name": payerName,
+      "payee_email": payeeEmail,
+      "total_amount": widget.selectedPackage?['price'],
+      "token_id": paymentId
+    });
+
+    print('boos listing Res: ${response.body}');
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -330,8 +362,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                             note: "PAYMENT_NOTE",
                                             onSuccess: (Map params) async {
                                               // print("onSuccess: $params");
-                                              var data = jsonEncode(params);
-                                              print("onSuccess123: $data");
+                                              // var data = jsonEncode(params);
+                                              print("onSuccess123: $params");
+                                              payWithPayPal(
+                                                payeeEmail: params['data']['transactions'][0]['payee']['email'],
+                                                payerEmail: params['data']['payer']['payer_info']['email'],
+                                                payerName: params['data']['payer']['payer_info']['first_name'] + " " + params['data']['payer']['payer_info']['last_name'] ,
+                                                paymentId: params['data']['transactions'][0]['related_resources'][0]['sale']['id'],paymentStatus: 'Paid',
+                                                // paymentId: params['data']['transactions'][0]['related_resources'][0]['sale']['id'],paymentStatus: params['data']['transactions'][0]['related_resources'][0]['sale']['state'],
+                                              );
                                             },
                                             onError: (error) {
                                               print("onError: $error");

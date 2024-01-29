@@ -168,7 +168,8 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                                         groupValue: _selectedPackageId,
                                         onChanged: (selectedPackageId) {
                                           stateSetterObject(() {
-                                            updateSelectedPackage(selectedPackageId);
+                                            updateSelectedPackage(
+                                                selectedPackageId);
                                           });
                                         },
                                       ),
@@ -185,7 +186,11 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
                                         builder: (context) => PaymentScreen(
                                             listingItemId: listedServices[index]
                                                 ['listings_services_id'],
-                                            selectedPackage: selectedPackage),
+                                            selectedPackage: selectedPackage,
+                                            userCustomerPackagesId: listedServices[
+                                                        index]?[
+                                                    'users_customers_packages'][
+                                                'users_customers_packages_id']),
                                       ));
                                     },
                                     showLoader: false),

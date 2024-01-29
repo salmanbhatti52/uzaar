@@ -174,7 +174,8 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                         groupValue: _selectedPackageId,
                                         onChanged: (selectedPackageId) {
                                           stateSetterObject(() {
-                                            updateSelectedPackage(selectedPackageId);
+                                            updateSelectedPackage(
+                                                selectedPackageId);
                                           });
                                         },
                                       ),
@@ -186,9 +187,17 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                     buttonText: 'Boost Now',
                                     onTap: () {
                                       Navigator.of(context).pop();
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentScreen(listingItemId: listedHousings[index]
-                                      ['listings_housings_id'],
-                                          selectedPackage: selectedPackage),));
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => PaymentScreen(
+                                            listingItemId: listedHousings[index]
+                                                ['listings_housings_id'],
+                                            selectedPackage: selectedPackage,
+                                            userCustomerPackagesId: listedHousings[
+                                                        index]?[
+                                                    'users_customers_packages'][
+                                                'users_customers_packages_id']),
+                                      ));
                                     },
                                     showLoader: false),
                               );
@@ -208,7 +217,6 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                           houseListingId: listedHousings[index]
                               ['listings_housings_id']);
                       if (result == 'success') {
-
                         setState(() {
                           listedHousings.removeAt(index);
                           appData.listedHousingsGV = listedHousings;

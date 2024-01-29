@@ -34,10 +34,8 @@ class _BottomSheetForSendOfferState extends State<BottomSheetForSendOffer> {
 
   Future<String> sendOffer() async {
     Response response =
-        await sendPostRequest(action: 'send_offer_listings', data: {
-      'listings_id': widget.listingData['listings_products_id'],
-      'listings_types_id': widget.listingData['listings_types_id'],
-      'listings_categories_id': widget.listingData['listings_categories_id'],
+        await sendPostRequest(action: 'send_offer_listings_products', data: {
+      'listings_products_id': widget.listingData['listings_products_id'],
       'users_customers_id': userDataGV['userId'],
       'offer_price': priceEditingController.text.toString()
     });
@@ -96,8 +94,9 @@ class _BottomSheetForSendOfferState extends State<BottomSheetForSendOffer> {
                 controller: priceEditingController,
                 textInputType: TextInputType.number,
                 prefixIcon: const SvgIcon(imageName: 'assets/service_icon.svg'),
-                hintText:
-                    'Amount not less than \$${widget.listingData['min_offer_price']} ',
+                hintText: 'Please enter appropriate offer price',
+                // 'Please enter appropriate offer price',
+                    // 'Amount not less than \$${widget.listingData['min_offer_price']} ',
                 obscureText: null,
               ),
             ),
@@ -124,8 +123,9 @@ class _BottomSheetForSendOfferState extends State<BottomSheetForSendOffer> {
                                 widget.listingData['min_offer_price'])) {
                           Navigator.pop(context);
                           ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(
-                              message:
-                                  'Amount not less than \$${widget.listingData['min_offer_price']}'));
+                              message: 'Plz increase your offer'
+                                  // 'Amount not less than \$${widget.listingData['min_offer_price']}'
+                              ));
                         } else {
                           setState(() {
                             setLoader = true;

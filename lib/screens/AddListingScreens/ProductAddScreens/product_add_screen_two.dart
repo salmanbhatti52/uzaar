@@ -256,7 +256,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                                               // 'users_customers_packages']
                                               // ['packages']['price'])
                                               // ,
-                                              // userCustomerPackagesId: data['users_customers_packages']['users_customers_packages_id'],
+                                              userCustomerPackagesId: data['users_customers_packages']['users_customers_packages_id'],
                                             )),
                                     (route) => false);
                               } else {
