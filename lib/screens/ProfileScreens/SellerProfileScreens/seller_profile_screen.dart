@@ -287,7 +287,9 @@ class _SellerProfileScreenState extends State<SellerProfileScreen>
                         sellerData: widget.sellerData,
                       )
                     : selectedCategory == 2
-                        ? const SellerListingsScreen()
+                        ? SellerListingsScreen(
+                            sellerData: widget.sellerData,
+                          )
                         : const SellerReviewsScreen()
                 // Container(
                 //   padding: EdgeInsets.all(10),

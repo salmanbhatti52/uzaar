@@ -31,6 +31,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
   List<String> businessTypes = ['Products', 'Services', 'Housing'];
   String orderedProductOffersErrMsg = '';
   List<dynamic> myOrderedProductOffers = [];
+
   getMyProductOrdersOffers() async {
     Response response = await sendPostRequest(
         action: 'get_listings_orders_offers',

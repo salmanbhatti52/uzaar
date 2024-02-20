@@ -25,6 +25,7 @@ class OfferedProductsOfSalesOrders extends StatefulWidget {
 class _OfferedProductsOfSalesOrdersState
     extends State<OfferedProductsOfSalesOrders> {
   String offerStatus = 'Pending';
+  int? selectedIndex;
   List<String> offerStatuses = ['Pending', 'Accept', 'Reject'];
   @override
   Widget build(BuildContext context) {
@@ -53,6 +54,7 @@ class _OfferedProductsOfSalesOrdersState
                     onSelected: (selectedOption) async {
                       setState(() {
                         offerStatus = selectedOption;
+                        selectedIndex = index;
                       });
                       if (offerStatus == 'Accept') {
                         Response response = await sendPostRequest(
@@ -81,6 +83,7 @@ class _OfferedProductsOfSalesOrdersState
                         if (status == 'success') {
                           setState(() {
                             widget.salesOrderedProductOffers.removeAt(index);
+                            selectedIndex = null;
                             widget.salesProductOffersErrMsg =
                                 'No listing found';
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -91,6 +94,7 @@ class _OfferedProductsOfSalesOrdersState
                           String message = decodedData['message'];
                           ScaffoldMessenger.of(context)
                               .showSnackBar(ErrorSnackBar(message: message));
+                          selectedIndex = null;
                         }
                       }
                       if (offerStatus == 'Reject') {
@@ -120,6 +124,7 @@ class _OfferedProductsOfSalesOrdersState
                         if (status == 'success') {
                           setState(() {
                             widget.salesOrderedProductOffers.removeAt(index);
+                            selectedIndex = null;
                             widget.salesProductOffersErrMsg =
                                 'No listing found';
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -130,10 +135,12 @@ class _OfferedProductsOfSalesOrdersState
                           String message = decodedData['message'];
                           ScaffoldMessenger.of(context)
                               .showSnackBar(ErrorSnackBar(message: message));
+                          selectedIndex = null;
                         }
                       }
                     },
-                    initialSelection: offerStatus,
+                    initialSelection:
+                        selectedIndex == index ? offerStatus : 'Pending',
                     dropdownMenuEntries: offerStatuses
                         .map((String value) =>
                             DropdownMenuEntry(value: value, label: value))

@@ -15,6 +15,7 @@ import '../../../widgets/text_form_field_reusable.dart';
 import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
+import '../../BusinessDetailPages/payment_screen.dart';
 
 class ProductEditScreenTwo extends StatefulWidget {
   static const String id = 'product_add_screen_two';
@@ -46,8 +47,9 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
   addDataToFields() {
     minPriceEditingController.text = widget.listingData['min_offer_price'];
     if (widget.listingData['users_customers_packages'] != null) {
-      int index = boostingPackagesGV.indexWhere(
-          (map) => map['name'] == widget.listingData['users_customers_packages']['packages']['name']);
+      int index = boostingPackagesGV.indexWhere((map) =>
+          map['name'] ==
+          widget.listingData['users_customers_packages']['packages']['name']);
       initialBoostingValue = boostingPackagesGV[index];
       updateSelectedBoosting(initialBoostingValue);
     }
@@ -123,8 +125,8 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: minPriceEditingController,
                           textInputType: TextInputType.number,
-                          prefixIcon:
-                              const SvgIcon(imageName: 'assets/tag_price_bold.svg'),
+                          prefixIcon: const SvgIcon(
+                              imageName: 'assets/tag_price_bold.svg'),
                           hintText: 'Enter Minimum Price',
                           obscureText: null,
                         ),
@@ -225,20 +227,43 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
                             print(response.body);
                             var decodedResponse = jsonDecode(response.body);
                             String status = decodedResponse['status'];
+                            Map data = decodedResponse['data'];
                             if (status == 'success') {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SuccessSnackBar());
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return const BottomNavBar(
-                                      requiredScreenIndex: 0,
-                                    );
-                                  },
-                                ),
-                                (route) => false,
-                              );
+                              if (selectedBoostingItem?['packages_id'] !=
+                                  null) {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => PaymentScreen(
+                                              listingProductId:
+                                                  data['listings_products_id'],
+                                              selectedPackage: data[
+                                                      'users_customers_packages']
+                                                  ['packages'],
+                                              // packagePrice:  double.parse(data[
+                                              // 'users_customers_packages']
+                                              // ['packages']['price'])
+                                              // ,
+                                              userCustomerPackagesId: data[
+                                                      'users_customers_packages']
+                                                  [
+                                                  'users_customers_packages_id'],
+                                            )),
+                                    (route) => false);
+                              } else {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return const BottomNavBar(
+                                        requiredScreenIndex: 0,
+                                      );
+                                    },
+                                  ),
+                                  (route) => false,
+                                );
+                              }
                             }
                             if (status == 'error') {
                               String message = decodedResponse?['message'];

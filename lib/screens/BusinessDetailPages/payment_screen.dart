@@ -18,7 +18,7 @@ import '../../widgets/text.dart';
 import '../BeforeLoginScreens/signup_screen.dart';
 import 'order_placed_screen.dart';
 import 'package:shimmer/shimmer.dart';
-// import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
+import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 
 class PaymentScreen extends StatefulWidget {
   PaymentScreen({
@@ -26,15 +26,22 @@ class PaymentScreen extends StatefulWidget {
     // required this.listingItemId,
     // required this.packageId,
     this.userCustomerPackagesId,
-    this.listingItemId,
+    // this.listingItemId,
+    this.listingProductId,
+    this.listingServiceId,
+    this.listingHousingId,
     this.selectedPackage,
     // this.packagePrice
     // this.userCustomerPackagesId,
   });
-  int? listingItemId;
+  // int? listingItemId;
+  int? listingProductId;
+  int? listingServiceId;
+  int? listingHousingId;
+
   Map? selectedPackage;
   // double? packagePrice;
-   int? userCustomerPackagesId;
+  int? userCustomerPackagesId;
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -48,7 +55,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   bool isHidden = true;
   late String selectedPaymentMethod;
-   int selectedPaymentMethodId = 1;
+  int selectedPaymentMethodId = 1;
   bool showSpinner = false;
   dynamic paymentMethods;
 
@@ -76,38 +83,81 @@ class _PaymentScreenState extends State<PaymentScreen> {
     });
   }
 
-  payWithPayPal({required String paymentStatus, required String payerEmail, required String payeeEmail, required String payerName, required String paymentId}) async{
-    
+  payWithPayPal(
+      {required String paymentStatus,
+      required String payerEmail,
+      required String payeeEmail,
+      required String payerName,
+      required String paymentId}) async {
     print(widget.selectedPackage);
     print(widget.userCustomerPackagesId);
 
     int? packagesId;
     int? usersCustomersPackagesId;
 
-    if(widget.userCustomerPackagesId != null){
+    if (widget.userCustomerPackagesId != null) {
       usersCustomersPackagesId = widget.userCustomerPackagesId;
       packagesId = null;
-    }else{
+    } else {
       packagesId = widget.selectedPackage?['packages_id'];
       usersCustomersPackagesId = null;
     }
 
-    Response response = await sendPostRequest(action: 'boost_listings_products_by_paypal',data: {
-      "listings_products_id": widget.listingItemId,
-      "packages_id": packagesId,
-      "users_customers_packages_id": usersCustomersPackagesId,
-      "payment_gateways_id": selectedPaymentMethodId,
-      // "payment_status": "Paid",
-      "payment_status": paymentStatus,
-      "payer_email": payerEmail,
-      "payer_name": payerName,
-      "payee_email": payeeEmail,
-      "total_amount": widget.selectedPackage?['price'],
-      "token_id": paymentId
-    });
+    if (widget.listingProductId != null) {
+      Response response = await sendPostRequest(
+          action: 'boost_listings_products_by_paypal',
+          data: {
+            "listings_products_id": widget.listingProductId,
+            "packages_id": packagesId,
+            "users_customers_packages_id": usersCustomersPackagesId,
+            "payment_gateways_id": selectedPaymentMethodId,
+            // "payment_status": "Paid",
+            "payment_status": paymentStatus,
+            "payer_email": payerEmail,
+            "payer_name": payerName,
+            "payee_email": payeeEmail,
+            "total_amount": widget.selectedPackage?['price'],
+            "token_id": paymentId
+          });
 
-    print('boos listing Res: ${response.body}');
+      print('product boost listing Res: ${response.body}');
+    } else if (widget.listingServiceId != null) {
+      Response response = await sendPostRequest(
+          action: 'boost_listings_services_by_paypal',
+          data: {
+            "listings_services_id": widget.listingServiceId,
+            "packages_id": packagesId,
+            "users_customers_packages_id": usersCustomersPackagesId,
+            "payment_gateways_id": selectedPaymentMethodId,
+            // "payment_status": "Paid",
+            "payment_status": paymentStatus,
+            "payer_email": payerEmail,
+            "payer_name": payerName,
+            "payee_email": payeeEmail,
+            "total_amount": widget.selectedPackage?['price'],
+            "token_id": paymentId
+          });
 
+      print('Service boost listing Res: ${response.body}');
+    } else if (widget.listingHousingId != null) {
+      Response response = await sendPostRequest(
+          action: 'boost_listings_housings_by_paypal',
+          data: {
+            "listings_housings_id": widget.listingHousingId,
+            "packages_id": packagesId,
+            "users_customers_packages_id": usersCustomersPackagesId,
+            "payment_gateways_id": selectedPaymentMethodId,
+            // "payment_status": "Paid",
+            "payment_status": paymentStatus,
+            "payer_email": payerEmail,
+            "payer_name": payerName,
+            "payee_email": payeeEmail,
+            "total_amount": widget.selectedPackage?['price'],
+            "token_id": paymentId
+          });
+
+      print('housing boost listing Res: ${response.body}');
+    } else {}
   }
 
   @override
@@ -356,92 +406,117 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     context: context,
                                     buttonText: 'Continue',
                                     onTap: () async {
-                                      // Navigator.of(context).push(
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) => PaypalCheckout(
-                                      //       note: "PAYMENT_NOTE",
-                                      //       onSuccess: (Map params) async {
-                                      //         // print("onSuccess: $params");
-                                      //         // var data = jsonEncode(params);
-                                      //         print("onSuccess123: $params");
-                                      //         payWithPayPal(
-                                      //           payeeEmail: params['data']['transactions'][0]['payee']['email'],
-                                      //           payerEmail: params['data']['payer']['payer_info']['email'],
-                                      //           payerName: params['data']['payer']['payer_info']['first_name'] + " " + params['data']['payer']['payer_info']['last_name'] ,
-                                      //           paymentId: params['data']['transactions'][0]['related_resources'][0]['sale']['id'],paymentStatus: 'Paid',
-                                      //           // paymentId: params['data']['transactions'][0]['related_resources'][0]['sale']['id'],paymentStatus: params['data']['transactions'][0]['related_resources'][0]['sale']['state'],
-                                      //         );
-                                      //       },
-                                      //       onError: (error) {
-                                      //         print("onError: $error");
-                                      //         Navigator.pop(context);
-                                      //       },
-                                      //       onCancel: () {
-                                      //         print('cancelled:');
-                                      //       },
-                                      //       sandboxMode: true,
-                                      //       returnURL: "success.snippetcoder.com",
-                                      //       cancelURL: "cancel.snippetcoder.com",
-                                      //       transactions:   [
-                                      //         {
-                                      //           "amount": {
-                                      //             "total": double.parse(widget.selectedPackage?['price']),
-                                      //             "currency": "USD",
-                                      //             "details": {
-                                      //               "subtotal": double.parse(widget.selectedPackage?['price']),
-                                      //               "shipping": '0',
-                                      //               "shipping_discount": 0
-                                      //             }
-                                      //           },
-                                      //           "description":
-                                      //           "The payment transaction description.",
-                                      //           // "payment_options": {
-                                      //           //   "allowed_payment_method":
-                                      //           //       "INSTANT_FUNDING_SOURCE"
-                                      //           // },
-                                      //           "item_list": {
-                                      //             "items": [
-                                      //               {
-                                      //                 "name": widget.selectedPackage?['name'],
-                                      //                 "quantity": '1',
-                                      //                 "price": widget.selectedPackage?['price'],
-                                      //                 "currency": "USD"
-                                      //               },
-                                      //               // {
-                                      //               //   "name": "Pineapple",
-                                      //               //   "quantity": 5,
-                                      //               //   "price": '10',
-                                      //               //   "currency": "USD"
-                                      //               // }
-                                      //             ],
-                                      //
-                                      //             // shipping address is not required though
-                                      //             // "shipping_address": {
-                                      //             //   "recipient_name": "Raman Singh",
-                                      //             //   "line1": "Delhi",
-                                      //             //   "line2": "",
-                                      //             //   "city": "Delhi",
-                                      //             //   "country_code": "IN",
-                                      //             //   "postal_code": "11001",
-                                      //             //   "phone": "+00000000",
-                                      //             //   "state": "Texas"
-                                      //             // },
-                                      //           }
-                                      //         }
-                                      //       ],
-                                      //
-                                      //       // client ids
-                                      //       //  clientId: 'ATkBD6J5eLYdsDnjmNRJieWhlDyFl_3tk0qlRfUln4_OQ4D4Z-HeHwMblMyb87coB64_Z2V4tFHhDpy7',
-                                      //       //  secretKey: 'EF-jLXtL3p4QXHRXHQaDeMJ6Ifex5xn1bzukc5mBzuczOl8ZqKm_qn4kctC32vnLnznXfSCW_ePh9ylA'
-                                      //
-                                      //       // my ids
-                                      //       clientId:
-                                      //       'AYA5Xg9t0RnixQN7yyN82YcQD-58pKMbU6j6AlN3sFuuK0n5o9CImA0Dvqx25ZaZ0P0ifLsrR8R2Fgn9',
-                                      //       secretKey:
-                                      //       'ELvU84r_EZBJHu47e7IEqdJ5IxyAlyx8EtFwtuT9MAinYM2N5Gh_m-WAMD1olGQRqifLCFALnIKNWvMe',
-                                      //     ),
-                                      //   ),
-                                      // );
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => PaypalCheckout(
+                                            note: "PAYMENT_NOTE",
+                                            onSuccess: (Map params) async {
+                                              // print("onSuccess: $params");
+                                              // var data = jsonEncode(params);
+                                              print("onSuccess123: $params");
+                                              payWithPayPal(
+                                                payeeEmail: params['data']
+                                                        ['transactions'][0]
+                                                    ['payee']['email'],
+                                                payerEmail: params['data']
+                                                        ['payer']['payer_info']
+                                                    ['email'],
+                                                payerName: params['data']
+                                                                ['payer']
+                                                            ['payer_info']
+                                                        ['first_name'] +
+                                                    " " +
+                                                    params['data']['payer']
+                                                            ['payer_info']
+                                                        ['last_name'],
+                                                paymentId: params['data']
+                                                            ['transactions'][0]
+                                                        ['related_resources'][0]
+                                                    ['sale']['id'],
+                                                paymentStatus: 'Paid',
+                                                // paymentId: params['data']['transactions'][0]['related_resources'][0]['sale']['id'],paymentStatus: params['data']['transactions'][0]['related_resources'][0]['sale']['state'],
+                                              );
+                                            },
+                                            onError: (error) {
+                                              print("onError: $error");
+                                              Navigator.pop(context);
+                                            },
+                                            onCancel: () {
+                                              print('cancelled:');
+                                            },
+                                            sandboxMode: true,
+                                            returnURL:
+                                                "success.snippetcoder.com",
+                                            cancelURL:
+                                                "cancel.snippetcoder.com",
+                                            transactions: [
+                                              {
+                                                "amount": {
+                                                  "total": double.parse(
+                                                      widget.selectedPackage?[
+                                                          'price']),
+                                                  "currency": "USD",
+                                                  "details": {
+                                                    "subtotal": double.parse(
+                                                        widget.selectedPackage?[
+                                                            'price']),
+                                                    "shipping": '0',
+                                                    "shipping_discount": 0
+                                                  }
+                                                },
+                                                "description":
+                                                    "The payment transaction description.",
+                                                // "payment_options": {
+                                                //   "allowed_payment_method":
+                                                //       "INSTANT_FUNDING_SOURCE"
+                                                // },
+                                                "item_list": {
+                                                  "items": [
+                                                    {
+                                                      "name": widget
+                                                              .selectedPackage?[
+                                                          'name'],
+                                                      "quantity": '1',
+                                                      "price": widget
+                                                              .selectedPackage?[
+                                                          'price'],
+                                                      "currency": "USD"
+                                                    },
+                                                    // {
+                                                    //   "name": "Pineapple",
+                                                    //   "quantity": 5,
+                                                    //   "price": '10',
+                                                    //   "currency": "USD"
+                                                    // }
+                                                  ],
+
+                                                  // shipping address is not required though
+                                                  // "shipping_address": {
+                                                  //   "recipient_name": "Raman Singh",
+                                                  //   "line1": "Delhi",
+                                                  //   "line2": "",
+                                                  //   "city": "Delhi",
+                                                  //   "country_code": "IN",
+                                                  //   "postal_code": "11001",
+                                                  //   "phone": "+00000000",
+                                                  //   "state": "Texas"
+                                                  // },
+                                                }
+                                              }
+                                            ],
+
+                                            // client ids
+                                            //  clientId: 'ATkBD6J5eLYdsDnjmNRJieWhlDyFl_3tk0qlRfUln4_OQ4D4Z-HeHwMblMyb87coB64_Z2V4tFHhDpy7',
+                                            //  secretKey: 'EF-jLXtL3p4QXHRXHQaDeMJ6Ifex5xn1bzukc5mBzuczOl8ZqKm_qn4kctC32vnLnznXfSCW_ePh9ylA'
+
+                                            // my ids
+                                            clientId:
+                                                'AYA5Xg9t0RnixQN7yyN82YcQD-58pKMbU6j6AlN3sFuuK0n5o9CImA0Dvqx25ZaZ0P0ifLsrR8R2Fgn9',
+                                            secretKey:
+                                                'ELvU84r_EZBJHu47e7IEqdJ5IxyAlyx8EtFwtuT9MAinYM2N5Gh_m-WAMD1olGQRqifLCFALnIKNWvMe',
+                                          ),
+                                        ),
+                                      );
                                       // return Navigator.of(context).push(
                                       //         MaterialPageRoute(
                                       //           builder: (context) =>

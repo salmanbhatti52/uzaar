@@ -156,7 +156,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) {
-                        return  PaymentScreen();
+                        return PaymentScreen();
                       },
                     ));
                   },
@@ -242,6 +242,14 @@ class _ChatScreenState extends State<ChatScreen> {
             color: primaryBlue,
             child: Column(
               children: [
+                widget.typeOfChat != 'shipping'
+                    ? Text(
+                        'Now that you want to meet up for this transaction, we advise that you take the following precautions:\n\n'
+                        '1. Meet up in a public location\n'
+                        '2. Make the exchange only when you are satisfied with the condition of the item\n'
+                        '3. Use respectful language.',
+                      )
+                    : SizedBox(),
                 Expanded(
                   // child: ListView(
                   // children: [

@@ -189,12 +189,14 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
                                         builder: (context) => PaymentScreen(
-                                            listingItemId: listedProducts[index]
-                                                ['listings_products_id'],
+                                            listingProductId:
+                                                listedProducts[index]
+                                                    ['listings_products_id'],
                                             selectedPackage: selectedPackage,
                                             userCustomerPackagesId: listedProducts[
                                                         index]?[
-                                                    'users_customers_packages'][
+                                                    'users_customers_packages']
+                                                ?[
                                                 'users_customers_packages_id']),
                                       ));
                                     },

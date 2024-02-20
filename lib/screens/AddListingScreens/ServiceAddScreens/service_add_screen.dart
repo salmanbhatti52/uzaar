@@ -498,15 +498,18 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                   Navigator.of(context).pushAndRemoveUntil(
                                       MaterialPageRoute(
                                           builder: (context) => PaymentScreen(
-                                                listingItemId: data[
-                                                    'listings_services_id'],
-                                            selectedPackage: data[
-                                            'users_customers_packages']['packages'],
+                                              listingServiceId:
+                                                  data['listings_services_id'],
+                                              selectedPackage: data[
+                                                      'users_customers_packages']
+                                                  ['packages'],
                                               // packagePrice:  double.parse(data[
                                               // 'users_customers_packages']
                                               // ['packages']['price']),
-                                                userCustomerPackagesId: data['users_customers_packages']['users_customers_packages_id']
-                                              )),
+                                              userCustomerPackagesId: data[
+                                                      'users_customers_packages']
+                                                  [
+                                                  'users_customers_packages_id'])),
                                       (route) => false);
                                 } else {
                                   Navigator.pushAndRemoveUntil(

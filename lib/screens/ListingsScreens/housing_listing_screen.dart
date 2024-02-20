@@ -190,12 +190,14 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
                                         builder: (context) => PaymentScreen(
-                                            listingItemId: listedHousings[index]
-                                                ['listings_housings_id'],
+                                            listingHousingId:
+                                                listedHousings[index]
+                                                    ['listings_housings_id'],
                                             selectedPackage: selectedPackage,
                                             userCustomerPackagesId: listedHousings[
                                                         index]?[
-                                                    'users_customers_packages'][
+                                                    'users_customers_packages']
+                                                ?[
                                                 'users_customers_packages_id']),
                                       ));
                                     },

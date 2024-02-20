@@ -18,6 +18,7 @@ import '../../../widgets/rounded_dropdown_menu.dart';
 import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
+import '../../BusinessDetailPages/payment_screen.dart';
 
 enum FurnishedConditions { yes, no }
 
@@ -90,8 +91,9 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
     updateSelectedCategory(initialCategoryValue);
 
     if (widget.listingData['users_customers_packages'] != null) {
-      int index = boostingPackagesGV.indexWhere(
-          (map) => map['name'] == widget.listingData['users_customers_packages']['packages']['name']);
+      int index = boostingPackagesGV.indexWhere((map) =>
+          map['name'] ==
+          widget.listingData['users_customers_packages']['packages']['name']);
       initialBoostingValue = boostingPackagesGV[index];
       updateSelectedBoosting(initialBoostingValue);
     }
@@ -285,8 +287,9 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                         children: [
                                           Radio(
                                             activeColor: primaryBlue,
-                                            fillColor: const MaterialStatePropertyAll(
-                                                primaryBlue),
+                                            fillColor:
+                                                const MaterialStatePropertyAll(
+                                                    primaryBlue),
                                             value: subCategories[index]['name'],
                                             groupValue: selectedSubCategory,
                                             onChanged: (value) {
@@ -333,8 +336,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                               children: [
                                 Radio(
                                   activeColor: primaryBlue,
-                                  fillColor:
-                                      const MaterialStatePropertyAll(primaryBlue),
+                                  fillColor: const MaterialStatePropertyAll(
+                                      primaryBlue),
                                   value: FurnishedConditions.yes,
                                   groupValue: _selectedCondition,
                                   onChanged: (value) {
@@ -359,8 +362,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                               children: [
                                 Radio(
                                   activeColor: primaryBlue,
-                                  fillColor:
-                                      const MaterialStatePropertyAll(primaryBlue),
+                                  fillColor: const MaterialStatePropertyAll(
+                                      primaryBlue),
                                   value: FurnishedConditions.no,
                                   groupValue: _selectedCondition,
                                   onChanged: (value) {
@@ -397,8 +400,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: locationEditingController,
                           textInputType: TextInputType.streetAddress,
-                          prefixIcon:
-                              const SvgIcon(imageName: 'assets/address-icon.svg'),
+                          prefixIcon: const SvgIcon(
+                              imageName: 'assets/address-icon.svg'),
                           suffixIcon: GestureDetector(
                             onTap: () async {
                               try {
@@ -455,8 +458,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: priceEditingController,
                           textInputType: TextInputType.number,
-                          prefixIcon:
-                              const SvgIcon(imageName: 'assets/tag_price_bold.svg'),
+                          prefixIcon: const SvgIcon(
+                              imageName: 'assets/tag_price_bold.svg'),
                           hintText: 'Enter Price',
                           obscureText: null,
                         ),
@@ -477,8 +480,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: descriptionEditingController,
                           textInputType: TextInputType.text,
-                          prefixIcon:
-                              const SvgIcon(imageName: 'assets/description_icon.svg'),
+                          prefixIcon: const SvgIcon(
+                              imageName: 'assets/description_icon.svg'),
                           hintText: 'Description here',
                           obscureText: null,
                         ),
@@ -718,25 +721,41 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                               print(response.body);
                               var decodedResponse = jsonDecode(response.body);
                               String status = decodedResponse['status'];
+                              Map data = decodedResponse['data'];
                               if (status == 'success') {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                        backgroundColor: primaryBlue,
-                                        content: Text(
-                                          'Success',
-                                          style: kToastTextStyle,
-                                        )));
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return const BottomNavBar(
-                                        requiredScreenIndex: 0,
-                                      );
-                                    },
-                                  ),
-                                  (route) => false,
-                                );
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SuccessSnackBar(message: null));
+                                if (selectedBoostingItem?['packages_id'] !=
+                                    null) {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => PaymentScreen(
+                                              listingHousingId:
+                                                  data['listings_housings_id'],
+                                              selectedPackage: data[
+                                                      'users_customers_packages']
+                                                  ['packages'],
+                                              // packagePrice:  double.parse(data[
+                                              // 'users_customers_packages']
+                                              // ['packages']['price']),
+                                              userCustomerPackagesId: data[
+                                                      'users_customers_packages']
+                                                  [
+                                                  'users_customers_packages_id'])),
+                                      (route) => false);
+                                } else {
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return const BottomNavBar(
+                                          requiredScreenIndex: 0,
+                                        );
+                                      },
+                                    ),
+                                    (route) => false,
+                                  );
+                                }
                               }
                               if (status == 'error') {
                                 String message = decodedResponse?['message'];

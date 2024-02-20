@@ -29,8 +29,6 @@ import 'BusinessDetailPages/service_details_page.dart';
 import 'chat_list_screen.dart';
 import 'notifications_screen.dart';
 
-
-
 enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 
 class HomeScreen extends StatefulWidget {
@@ -242,10 +240,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   getFeaturedProducts() async {
-    Response response =
-        await sendPostRequest(action: 'get_featured_listings_products', data: {
-      'users_customers_id': userDataGV['userId'],
-    });
+    Response response = await sendGetRequest('get_featured_listings_products');
+
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
@@ -254,6 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
     featuredProductsGV = [];
     if (status == 'success') {
       featuredProductsGV = decodedResponse['data'];
+
       if (mounted) {
         setState(() {
           featuredProducts = featuredProductsGV;
@@ -275,10 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   getFeaturedServices() async {
-    Response response =
-        await sendPostRequest(action: 'get_featured_listings_services', data: {
-      'users_customers_id': userDataGV['userId'],
-    });
+    Response response = await sendGetRequest('get_featured_listings_services');
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
@@ -306,10 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   getFeaturedHousings() async {
-    Response response =
-        await sendPostRequest(action: 'get_featured_listings_housings', data: {
-      'users_customers_id': userDataGV['userId'],
-    });
+    Response response = await sendGetRequest('get_featured_listings_housings');
     print(response.statusCode);
     print(response.body);
     var decodedResponse = jsonDecode(response.body);
@@ -533,7 +524,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     SizedBox(
                       height: 20.h,
                     ),
@@ -610,11 +600,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       textColor: grey)),
                             ),
                     ),
-
                     SizedBox(
                       height: 30.h,
                     ),
-
                     SizedBox(
                       height: 98,
                       child: selectedListingType == 1 &&
@@ -1075,7 +1063,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           )
                         : const SizedBox(),
-
                     selectedListingType == 2
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1330,7 +1317,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           )
                         : const SizedBox(),
-
                     selectedListingType == 3
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

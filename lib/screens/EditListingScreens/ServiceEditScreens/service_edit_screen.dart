@@ -18,6 +18,7 @@ import '../../../widgets/rounded_dropdown_menu.dart';
 import '../../../widgets/suffix_svg_icon.dart';
 import '../../../widgets/tab_indicator.dart';
 import '../../../widgets/text.dart';
+import '../../BusinessDetailPages/payment_screen.dart';
 
 class ServiceEditScreen extends StatefulWidget {
   const ServiceEditScreen(
@@ -131,8 +132,9 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
     initialCategoryValue = serviceListingCategoriesGV[index];
     updateSelectedCategory(initialCategoryValue);
     if (widget.listingData['users_customers_packages'] != null) {
-      int index = boostingPackagesGV.indexWhere(
-          (map) => map['name'] == widget.listingData['users_customers_packages']['packages']['name']);
+      int index = boostingPackagesGV.indexWhere((map) =>
+          map['name'] ==
+          widget.listingData['users_customers_packages']['packages']['name']);
       initialBoostingValue = boostingPackagesGV[index];
       updateSelectedBoosting(initialBoostingValue);
     }
@@ -192,8 +194,8 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: nameEditingController,
                           textInputType: TextInputType.text,
-                          prefixIcon:
-                              const SvgIcon(imageName: 'assets/service_icon.svg'),
+                          prefixIcon: const SvgIcon(
+                              imageName: 'assets/service_icon.svg'),
                           hintText: 'Service Name',
                           obscureText: null,
                         ),
@@ -242,8 +244,9 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                                         children: [
                                           Radio(
                                             activeColor: primaryBlue,
-                                            fillColor: const MaterialStatePropertyAll(
-                                                primaryBlue),
+                                            fillColor:
+                                                const MaterialStatePropertyAll(
+                                                    primaryBlue),
                                             value: subCategories[index]['name'],
                                             groupValue: selectedSubCategory,
                                             onChanged: (value) {
@@ -288,8 +291,8 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: descriptionEditingController,
                           textInputType: TextInputType.text,
-                          prefixIcon:
-                              const SvgIcon(imageName: 'assets/description_icon.svg'),
+                          prefixIcon: const SvgIcon(
+                              imageName: 'assets/description_icon.svg'),
                           hintText: 'Description here',
                           obscureText: null,
                         ),
@@ -310,8 +313,8 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: locationEditingController,
                           textInputType: TextInputType.streetAddress,
-                          prefixIcon:
-                              const SvgIcon(imageName: 'assets/address-icon.svg'),
+                          prefixIcon: const SvgIcon(
+                              imageName: 'assets/address-icon.svg'),
                           suffixIcon: GestureDetector(
                             onTap: () async {
                               try {
@@ -368,8 +371,8 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: priceEditingController,
                           textInputType: TextInputType.number,
-                          prefixIcon:
-                              const SvgIcon(imageName: 'assets/tag_price_bold.svg'),
+                          prefixIcon: const SvgIcon(
+                              imageName: 'assets/tag_price_bold.svg'),
                           hintText: 'Enter Price',
                           obscureText: null,
                         ),
@@ -499,25 +502,41 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                               print(response.body);
                               var decodedResponse = jsonDecode(response.body);
                               String status = decodedResponse['status'];
+                              Map data = decodedResponse['data'];
                               if (status == 'success') {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                        backgroundColor: primaryBlue,
-                                        content: Text(
-                                          'Success',
-                                          style: kToastTextStyle,
-                                        )));
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return const BottomNavBar(
-                                        requiredScreenIndex: 0,
-                                      );
-                                    },
-                                  ),
-                                  (route) => false,
-                                );
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SuccessSnackBar(message: null));
+                                if (selectedBoostingItem?['packages_id'] !=
+                                    null) {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => PaymentScreen(
+                                              listingServiceId:
+                                                  data['listings_services_id'],
+                                              selectedPackage: data[
+                                                      'users_customers_packages']
+                                                  ['packages'],
+                                              // packagePrice:  double.parse(data[
+                                              // 'users_customers_packages']
+                                              // ['packages']['price']),
+                                              userCustomerPackagesId: data[
+                                                      'users_customers_packages']
+                                                  [
+                                                  'users_customers_packages_id'])),
+                                      (route) => false);
+                                } else {
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return const BottomNavBar(
+                                          requiredScreenIndex: 0,
+                                        );
+                                      },
+                                    ),
+                                    (route) => false,
+                                  );
+                                }
                               }
                               if (status == 'error') {
                                 String message = decodedResponse?['message'];
