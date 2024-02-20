@@ -2,10 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uzaar/models/app_data.dart';
 import 'package:uzaar/services/restService.dart';
 import 'package:uzaar/utils/Buttons.dart';
 
