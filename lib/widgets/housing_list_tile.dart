@@ -42,6 +42,7 @@ class HousingListTile extends StatelessWidget {
   final void Function(dynamic)? onSelected;
   final List<PopupMenuEntry<dynamic>> Function(BuildContext) itemBuilder;
   final dynamic initialValue;
+  final String featuredStatus;
 
   const HousingListTile({
     super.key,
@@ -56,6 +57,7 @@ class HousingListTile extends StatelessWidget {
     required this.onSelected,
     required this.itemBuilder,
     this.initialValue,
+    required this.featuredStatus,
   });
 
   @override
@@ -98,15 +100,25 @@ class HousingListTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 150,
-                    child: Text(
-                      houseName,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: true,
-                      style: productNameTextStyle,
-                    ),
+                  Row(
+                    children: [
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 140),
+                        child: Text(
+                          houseName,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          softWrap: true,
+                          style: productNameTextStyle,
+                        ),
+                      ),
+                      featuredStatus == 'Yes'
+                          ? Icon(
+                              Icons.bolt,
+                              color: Colors.orange,
+                            )
+                          : SizedBox()
+                    ],
                   ),
                   const SizedBox(
                     height: 4,

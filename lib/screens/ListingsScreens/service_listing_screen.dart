@@ -123,6 +123,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen> {
           ? ListView.builder(
               itemBuilder: (context, index) {
                 return ServiceListTile(
+                  featuredStatus: listedServices[index]['featured'],
                   serviceImage: imgBaseUrl +
                       listedServices[index]['listings_images'][0]['image'],
                   serviceName: listedServices[index]['name'],

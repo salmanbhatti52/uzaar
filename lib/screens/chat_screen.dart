@@ -243,11 +243,14 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Column(
               children: [
                 widget.typeOfChat != 'shipping'
-                    ? Text(
-                        'Now that you want to meet up for this transaction, we advise that you take the following precautions:\n\n'
-                        '1. Meet up in a public location\n'
-                        '2. Make the exchange only when you are satisfied with the condition of the item\n'
-                        '3. Use respectful language.',
+                    ? Container(
+                        margin: EdgeInsets.only(bottom: 12),
+                        child: Text(
+                          'Now that you want to meet up for this transaction, we advise that you take the following precautions:\n\n'
+                          '1. Meet up in a public location\n'
+                          '2. Make the exchange only when you are satisfied with the condition of the item\n'
+                          '3. Use respectful language.',
+                        ),
                       )
                     : SizedBox(),
                 Expanded(

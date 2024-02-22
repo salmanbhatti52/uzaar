@@ -36,12 +36,50 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
   dynamic selectedBoostingItem;
   bool setLoader = false;
   String setButtonStatus = 'Publish';
+  Map<dynamic, dynamic>? initialBoostingValue;
+
+  setBoughtMultiListingPkg() {
+    // todo: need to add date check
+    if (sellerMultiListingPackageGV.isNotEmpty) {
+      int index = boostingPackagesGV.indexWhere((map) =>
+          map['name'] == sellerMultiListingPackageGV['packages']['name']);
+      initialBoostingValue = boostingPackagesGV[index];
+      updateSelectedBoosting(initialBoostingValue);
+    }
+  }
+
+  updateSelectedBoosting(value) {
+    if (sellerMultiListingPackageGV.isNotEmpty &&
+        value['name'] == sellerMultiListingPackageGV['packages']['name']) {
+      setState(() {
+        selectedBoosting = '\$${double.parse(value['price'])} ${value['name']}';
+      });
+      print(selectedBoosting);
+      selectedBoostingItem = value;
+      print(selectedBoostingItem);
+    } else if (sellerMultiListingPackageGV.isEmpty) {
+      setState(() {
+        selectedBoosting = '\$${double.parse(value['price'])} ${value['name']}';
+      });
+      print(selectedBoosting);
+      selectedBoostingItem = value;
+      print(selectedBoostingItem);
+    } else if (sellerMultiListingPackageGV.isNotEmpty &&
+        value['name'] != sellerMultiListingPackageGV['packages']['name']) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          ErrorSnackBar(message: 'You don\'t need to buy a new package.'));
+      ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(
+          message:
+              'You have the subscription of Monthly Unlimited Boosting package.'));
+    } else {}
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     print(widget.formData);
+    setBoughtMultiListingPkg();
   }
 
   List<Widget> getPageIndicators() {
@@ -133,15 +171,26 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                         width: MediaQuery.sizeOf(context).width * 0.887,
                         leadingIconName: 'boost_icon',
                         hintText: 'Select Option',
-                        onSelected: (value) {
-                          setState(() {
-                            selectedBoosting =
-                                '\$${double.parse(value['price'])} ${value['name']}';
-                          });
-                          print(selectedBoosting);
-                          selectedBoostingItem = value;
-                          print(selectedBoostingItem);
-                        },
+                        onSelected: updateSelectedBoosting,
+                        // onSelected: (value) {
+                        //   // if (sellerMultiListingPackageGV.isEmpty) {
+                        //   setState(() {
+                        //     selectedBoosting =
+                        //         '\$${double.parse(value['price'])} ${value['name']}';
+                        //   });
+                        //   print(selectedBoosting);
+                        //   selectedBoostingItem = value;
+                        //   print(selectedBoostingItem);
+                        //   // } else {
+                        //   //   ErrorSnackBar(
+                        //   //       message:
+                        //   //           'You don\'t need to buy a new package.');
+                        //   //   ErrorSnackBar(
+                        //   //       message:
+                        //   //           'You have the subscription of Monthly Unlimited Boosting package.');
+                        //   // }
+                        // },
+                        initialSelection: initialBoostingValue,
                         dropdownMenuEntries: boostingPackagesGV
                             .map(
                               (dynamic value) => DropdownMenuEntry<dynamic>(
@@ -222,8 +271,10 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                                   'price': widget.formData['productPrice'],
                                   'min_offer_price':
                                       minPriceEditingController.text.toString(),
-                                  'packages_id':
-                                      selectedBoostingItem?['packages_id'],
+                                  'packages_id': sellerMultiListingPackageGV
+                                          .isNotEmpty
+                                      ? ""
+                                      : selectedBoostingItem?['packages_id'],
                                   'payment_gateways_id': "",
                                   'payment_status': "",
                                   'listings_images': images,
@@ -243,27 +294,39 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                             if (status == 'success') {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SuccessSnackBar());
-                              if (selectedBoostingItem?['packages_id'] !=
-                                  null) {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) => PaymentScreen(
-                                              listingProductId:
-                                                  data['listings_products_id'],
-                                              selectedPackage: data[
-                                                      'users_customers_packages']
-                                                  ['packages'],
-                                              // packagePrice:  double.parse(data[
-                                              // 'users_customers_packages']
-                                              // ['packages']['price'])
-                                              // ,
-                                              userCustomerPackagesId: data[
-                                                      'users_customers_packages']
-                                                  [
-                                                  'users_customers_packages_id'],
-                                            )),
-                                    (route) => false);
-                              } else {
+                              if (sellerMultiListingPackageGV.isNotEmpty) {
+                                setState(() {
+                                  setLoader = true;
+                                  setButtonStatus = 'Please wait..';
+                                });
+                                Response response = await sendPostRequest(
+                                    action: 'boost_listings_individually',
+                                    data: {
+                                      "users_customers_packages_id":
+                                          sellerMultiListingPackageGV[
+                                              'users_customers_packages_id'],
+                                      "listings_products_id":
+                                          data['listings_products_id'],
+                                      "listings_services_id": "",
+                                      "listings_housings_id": ""
+                                    });
+                                setState(() {
+                                  setLoader = false;
+                                  setButtonStatus = 'Publish';
+                                });
+                                var decodedResponse = jsonDecode(response.body);
+                                String status = decodedResponse['status'];
+                                if (status == 'success') {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SuccessSnackBar(
+                                          message:
+                                              'Your listing boosted successfully'));
+                                } else if (status == 'error') {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      ErrorSnackBar(
+                                          message: decodedResponse['message']));
+                                } else {}
+                                // ignore: use_build_context_synchronously
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
@@ -275,7 +338,39 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                                   ),
                                   (route) => false,
                                 );
-                              }
+                              } else if (sellerMultiListingPackageGV.isEmpty &&
+                                  selectedBoostingItem?['packages_id'] ==
+                                      null) {
+                                // ignore: use_build_context_synchronously
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return const BottomNavBar(
+                                        requiredScreenIndex: 0,
+                                      );
+                                    },
+                                  ),
+                                  (route) => false,
+                                );
+                              } else if (sellerMultiListingPackageGV.isEmpty &&
+                                  selectedBoostingItem?['packages_id'] !=
+                                      null) {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => PaymentScreen(
+                                              listingProductId:
+                                                  data['listings_products_id'],
+                                              selectedPackage: data[
+                                                      'users_customers_packages']
+                                                  ['packages'],
+                                              userCustomerPackagesId: data[
+                                                      'users_customers_packages']
+                                                  [
+                                                  'users_customers_packages_id'],
+                                            )),
+                                    (route) => false);
+                              } else {}
                             }
                             if (status == 'error') {
                               String message = decodedResponse?['message'];

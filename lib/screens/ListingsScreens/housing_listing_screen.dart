@@ -124,6 +124,7 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
           ? ListView.builder(
               itemBuilder: (context, index) {
                 return HousingListTile(
+                  featuredStatus: listedHousings[index]['featured'],
                   houseImage: imgBaseUrl +
                       listedHousings[index]['listings_images'][0]['image'],
                   houseName: listedHousings[index]['name'],

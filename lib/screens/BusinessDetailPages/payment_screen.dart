@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:uzaar/widgets/BottomNaviBar.dart';
+import 'package:uzaar/widgets/snackbars.dart';
 import 'package:uzaar/widgets/suffix_svg_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -121,6 +122,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
           });
 
       print('product boost listing Res: ${response.body}');
+      var decodedResponse = jsonDecode(response.body);
+      String status = decodedResponse['status'];
+      if (status == 'success') {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SuccessSnackBar(message: 'Your listing boosted successfully'));
+      } else if (status == 'error') {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(ErrorSnackBar(message: decodedResponse['message']));
+      } else {}
     } else if (widget.listingServiceId != null) {
       Response response = await sendPostRequest(
           action: 'boost_listings_services_by_paypal',
@@ -139,6 +149,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
           });
 
       print('Service boost listing Res: ${response.body}');
+      print('product boost listing Res: ${response.body}');
+      var decodedResponse = jsonDecode(response.body);
+      String status = decodedResponse['status'];
+      if (status == 'success') {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SuccessSnackBar(message: 'Your listing boosted successfully'));
+      } else if (status == 'error') {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(ErrorSnackBar(message: decodedResponse['message']));
+      } else {}
     } else if (widget.listingHousingId != null) {
       Response response = await sendPostRequest(
           action: 'boost_listings_housings_by_paypal',
@@ -157,7 +177,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
           });
 
       print('housing boost listing Res: ${response.body}');
+      print('product boost listing Res: ${response.body}');
+      var decodedResponse = jsonDecode(response.body);
+      String status = decodedResponse['status'];
+      if (status == 'success') {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SuccessSnackBar(message: 'Your listing boosted successfully'));
+      } else if (status == 'error') {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(ErrorSnackBar(message: decodedResponse['message']));
+      } else {}
     } else {}
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (context) => BottomNavBar(requiredScreenIndex: 0)),
+    );
   }
 
   @override
@@ -439,6 +475,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                             },
                                             onError: (error) {
                                               print("onError: $error");
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(ErrorSnackBar(
+                                                      message:
+                                                          'Something went wrong.'));
                                               Navigator.pop(context);
                                             },
                                             onCancel: () {

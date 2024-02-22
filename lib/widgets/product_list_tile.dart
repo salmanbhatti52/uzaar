@@ -26,17 +26,20 @@ class ProductListTile extends StatelessWidget {
   final String productName;
   final String productCondition;
   final String productPrice;
+  final String featuredStatus;
   final void Function(dynamic)? onSelected;
   final List<PopupMenuEntry<dynamic>> Function(BuildContext) itemBuilder;
   final dynamic initialValue;
 
-  const ProductListTile({super.key, 
+  const ProductListTile({
+    super.key,
     required this.productImage,
     required this.productName,
     required this.productCondition,
     required this.productPrice,
     required this.onSelected,
     required this.itemBuilder,
+    required this.featuredStatus,
     this.initialValue,
   });
 
@@ -77,15 +80,25 @@ class ProductListTile extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 150,
-                    child: Text(
-                      productName,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: true,
-                      style: productNameTextStyle,
-                    ),
+                  Row(
+                    children: [
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 140),
+                        child: Text(
+                          productName,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          softWrap: true,
+                          style: productNameTextStyle,
+                        ),
+                      ),
+                      featuredStatus == 'Yes'
+                          ? Icon(
+                              Icons.bolt,
+                              color: Colors.orange,
+                            )
+                          : SizedBox()
+                    ],
                   ),
                   const SizedBox(
                     height: 4,

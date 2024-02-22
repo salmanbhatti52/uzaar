@@ -32,6 +32,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
   int noOfTabs = 2;
   String? selectedBoosting;
   dynamic selectedBoostingItem;
+  Map<dynamic, dynamic>? initialBoostingValue;
   late String? selectedCategoryName = '';
   late int selectedCategoryId;
   late int? selectedSubCategoryId;
@@ -51,6 +52,7 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    setBoughtMultiListingPkg();
   }
 
   List<Widget> getPageIndicators() {
@@ -90,6 +92,42 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
       });
     }
     print(subCategories);
+  }
+
+  setBoughtMultiListingPkg() {
+    // todo: need to add date check
+    if (sellerMultiListingPackageGV.isNotEmpty) {
+      int index = boostingPackagesGV.indexWhere((map) =>
+          map['name'] == sellerMultiListingPackageGV['packages']['name']);
+      initialBoostingValue = boostingPackagesGV[index];
+      updateSelectedBoosting(initialBoostingValue);
+    }
+  }
+
+  updateSelectedBoosting(value) {
+    if (sellerMultiListingPackageGV.isNotEmpty &&
+        value['name'] == sellerMultiListingPackageGV['packages']['name']) {
+      setState(() {
+        selectedBoosting = '\$${double.parse(value['price'])} ${value['name']}';
+      });
+      print(selectedBoosting);
+      selectedBoostingItem = value;
+      print(selectedBoostingItem);
+    } else if (sellerMultiListingPackageGV.isEmpty) {
+      setState(() {
+        selectedBoosting = '\$${double.parse(value['price'])} ${value['name']}';
+      });
+      print(selectedBoosting);
+      selectedBoostingItem = value;
+      print(selectedBoostingItem);
+    } else if (sellerMultiListingPackageGV.isNotEmpty &&
+        value['name'] != sellerMultiListingPackageGV['packages']['name']) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          ErrorSnackBar(message: 'You don\'t need to buy a new package.'));
+      ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(
+          message:
+              'You have the subscription of Monthly Unlimited Boosting package.'));
+    } else {}
   }
 
   updateSelectedSubCategory(value) {
@@ -360,15 +398,17 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                           width: MediaQuery.sizeOf(context).width * 0.887,
                           leadingIconName: 'boost_icon',
                           hintText: 'Select Option',
-                          onSelected: (value) {
-                            setState(() {
-                              selectedBoosting =
-                                  '\$${double.parse(value['price'])} ${value['name']}';
-                            });
-                            print(selectedBoosting);
-                            selectedBoostingItem = value;
-                            print(selectedBoostingItem);
-                          },
+                          // onSelected: (value) {
+                          //   setState(() {
+                          //     selectedBoosting =
+                          //         '\$${double.parse(value['price'])} ${value['name']}';
+                          //   });
+                          //   print(selectedBoosting);
+                          //   selectedBoostingItem = value;
+                          //   print(selectedBoostingItem);
+                          // },
+                          onSelected: updateSelectedBoosting,
+                          initialSelection: initialBoostingValue,
                           dropdownMenuEntries: boostingPackagesGV
                               .map(
                                 (dynamic value) => DropdownMenuEntry<dynamic>(
@@ -475,8 +515,10 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                         .toString(),
                                     'latitude': latitude.toString(),
                                     'longitude': longitude.toString(),
-                                    'packages_id':
-                                        selectedBoostingItem?['packages_id'],
+                                    'packages_id': sellerMultiListingPackageGV
+                                            .isNotEmpty
+                                        ? ""
+                                        : selectedBoostingItem?['packages_id'],
                                     'payment_gateways_id': '',
                                     'payment_status': '',
                                     'listings_images': images
@@ -491,27 +533,44 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                               String status = decodedResponse['status'];
                               Map data = decodedResponse['data'];
                               if (status == 'success') {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SuccessSnackBar(message: null));
-                                if (selectedBoostingItem?['packages_id'] !=
-                                    null) {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (context) => PaymentScreen(
-                                              listingServiceId:
-                                                  data['listings_services_id'],
-                                              selectedPackage: data[
-                                                      'users_customers_packages']
-                                                  ['packages'],
-                                              // packagePrice:  double.parse(data[
-                                              // 'users_customers_packages']
-                                              // ['packages']['price']),
-                                              userCustomerPackagesId: data[
-                                                      'users_customers_packages']
-                                                  [
-                                                  'users_customers_packages_id'])),
-                                      (route) => false);
-                                } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SuccessSnackBar());
+                                if (sellerMultiListingPackageGV.isNotEmpty) {
+                                  setState(() {
+                                    setLoader = true;
+                                    setButtonStatus = 'Please wait..';
+                                  });
+                                  Response response = await sendPostRequest(
+                                      action: 'boost_listings_individually',
+                                      data: {
+                                        "users_customers_packages_id":
+                                            sellerMultiListingPackageGV[
+                                                'users_customers_packages_id'],
+                                        "listings_products_id": "",
+                                        "listings_services_id":
+                                            data['listings_services_id'],
+                                        "listings_housings_id": ""
+                                      });
+                                  setState(() {
+                                    setLoader = false;
+                                    setButtonStatus = 'Publish';
+                                  });
+                                  print(response.body);
+                                  var decodedResponse =
+                                      jsonDecode(response.body);
+                                  String status = decodedResponse['status'];
+                                  if (status == 'success') {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SuccessSnackBar(
+                                            message:
+                                                'Your listing boosted successfully'));
+                                  } else if (status == 'error') {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        ErrorSnackBar(
+                                            message:
+                                                decodedResponse['message']));
+                                  } else {}
+                                  // ignore: use_build_context_synchronously
                                   Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
@@ -523,7 +582,40 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                     ),
                                     (route) => false,
                                   );
-                                }
+                                } else if (sellerMultiListingPackageGV
+                                        .isEmpty &&
+                                    selectedBoostingItem?['packages_id'] ==
+                                        null) {
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return const BottomNavBar(
+                                          requiredScreenIndex: 0,
+                                        );
+                                      },
+                                    ),
+                                    (route) => false,
+                                  );
+                                } else if (sellerMultiListingPackageGV
+                                        .isEmpty &&
+                                    selectedBoostingItem?['packages_id'] !=
+                                        null) {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => PaymentScreen(
+                                              listingServiceId:
+                                                  data['listings_services_id'],
+                                              selectedPackage: data[
+                                                      'users_customers_packages']
+                                                  ['packages'],
+                                              userCustomerPackagesId: data[
+                                                      'users_customers_packages']
+                                                  [
+                                                  'users_customers_packages_id'])),
+                                      (route) => false);
+                                } else {}
                               }
                               if (status == 'error') {
                                 String message = decodedResponse?['message'];

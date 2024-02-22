@@ -28,11 +28,13 @@ class ServiceListTile extends StatelessWidget {
   final String serviceName;
   final String serviceLocation;
   final String servicePrice;
+  final String featuredStatus;
   final void Function(dynamic)? onSelected;
   final List<PopupMenuEntry<dynamic>> Function(BuildContext) itemBuilder;
   final dynamic initialValue;
 
-  const ServiceListTile({super.key, 
+  const ServiceListTile({
+    super.key,
     required this.serviceImage,
     required this.serviceName,
     required this.serviceLocation,
@@ -40,6 +42,7 @@ class ServiceListTile extends StatelessWidget {
     required this.onSelected,
     required this.itemBuilder,
     this.initialValue,
+    required this.featuredStatus,
   });
 
   @override
@@ -79,15 +82,25 @@ class ServiceListTile extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 150,
-                    child: Text(
-                      serviceName,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: true,
-                      style: productNameTextStyle,
-                    ),
+                  Row(
+                    children: [
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 140),
+                        child: Text(
+                          serviceName,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          softWrap: true,
+                          style: productNameTextStyle,
+                        ),
+                      ),
+                      featuredStatus == 'Yes'
+                          ? Icon(
+                              Icons.bolt,
+                              color: Colors.orange,
+                            )
+                          : SizedBox()
+                    ],
                   ),
                   const SizedBox(
                     height: 4,

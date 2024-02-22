@@ -127,6 +127,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
           ? ListView.builder(
               itemBuilder: (context, index) {
                 return ProductListTile(
+                  featuredStatus: listedProducts[index]['featured'],
                   productImage: imgBaseUrl +
                       listedProducts[index]['listings_images'][0]['image'],
                   productName: listedProducts[index]['name'],

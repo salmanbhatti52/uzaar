@@ -81,9 +81,30 @@ class _SellScreenState extends State<SellScreen> {
     return tabs;
   }
 
+  getSellerMultiListingPackages() async {
+    Response response = await sendPostRequest(
+        action: 'get_multi_listing_packages_customer',
+        data: {'users_customers_id': userDataGV['userId']});
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    List packages = [];
+    if (status == 'success') {
+      packages = decodedResponse['data'];
+      sellerMultiListingPackageGV = packages.last;
+      print('sellerMultiListingPackageGV: $sellerMultiListingPackageGV');
+    }
+
+    if (status == 'error') {
+      sellerMultiListingPackageGV = {};
+      print('sellerMultiListingPackageGV: $sellerMultiListingPackageGV');
+    }
+  }
+
   init() {
     selectedListingMap = listingTypesGV[0];
     getBoostingPackages();
+    getSellerMultiListingPackages();
   }
 
   @override

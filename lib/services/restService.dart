@@ -11,6 +11,7 @@ const imgBaseUrl = 'https://b1gpraiseel.net/portal/public/';
 List<dynamic> featuredProductsGV = [];
 List<dynamic> featuredServicesGV = [];
 List<dynamic> featuredHousingGV = [];
+
 // List<dynamic> userFeaturedProductsGV = [];
 // List<dynamic> userFeaturedServicesGV = [];
 // List<dynamic> userFeaturedHousingGV = [];
@@ -26,6 +27,8 @@ List<dynamic> servicesPriceRangesGV = [];
 List<dynamic> housingsPriceRangesGV = [];
 List<dynamic> boostingPackagesGV = [];
 Map<String, dynamic> userDataGV = {};
+Map<String, dynamic> sellerMultiListingPackageGV =
+    {}; // Todo: Need to add for globally provider
 bool loginAsGuestGV = false;
 String listingSelectedCategoryGV = '';
 String profileVerificationStatusGV = '';
