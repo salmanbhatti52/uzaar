@@ -280,6 +280,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           IconTextReusable(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             imageName: 'area_icon',
                             text: '${widget.houseData['area']} sq.ft',
                             height: 16,
@@ -290,6 +291,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                             width: 18,
                           ),
                           IconTextReusable(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             imageName: 'bath_icon',
                             text: widget.houseData['bathroom'],
                             height: 16,
@@ -300,6 +302,7 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                             width: 18,
                           ),
                           IconTextReusable(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             imageName: 'bed_icon',
                             text: widget.houseData['bedroom'],
                             height: 16,

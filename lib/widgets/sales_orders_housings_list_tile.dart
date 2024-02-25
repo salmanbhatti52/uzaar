@@ -52,7 +52,8 @@ class SalesOrdersHousingsListTile extends StatelessWidget {
   final List<DropdownMenuEntry<String>> dropdownMenuEntries;
 
   const SalesOrdersHousingsListTile(
-      {super.key, required this.houseImage,
+      {super.key,
+      required this.houseImage,
       required this.houseName,
       required this.houseLocation,
       required this.housePrice,
@@ -168,6 +169,7 @@ class SalesOrdersHousingsListTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         IconTextReusable(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           imageName: 'area_icon',
                           text: '$houseArea sq.mt',
                         ),
@@ -178,6 +180,7 @@ class SalesOrdersHousingsListTile extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             IconTextReusable(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               imageName: 'bath_icon',
                               text: noOfBaths,
                             ),
@@ -185,6 +188,7 @@ class SalesOrdersHousingsListTile extends StatelessWidget {
                               width: 18,
                             ),
                             IconTextReusable(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               imageName: 'bed_icon',
                               text: noOfBeds,
                             ),
@@ -224,7 +228,8 @@ class SalesOrdersHousingsListTile extends StatelessWidget {
                       textStyle: kFontTwelveSixHW,
                       // hintText: 'Products',
                       leadingIconName: null,
-                      colorFilter: const ColorFilter.mode(white, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(white, BlendMode.srcIn),
                       // trailingIconName: 'grid_icon',
                     )
                   ],

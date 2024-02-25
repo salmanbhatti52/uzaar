@@ -15,6 +15,8 @@ import 'package:http/http.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../widgets/DrawerWidget.dart';
+import '../../widgets/icon_text_combo.dart';
+import '../../widgets/snackbars.dart';
 import '../chat_list_screen.dart';
 import '../notifications_screen.dart';
 
@@ -39,6 +41,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
 
   init() {
     getBoostingPackages();
+    getSellerMultiListingPackages();
   }
 
   getBoostingPackages() async {
@@ -56,6 +59,26 @@ class _ListingsScreenState extends State<ListingsScreen> {
           boostingPackages = boostingPackagesGV;
         });
       }
+    }
+  }
+
+  getSellerMultiListingPackages() async {
+    Response response = await sendPostRequest(
+        action: 'get_multi_listing_packages_customer',
+        data: {'users_customers_id': userDataGV['userId']});
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    List packages = [];
+    if (status == 'success') {
+      packages = decodedResponse['data'];
+      sellerMultiListingPackageGV = packages.last;
+      print('sellerMultiListingPackageGV: $sellerMultiListingPackageGV');
+    }
+
+    if (status == 'error') {
+      sellerMultiListingPackageGV = {};
+      print('sellerMultiListingPackageGV: $sellerMultiListingPackageGV');
     }
   }
 
@@ -178,15 +201,13 @@ class _ListingsScreenState extends State<ListingsScreen> {
                             baseColor: Colors.grey[500]!,
                             highlightColor: Colors.grey[100]!,
                             child: BusinessTypeButton(
-                                margin: const EdgeInsets.only(left: 5, right: 5),
+                                margin:
+                                    const EdgeInsets.only(left: 5, right: 5),
                                 businessName: '',
                                 gradient: null,
                                 buttonBackground: grey.withOpacity(0.3),
                                 textColor: grey)),
                       ),
-              ),
-              const SizedBox(
-                height: 20,
               ),
               selectedListingType == 1 && boostingPackages.isNotEmpty
                   ? ProductListingScreen(

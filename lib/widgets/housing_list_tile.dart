@@ -80,7 +80,7 @@ class HousingListTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: 86,
@@ -178,6 +178,7 @@ class HousingListTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconTextReusable(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         imageName: 'area_icon',
                         text: '$houseArea sq.ft',
                       ),
@@ -185,6 +186,7 @@ class HousingListTile extends StatelessWidget {
                         width: 18,
                       ),
                       IconTextReusable(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         imageName: 'bath_icon',
                         text: noOfBaths,
                       ),
@@ -192,6 +194,7 @@ class HousingListTile extends StatelessWidget {
                         width: 18,
                       ),
                       IconTextReusable(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         imageName: 'bed_icon',
                         text: noOfBeds,
                       ),

@@ -208,14 +208,17 @@ class FeaturedHousingWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconTextReusable(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       imageName: 'area_icon',
                       text: '$area sq.ft',
                     ),
                     IconTextReusable(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       imageName: 'bath_icon',
                       text: bathrooms,
                     ),
                     IconTextReusable(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       imageName: 'bed_icon',
                       text: bedrooms,
                     ),

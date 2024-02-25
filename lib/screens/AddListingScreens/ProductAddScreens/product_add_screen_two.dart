@@ -38,40 +38,102 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
   String setButtonStatus = 'Publish';
   Map<dynamic, dynamic>? initialBoostingValue;
 
-  setBoughtMultiListingPkg() {
-    // todo: need to add date check
-    if (sellerMultiListingPackageGV.isNotEmpty) {
-      int index = boostingPackagesGV.indexWhere((map) =>
-          map['name'] == sellerMultiListingPackageGV['packages']['name']);
-      initialBoostingValue = boostingPackagesGV[index];
-      updateSelectedBoosting(initialBoostingValue);
-    }
-  }
+  // setBoughtMultiListingPkg() {
+  //   // todo: need to add date check
+  //   // sellerMultiListingPackageGV['payment_status'] != 'Unpaid'
+  //   if (sellerMultiListingPackageGV.isNotEmpty) {
+  //     int index = boostingPackagesGV.indexWhere((map) =>
+  //         map['name'] == sellerMultiListingPackageGV['packages']['name']);
+  //     initialBoostingValue = boostingPackagesGV[index];
+  //     updateSelectedBoosting(initialBoostingValue);
+  //   }
+  // }
+
+  // updateSelectedBoosting(value) {
+  //   // if (sellerMultiListingPackageGV.isNotEmpty &&
+  //   //     value['name'] == sellerMultiListingPackageGV['packages']['name']) {
+  //   //   setState(() {
+  //   //     selectedBoosting = '\$${double.parse(value['price'])} ${value['name']}';
+  //   //   });
+  //   //   print(selectedBoosting);
+  //   //   selectedBoostingItem = value;
+  //   //   print(selectedBoostingItem);
+  //   // }
+  //   // else if (sellerMultiListingPackageGV.isEmpty) {
+  //   setState(() {
+  //     selectedBoosting = '\$${double.parse(value['price'])} ${value['name']}';
+  //   });
+  //   print(selectedBoosting);
+  //   selectedBoostingItem = value;
+  //   print(selectedBoostingItem);
+  //   // } else
+  //   if (sellerMultiListingPackageGV.isNotEmpty &&
+  //       sellerMultiListingPackageGV['payment_status'] == 'Paid' &&
+  //       value['name'] != sellerMultiListingPackageGV['packages']['name']) {
+  //     // ScaffoldMessenger.of(context).showSnackBar(
+  //     //     ErrorSnackBar(message: 'You don\'t need to buy a new package.'));
+  //     ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(
+  //         message:
+  //         'You have the subscription of Monthly Unlimited Boosting package.'));
+  //   }
+  //   // else {}
+  // }
 
   updateSelectedBoosting(value) {
+    setState(() {
+      selectedBoosting = '\$${double.parse(value['price'])} ${value['name']}';
+    });
+    print(selectedBoosting);
+    selectedBoostingItem = value;
+    print(selectedBoostingItem);
+
     if (sellerMultiListingPackageGV.isNotEmpty &&
-        value['name'] == sellerMultiListingPackageGV['packages']['name']) {
-      setState(() {
-        selectedBoosting = '\$${double.parse(value['price'])} ${value['name']}';
-      });
-      print(selectedBoosting);
-      selectedBoostingItem = value;
-      print(selectedBoostingItem);
-    } else if (sellerMultiListingPackageGV.isEmpty) {
-      setState(() {
-        selectedBoosting = '\$${double.parse(value['price'])} ${value['name']}';
-      });
-      print(selectedBoosting);
-      selectedBoostingItem = value;
-      print(selectedBoostingItem);
-    } else if (sellerMultiListingPackageGV.isNotEmpty &&
+        sellerMultiListingPackageGV['payment_status'] == 'Paid' &&
         value['name'] != sellerMultiListingPackageGV['packages']['name']) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          ErrorSnackBar(message: 'You don\'t need to buy a new package.'));
       ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(
           message:
               'You have the subscription of Monthly Unlimited Boosting package.'));
+    }
+  }
+
+  boostIndividualListing(
+      {required listingsProductsId, required usersCustomersPkgsId}) async {
+    setState(() {
+      setLoader = true;
+      setButtonStatus = 'Please wait..';
+    });
+    Response response =
+        await sendPostRequest(action: 'boost_listings_individually', data: {
+      "users_customers_packages_id": usersCustomersPkgsId,
+      "listings_products_id": listingsProductsId,
+      "listings_services_id": "",
+      "listings_housings_id": ""
+    });
+    setState(() {
+      setLoader = false;
+      setButtonStatus = 'Publish';
+    });
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    if (status == 'success') {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SuccessSnackBar(message: 'Your listing boosted successfully'));
+    } else if (status == 'error') {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(ErrorSnackBar(message: decodedResponse['message']));
     } else {}
+    // ignore: use_build_context_synchronously
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return const BottomNavBar(
+            requiredScreenIndex: 0,
+          );
+        },
+      ),
+      (route) => false,
+    );
   }
 
   @override
@@ -79,7 +141,7 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
     // TODO: implement initState
     super.initState();
     print(widget.formData);
-    setBoughtMultiListingPkg();
+    // setBoughtMultiListingPkg();
   }
 
   List<Widget> getPageIndicators() {
@@ -172,25 +234,6 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                         leadingIconName: 'boost_icon',
                         hintText: 'Select Option',
                         onSelected: updateSelectedBoosting,
-                        // onSelected: (value) {
-                        //   // if (sellerMultiListingPackageGV.isEmpty) {
-                        //   setState(() {
-                        //     selectedBoosting =
-                        //         '\$${double.parse(value['price'])} ${value['name']}';
-                        //   });
-                        //   print(selectedBoosting);
-                        //   selectedBoostingItem = value;
-                        //   print(selectedBoostingItem);
-                        //   // } else {
-                        //   //   ErrorSnackBar(
-                        //   //       message:
-                        //   //           'You don\'t need to buy a new package.');
-                        //   //   ErrorSnackBar(
-                        //   //       message:
-                        //   //           'You have the subscription of Monthly Unlimited Boosting package.');
-                        //   // }
-                        // },
-                        initialSelection: initialBoostingValue,
                         dropdownMenuEntries: boostingPackagesGV
                             .map(
                               (dynamic value) => DropdownMenuEntry<dynamic>(
@@ -271,10 +314,26 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                                   'price': widget.formData['productPrice'],
                                   'min_offer_price':
                                       minPriceEditingController.text.toString(),
-                                  'packages_id': sellerMultiListingPackageGV
-                                          .isNotEmpty
-                                      ? ""
-                                      : selectedBoostingItem?['packages_id'],
+                                  'packages_id':
+                                      sellerMultiListingPackageGV.isNotEmpty &&
+                                              sellerMultiListingPackageGV[
+                                                      'payment_status'] ==
+                                                  'Paid' &&
+                                              selectedBoostingItem?[
+                                                      'packages_id'] !=
+                                                  sellerMultiListingPackageGV[
+                                                      'packages']['packages_id']
+                                          ? ""
+                                          : sellerMultiListingPackageGV
+                                                      .isNotEmpty &&
+                                                  selectedBoostingItem?[
+                                                          'packages_id'] ==
+                                                      sellerMultiListingPackageGV[
+                                                              'packages']
+                                                          ['packages_id']
+                                              ? ""
+                                              : selectedBoostingItem?[
+                                                  'packages_id'],
                                   'payment_gateways_id': "",
                                   'payment_status': "",
                                   'listings_images': images,
@@ -294,38 +353,118 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                             if (status == 'success') {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SuccessSnackBar());
-                              if (sellerMultiListingPackageGV.isNotEmpty) {
-                                setState(() {
-                                  setLoader = true;
-                                  setButtonStatus = 'Please wait..';
-                                });
-                                Response response = await sendPostRequest(
-                                    action: 'boost_listings_individually',
-                                    data: {
-                                      "users_customers_packages_id":
-                                          sellerMultiListingPackageGV[
-                                              'users_customers_packages_id'],
-                                      "listings_products_id":
+
+                              if (selectedBoostingItem?['packages_id'] !=
+                                  null) {
+                                // ================inner if-else starting below==================
+                                //============ start case: selecting any boost listing package
+                                if (sellerMultiListingPackageGV.isEmpty) {
+                                  print(
+                                      'multi-listing pkg not subscribed, and chosen a different package');
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => PaymentScreen(
+                                                listingProductId: data[
+                                                    'listings_products_id'],
+                                                selectedPackage: data[
+                                                        'users_customers_packages']
+                                                    ['packages'],
+                                                userCustomerPackagesId: data[
+                                                        'users_customers_packages']
+                                                    [
+                                                    'users_customers_packages_id'],
+                                              )),
+                                      (route) => false);
+                                }
+                                //============ cases: for selecting a different package other than multi-listing
+
+                                else if (sellerMultiListingPackageGV
+                                        .isNotEmpty &&
+                                    sellerMultiListingPackageGV[
+                                            'payment_status'] ==
+                                        'Unpaid' &&
+                                    selectedBoostingItem?['packages_id'] !=
+                                        sellerMultiListingPackageGV['packages']
+                                            ['packages_id']) {
+                                  print(
+                                      'multi-listing already subscribed, not bought, and chosen a different package');
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => PaymentScreen(
+                                                listingProductId: data[
+                                                    'listings_products_id'],
+                                                selectedPackage: data[
+                                                        'users_customers_packages']
+                                                    ['packages'],
+                                                userCustomerPackagesId: data[
+                                                        'users_customers_packages']
+                                                    [
+                                                    'users_customers_packages_id'],
+                                              )),
+                                      (route) => false);
+                                } else if (sellerMultiListingPackageGV
+                                        .isNotEmpty &&
+                                    sellerMultiListingPackageGV[
+                                            'payment_status'] ==
+                                        'Paid' &&
+                                    selectedBoostingItem?['packages_id'] !=
+                                        sellerMultiListingPackageGV['packages']
+                                            ['packages_id']) {
+                                  print(
+                                      'multi-listing already subscribed and bought, and chosen a different package');
+
+                                  await boostIndividualListing(
+                                      listingsProductsId:
                                           data['listings_products_id'],
-                                      "listings_services_id": "",
-                                      "listings_housings_id": ""
-                                    });
-                                setState(() {
-                                  setLoader = false;
-                                  setButtonStatus = 'Publish';
-                                });
-                                var decodedResponse = jsonDecode(response.body);
-                                String status = decodedResponse['status'];
-                                if (status == 'success') {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SuccessSnackBar(
-                                          message:
-                                              'Your listing boosted successfully'));
-                                } else if (status == 'error') {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      ErrorSnackBar(
-                                          message: decodedResponse['message']));
-                                } else {}
+                                      usersCustomersPkgsId:
+                                          sellerMultiListingPackageGV[
+                                              'users_customers_packages_id']);
+                                }
+                                //============ cases done: for selecting a different package other than multi-listing
+                                //============ cases: for selecting a multi-listing package
+                                else if (sellerMultiListingPackageGV
+                                        .isNotEmpty &&
+                                    selectedBoostingItem?['packages_id'] ==
+                                        sellerMultiListingPackageGV['packages']
+                                            ['packages_id'] &&
+                                    sellerMultiListingPackageGV[
+                                            'payment_status'] ==
+                                        'Unpaid') {
+                                  print(
+                                      'multi-listing already subscribed, not bought but again choose multi-listing package');
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => PaymentScreen(
+                                                listingProductId: data[
+                                                    'listings_products_id'],
+                                                selectedPackage:
+                                                    sellerMultiListingPackageGV[
+                                                        'packages'],
+                                                userCustomerPackagesId:
+                                                    sellerMultiListingPackageGV[
+                                                        'users_customers_packages_id'],
+                                              )),
+                                      (route) => false);
+                                } else if (sellerMultiListingPackageGV
+                                        .isNotEmpty &&
+                                    selectedBoostingItem?['packages_id'] ==
+                                        sellerMultiListingPackageGV['packages']
+                                            ['packages_id'] &&
+                                    sellerMultiListingPackageGV[
+                                            'payment_status'] ==
+                                        'Paid') {
+                                  print(
+                                      'multi-listing already subscribed and bought but again chosen multi-listing package');
+                                  await boostIndividualListing(
+                                      listingsProductsId:
+                                          data['listings_products_id'],
+                                      usersCustomersPkgsId:
+                                          sellerMultiListingPackageGV[
+                                              'users_customers_packages_id']);
+                                }
+                                // ================inner if-else done==================
+                              } else if (selectedBoostingItem?['packages_id'] ==
+                                  null) {
                                 // ignore: use_build_context_synchronously
                                 Navigator.pushAndRemoveUntil(
                                   context,
@@ -338,38 +477,6 @@ class _ProductAddScreenTwoState extends State<ProductAddScreenTwo> {
                                   ),
                                   (route) => false,
                                 );
-                              } else if (sellerMultiListingPackageGV.isEmpty &&
-                                  selectedBoostingItem?['packages_id'] ==
-                                      null) {
-                                // ignore: use_build_context_synchronously
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return const BottomNavBar(
-                                        requiredScreenIndex: 0,
-                                      );
-                                    },
-                                  ),
-                                  (route) => false,
-                                );
-                              } else if (sellerMultiListingPackageGV.isEmpty &&
-                                  selectedBoostingItem?['packages_id'] !=
-                                      null) {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) => PaymentScreen(
-                                              listingProductId:
-                                                  data['listings_products_id'],
-                                              selectedPackage: data[
-                                                      'users_customers_packages']
-                                                  ['packages'],
-                                              userCustomerPackagesId: data[
-                                                      'users_customers_packages']
-                                                  [
-                                                  'users_customers_packages_id'],
-                                            )),
-                                    (route) => false);
                               } else {}
                             }
                             if (status == 'error') {

@@ -7,6 +7,7 @@ List<PopupMenuEntry> popupMenuOptions = [
   PopupMenuItem(
     value: 'boost',
     child: IconTextReusable(
+      mainAxisAlignment: MainAxisAlignment.start,
       imageName: 'boost_option',
       text: 'Boost Listing',
       style: kBodyTextStyle,
@@ -18,6 +19,7 @@ List<PopupMenuEntry> popupMenuOptions = [
   PopupMenuItem(
     value: 'edit',
     child: IconTextReusable(
+      mainAxisAlignment: MainAxisAlignment.start,
       imageName: 'edit_option',
       text: 'Edit',
       spaceBetween: 10,
@@ -29,6 +31,7 @@ List<PopupMenuEntry> popupMenuOptions = [
   PopupMenuItem(
     value: 'delete',
     child: IconTextReusable(
+      mainAxisAlignment: MainAxisAlignment.start,
       imageName: 'delete_option',
       spaceBetween: 10,
       height: 20,
