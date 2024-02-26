@@ -803,6 +803,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                           MaterialPageRoute(
                                               builder:
                                                   (context) => PaymentScreen(
+                                                        buyTheProduct: false,
+                                                        buyTheBoosting: true,
                                                         listingHousingId: data[
                                                             'listings_housings_id'],
                                                         selectedPackage: data[
@@ -831,6 +833,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                           MaterialPageRoute(
                                               builder:
                                                   (context) => PaymentScreen(
+                                                        buyTheProduct: false,
+                                                        buyTheBoosting: true,
                                                         listingHousingId: data[
                                                             'listings_housings_id'],
                                                         selectedPackage: data[
@@ -876,6 +880,8 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   PaymentScreen(
+                                                    buyTheProduct: false,
+                                                    buyTheBoosting: true,
                                                     listingHousingId: data[
                                                         'listings_housings_id'],
                                                     selectedPackage:

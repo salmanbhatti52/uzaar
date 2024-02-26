@@ -47,6 +47,7 @@ class FeaturedServicesWidget extends StatelessWidget {
   final String servicePrice;
   final void Function()? onOptionTap;
   final void Function()? onImageTap;
+  final String? sellerProfileVerified;
   const FeaturedServicesWidget({
     super.key,
     required this.image,
@@ -56,6 +57,7 @@ class FeaturedServicesWidget extends StatelessWidget {
     required this.servicePrice,
     required this.onOptionTap,
     required this.onImageTap,
+    required this.sellerProfileVerified,
   });
 
   @override
@@ -83,15 +85,17 @@ class FeaturedServicesWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                left: 6,
-                top: 5,
-                child: SvgPicture.asset(
-                  'assets/verify-check.svg',
-                  width: 20,
-                  height: 20,
-                ),
-              ),
+              sellerProfileVerified == 'Yes'
+                  ? Positioned(
+                      left: 6,
+                      top: 5,
+                      child: SvgPicture.asset(
+                        'assets/verify-check.svg',
+                        width: 20,
+                        height: 20,
+                      ),
+                    )
+                  : const Positioned(child: SizedBox()),
               Positioned(
                 right: 3,
                 top: 5,

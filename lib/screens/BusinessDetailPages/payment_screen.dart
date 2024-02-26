@@ -22,24 +22,29 @@ import 'package:shimmer/shimmer.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 
 class PaymentScreen extends StatefulWidget {
-  PaymentScreen({
-    super.key,
-    // required this.listingItemId,
-    // required this.packageId,
-    this.userCustomerPackagesId,
-    // this.listingItemId,
-    this.listingProductId,
-    this.listingServiceId,
-    this.listingHousingId,
-    this.selectedPackage,
-    // this.packagePrice
-    // this.userCustomerPackagesId,
-  });
+  PaymentScreen(
+      {super.key,
+      // required this.listingItemId,
+      // required this.packageId,
+      this.userCustomerPackagesId,
+      // this.listingItemId,
+      this.listingProductId,
+      this.listingServiceId,
+      this.listingHousingId,
+      this.selectedPackage,
+      this.offerData,
+      required this.buyTheBoosting,
+      required this.buyTheProduct
+      // this.packagePrice
+      // this.userCustomerPackagesId,
+      });
   // int? listingItemId;
   int? listingProductId;
   int? listingServiceId;
   int? listingHousingId;
-
+  Map? offerData;
+  bool buyTheProduct;
+  bool buyTheBoosting;
   Map? selectedPackage;
   // double? packagePrice;
   int? userCustomerPackagesId;
@@ -84,7 +89,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     });
   }
 
-  payWithPayPal(
+  payForBoostingWithPayPal(
       {required String paymentStatus,
       required String payerEmail,
       required String payeeEmail,
@@ -450,28 +455,32 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                               // print("onSuccess: $params");
                                               // var data = jsonEncode(params);
                                               print("onSuccess123: $params");
-                                              payWithPayPal(
-                                                payeeEmail: params['data']
-                                                        ['transactions'][0]
-                                                    ['payee']['email'],
-                                                payerEmail: params['data']
-                                                        ['payer']['payer_info']
-                                                    ['email'],
-                                                payerName: params['data']
-                                                                ['payer']
-                                                            ['payer_info']
-                                                        ['first_name'] +
-                                                    " " +
-                                                    params['data']['payer']
-                                                            ['payer_info']
-                                                        ['last_name'],
-                                                paymentId: params['data']
-                                                            ['transactions'][0]
-                                                        ['related_resources'][0]
-                                                    ['sale']['id'],
-                                                paymentStatus: 'Paid',
-                                                // paymentId: params['data']['transactions'][0]['related_resources'][0]['sale']['id'],paymentStatus: params['data']['transactions'][0]['related_resources'][0]['sale']['state'],
-                                              );
+                                              if (widget.buyTheBoosting ==
+                                                  true) {
+                                                payForBoostingWithPayPal(
+                                                  payeeEmail: params['data']
+                                                          ['transactions'][0]
+                                                      ['payee']['email'],
+                                                  payerEmail: params['data']
+                                                          ['payer']
+                                                      ['payer_info']['email'],
+                                                  payerName: params['data']
+                                                                  ['payer']
+                                                              ['payer_info']
+                                                          ['first_name'] +
+                                                      " " +
+                                                      params['data']['payer']
+                                                              ['payer_info']
+                                                          ['last_name'],
+                                                  paymentId: params['data'][
+                                                              'transactions'][0]
+                                                          ['related_resources']
+                                                      [0]['sale']['id'],
+                                                  paymentStatus: 'Paid',
+                                                  // paymentId: params['data']['transactions'][0]['related_resources'][0]['sale']['id'],paymentStatus: params['data']['transactions'][0]['related_resources'][0]['sale']['state'],
+                                                );
+                                              } else if (widget.buyTheProduct ==
+                                                  true) {}
                                             },
                                             onError: (error) {
                                               print("onError: $error");
@@ -492,14 +501,26 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                             transactions: [
                                               {
                                                 "amount": {
-                                                  "total": double.parse(
-                                                      widget.selectedPackage?[
-                                                          'price']),
+                                                  "total": widget
+                                                              .buyTheBoosting ==
+                                                          true
+                                                      ? double.parse(widget
+                                                              .selectedPackage?[
+                                                          'price'])
+                                                      : double.parse(
+                                                          widget.offerData?[
+                                                              'offer_price']),
                                                   "currency": "USD",
                                                   "details": {
-                                                    "subtotal": double.parse(
-                                                        widget.selectedPackage?[
-                                                            'price']),
+                                                    "subtotal": widget
+                                                                .buyTheBoosting ==
+                                                            true
+                                                        ? double.parse(widget
+                                                                .selectedPackage?[
+                                                            'price'])
+                                                        : double.parse(
+                                                            widget.offerData?[
+                                                                'offer_price']),
                                                     "shipping": '0',
                                                     "shipping_discount": 0
                                                   }
@@ -512,16 +533,27 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                 // },
                                                 "item_list": {
                                                   "items": [
-                                                    {
-                                                      "name": widget
-                                                              .selectedPackage?[
-                                                          'name'],
-                                                      "quantity": '1',
-                                                      "price": widget
-                                                              .selectedPackage?[
-                                                          'price'],
-                                                      "currency": "USD"
-                                                    },
+                                                    widget.buyTheBoosting ==
+                                                            true
+                                                        ? {
+                                                            "name": widget
+                                                                    .selectedPackage?[
+                                                                'name'],
+                                                            "quantity": '1',
+                                                            "price": widget
+                                                                    .selectedPackage?[
+                                                                'price'],
+                                                            "currency": "USD"
+                                                          }
+                                                        : {
+                                                            "name":
+                                                                'Buying the listing',
+                                                            "quantity": '1',
+                                                            "price": widget
+                                                                    .offerData?[
+                                                                'offer_price'],
+                                                            "currency": "USD"
+                                                          },
                                                     // {
                                                     //   "name": "Pineapple",
                                                     //   "quantity": 5,

@@ -392,13 +392,17 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                                                 color: Color(0xFFD9D9D9),
                                               ),
                                   ),
-                                  Positioned(
-                                    child: SvgPicture.asset(
-                                      'assets/verify-check.svg',
-                                      width: 19,
-                                      height: 19,
-                                    ),
-                                  ),
+                                  widget.serviceData['users_customers']
+                                              ['badge_verified'] ==
+                                          'Yes'
+                                      ? Positioned(
+                                          child: SvgPicture.asset(
+                                            'assets/verify-check.svg',
+                                            width: 19,
+                                            height: 19,
+                                          ),
+                                        )
+                                      : const Positioned(child: SizedBox()),
                                 ],
                               ),
                               const SizedBox(
@@ -510,6 +514,9 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return FeaturedServicesWidget(
+                                sellerProfileVerified:
+                                    aSellerOtherListingServices[index]
+                                        ['users_customers']['badge_verified'],
                                 image: imgBaseUrl +
                                     aSellerOtherListingServices[index]
                                         ['listings_images'][0]['image'],

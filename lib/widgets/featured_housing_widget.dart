@@ -46,7 +46,7 @@ class FeaturedHousingWidget extends StatelessWidget {
   final String bathrooms;
   final void Function()? onOptionTap;
   final void Function()? onImageTap;
-
+  final String? sellerProfileVerified;
   const FeaturedHousingWidget(
       {super.key,
       required this.image,
@@ -59,7 +59,8 @@ class FeaturedHousingWidget extends StatelessWidget {
       required this.bathrooms,
       required this.onOptionTap,
       required this.onImageTap,
-      required this.furnishedStatus});
+      required this.furnishedStatus,
+      required this.sellerProfileVerified});
 
   @override
   Widget build(BuildContext context) {
@@ -86,15 +87,17 @@ class FeaturedHousingWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                left: 6,
-                top: 5,
-                child: SvgPicture.asset(
-                  'assets/verify-check.svg',
-                  width: 20,
-                  height: 20,
-                ),
-              ),
+              sellerProfileVerified == 'Yes'
+                  ? Positioned(
+                      left: 6,
+                      top: 5,
+                      child: SvgPicture.asset(
+                        'assets/verify-check.svg',
+                        width: 20,
+                        height: 20,
+                      ),
+                    )
+                  : const Positioned(child: SizedBox()),
               Positioned(
                 right: 3,
                 top: 5,

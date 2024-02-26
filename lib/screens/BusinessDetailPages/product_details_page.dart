@@ -488,13 +488,17 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                 color: Color(0xFFD9D9D9),
                                               ),
                                   ),
-                                  Positioned(
-                                    child: SvgPicture.asset(
-                                      'assets/verify-check.svg',
-                                      width: 19,
-                                      height: 19,
-                                    ),
-                                  ),
+                                  widget.productData['users_customers']
+                                              ['badge_verified'] ==
+                                          'Yes'
+                                      ? Positioned(
+                                          child: SvgPicture.asset(
+                                            'assets/verify-check.svg',
+                                            width: 19,
+                                            height: 19,
+                                          ),
+                                        )
+                                      : const Positioned(child: SizedBox()),
                                 ],
                               ),
                               const SizedBox(
@@ -592,6 +596,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return FeaturedProductsWidget(
+                                sellerProfileVerified:
+                                    aSellerOtherListingProducts[index]
+                                        ['users_customers']['badge_verified'],
                                 productCondition:
                                     aSellerOtherListingProducts[index]
                                         ['condition'],

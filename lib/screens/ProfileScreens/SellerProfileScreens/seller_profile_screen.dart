@@ -115,16 +115,18 @@ class _SellerProfileScreenState extends State<SellerProfileScreen>
                             : const SizedBox(),
                       ),
                     ),
-                    Positioned(
-                      left: -10,
-                      top: -7,
-                      child: GestureDetector(
-                        onTap: null,
-                        child: SvgPicture.asset(
-                          'assets/verify-check.svg',
-                        ),
-                      ),
-                    ),
+                    widget.sellerData['badge_verified'] == 'Yes'
+                        ? Positioned(
+                            left: -10,
+                            top: -7,
+                            child: GestureDetector(
+                              onTap: null,
+                              child: SvgPicture.asset(
+                                'assets/verify-check.svg',
+                              ),
+                            ),
+                          )
+                        : const Positioned(child: SizedBox()),
                   ],
                 ),
                 const SizedBox(

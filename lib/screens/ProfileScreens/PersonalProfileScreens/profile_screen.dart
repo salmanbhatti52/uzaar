@@ -92,6 +92,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   initPrefs() async {
     preferences = await SharedPreferences.getInstance();
+    isProfileVerified();
+  }
+
+  isProfileVerified() async {
+    Response response = await sendPostRequest(
+        action: 'is_verification_applied',
+        data: {"users_customers_id": userDataGV['userId']});
+    print('isProfileVerified: ${response.body}');
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+
+    if (status == 'success') {
+      Map data = decodedResponse['data'];
+      setState(() {
+        profileVerificationStatusGV = data['verification_applied'];
+      });
+    } else if (status == 'error') {
+      setState(() {
+        profileVerificationStatusGV = '';
+      });
+    } else {}
   }
 
   @override
@@ -233,16 +254,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   : const SizedBox(),
                             ),
                           ),
-                          Positioned(
-                            left: -10,
-                            top: -7,
-                            child: GestureDetector(
-                              onTap: null,
-                              child: SvgPicture.asset(
-                                'assets/verified_icon.svg',
-                              ),
-                            ),
-                          ),
+                          profileVerificationStatusGV == 'Approved'
+                              ? Positioned(
+                                  left: -10,
+                                  top: -7,
+                                  child: GestureDetector(
+                                    onTap: null,
+                                    child: SvgPicture.asset(
+                                      'assets/verified_icon.svg',
+                                    ),
+                                  ),
+                                )
+                              : const Positioned(child: SizedBox()),
                           Positioned(
                             right: -7,
                             bottom: -1,
@@ -319,20 +342,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(
                         height: 15,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          if(profileVerificationStatusGV.isEmpty){
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const ApplyForVerificationScreen(),
-                            ));
-                          }
-                        },
-                        child:  Text(profileVerificationStatusGV.isEmpty?
-                          'Apply for Verification':'Applied for Verification',
-                          textAlign: TextAlign.center,
-                          style: kFontSixteenSixHPB,
-                        ),
-                      ),
+                      profileVerificationStatusGV != 'Approved'
+                          ? GestureDetector(
+                              onTap: () async {
+                                if (profileVerificationStatusGV.isEmpty ||
+                                    profileVerificationStatusGV == 'Declined') {
+                                  String result = await Navigator.of(context)
+                                      .push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ApplyForVerificationScreen(),
+                                  ));
+                                  if (result != '') {
+                                    setState(() {
+                                      profileVerificationStatusGV = result;
+                                    });
+                                  }
+                                }
+                              },
+                              child: Text(
+                                profileVerificationStatusGV.isEmpty ||
+                                        profileVerificationStatusGV ==
+                                            'Declined'
+                                    ? 'Apply for Verification'
+                                    : profileVerificationStatusGV == 'Pending'
+                                        ? 'Applied for Verification'
+                                        : '',
+                                textAlign: TextAlign.center,
+                                style: kFontSixteenSixHPB,
+                              ),
+                            )
+                          : const SizedBox(),
                       const SizedBox(
                         height: 7,
                       ),

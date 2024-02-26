@@ -308,6 +308,8 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) => PaymentScreen(
+                                                  buyTheProduct: false,
+                                                  buyTheBoosting: true,
                                                   listingProductId: data[
                                                       'listings_products_id'],
                                                   selectedPackage: data[
@@ -336,6 +338,8 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) => PaymentScreen(
+                                                  buyTheProduct: false,
+                                                  buyTheBoosting: true,
                                                   listingProductId: data[
                                                       'listings_products_id'],
                                                   selectedPackage: data[
@@ -380,6 +384,8 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) => PaymentScreen(
+                                                  buyTheProduct: false,
+                                                  buyTheBoosting: true,
                                                   listingProductId: data[
                                                       'listings_products_id'],
                                                   selectedPackage:

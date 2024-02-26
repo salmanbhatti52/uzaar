@@ -557,6 +557,8 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                       itemCount: allListingsProducts.length,
                       itemBuilder: (context, index) {
                         return FeaturedProductsWidget(
+                          sellerProfileVerified: allListingsProducts[index]
+                              ['users_customers']['badge_verified'],
                           productCondition: allListingsProducts[index]
                               ['condition'],
                           image: imgBaseUrl +

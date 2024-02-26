@@ -288,6 +288,10 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                                           MaterialPageRoute(
                                                               builder: (context) =>
                                                                   PaymentScreen(
+                                                                    buyTheProduct:
+                                                                        false,
+                                                                    buyTheBoosting:
+                                                                        true,
                                                                     listingHousingId:
                                                                         listedHousings[index]
                                                                             [
@@ -321,6 +325,10 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                                           MaterialPageRoute(
                                                               builder: (context) =>
                                                                   PaymentScreen(
+                                                                    buyTheProduct:
+                                                                        false,
+                                                                    buyTheBoosting:
+                                                                        true,
                                                                     listingHousingId:
                                                                         listedHousings[index]
                                                                             [
@@ -373,6 +381,10 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                                                           MaterialPageRoute(
                                                               builder: (context) =>
                                                                   PaymentScreen(
+                                                                    buyTheProduct:
+                                                                        false,
+                                                                    buyTheBoosting:
+                                                                        true,
                                                                     listingHousingId:
                                                                         listedHousings[index]
                                                                             [

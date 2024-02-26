@@ -42,6 +42,7 @@ class FeaturedProductsWidget extends StatelessWidget {
   final String productCondition;
   final void Function()? onOptionTap;
   final void Function()? onImageTap;
+  final String? sellerProfileVerified;
   const FeaturedProductsWidget(
       {super.key,
       required this.image,
@@ -51,7 +52,8 @@ class FeaturedProductsWidget extends StatelessWidget {
       required this.productPrice,
       required this.onOptionTap,
       required this.onImageTap,
-      required this.productCondition});
+      required this.productCondition,
+      required this.sellerProfileVerified});
 
   @override
   Widget build(BuildContext context) {
@@ -79,15 +81,17 @@ class FeaturedProductsWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                left: 6,
-                top: 5,
-                child: SvgPicture.asset(
-                  'assets/verify-check.svg',
-                  width: 20,
-                  height: 20,
-                ),
-              ),
+              sellerProfileVerified == 'Yes'
+                  ? Positioned(
+                      left: 6,
+                      top: 5,
+                      child: SvgPicture.asset(
+                        'assets/verify-check.svg',
+                        width: 20,
+                        height: 20,
+                      ),
+                    )
+                  : const Positioned(child: SizedBox()),
               Positioned(
                 right: 3,
                 top: 5,

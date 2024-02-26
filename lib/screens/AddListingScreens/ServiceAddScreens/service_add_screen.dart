@@ -572,6 +572,8 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) => PaymentScreen(
+                                                  buyTheProduct: false,
+                                                  buyTheBoosting: true,
                                                   listingServiceId: data[
                                                       'listings_services_id'],
                                                   selectedPackage: data[
@@ -600,6 +602,8 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) => PaymentScreen(
+                                                  buyTheProduct: false,
+                                                  buyTheBoosting: true,
                                                   listingServiceId: data[
                                                       'listings_services_id'],
                                                   selectedPackage: data[
@@ -644,6 +648,8 @@ class _ServiceAddScreenState extends State<ServiceAddScreen> {
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) => PaymentScreen(
+                                                  buyTheProduct: false,
+                                                  buyTheBoosting: true,
                                                   listingServiceId: data[
                                                       'listings_services_id'],
                                                   selectedPackage:

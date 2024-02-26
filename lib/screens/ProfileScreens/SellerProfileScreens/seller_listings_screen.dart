@@ -132,6 +132,8 @@ class _SellerListingsScreenState extends State<SellerListingsScreen> {
                     ? ListView.builder(
                         itemBuilder: (context, index) {
                           return FeaturedProductsWidget(
+                            sellerProfileVerified: userFeaturedProducts[index]
+                                ['users_customers']['badge_verified'],
                             productCondition: userFeaturedProducts[index]
                                 ['condition'],
                             image: imgBaseUrl +
@@ -328,6 +330,8 @@ class _SellerListingsScreenState extends State<SellerListingsScreen> {
                     ? ListView.builder(
                         itemBuilder: (context, index) {
                           return FeaturedServicesWidget(
+                            sellerProfileVerified: userFeaturedServices[index]
+                                ['users_customers']['badge_verified'],
                             image: imgBaseUrl +
                                 userFeaturedServices[index]['listings_images']
                                     [0]['image'],
@@ -520,6 +524,8 @@ class _SellerListingsScreenState extends State<SellerListingsScreen> {
                     ? ListView.builder(
                         itemBuilder: (context, index) {
                           return FeaturedHousingWidget(
+                            sellerProfileVerified: userFeaturedHousings[index]
+                                ['users_customers']['badge_verified'],
                             furnishedStatus: userFeaturedHousings[index]
                                         ['furnished'] ==
                                     'Yes'

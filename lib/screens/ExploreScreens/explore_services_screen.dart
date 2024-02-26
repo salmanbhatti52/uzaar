@@ -410,6 +410,8 @@ class _ExploreServicesScreenState extends State<ExploreServicesScreen> {
                         itemCount: allListingsServices.length,
                         itemBuilder: (context, index) {
                           return FeaturedServicesWidget(
+                            sellerProfileVerified: allListingsServices[index]
+                                ['users_customers']['badge_verified'],
                             image: imgBaseUrl +
                                 allListingsServices[index]['listings_images'][0]
                                     ['image'],

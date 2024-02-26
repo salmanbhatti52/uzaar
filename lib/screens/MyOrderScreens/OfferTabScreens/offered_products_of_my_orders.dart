@@ -63,13 +63,15 @@ class _OfferedProductsOfMyOrdersState extends State<OfferedProductsOfMyOrders> {
     navigateToChatScreen(
         {required String otherUserName,
         required int otherUserId,
-        required String value}) {
+        required String value,
+        required Map offerData}) {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) {
           return ChatScreen(
             otherUserName: otherUserName,
             otherUserId: otherUserId,
             typeOfChat: value,
+            offerData: offerData,
           );
         },
       ));
@@ -136,6 +138,7 @@ class _OfferedProductsOfMyOrdersState extends State<OfferedProductsOfMyOrders> {
                                       ['listings_products']['users_customers']
                                   ['last_name'];
                           navigateToChatScreen(
+                              offerData: widget.myOrderedProductOffers[index],
                               otherUserId: otherUserId,
                               otherUserName:
                                   '$otherUserFirstName $otherUserLastName',

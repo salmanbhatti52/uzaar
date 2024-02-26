@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
 import 'package:uzaar/screens/BusinessDetailPages/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,14 +14,16 @@ import '../services/restService.dart';
 import '../widgets/message_text_field.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen(
+  ChatScreen(
       {super.key,
       required this.otherUserId,
       required this.otherUserName,
-      this.typeOfChat});
+      this.typeOfChat,
+      this.offerData});
   final int otherUserId;
   final String otherUserName;
   final String? typeOfChat;
+  final Map? offerData;
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -69,8 +72,8 @@ class _ChatScreenState extends State<ChatScreen> {
       'users_customers_id': userDataGV['userId'],
       'other_users_customers_id': widget.otherUserId,
     });
-    print(response.statusCode);
-    print(response.body);
+    // print(response.statusCode);
+    // print(response.body);
     var decodedData = jsonDecode(response.body);
     String status = decodedData['status'];
     chatHistoryStatus = status;
@@ -116,9 +119,19 @@ class _ChatScreenState extends State<ChatScreen> {
       firstDate: DateTime.now(),
       lastDate: DateTime(2100),
     );
+
     if (pickedDate != null && pickedDate != selectedDate) {
       setState(() {
         selectedDate = pickedDate;
+      });
+
+      // Format the date using intl package
+      final formattedDate = DateFormat.yMMMd().format(selectedDate!);
+
+      print(formattedDate); // Output: Feb 20, 2024
+      setState(() {
+        msgTextFieldController.text =
+            msgTextFieldController.text + formattedDate;
       });
     }
   }
@@ -156,7 +169,11 @@ class _ChatScreenState extends State<ChatScreen> {
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) {
-                        return PaymentScreen();
+                        return PaymentScreen(
+                          buyTheProduct: true,
+                          buyTheBoosting: false,
+                          offerData: widget.offerData,
+                        );
                       },
                     ));
                   },
@@ -236,7 +253,7 @@ class _ChatScreenState extends State<ChatScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
           child: RefreshIndicator(
             onRefresh: () async {},
             color: primaryBlue,
@@ -244,7 +261,14 @@ class _ChatScreenState extends State<ChatScreen> {
               children: [
                 widget.typeOfChat != 'shipping'
                     ? Container(
-                        margin: EdgeInsets.only(bottom: 12),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: Colors.red,
+                                width: 1.5,
+                                style: BorderStyle.solid)),
+                        margin: EdgeInsets.only(bottom: 17),
+                        padding: EdgeInsets.all(10),
                         child: Text(
                           'Now that you want to meet up for this transaction, we advise that you take the following precautions:\n\n'
                           '1. Meet up in a public location\n'

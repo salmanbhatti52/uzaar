@@ -773,6 +773,8 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) => PaymentScreen(
+                                                  buyTheBoosting: true,
+                                                  buyTheProduct: false,
                                                   listingHousingId: data[
                                                       'listings_housings_id'],
                                                   selectedPackage: data[
@@ -801,6 +803,8 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) => PaymentScreen(
+                                                  buyTheProduct: false,
+                                                  buyTheBoosting: true,
                                                   listingHousingId: data[
                                                       'listings_housings_id'],
                                                   selectedPackage: data[
@@ -845,6 +849,8 @@ class _HouseAddScreenState extends State<HouseAddScreen> {
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) => PaymentScreen(
+                                                  buyTheProduct: false,
+                                                  buyTheBoosting: true,
                                                   listingHousingId: data[
                                                       'listings_housings_id'],
                                                   selectedPackage:

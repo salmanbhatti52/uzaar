@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   init() async {
     await getUserData();
+    isProfileVerified();
     getListingTypes();
     getProductListingsCategories();
     getServiceListingsCategories();
@@ -396,6 +397,22 @@ class _HomeScreenState extends State<HomeScreen> {
         } else {}
       },
     );
+  }
+
+  isProfileVerified() async {
+    Response response = await sendPostRequest(
+        action: 'is_verification_applied',
+        data: {"users_customers_id": userDataGV['userId']});
+    print('isProfileVerified: ${response.body}');
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+
+    if (status == 'success') {
+      Map data = decodedResponse['data'];
+      profileVerificationStatusGV = data['verification_applied'];
+    } else if (status == 'error') {
+      profileVerificationStatusGV = '';
+    } else {}
   }
 
   @override
@@ -840,6 +857,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ? ListView.builder(
                                         itemBuilder: (context, index) {
                                           return FeaturedProductsWidget(
+                                            sellerProfileVerified:
+                                                featuredProducts[index]
+                                                        ['users_customers']
+                                                    ['badge_verified'],
                                             productCondition:
                                                 featuredProducts[index]
                                                     ['condition'],
@@ -1102,6 +1123,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ? ListView.builder(
                                         itemBuilder: (context, index) {
                                           return FeaturedServicesWidget(
+                                            sellerProfileVerified:
+                                                featuredServices[index]
+                                                        ['users_customers']
+                                                    ['badge_verified'],
                                             image: imgBaseUrl +
                                                 featuredServices[index]
                                                         ['listings_images'][0]
@@ -1356,6 +1381,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ? ListView.builder(
                                         itemBuilder: (context, index) {
                                           return FeaturedHousingWidget(
+                                            sellerProfileVerified:
+                                                featuredHousings[index]
+                                                        ['users_customers']
+                                                    ['badge_verified'],
                                             furnishedStatus:
                                                 featuredHousings[index]
                                                             ['furnished'] ==

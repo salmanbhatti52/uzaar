@@ -165,13 +165,15 @@ class _ApplyForVerificationScreenState
                           if (status == 'success') {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SuccessSnackBar(message: message));
-                            profileVerificationStatusGV = 'applied';
+                            profileVerificationStatusGV = 'Pending';
                           } else if (status == 'error') {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(ErrorSnackBar(message: message));
-                            profileVerificationStatusGV = 'applied';
+                            profileVerificationStatusGV = 'Pending';
                           } else {}
-                          Navigator.of(context).pop(profileVerificationStatusGV);
+                          Navigator.of(context)
+                              .pop(profileVerificationStatusGV);
+                          // Navigator.of(context).pop();
                         } else if (selectedImageInBase64.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               ErrorSnackBar(message: 'Plz upload your Id'));

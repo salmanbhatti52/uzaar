@@ -784,6 +784,8 @@ class _ExploreHousingScreenState extends State<ExploreHousingScreen> {
                       itemCount: allListingsHousings.length,
                       itemBuilder: (context, index) {
                         return FeaturedHousingWidget(
+                          sellerProfileVerified: allListingsHousings[index]
+                              ['users_customers']['badge_verified'],
                           furnishedStatus:
                               allListingsHousings[index]['furnished'] == 'Yes'
                                   ? 'Furnished'

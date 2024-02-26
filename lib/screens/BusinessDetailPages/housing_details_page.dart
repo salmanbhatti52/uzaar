@@ -440,13 +440,17 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                                                 color: Color(0xFFD9D9D9),
                                               ),
                                   ),
-                                  Positioned(
-                                    child: SvgPicture.asset(
-                                      'assets/verify-check.svg',
-                                      width: 19,
-                                      height: 19,
-                                    ),
-                                  ),
+                                  widget.houseData['users_customers']
+                                              ['badge_verified'] ==
+                                          'Yes'
+                                      ? Positioned(
+                                          child: SvgPicture.asset(
+                                            'assets/verify-check.svg',
+                                            width: 19,
+                                            height: 19,
+                                          ),
+                                        )
+                                      : const Positioned(child: SizedBox()),
                                 ],
                               ),
                               const SizedBox(
@@ -558,6 +562,9 @@ class _HousingDetailsPageState extends State<HousingDetailsPage> {
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return FeaturedHousingWidget(
+                                sellerProfileVerified:
+                                    aSellerOtherListingHouses[index]
+                                        ['users_customers']['badge_verified'],
                                 furnishedStatus:
                                     aSellerOtherListingHouses[index]
                                                 ['furnished'] ==
