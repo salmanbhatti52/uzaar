@@ -33,16 +33,15 @@ class MessageTextField extends StatelessWidget {
       ),
       child: Container(
         margin: const EdgeInsets.only(right: 12),
-        // width: MediaQuery.sizeOf(context).width,
-        padding: const EdgeInsets.only(left: 20),
-
-        height: 46,
-        // width: MediaQuery.sizeOf(context).width,
+        padding: const EdgeInsets.only(left: 20, top: 7, bottom: 7, right: 10),
+        constraints: BoxConstraints(minHeight: 46, maxHeight: 120),
+        // height: 46,
         child: Row(
           children: [
             Expanded(
               child: TextFormField(
-                keyboardType: TextInputType.text,
+                maxLines: null,
+                keyboardType: TextInputType.multiline,
                 controller: msgTextFieldController,
                 style: kTextFieldInputStyle,
                 cursorColor: primaryBlue,

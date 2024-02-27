@@ -120,7 +120,7 @@ class _ChatScreenState extends State<ChatScreen> {
       lastDate: DateTime(2100),
     );
 
-    if (pickedDate != null && pickedDate != selectedDate) {
+    if (pickedDate != null) {
       setState(() {
         selectedDate = pickedDate;
       });
