@@ -195,7 +195,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                         'Please enter your email',
                                         style: kToastTextStyle,
                                       )));
-                            } else if (!regex.hasMatch(emailController.text)) {
+                            } else if (!regex.hasMatch(emailController.text.trim())) {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                       backgroundColor: Colors.red,

@@ -34,118 +34,137 @@ class _OfferedProductsOfSalesOrdersState
           ? ListView.builder(
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>  SalesOrderDetailScreen(orderData: widget.salesOrderedProductOffers[index],),
+                  onTap: () async {
+                    String result = await Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => SalesOrderDetailScreen(
+                        orderData: widget.salesOrderedProductOffers[index],
+                      ),
                     ));
-                  },
-                  child: SalesOrdersProductsListTile(
-                    enabled: true,
-                    productImage: widget.salesOrderedProductOffers[index]
-                        ['listings_products']['listings_images'][0]['image'],
-                    productName: widget.salesOrderedProductOffers[index]
-                        ['listings_products']['name'],
-                    // productLocation: 'Los Angeles',
-                    productPrice:
-                        '\$${widget.salesOrderedProductOffers[index]['listings_products']['price']}',
-                    date: widget.salesOrderedProductOffers[index]['date_added'],
-                    offeredPrice:
-                        '\$${widget.salesOrderedProductOffers[index]['offer_price']}',
-                    onSelected: (selectedOption) async {
+                    print('Result: $result');
+                    if(result.isNotEmpty && result != 'Pending'){
                       setState(() {
-                        offerStatus = selectedOption;
-                        selectedIndex = index;
+                        widget.salesOrderedProductOffers
+                            .removeAt(index);
                       });
-                      if (offerStatus == 'Accept') {
-                        Response response = await sendPostRequest(
-                            action: 'accept_sales_listings_orders_offers',
-                            data: {
-                              'listings_orders_id':
-                                  widget.salesOrderedProductOffers[index]
-                                      ['listings_orders_id'],
-                              'listings_id':
-                                  widget.salesOrderedProductOffers[index]
-                                      ['listings_id'],
-                              'listings_types_id':
-                                  widget.salesOrderedProductOffers[index]
-                                      ['listings_types_id'],
-                              'listings_categories_id':
-                                  widget.salesOrderedProductOffers[index]
-                                      ['listings_categories_id'],
-                              'users_customers_id':
-                                  widget.salesOrderedProductOffers[index]
-                                      ['users_customers_id']
+
+                    }
+                  },
+                  child: widget.salesOrderedProductOffers[index]['status'] ==
+                          'Pending'
+                      ? SalesOrdersProductsListTile(
+                          enabled: true,
+                          productImage: widget.salesOrderedProductOffers[index]
+                                  ['listings_products']['listings_images'][0]
+                              ['image'],
+                          productName: widget.salesOrderedProductOffers[index]
+                              ['listings_products']['name'],
+                          // productLocation: 'Los Angeles',
+                          productPrice:
+                              '\$${widget.salesOrderedProductOffers[index]['listings_products']['price']}',
+                          date: widget.salesOrderedProductOffers[index]
+                              ['date_added'],
+                          offeredPrice:
+                              '\$${widget.salesOrderedProductOffers[index]['offer_price']}',
+                          onSelected: (selectedOption) async {
+                            setState(() {
+                              offerStatus = selectedOption;
+                              selectedIndex = index;
                             });
-                        print(response.statusCode);
-                        print(response.body);
-                        var decodedData = jsonDecode(response.body);
-                        String status = decodedData['status'];
-                        if (status == 'success') {
-                          setState(() {
-                            widget.salesOrderedProductOffers.removeAt(index);
-                            selectedIndex = null;
-                            widget.salesProductOffersErrMsg =
-                                'No listing found';
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SuccessSnackBar(message: 'Offer Accepted'));
-                          });
-                        }
-                        if (status == 'error') {
-                          String message = decodedData['message'];
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(ErrorSnackBar(message: message));
-                          selectedIndex = null;
-                        }
-                      }
-                      if (offerStatus == 'Reject') {
-                        Response response = await sendPostRequest(
-                            action: 'reject_sales_listings_orders_offers',
-                            data: {
-                              'listings_orders_id':
-                                  widget.salesOrderedProductOffers[index]
-                                      ['listings_orders_id'],
-                              'listings_id':
-                                  widget.salesOrderedProductOffers[index]
-                                      ['listings_id'],
-                              'listings_types_id':
-                                  widget.salesOrderedProductOffers[index]
-                                      ['listings_types_id'],
-                              'listings_categories_id':
-                                  widget.salesOrderedProductOffers[index]
-                                      ['listings_categories_id'],
-                              'users_customers_id':
-                                  widget.salesOrderedProductOffers[index]
-                                      ['users_customers_id']
-                            });
-                        print(response.statusCode);
-                        print(response.body);
-                        var decodedData = jsonDecode(response.body);
-                        String status = decodedData['status'];
-                        if (status == 'success') {
-                          setState(() {
-                            widget.salesOrderedProductOffers.removeAt(index);
-                            selectedIndex = null;
-                            widget.salesProductOffersErrMsg =
-                                'No listing found';
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SuccessSnackBar(message: 'Offer Rejected'));
-                          });
-                        }
-                        if (status == 'error') {
-                          String message = decodedData['message'];
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(ErrorSnackBar(message: message));
-                          selectedIndex = null;
-                        }
-                      }
-                    },
-                    initialSelection:
-                        selectedIndex == index ? offerStatus : 'Pending',
-                    dropdownMenuEntries: offerStatuses
-                        .map((String value) =>
-                            DropdownMenuEntry(value: value, label: value))
-                        .toList(),
-                  ),
+                            if (offerStatus == 'Accept') {
+                              Response response = await sendPostRequest(
+                                  action: 'accept_sales_listings_orders_offers',
+                                  data: {
+                                    'listings_orders_id':
+                                        widget.salesOrderedProductOffers[index]
+                                            ['listings_orders_id'],
+                                    'listings_id':
+                                        widget.salesOrderedProductOffers[index]
+                                            ['listings_id'],
+                                    'listings_types_id':
+                                        widget.salesOrderedProductOffers[index]
+                                            ['listings_types_id'],
+                                    'listings_categories_id':
+                                        widget.salesOrderedProductOffers[index]
+                                            ['listings_categories_id'],
+                                    'users_customers_id':
+                                        widget.salesOrderedProductOffers[index]
+                                            ['users_customers_id']
+                                  });
+                              print(response.statusCode);
+                              print(response.body);
+                              var decodedData = jsonDecode(response.body);
+                              String status = decodedData['status'];
+                              if (status == 'success') {
+                                setState(() {
+                                  widget.salesOrderedProductOffers
+                                      .removeAt(index);
+                                  selectedIndex = null;
+                                  widget.salesProductOffersErrMsg =
+                                      'No listing found';
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SuccessSnackBar(
+                                          message: 'Offer Accepted'));
+                                });
+                              }
+                              if (status == 'error') {
+                                String message = decodedData['message'];
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    ErrorSnackBar(message: message));
+                                selectedIndex = null;
+                              }
+                            }
+                            if (offerStatus == 'Reject') {
+                              Response response = await sendPostRequest(
+                                  action: 'reject_sales_listings_orders_offers',
+                                  data: {
+                                    'listings_orders_id':
+                                        widget.salesOrderedProductOffers[index]
+                                            ['listings_orders_id'],
+                                    'listings_id':
+                                        widget.salesOrderedProductOffers[index]
+                                            ['listings_id'],
+                                    'listings_types_id':
+                                        widget.salesOrderedProductOffers[index]
+                                            ['listings_types_id'],
+                                    'listings_categories_id':
+                                        widget.salesOrderedProductOffers[index]
+                                            ['listings_categories_id'],
+                                    'users_customers_id':
+                                        widget.salesOrderedProductOffers[index]
+                                            ['users_customers_id']
+                                  });
+                              print(response.statusCode);
+                              print(response.body);
+                              var decodedData = jsonDecode(response.body);
+                              String status = decodedData['status'];
+                              if (status == 'success') {
+                                setState(() {
+                                  widget.salesOrderedProductOffers
+                                      .removeAt(index);
+                                  selectedIndex = null;
+                                  widget.salesProductOffersErrMsg =
+                                      'No listing found';
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SuccessSnackBar(
+                                          message: 'Offer Rejected'));
+                                });
+                              }
+                              if (status == 'error') {
+                                String message = decodedData['message'];
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    ErrorSnackBar(message: message));
+                                selectedIndex = null;
+                              }
+                            }
+                          },
+                          initialSelection:
+                              selectedIndex == index ? offerStatus : 'Pending',
+                          dropdownMenuEntries: offerStatuses
+                              .map((String value) =>
+                                  DropdownMenuEntry(value: value, label: value))
+                              .toList(),
+                        )
+                      : const SizedBox(),
                 );
               },
               itemCount: widget.salesOrderedProductOffers.length,

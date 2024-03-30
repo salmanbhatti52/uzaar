@@ -78,7 +78,7 @@ class RoundedMiniDropdownMenu extends StatelessWidget {
         inputDecorationTheme: InputDecorationTheme(
           constraints: const BoxConstraints(maxHeight: 30),
           contentPadding: const EdgeInsets.only(
-            left: 15,
+            left: 11,
           ),
           border: kDropDownBorderStyle,
           enabledBorder: kDropDownBorderStyle,

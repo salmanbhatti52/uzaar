@@ -63,7 +63,7 @@ class SalesOrdersProductsListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 2, left: 5, right: 5, bottom: 14),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(9),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: white,
@@ -87,7 +87,7 @@ class SalesOrdersProductsListTile extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            width: 8.0,
+            width: 6.0,
           ),
           Expanded(
             child: Column(
@@ -113,9 +113,9 @@ class SalesOrdersProductsListTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 4,
-                ),
+                // const SizedBox(
+                //   height: 4,
+                // ),
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 //   children: [
@@ -197,7 +197,7 @@ class SalesOrdersProductsListTile extends StatelessWidget {
                     // offerStatus != null?
                     RoundedMiniDropdownMenu(
                       enabled: enabled,
-                      width: 115,
+                      width: 110,
                       onSelected: onSelected,
                       initialSelection: initialSelection,
                       dropdownMenuEntries: dropdownMenuEntries,

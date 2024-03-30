@@ -93,7 +93,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+        padding: EdgeInsets.symmetric(horizontal: 18.0),
         child: Column(
           children: [
             SizedBox(

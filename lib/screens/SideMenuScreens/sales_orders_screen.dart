@@ -83,7 +83,7 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 22.0.w),
+        padding: EdgeInsets.symmetric(horizontal: 18.0),
         child: Column(
           children: [
             SizedBox(

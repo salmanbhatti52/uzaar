@@ -80,8 +80,8 @@ class _PendingProductsOfSalesOrdersState
                     ));
                   },
                   child: MyOrdersProductsListTile(
-                    productCondition: mySalesOrdersDispatched[index]
-                        ['listings_products']['condition'],
+                    // productCondition: mySalesOrdersDispatched[index]
+                    //     ['listings_products']['condition'],
                     productImage: mySalesOrdersDispatched[index]
                         ['listings_products']['listings_images'][0]['image'],
                     productName: mySalesOrdersDispatched[index]
