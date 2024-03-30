@@ -22,9 +22,9 @@ class _PendingServicesOfSalesOrdersState
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const SalesOrderDetailScreen(),
-              ));
+              // Navigator.of(context).push(MaterialPageRoute(
+              //   builder: (context) => const SalesOrderDetailScreen(),
+              // ));
             },
             child: SalesOrdersServicesListTile(
               serviceImage: 'assets/listed_service_img.png',

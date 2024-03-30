@@ -93,7 +93,7 @@ class _OfferedProductsOfMyOrdersState extends State<OfferedProductsOfMyOrders> {
                   return GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => MyOrderDetailScreen(),
+                        builder: (context) => MyOrderDetailScreen(orderData: widget.myOrderedProductOffers[index],),
                       ));
                     },
                     child: MyOrdersProductsListTile(

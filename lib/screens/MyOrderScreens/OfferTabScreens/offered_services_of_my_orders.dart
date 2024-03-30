@@ -19,9 +19,9 @@ class _OfferedServicesOfMyOrdersState extends State<OfferedServicesOfMyOrders> {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => MyOrderDetailScreen(),
-              ));
+              // Navigator.of(context).push(MaterialPageRoute(
+              //   builder: (context) => MyOrderDetailScreen(),
+              // ));
             },
             child: const MyOrdersServicesListTile(
               serviceImage: 'assets/listed_service_img.png',

@@ -1,12 +1,8 @@
 import 'dart:convert';
 
 import 'package:uzaar/screens/SalesOrderScreens/OfferTabScreens/offered_products_of_sales_orders.dart';
-import 'package:uzaar/screens/SalesOrderScreens/PendingTabScreens/pending_Housings_of_sales_orders.dart';
 import 'package:uzaar/screens/SalesOrderScreens/PendingTabScreens/pending_products_of_sales_orders.dart';
-import 'package:uzaar/screens/SalesOrderScreens/PendingTabScreens/pending_services_of_sales_orders.dart';
-import 'package:uzaar/screens/SalesOrderScreens/PreviousTabScreens/previous_housings_of_sales_orders.dart';
 import 'package:uzaar/screens/SalesOrderScreens/PreviousTabScreens/previous_products_of_sales_orders.dart';
-import 'package:uzaar/screens/SalesOrderScreens/PreviousTabScreens/previous_services_of_sales_orders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -27,7 +23,7 @@ class SalesOrdersScreen extends StatefulWidget {
 class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
   int selectedCategory = 2;
   String selectedBusiness = 'Products';
-  List<String> businessTypes = ['Products', 'Services', 'Housing'];
+  List<String> businessTypes = ['Products'];
   String salesProductOffersErrMsg = '';
   List<dynamic> salesOrderedProductOffers = [];
 
@@ -118,12 +114,13 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
                   onTap: () {
                     setState(() {
                       selectedCategory = 2;
-                      businessTypes = ['Products', 'Services', 'Housing'];
+                      businessTypes = ['Products'];
                       selectedBusiness = 'Products';
                     });
                   },
                   child: BusinessTypeButton(
-                      businessName: 'Pending',
+                      // businessName: 'Pending',
+                      businessName: 'In Progress',
                       gradient: selectedCategory == 2 ? gradient : null,
                       buttonBackground:
                           selectedCategory != 2 ? grey.withOpacity(0.3) : null,
@@ -136,7 +133,7 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
                   onTap: () {
                     setState(() {
                       selectedCategory = 3;
-                      businessTypes = ['Products', 'Services', 'Housing'];
+                      businessTypes = ['Products'];
                       selectedBusiness = 'Products';
                     });
                   },
@@ -191,16 +188,16 @@ class _SalesOrdersScreenState extends State<SalesOrdersScreen> {
             //   const OfferedHousingsOfSalesOrders()
             else if (selectedCategory == 2 && selectedBusiness == 'Products')
               const PendingProductsOfSalesOrders()
-            else if (selectedCategory == 2 && selectedBusiness == 'Services')
-              const PendingServicesOfSalesOrders()
-            else if (selectedCategory == 2 && selectedBusiness == 'Housing')
-              const PendingHousingsOfSalesOrders()
+            // else if (selectedCategory == 2 && selectedBusiness == 'Services')
+            //   const PendingServicesOfSalesOrders()
+            // else if (selectedCategory == 2 && selectedBusiness == 'Housing')
+            //   const PendingHousingsOfSalesOrders()
             else if (selectedCategory == 3 && selectedBusiness == 'Products')
               const PreviousProductsOfSalesOrders()
-            else if (selectedCategory == 3 && selectedBusiness == 'Services')
-              const PreviousServicesOfSalesOrders()
-            else if (selectedCategory == 3 && selectedBusiness == 'Housing')
-              const PreviousHousingsOfSalesOrders()
+            // else if (selectedCategory == 3 && selectedBusiness == 'Services')
+            //   const PreviousServicesOfSalesOrders()
+            // else if (selectedCategory == 3 && selectedBusiness == 'Housing')
+            //   const PreviousHousingsOfSalesOrders()
             else
               const SizedBox(
                 height: 10,

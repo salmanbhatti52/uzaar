@@ -19,9 +19,9 @@ class _PendingHousingsOfMyOrdersState extends State<PendingHousingsOfMyOrders> {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => MyOrderDetailScreen(),
-              ));
+              // Navigator.of(context).push(MaterialPageRoute(
+              //   builder: (context) => MyOrderDetailScreen(),
+              // ));
             },
             child: const MyOrdersHousingsListTile(
               houseImage: 'assets/listed_house_img.png',

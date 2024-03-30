@@ -95,7 +95,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
           map['name'] ==
           widget.listingData['users_customers_packages']['packages']['name']);
       initialBoostingValue = boostingPackagesGV[index];
-      updateSelectedBoosting(initialBoostingValue);
+      // updateSelectedBoosting(initialBoostingValue);
     }
 
     int bedroomsValIndex =

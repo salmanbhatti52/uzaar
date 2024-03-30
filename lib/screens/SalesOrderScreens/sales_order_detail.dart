@@ -8,8 +8,8 @@ import '../../widgets/mini_dropdown_menu.dart';
 import '../../widgets/profile_info_tile.dart';
 
 class SalesOrderDetailScreen extends StatefulWidget {
-  const SalesOrderDetailScreen({super.key});
-
+   SalesOrderDetailScreen({super.key,required this.orderData});
+  dynamic orderData;
   @override
   State<SalesOrderDetailScreen> createState() => _SalesOrderDetailScreenState();
 }

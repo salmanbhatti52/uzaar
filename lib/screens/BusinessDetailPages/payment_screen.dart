@@ -136,7 +136,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
         ScaffoldMessenger.of(context)
             .showSnackBar(ErrorSnackBar(message: decodedResponse['message']));
       } else {}
-    } else if (widget.listingServiceId != null) {
+    }
+    else if (widget.listingServiceId != null) {
       Response response = await sendPostRequest(
           action: 'boost_listings_services_by_paypal',
           data: {
@@ -164,7 +165,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
         ScaffoldMessenger.of(context)
             .showSnackBar(ErrorSnackBar(message: decodedResponse['message']));
       } else {}
-    } else if (widget.listingHousingId != null) {
+    }
+    else if (widget.listingHousingId != null) {
       Response response = await sendPostRequest(
           action: 'boost_listings_housings_by_paypal',
           data: {
@@ -192,13 +194,57 @@ class _PaymentScreenState extends State<PaymentScreen> {
         ScaffoldMessenger.of(context)
             .showSnackBar(ErrorSnackBar(message: decodedResponse['message']));
       } else {}
-    } else {}
+    }
+    else {}
 
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
           builder: (context) => BottomNavBar(requiredScreenIndex: 0)),
     );
+  }
+
+  payForProductWithPayPal(
+      {required String paymentStatus,
+      required String payerEmail,
+      required String payeeEmail,
+      required String payerName,
+      required String paymentId}) async {
+
+
+      Response response = await sendPostRequest(
+          action: 'payment_by_paypal',
+          data: {
+            "listings_orders_id": widget.offerData?['listings_orders_id'],
+            "payment_gateways_id": selectedPaymentMethodId,
+            "payment_status": paymentStatus,
+            "payer_email": payerEmail,
+            "payer_name": payerName,
+            "payee_email": payeeEmail,
+            "total_amount": widget.offerData?['offer_price'],
+            "token_id": paymentId
+          });
+
+      print('product bought Res: ${response.body}');
+      var decodedResponse = jsonDecode(response.body);
+      String status = decodedResponse['status'];
+      if (status == 'success') {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SuccessSnackBar(message: 'Product purchasing completed.'));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SuccessSnackBar(message: 'Soon, your product will be dispatched.'));
+
+      } else if (status == 'error') {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(ErrorSnackBar(message: decodedResponse['message']));
+      } else {}
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => BottomNavBar(requiredScreenIndex: 0)),
+      );
+
   }
 
   @override
@@ -480,7 +526,30 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                   // paymentId: params['data']['transactions'][0]['related_resources'][0]['sale']['id'],paymentStatus: params['data']['transactions'][0]['related_resources'][0]['sale']['state'],
                                                 );
                                               } else if (widget.buyTheProduct ==
-                                                  true) {}
+                                                  true) {
+                                                payForProductWithPayPal(
+                                                  payeeEmail: params['data']
+                                                          ['transactions'][0]
+                                                      ['payee']['email'],
+                                                  payerEmail: params['data']
+                                                          ['payer']
+                                                      ['payer_info']['email'],
+                                                  payerName: params['data']
+                                                                  ['payer']
+                                                              ['payer_info']
+                                                          ['first_name'] +
+                                                      " " +
+                                                      params['data']['payer']
+                                                              ['payer_info']
+                                                          ['last_name'],
+                                                  paymentId: params['data'][
+                                                              'transactions'][0]
+                                                          ['related_resources']
+                                                      [0]['sale']['id'],
+                                                  paymentStatus: 'Paid',
+                                                  // paymentId: params['data']['transactions'][0]['related_resources'][0]['sale']['id'],paymentStatus: params['data']['transactions'][0]['related_resources'][0]['sale']['state'],
+                                                );
+                                              }
                                             },
                                             onError: (error) {
                                               print("onError: $error");

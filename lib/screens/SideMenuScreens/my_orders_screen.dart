@@ -28,7 +28,7 @@ class MyOrdersScreen extends StatefulWidget {
 class _MyOrdersScreenState extends State<MyOrdersScreen> {
   int selectedCategory = 2;
   String selectedBusiness = 'Products';
-  List<String> businessTypes = ['Products', 'Services', 'Housing'];
+  List<String> businessTypes = ['Products'];
   String orderedProductOffersErrMsg = '';
   List<dynamic> myOrderedProductOffers = [];
 
@@ -124,12 +124,13 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   onTap: () {
                     setState(() {
                       selectedCategory = 2;
-                      businessTypes = ['Products', 'Services', 'Housing'];
+                      businessTypes = ['Products'];
                       selectedBusiness = 'Products';
                     });
                   },
                   child: BusinessTypeButton(
-                      businessName: 'Pending',
+                      // businessName: 'Pending',
+                      businessName: 'In Progress',
                       gradient: selectedCategory == 2 ? gradient : null,
                       buttonBackground:
                           selectedCategory != 2 ? grey.withOpacity(0.3) : null,
@@ -142,7 +143,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   onTap: () {
                     setState(() {
                       selectedCategory = 3;
-                      businessTypes = ['Products', 'Services', 'Housing'];
+                      businessTypes = ['Products'];
                       selectedBusiness = 'Products';
                     });
                   },
@@ -198,16 +199,16 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
             //   const OfferedHousingsOfMyOrders()
             else if (selectedCategory == 2 && selectedBusiness == 'Products')
               const PendingProductsOfMyOrders()
-            else if (selectedCategory == 2 && selectedBusiness == 'Services')
-              const PendingServicesOfMyOrders()
-            else if (selectedCategory == 2 && selectedBusiness == 'Housing')
-              const PendingHousingsOfMyOrders()
+            // else if (selectedCategory == 2 && selectedBusiness == 'Services')
+            //   const PendingServicesOfMyOrders()
+            // else if (selectedCategory == 2 && selectedBusiness == 'Housing')
+            //   const PendingHousingsOfMyOrders()
             else if (selectedCategory == 3 && selectedBusiness == 'Products')
               const PreviousProductsOfMyOrders()
-            else if (selectedCategory == 3 && selectedBusiness == 'Services')
-              const PreviousServicesOfMyOrders()
-            else if (selectedCategory == 3 && selectedBusiness == 'Housing')
-              const PreviousHousingsOfMyOrders()
+            // else if (selectedCategory == 3 && selectedBusiness == 'Services')
+            //   const PreviousServicesOfMyOrders()
+            // else if (selectedCategory == 3 && selectedBusiness == 'Housing')
+            //   const PreviousHousingsOfMyOrders()
             else
               const SizedBox(
                 height: 10,

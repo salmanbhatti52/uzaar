@@ -4,9 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../utils/Colors.dart';
+import '../../widgets/carousel_builder.dart';
 
 class MyOrderDetailScreen extends StatefulWidget {
-  MyOrderDetailScreen({super.key, this.orderData});
+  MyOrderDetailScreen({super.key, required this.orderData});
   dynamic orderData;
   @override
   State<MyOrderDetailScreen> createState() => _MyOrderDetailScreenState();
@@ -45,7 +46,8 @@ class _MyOrderDetailScreenState extends State<MyOrderDetailScreen> {
               SizedBox(
                 height: 20.h,
               ),
-              // CarouselBuilder(categoryName: 'Electronics', image: ''),
+
+              // CarouselBuilder(categoryName: 'Electronics', image: '', slideWidget: null,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(

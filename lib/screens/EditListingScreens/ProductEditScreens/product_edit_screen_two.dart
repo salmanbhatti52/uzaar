@@ -51,7 +51,7 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
           map['name'] ==
           widget.listingData['users_customers_packages']['packages']['name']);
       initialBoostingValue = boostingPackagesGV[index];
-      updateSelectedBoosting(initialBoostingValue);
+      // updateSelectedBoosting(initialBoostingValue);
     }
   }
 
@@ -66,9 +66,12 @@ class _ProductEditScreenTwoState extends State<ProductEditScreenTwo> {
     if (sellerMultiListingPackageGV.isNotEmpty &&
         sellerMultiListingPackageGV['payment_status'] == 'Paid' &&
         value['name'] != sellerMultiListingPackageGV['packages']['name']) {
-      ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(
-          message:
-              'You have the subscription of Monthly Unlimited Boosting package.'));
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(
+            message:
+            'You have the subscription of Monthly Unlimited Boosting package.'));
+      });
+
     }
   }
 

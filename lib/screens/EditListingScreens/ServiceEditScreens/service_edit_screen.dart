@@ -184,7 +184,7 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
           map['name'] ==
           widget.listingData['users_customers_packages']['packages']['name']);
       initialBoostingValue = boostingPackagesGV[index];
-      updateSelectedBoosting(initialBoostingValue);
+      // updateSelectedBoosting(initialBoostingValue);
     }
   }
 

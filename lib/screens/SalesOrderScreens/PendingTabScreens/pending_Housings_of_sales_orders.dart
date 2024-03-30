@@ -22,9 +22,9 @@ class _PendingHousingsOfSalesOrdersState
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const SalesOrderDetailScreen(),
-              ));
+              // Navigator.of(context).push(MaterialPageRoute(
+              //   builder: (context) => const SalesOrderDetailScreen(),
+              // ));
             },
             child: SalesOrdersHousingsListTile(
               houseImage: 'assets/listed_house_img.png',

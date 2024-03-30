@@ -36,7 +36,7 @@ class _OfferedProductsOfSalesOrdersState
                 return GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const SalesOrderDetailScreen(),
+                      builder: (context) =>  SalesOrderDetailScreen(orderData: widget.salesOrderedProductOffers[index],),
                     ));
                   },
                   child: SalesOrdersProductsListTile(
