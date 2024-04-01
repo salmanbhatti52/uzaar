@@ -209,6 +209,9 @@ class _ListingsScreenState extends State<ListingsScreen> {
                                 textColor: grey)),
                       ),
               ),
+              const SizedBox(
+                height: 16,
+              ),
               selectedListingType == 1 && boostingPackages.isNotEmpty
                   ? ProductListingScreen(
                       selectedListingType: selectedListingType,

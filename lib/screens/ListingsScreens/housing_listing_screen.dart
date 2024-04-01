@@ -184,7 +184,7 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                       boostAllListings();
                     },
                     child: Container(
-                      padding: EdgeInsets.only(top: 12, right: 10),
+                      padding: const EdgeInsets.only(bottom: 16, right: 10),
                       child: IconTextReusable(
                         imageName: 'boost_option',
                         text: 'Boost All Listings',
@@ -196,12 +196,12 @@ class _HousingListingScreenState extends State<HousingListingScreen> {
                       ),
                     ),
                   )
-                : SizedBox(
-                    height: 8,
+                : const SizedBox(
+                    // height: 8,
                   ),
-            const SizedBox(
-              height: 12,
-            ),
+            // const SizedBox(
+            //   height: 12,
+            // ),
             Expanded(
               child: listedHousings.isNotEmpty
                   ? ListView.builder(

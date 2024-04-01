@@ -1,6 +1,11 @@
+import 'dart:convert';
+
+import 'package:http/http.dart';
+import 'package:uzaar/services/restService.dart';
 import 'package:uzaar/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:uzaar/widgets/snackbars.dart';
 
 import '../../utils/Buttons.dart';
 
@@ -20,6 +25,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   final emailController = TextEditingController();
   final messageController = TextEditingController();
   bool textareaFocused = false;
+  bool setLoader = false;
+  String setButtonStatus = 'Send';
   final GlobalKey<FormState> _key = GlobalKey();
 
   @override
@@ -195,14 +202,45 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   ),
                   primaryButton(
                       context: context,
-                      buttonText: 'Send',
-                      // () => Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) => VerifyEmail(),
-                      //   ),
-                      // ),
-                      onTap: () => null,
-                      showLoader: false),
+                      buttonText: setButtonStatus,
+                      onTap: () async {
+                        String emailRegex =
+                            r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
+                        RegExp regex = RegExp(emailRegex);
+                        if(nameController.text.isEmpty){
+                          ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(message: 'Please enter your name'));
+                        }else if(emailController.text.isEmpty){
+                          ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(message: 'Please enter your email',));
+                        }else if(!regex.hasMatch(emailController.text.trim())){
+                          ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(message: 'Please enter a valid email',));
+                        }else if(messageController.text.isEmpty){
+                          ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(message: 'Please enter your message'));
+                        }else{
+                          setState(() {
+                            setButtonStatus = 'Please wait..';
+                            setLoader = true;
+                          });
+                          Response response = await sendPostRequest(action: 'contact_us', data: {
+                            'users_customers_id': userDataGV['userId'].toString(),
+                            'message': messageController.text.toString()
+                          });
+                          setState(() {
+                            setButtonStatus = 'Send';
+                            setLoader = false;
+                          });
+                          print(response.body);
+                          var decodedResponse = jsonDecode(response.body);
+                          String status = decodedResponse['status'];
+                          if(status == 'success'){
+                            ScaffoldMessenger.of(context).showSnackBar(SuccessSnackBar(message: 'Your message sent successfully'));
+                            Navigator.of(context).pop();
+                          }else if(status == 'error'){
+                            ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(message: 'Something went wrong.'));
+                            Navigator.of(context).pop();
+                          }else{}
+                        }
+                      },
+                      showLoader: setLoader),
                   const SizedBox(
                     height: 20,
                   ),

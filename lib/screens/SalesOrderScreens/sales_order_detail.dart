@@ -205,18 +205,7 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                                             'listings_orders_id':
                                             widget.orderData
                                             ['listings_orders_id'],
-                                            'listings_id':
-                                            widget.orderData
-                                            ['listings_id'],
-                                            'listings_types_id':
-                                            widget.orderData
-                                            ['listings_types_id'],
-                                            'listings_categories_id':
-                                            widget.orderData
-                                            ['listings_categories_id'],
-                                            'users_customers_id':
-                                            widget.orderData
-                                            ['users_customers_id']
+
                                           });
                                       print(response.statusCode);
                                       print(response.body);
@@ -244,18 +233,6 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                                             'listings_orders_id':
                                             widget.orderData
                                             ['listings_orders_id'],
-                                            'listings_id':
-                                            widget.orderData
-                                            ['listings_id'],
-                                            'listings_types_id':
-                                            widget.orderData
-                                            ['listings_types_id'],
-                                            'listings_categories_id':
-                                            widget.orderData
-                                            ['listings_categories_id'],
-                                            'users_customers_id':
-                                            widget.orderData
-                                            ['users_customers_id']
                                           });
                                       print(response.statusCode);
                                       print(response.body);
@@ -339,18 +316,6 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                                   'listings_orders_id':
                                   widget.orderData
                                   ['listings_orders_id'],
-                                  'listings_id':
-                                  widget.orderData
-                                  ['listings_id'],
-                                  'listings_types_id':
-                                  widget.orderData
-                                  ['listings_types_id'],
-                                  'listings_categories_id':
-                                  widget.orderData
-                                  ['listings_categories_id'],
-                                  'users_customers_id':
-                                  widget.orderData
-                                  ['users_customers_id']
                                 });
                             print(response.statusCode);
                             print(response.body);
@@ -378,18 +343,6 @@ class _SalesOrderDetailScreenState extends State<SalesOrderDetailScreen> {
                                   'listings_orders_id':
                                   widget.orderData
                                   ['listings_orders_id'],
-                                  'listings_id':
-                                  widget.orderData
-                                  ['listings_id'],
-                                  'listings_types_id':
-                                  widget.orderData
-                                  ['listings_types_id'],
-                                  'listings_categories_id':
-                                  widget.orderData
-                                  ['listings_categories_id'],
-                                  'users_customers_id':
-                                  widget.orderData
-                                  ['users_customers_id']
                                 });
                             print(response.statusCode);
                             print(response.body);

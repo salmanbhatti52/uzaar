@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:uzaar/models/app_data.dart';
 import 'package:uzaar/screens/BusinessDetailPages/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -35,6 +37,56 @@ class _ChatScreenState extends State<ChatScreen> {
   String chatHistoryStatus = '';
   late Timer _timer;
   String errorMessage = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('chatType: ${widget.typeOfChat}');
+    getMessages();
+    callRepeatingFunction();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    print('dispose called');
+    _timer.cancel();
+    print('dispose called 2');
+    super.dispose();
+  }
+
+  callRepeatingFunction() {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      getMessages();
+    });
+  }
+
+  DateTime? selectedDate;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        selectedDate = pickedDate;
+      });
+
+      // Format the date using intl package
+      final formattedDate = DateFormat.yMMMd().format(selectedDate!);
+
+      print(formattedDate); // Output: Feb 20, 2024
+      setState(() {
+        msgTextFieldController.text =
+            msgTextFieldController.text + formattedDate;
+      });
+    }
+  }
 
   Future<String> sendMessage() async {
     String message = msgTextFieldController.text.toString();
@@ -95,279 +147,239 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  callRepeatingFunction() {
-    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      getMessages();
-    });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print('chatType: ${widget.typeOfChat}');
-    getMessages();
-    callRepeatingFunction();
-  }
-
-  DateTime? selectedDate;
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2100),
-    );
-
-    if (pickedDate != null) {
-      setState(() {
-        selectedDate = pickedDate;
-      });
-
-      // Format the date using intl package
-      final formattedDate = DateFormat.yMMMd().format(selectedDate!);
-
-      print(formattedDate); // Output: Feb 20, 2024
-      setState(() {
-        msgTextFieldController.text =
-            msgTextFieldController.text + formattedDate;
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    // if (_timer.isActive) {
-    _timer.cancel();
-    // }
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-        leading: GestureDetector(
-          onTap: () => Navigator.of(context).pop(),
-          child: SvgPicture.asset(
-            'assets/back-arrow-button.svg',
-            fit: BoxFit.scaleDown,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if(!currentFocus.hasPrimaryFocus){
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: Colors.white,
+          leading: GestureDetector(
+            onTap: () => Navigator.of(context).pop(),
+            child: SvgPicture.asset(
+              'assets/back-arrow-button.svg',
+              fit: BoxFit.scaleDown,
+            ),
           ),
-        ),
-        centerTitle: false,
-        title: Text(
-          widget.otherUserName,
-          style: kAppBarTitleStyle,
-        ),
-        actions: [
-          widget.typeOfChat == 'shipping'
-              ? GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) {
-                        return PaymentScreen(
-                          buyTheProduct: true,
-                          buyTheBoosting: false,
-                          offerData: widget.offerData,
-                        );
-                      },
-                    ));
-                  },
-                  child: SizedBox(
-                    height: 27,
-                    child: Container(
-                      width: 80,
-                      height: 27,
-                      margin: const EdgeInsets.fromLTRB(0, 14, 12, 9),
-                      decoration: BoxDecoration(
-                          color: primaryBlue,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Center(
-                          child: Text(
-                        'Pay Now',
-                        style: kFontThirteenFiveHW,
-                      )),
-                    ),
-                  ),
-                )
-              :
-              // Column(
-              //   children: [
-              Container(
-                  margin: const EdgeInsets.fromLTRB(0, 14, 12, 9),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _selectDate(context);
+          centerTitle: false,
+          title: Text(
+            widget.otherUserName,
+            style: kAppBarTitleStyle,
+          ),
+          actions: [
+            widget.typeOfChat == 'shipping'
+                ? GestureDetector(
+                    onTap: () {
+                      _timer.cancel();
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) {
+                          return PaymentScreen(
+                            buyTheProduct: true,
+                            buyTheBoosting: false,
+                            offerData: widget.offerData,
+                          );
                         },
-                        child: Container(
-                          // height: 27,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              color: primaryBlue,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Center(
+                      ));
+                    },
+                    child: SizedBox(
+                      height: 27,
+                      child: Container(
+                        width: 80,
+                        height: 27,
+                        margin: const EdgeInsets.fromLTRB(0, 14, 12, 9),
+                        decoration: BoxDecoration(
+                            color: primaryBlue,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Center(
                             child: Text(
-                              'Meet-up',
-                              style: kFontThirteenFiveHW,
-                            ),
-                          ),
-                        ),
+                          'Pay Now',
+                          style: kFontThirteenFiveHW,
+                        )),
                       ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      GestureDetector(
+                    ),
+                  )
+                : widget.typeOfChat == 'meetup' ?
+                // Column(
+                //   children: [
+                Container(
+                    margin: const EdgeInsets.fromLTRB(0, 14, 12, 9),
+                    child: Row(
+                      children: [
+                        GestureDetector(
                           onTap: () {
                             _selectDate(context);
                           },
-                          child: const Icon(
-                            Icons.calendar_month,
-                            color: primaryBlue,
-                          ))
-                    ],
-                  ),
-                ),
-          // Text(
-          //   selectedDate != null
-          //       ? '${selectedDate.toString().split(' ')[0]}'
-          //       : 'Select Date',
-          //   style: TextStyle(
-          //     color: selectedDate != null
-          //         ? Colors.black
-          //         : Color.fromRGBO(167, 169, 183, 1),
-          //     fontFamily: "Outfit",
-          //     fontWeight: FontWeight.w300,
-          //     fontSize: 14,
-          //   ),
-          // ),
-          // ],
-          // )
-        ],
-      ),
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
-          child: RefreshIndicator(
-            onRefresh: () async {},
-            color: primaryBlue,
-            child: Column(
-              children: [
-                widget.typeOfChat != 'shipping'
-                    ? Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: Colors.red,
-                                width: 1.5,
-                                style: BorderStyle.solid)),
-                        margin: EdgeInsets.only(bottom: 17),
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          'Now that you want to meet up for this transaction, we advise that you take the following precautions:\n\n'
-                          '1. Meet up in a public location\n'
-                          '2. Make the exchange only when you are satisfied with the condition of the item\n'
-                          '3. Use respectful language.',
+                          child: Container(
+                            // height: 27,
+                            width: 80,
+                            decoration: BoxDecoration(
+                                color: primaryBlue,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Center(
+                              child: Text(
+                                'Meet-up',
+                                style: kFontThirteenFiveHW,
+                              ),
+                            ),
+                          ),
                         ),
-                      )
-                    : SizedBox(),
-                Expanded(
-                  // child: ListView(
-                  // children: [
-                  //
-                  //
-                  // OtherUserMsgWidget(
-                  //   msgText: '\$100 Offer Received',
-                  //   image: Image.asset('assets/offer_img.png'),
-                  // ),
-                  // SizedBox(
-                  //   height: 14,
-                  // ),
-                  // UserMsgWidget(
-                  //   msgText: '\$100 Offer Received',
-                  //   image: Image.asset('assets/offer_img.png'),
-                  // ),
-                  // ],
-                  // ),
-                  child: messages.isNotEmpty
-                      ? ListView.builder(
-                          itemBuilder: (context, index) {
-                            int reverse = messages.length - 1 - index;
-                            return messages[reverse]['sender_id'] ==
-                                    userDataGV['userId']
-                                ? Container(
-                                    margin: const EdgeInsets.only(bottom: 15),
-                                    child: UserMsgWidget(
-                                        date: messages[reverse]['date'],
-                                        networkImagePath: messages[reverse]
-                                                    ['users_customers']
-                                                ['profile_pic'] ??
-                                            '',
-                                        msgText: messages[reverse]['message']),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              _selectDate(context);
+                            },
+                            child: const Icon(
+                              Icons.calendar_month,
+                              color: primaryBlue,
+                            ))
+                      ],
+                    ),
+                  ): const SizedBox(),
+            // Text(
+            //   selectedDate != null
+            //       ? '${selectedDate.toString().split(' ')[0]}'
+            //       : 'Select Date',
+            //   style: TextStyle(
+            //     color: selectedDate != null
+            //         ? Colors.black
+            //         : Color.fromRGBO(167, 169, 183, 1),
+            //     fontFamily: "Outfit",
+            //     fontWeight: FontWeight.w300,
+            //     fontSize: 14,
+            //   ),
+            // ),
+            // ],
+            // )
+          ],
+        ),
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
+            child: RefreshIndicator(
+              onRefresh: () async {},
+              color: primaryBlue,
+              child: Column(
+                children: [
+                  widget.typeOfChat == 'meetup'
+                      ? Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                  color: Colors.red,
+                                  width: 1.5,
+                                  style: BorderStyle.solid)),
+                          margin: EdgeInsets.only(bottom: 17),
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            'Now that you want to meet up for this transaction, we advise that you take the following precautions:\n\n'
+                            '1. Meet up in a public location\n'
+                            '2. Make the exchange only when you are satisfied with the condition of the item\n'
+                            '3. Use respectful language.',
+                          ),
+                        )
+
+                      :  SizedBox(),
+                  Expanded(
+                    // child: ListView(
+                    // children: [
+                    //
+                    //
+                    // OtherUserMsgWidget(
+                    //   msgText: '\$100 Offer Received',
+                    //   image: Image.asset('assets/offer_img.png'),
+                    // ),
+                    // SizedBox(
+                    //   height: 14,
+                    // ),
+                    // UserMsgWidget(
+                    //   msgText: '\$100 Offer Received',
+                    //   image: Image.asset('assets/offer_img.png'),
+                    // ),
+                    // ],
+                    // ),
+                    child: messages.isNotEmpty
+                        ? ListView.builder(
+                            itemBuilder: (context, index) {
+                              int reverse = messages.length - 1 - index;
+                              return messages[reverse]['sender_id'] ==
+                                      userDataGV['userId']
+                                  ? Container(
+                                      margin: const EdgeInsets.only(bottom: 15),
+                                      child: UserMsgWidget(
+                                          date: messages[reverse]['date'],
+                                          networkImagePath: messages[reverse]
+                                                      ['users_customers']
+                                                  ['profile_pic'] ??
+                                              '',
+                                          msgText: messages[reverse]['message']),
+                                    )
+                                  : Container(
+                                      margin: const EdgeInsets.only(bottom: 15),
+                                      child: OtherUserMsgWidget(
+                                          date: messages[reverse]['date'],
+                                          networkImagePath: messages[reverse]
+                                                      ['users_customers']
+                                                  ['profile_pic'] ??
+                                              '',
+                                          msgText: messages[reverse]['message']),
+                                    );
+                            },
+                            controller: _scrollController,
+                            reverse: true,
+                            itemCount: messages.length,
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true)
+                        : messages.isEmpty && errorMessage == ''
+                            ? ListView.builder(
+                                itemBuilder: (context, index) {
+                                  return Shimmer.fromColors(
+                                      baseColor: Colors.grey[500]!,
+                                      highlightColor: Colors.grey[100]!,
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 15),
+                                              child: const UserMsgWidgetDummy()),
+                                          Container(
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 15),
+                                              child:
+                                                  const OtherUserMsgWidgetDummy())
+                                        ],
+                                      ));
+                                },
+                                itemCount: 3,
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true)
+                            : messages.isEmpty && errorMessage != ''
+                                ? const Center(
+                                    child: Text('No message found.'),
                                   )
-                                : Container(
-                                    margin: const EdgeInsets.only(bottom: 15),
-                                    child: OtherUserMsgWidget(
-                                        date: messages[reverse]['date'],
-                                        networkImagePath: messages[reverse]
-                                                    ['users_customers']
-                                                ['profile_pic'] ??
-                                            '',
-                                        msgText: messages[reverse]['message']),
-                                  );
-                          },
-                          controller: _scrollController,
-                          reverse: true,
-                          itemCount: messages.length,
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true)
-                      : messages.isEmpty && errorMessage == ''
-                          ? ListView.builder(
-                              itemBuilder: (context, index) {
-                                return Shimmer.fromColors(
-                                    baseColor: Colors.grey[500]!,
-                                    highlightColor: Colors.grey[100]!,
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            margin: const EdgeInsets.only(
-                                                bottom: 15),
-                                            child: const UserMsgWidgetDummy()),
-                                        Container(
-                                            margin: const EdgeInsets.only(
-                                                bottom: 15),
-                                            child:
-                                                const OtherUserMsgWidgetDummy())
-                                      ],
-                                    ));
-                              },
-                              itemCount: 3,
-                              physics: const BouncingScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true)
-                          : messages.isEmpty && errorMessage != ''
-                              ? const Center(
-                                  child: Text('No message found.'),
-                                )
-                              : const SizedBox(),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                MessageTextField(
-                  msgTextFieldController: msgTextFieldController,
-                  sendButtonTap: () {
-                    sendMessage();
-                  },
-                ),
-              ],
+                                : const SizedBox(),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  MessageTextField(
+                    msgTextFieldController: msgTextFieldController,
+                    sendButtonTap: () {
+                      sendMessage();
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

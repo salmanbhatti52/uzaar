@@ -45,13 +45,14 @@ class _OfferedProductsOfSalesOrdersState
                       setState(() {
                         widget.salesOrderedProductOffers
                             .removeAt(index);
+                        if(widget.salesOrderedProductOffers.isEmpty){
+                          widget.salesProductOffersErrMsg = 'No listing found.';
+                        }
                       });
 
                     }
                   },
-                  child: widget.salesOrderedProductOffers[index]['status'] ==
-                          'Pending'
-                      ? SalesOrdersProductsListTile(
+                  child: SalesOrdersProductsListTile(
                           enabled: true,
                           productImage: widget.salesOrderedProductOffers[index]
                                   ['listings_products']['listings_images'][0]
@@ -77,18 +78,6 @@ class _OfferedProductsOfSalesOrdersState
                                     'listings_orders_id':
                                         widget.salesOrderedProductOffers[index]
                                             ['listings_orders_id'],
-                                    'listings_id':
-                                        widget.salesOrderedProductOffers[index]
-                                            ['listings_id'],
-                                    'listings_types_id':
-                                        widget.salesOrderedProductOffers[index]
-                                            ['listings_types_id'],
-                                    'listings_categories_id':
-                                        widget.salesOrderedProductOffers[index]
-                                            ['listings_categories_id'],
-                                    'users_customers_id':
-                                        widget.salesOrderedProductOffers[index]
-                                            ['users_customers_id']
                                   });
                               print(response.statusCode);
                               print(response.body);
@@ -120,18 +109,6 @@ class _OfferedProductsOfSalesOrdersState
                                     'listings_orders_id':
                                         widget.salesOrderedProductOffers[index]
                                             ['listings_orders_id'],
-                                    'listings_id':
-                                        widget.salesOrderedProductOffers[index]
-                                            ['listings_id'],
-                                    'listings_types_id':
-                                        widget.salesOrderedProductOffers[index]
-                                            ['listings_types_id'],
-                                    'listings_categories_id':
-                                        widget.salesOrderedProductOffers[index]
-                                            ['listings_categories_id'],
-                                    'users_customers_id':
-                                        widget.salesOrderedProductOffers[index]
-                                            ['users_customers_id']
                                   });
                               print(response.statusCode);
                               print(response.body);
@@ -164,7 +141,7 @@ class _OfferedProductsOfSalesOrdersState
                                   DropdownMenuEntry(value: value, label: value))
                               .toList(),
                         )
-                      : const SizedBox(),
+
                 );
               },
               itemCount: widget.salesOrderedProductOffers.length,

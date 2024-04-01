@@ -188,7 +188,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                       boostAllListings();
                     },
                     child: Container(
-                      padding: EdgeInsets.only(top: 12, right: 10),
+                      padding: const EdgeInsets.only(bottom: 16, right: 10),
                       child: IconTextReusable(
                         imageName: 'boost_option',
                         text: 'Boost All Listings',
@@ -200,12 +200,12 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                       ),
                     ),
                   )
-                : SizedBox(
-                    height: 8,
+                : const SizedBox(
+                    // height: 8,
                   ),
-            const SizedBox(
-              height: 12,
-            ),
+            //  SizedBox(
+            //   height: 12,
+            // ),
             Expanded(
               child: listedProducts.isNotEmpty
                   ? ListView.builder(

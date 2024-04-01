@@ -211,7 +211,8 @@ class _LogInScreenState extends State<LogInScreen> {
                                         'Please enter your password',
                                         style: kToastTextStyle,
                                       )));
-                            } else {
+                            }
+                            else {
                               setState(() {
                                 setLoader = true;
                                 setButtonStatus = 'Please wait..';
