@@ -15,6 +15,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/SideMenuScreens/my_orders_screen.dart';
 import '../screens/SideMenuScreens/sales_orders_screen.dart';
+import '../utils/Buttons.dart';
+import 'alert_dialog_reusable.dart';
 import 'drawer_list_tile.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -210,7 +212,36 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     const Spacer(),
 
                     ListTile(
-                      onTap: null,
+                      onTap: () {
+                        // showDialog(
+                        //   context: context,
+                        //   builder: (context) =>
+                        //       StatefulBuilder(
+                        //         builder: (BuildContext
+                        //         context,
+                        //             StateSetter
+                        //             stateSetterObject) {
+                        //           return AlertDialogReusable(
+                        //             title: 'Delete Account?',
+                        //             description:
+                        //             'Are you sure you want to delete your account? Your data will be deleted permanently after 15 days.',
+                        //             button: primaryButton(
+                        //               context: context,
+                        //               buttonText: 'Signup',
+                        //               // onTap: () =>
+                        //               //     Navigator.pushReplacement(context, MaterialPageRoute(
+                        //               //       builder: (context) {
+                        //               //         return const SignUpScreen();
+                        //               //       },
+                        //               //     )),
+                        //               showLoader: false,
+                        //             ),
+                        //           );
+                        //         },
+                        //       ),
+                        // );
+
+                      },
                       leading: SvgPicture.asset('assets/dlt-icon.svg'),
                       title: Text(
                         'Delete Account',

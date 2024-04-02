@@ -19,6 +19,7 @@ import 'package:uzaar/widgets/search_field.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:uzaar/widgets/snackbars.dart';
 
 import '../utils/Buttons.dart';
 import '../widgets/DrawerWidget.dart';
@@ -28,8 +29,6 @@ import 'BusinessDetailPages/product_details_page.dart';
 import 'BusinessDetailPages/service_details_page.dart';
 import 'chat_list_screen.dart';
 import 'notifications_screen.dart';
-
-enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 
 class HomeScreen extends StatefulWidget {
   static const String id = 'home_screen';
@@ -41,7 +40,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final searchController = TextEditingController();
-  late Set<ReportReason> selectedReasons = {};
+  late String selectedReason = '';
+  late int selectedReasonId;
   late SharedPreferences preferences;
   bool showSpinner = false;
   List<dynamic> featuredProducts = [...featuredProductsGV];
@@ -52,7 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String featuredHousingsErrMsg = '';
   int selectedListingType = 1;
   int _tapCount = 0;
-
+  String setSendReportButtonStatus = 'Send';
+  bool setSendReportButtonLoader = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -63,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
   init() async {
     await getUserData();
     isProfileVerified();
+    getListingReportReasons();
     getListingTypes();
     getProductListingsCategories();
     getServiceListingsCategories();
@@ -122,6 +124,21 @@ class _HomeScreenState extends State<HomeScreen> {
       };
 
       print(userDataGV);
+    }
+  }
+
+  getListingReportReasons() async {
+    Response response = await sendGetRequest('get_listings_reports_reasons');
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    if (status == 'success') {
+      if (mounted) {
+        setState(() {
+          listingsReportReasonsGV = decodedResponse['data'];
+        });
+      }
     }
   }
 
@@ -328,15 +345,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  handleOptionSelection(ReportReason reason) {
-    if (selectedReasons.contains(reason)) {
-      selectedReasons.remove(reason);
-    } else {
-      selectedReasons.add(reason);
-    }
-    print(selectedReasons);
-  }
-
   searchData(String value) {
     print(value);
     Future.delayed(
@@ -397,6 +405,27 @@ class _HomeScreenState extends State<HomeScreen> {
         } else {}
       },
     );
+  }
+
+  Future<String> reportListing({required int listingId, required int listingTypeId, required int listingCategoriesId, required int listingReportReasonId,}) async{
+    Response response = await sendPostRequest(action: 'add_listings_reports', data: {
+      "listings_id": listingId,
+      "listings_types_id": listingTypeId,
+      "listings_categories_id": listingCategoriesId,
+      "users_customers_id": userDataGV['userId'],
+      "listings_reports_reasons_id": listingReportReasonId
+    });
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    if(status == 'success'){
+      return status;
+    }else if(status == 'error'){
+      return decodedResponse['message'];
+    }else{
+      return '';
+    }
   }
 
   isProfileVerified() async {
@@ -890,167 +919,99 @@ class _HomeScreenState extends State<HomeScreen> {
                                               );
                                             },
                                             onOptionTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) =>
-                                                    StatefulBuilder(
-                                                  builder: (BuildContext
-                                                          context,
-                                                      StateSetter
-                                                          stateSetterObject) {
-                                                    return AlertDialogReusable(
-                                                      description:
-                                                          'Select any reason to report. We will show you less listings like this next time.',
-                                                      title: 'Report Listing',
-                                                      itemsList: [
-                                                        SizedBox(
-                                                          height: 35,
-                                                          child: ListTile(
-                                                            title: Text(
-                                                              'Not Interested',
-                                                              style:
-                                                                  kTextFieldInputStyle,
+                                              if(userDataGV['userId'] == featuredProducts[index]['users_customers_id']){
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                    ErrorSnackBar(
+                                                        message: 'You can only see your listings'));
+                                              }else{
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      StatefulBuilder(
+                                                        builder: (BuildContext
+                                                        context,
+                                                            StateSetter
+                                                            stateSetterObject) {
+                                                          return AlertDialogReusable(
+                                                            description:
+                                                            'Select any reason to report. We will show you less listings like this next time.',
+                                                            title: 'Report Listing',
+                                                            itemsList: List.generate(
+                                                              listingsReportReasonsGV
+                                                                  .length,
+                                                                  (index) =>
+                                                                  SizedBox(
+                                                                    height: 35,
+                                                                    child: ListTile(
+                                                                      title: Text(
+                                                                        listingsReportReasonsGV[
+                                                                        index]
+                                                                        ['reason'],
+                                                                        style:
+                                                                        kTextFieldInputStyle,
+                                                                      ),
+                                                                      leading:
+                                                                      GestureDetector(
+                                                                        onTap: () {
+                                                                          stateSetterObject(
+                                                                                  () {
+                                                                                selectedReason =
+                                                                                listingsReportReasonsGV[index]
+                                                                                [
+                                                                                'reason'];
+                                                                                selectedReasonId = listingsReportReasonsGV[index]['listings_reports_reasons_id'];
+                                                                              });
+                                                                        },
+                                                                        child: SvgPicture.asset(selectedReason ==
+                                                                            listingsReportReasonsGV[index]
+                                                                            [
+                                                                            'reason']
+                                                                            ? 'assets/selected_check.svg'
+                                                                            : 'assets/default_check.svg'),
+                                                                      ),
+                                                                    ),
+                                                                  ),
                                                             ),
-                                                            leading:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                stateSetterObject(
-                                                                    () {
-                                                                  handleOptionSelection(
-                                                                      ReportReason
-                                                                          .notInterested);
-                                                                });
-                                                              },
-                                                              child: SvgPicture.asset(selectedReasons
-                                                                      .contains(
-                                                                          ReportReason
-                                                                              .notInterested)
-                                                                  ? 'assets/selected_check.svg'
-                                                                  : 'assets/default_check.svg'),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 35,
-                                                          child: ListTile(
-                                                            title: Text(
-                                                              'Not Authentic',
-                                                              style:
-                                                                  kTextFieldInputStyle,
-                                                            ),
-                                                            leading:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                stateSetterObject(
-                                                                    () {
-                                                                  handleOptionSelection(
-                                                                      ReportReason
-                                                                          .notAuthentic);
-                                                                });
-                                                              },
-                                                              child: SvgPicture.asset(selectedReasons
-                                                                      .contains(
-                                                                          ReportReason
-                                                                              .notAuthentic)
-                                                                  ? 'assets/selected_check.svg'
-                                                                  : 'assets/default_check.svg'),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 35,
-                                                          child: ListTile(
-                                                            title: Text(
-                                                              'Inappropriate',
-                                                              style:
-                                                                  kTextFieldInputStyle,
-                                                            ),
-                                                            leading:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                stateSetterObject(
-                                                                    () {
-                                                                  handleOptionSelection(
-                                                                      ReportReason
-                                                                          .inappropriate);
-                                                                });
-                                                              },
-                                                              child: SvgPicture.asset(selectedReasons
-                                                                      .contains(
-                                                                          ReportReason
-                                                                              .inappropriate)
-                                                                  ? 'assets/selected_check.svg'
-                                                                  : 'assets/default_check.svg'),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 35,
-                                                          child: ListTile(
-                                                            title: Text(
-                                                              'Violent or prohibited content',
-                                                              style:
-                                                                  kTextFieldInputStyle,
-                                                            ),
-                                                            leading:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                stateSetterObject(
-                                                                    () {
-                                                                  handleOptionSelection(
-                                                                      ReportReason
-                                                                          .violent);
-                                                                });
-                                                              },
-                                                              child: SvgPicture.asset(selectedReasons
-                                                                      .contains(
-                                                                          ReportReason
-                                                                              .violent)
-                                                                  ? 'assets/selected_check.svg'
-                                                                  : 'assets/default_check.svg'),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 35,
-                                                          child: ListTile(
-                                                            title: Text(
-                                                              'Other',
-                                                              style:
-                                                                  kTextFieldInputStyle,
-                                                            ),
-                                                            leading:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                stateSetterObject(
-                                                                    () {
-                                                                  handleOptionSelection(
-                                                                      ReportReason
-                                                                          .other);
-                                                                });
-                                                              },
-                                                              child: SvgPicture.asset(selectedReasons
-                                                                      .contains(
-                                                                          ReportReason
-                                                                              .other)
-                                                                  ? 'assets/selected_check.svg'
-                                                                  : 'assets/default_check.svg'),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                      button: primaryButton(
-                                                          context: context,
-                                                          buttonText: 'Send',
-                                                          onTap: () =>
-                                                              Navigator.of(
+                                                            button: primaryButton(
+                                                                context: context,
+                                                                buttonText: setSendReportButtonStatus,
+                                                                onTap: () async {
+                                                                  stateSetterObject((){
+                                                                    setSendReportButtonStatus = 'Please wait..';
+                                                                    setSendReportButtonLoader = true;
+                                                                  });
+                                                                  String apiResponse = await reportListing(
+                                                                      listingId: featuredProducts[index]['listings_products_id'],
+                                                                      listingTypeId: featuredProducts[index]['listings_types_id'],
+                                                                      listingCategoriesId: featuredProducts[index]['listings_categories_id'],
+                                                                      listingReportReasonId: selectedReasonId
+                                                                  );
+
+                                                                  stateSetterObject((){
+
+                                                                    setSendReportButtonStatus = 'Send';
+                                                                    setSendReportButtonLoader = false;
+                                                                  });
+                                                                  if(apiResponse == 'success'){
+
+                                                                    ScaffoldMessenger.of(context).showSnackBar(SuccessSnackBar(message: 'Listing Reported'));
+
+                                                                  }else if(apiResponse.isNotEmpty && apiResponse != 'success'){
+
+                                                                    ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(message: apiResponse));
+
+                                                                  }
+                                                                  Navigator.of(
                                                                       context)
-                                                                  .pop(),
-                                                          showLoader: false),
-                                                    );
-                                                  },
-                                                ),
-                                              );
+                                                                      .pop();
+                                                                },
+                                                                showLoader: setSendReportButtonLoader),
+                                                          );
+                                                        },
+                                                      ),
+                                                );
+                                              }
+
                                             },
                                           );
                                         },
@@ -1154,161 +1115,100 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                             ),
                                             onOptionTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) =>
-                                                    StatefulBuilder(
-                                                  builder: (BuildContext
-                                                          context,
-                                                      StateSetter
-                                                          stateSetterObject) {
-                                                    return AlertDialogReusable(
-                                                        description:
-                                                            'Select any reason to report. We will show you less listings like this next time.',
-                                                        title: 'Report Listing',
-                                                        itemsList: [
-                                                          SizedBox(
-                                                            height: 35,
-                                                            child: ListTile(
-                                                              title: Text(
-                                                                'Not Interested',
-                                                                style:
-                                                                    kTextFieldInputStyle,
+                                              if(userDataGV['userId'] == featuredServices[index]['users_customers_id']){
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                    ErrorSnackBar(
+                                                        message: 'You can only see your listings'));
+                                              }else{
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      StatefulBuilder(
+                                                        builder: (BuildContext
+                                                        context,
+                                                            StateSetter
+                                                            stateSetterObject) {
+                                                          return AlertDialogReusable(
+                                                              description:
+                                                              'Select any reason to report. We will show you less listings like this next time.',
+                                                              title: 'Report Listing',
+                                                              itemsList:
+                                                              List.generate(
+                                                                listingsReportReasonsGV
+                                                                    .length,
+                                                                    (index) =>
+                                                                    SizedBox(
+                                                                      height: 35,
+                                                                      child: ListTile(
+                                                                        title: Text(
+                                                                          listingsReportReasonsGV[
+                                                                          index]
+                                                                          [
+                                                                          'reason'],
+                                                                          style:
+                                                                          kTextFieldInputStyle,
+                                                                        ),
+                                                                        leading:
+                                                                        GestureDetector(
+                                                                          onTap: () {
+                                                                            stateSetterObject(
+                                                                                    () {
+                                                                                  selectedReason =
+                                                                                  listingsReportReasonsGV[index]
+                                                                                  [
+                                                                                  'reason'];
+                                                                                  selectedReasonId = listingsReportReasonsGV[index]['listings_reports_reasons_id'];
+                                                                                });
+                                                                          },
+                                                                          child: SvgPicture.asset(selectedReason ==
+                                                                              listingsReportReasonsGV[index]
+                                                                              [
+                                                                              'reason']
+                                                                              ? 'assets/selected_check.svg'
+                                                                              : 'assets/default_check.svg'),
+                                                                        ),
+                                                                      ),
+                                                                    ),
                                                               ),
-                                                              leading:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  stateSetterObject(
-                                                                      () {
-                                                                    handleOptionSelection(
-                                                                        ReportReason
-                                                                            .notInterested);
-                                                                  });
-                                                                },
-                                                                child: SvgPicture.asset(selectedReasons
-                                                                        .contains(
-                                                                            ReportReason.notInterested)
-                                                                    ? 'assets/selected_check.svg'
-                                                                    : 'assets/default_check.svg'),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 35,
-                                                            child: ListTile(
-                                                              title: Text(
-                                                                'Not Authentic',
-                                                                style:
-                                                                    kTextFieldInputStyle,
-                                                              ),
-                                                              leading:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  stateSetterObject(
-                                                                      () {
-                                                                    handleOptionSelection(
-                                                                        ReportReason
-                                                                            .notAuthentic);
-                                                                  });
-                                                                },
-                                                                child: SvgPicture.asset(selectedReasons
-                                                                        .contains(
-                                                                            ReportReason.notAuthentic)
-                                                                    ? 'assets/selected_check.svg'
-                                                                    : 'assets/default_check.svg'),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 35,
-                                                            child: ListTile(
-                                                              title: Text(
-                                                                'Inappropriate',
-                                                                style:
-                                                                    kTextFieldInputStyle,
-                                                              ),
-                                                              leading:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  stateSetterObject(
-                                                                      () {
-                                                                    handleOptionSelection(
-                                                                        ReportReason
-                                                                            .inappropriate);
-                                                                  });
-                                                                },
-                                                                child: SvgPicture.asset(selectedReasons
-                                                                        .contains(
-                                                                            ReportReason.inappropriate)
-                                                                    ? 'assets/selected_check.svg'
-                                                                    : 'assets/default_check.svg'),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 35,
-                                                            child: ListTile(
-                                                              title: Text(
-                                                                'Violent or prohibited content',
-                                                                style:
-                                                                    kTextFieldInputStyle,
-                                                              ),
-                                                              leading:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  stateSetterObject(
-                                                                      () {
-                                                                    handleOptionSelection(
-                                                                        ReportReason
-                                                                            .violent);
-                                                                  });
-                                                                },
-                                                                child: SvgPicture.asset(selectedReasons
-                                                                        .contains(
-                                                                            ReportReason.violent)
-                                                                    ? 'assets/selected_check.svg'
-                                                                    : 'assets/default_check.svg'),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 35,
-                                                            child: ListTile(
-                                                              title: Text(
-                                                                'Other',
-                                                                style:
-                                                                    kTextFieldInputStyle,
-                                                              ),
-                                                              leading:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  stateSetterObject(
-                                                                      () {
-                                                                    handleOptionSelection(
-                                                                        ReportReason
-                                                                            .other);
-                                                                  });
-                                                                },
-                                                                child: SvgPicture.asset(selectedReasons
-                                                                        .contains(
-                                                                            ReportReason.other)
-                                                                    ? 'assets/selected_check.svg'
-                                                                    : 'assets/default_check.svg'),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                        button: primaryButton(
-                                                            context: context,
-                                                            buttonText: 'Send',
-                                                            onTap: () =>
-                                                                Navigator.of(
+                                                              button: primaryButton(
+                                                                  context: context,
+                                                                  buttonText: setSendReportButtonStatus,
+                                                                  onTap: () async {
+                                                                    stateSetterObject((){
+                                                                      setSendReportButtonStatus = 'Please wait..';
+                                                                      setSendReportButtonLoader = true;
+                                                                    });
+                                                                    String apiResponse = await reportListing(
+                                                                        listingId: featuredServices[index]['listings_services_id'],
+                                                                        listingTypeId: featuredServices[index]['listings_types_id'],
+                                                                        listingCategoriesId: featuredServices[index]['listings_categories_id'],
+                                                                        listingReportReasonId: selectedReasonId
+                                                                    );
+
+                                                                    stateSetterObject((){
+
+                                                                      setSendReportButtonStatus = 'Send';
+                                                                      setSendReportButtonLoader = false;
+                                                                    });
+                                                                    if(apiResponse == 'success'){
+
+                                                                      ScaffoldMessenger.of(context).showSnackBar(SuccessSnackBar(message: 'Listing Reported'));
+
+                                                                    }else if(apiResponse.isNotEmpty && apiResponse != 'success'){
+
+                                                                      ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(message: apiResponse));
+
+                                                                    }
+                                                                    Navigator.of(
                                                                         context)
-                                                                    .pop(),
-                                                            showLoader: false));
-                                                  },
-                                                ),
-                                              );
+                                                                        .pop();
+                                                                  },
+                                                                  showLoader: setSendReportButtonLoader));
+                                                        },
+                                                      ),
+                                                );
+                                              }
+
                                             },
                                           );
                                         },
@@ -1424,161 +1324,100 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ));
                                             },
                                             onOptionTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) =>
-                                                    StatefulBuilder(
-                                                  builder: (BuildContext
-                                                          context,
-                                                      StateSetter
-                                                          stateSetterObject) {
-                                                    return AlertDialogReusable(
-                                                        description:
-                                                            'Select any reason to report. We will show you less listings like this next time.',
-                                                        title: 'Report Listing',
-                                                        itemsList: [
-                                                          SizedBox(
-                                                            height: 35,
-                                                            child: ListTile(
-                                                              title: Text(
-                                                                'Not Interested',
-                                                                style:
-                                                                    kTextFieldInputStyle,
+                                              if(userDataGV['userId'] == featuredHousings[index]['users_customers_id']){
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                    ErrorSnackBar(
+                                                        message: 'You can only see your listings'));
+                                              }else{
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      StatefulBuilder(
+                                                        builder: (BuildContext
+                                                        context,
+                                                            StateSetter
+                                                            stateSetterObject) {
+                                                          return AlertDialogReusable(
+                                                              description:
+                                                              'Select any reason to report. We will show you less listings like this next time.',
+                                                              title: 'Report Listing',
+                                                              itemsList:
+                                                              List.generate(
+                                                                listingsReportReasonsGV
+                                                                    .length,
+                                                                    (index) =>
+                                                                    SizedBox(
+                                                                      height: 35,
+                                                                      child: ListTile(
+                                                                        title: Text(
+                                                                          listingsReportReasonsGV[
+                                                                          index]
+                                                                          [
+                                                                          'reason'],
+                                                                          style:
+                                                                          kTextFieldInputStyle,
+                                                                        ),
+                                                                        leading:
+                                                                        GestureDetector(
+                                                                          onTap: () {
+                                                                            stateSetterObject(
+                                                                                    () {
+                                                                                  selectedReason =
+                                                                                  listingsReportReasonsGV[index]
+                                                                                  [
+                                                                                  'reason'];
+                                                                                  selectedReasonId = listingsReportReasonsGV[index]['listings_reports_reasons_id'];
+                                                                                });
+                                                                          },
+                                                                          child: SvgPicture.asset(selectedReason ==
+                                                                              listingsReportReasonsGV[index]
+                                                                              [
+                                                                              'reason']
+                                                                              ? 'assets/selected_check.svg'
+                                                                              : 'assets/default_check.svg'),
+                                                                        ),
+                                                                      ),
+                                                                    ),
                                                               ),
-                                                              leading:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  stateSetterObject(
-                                                                      () {
-                                                                    handleOptionSelection(
-                                                                        ReportReason
-                                                                            .notInterested);
-                                                                  });
-                                                                },
-                                                                child: SvgPicture.asset(selectedReasons
-                                                                        .contains(
-                                                                            ReportReason.notInterested)
-                                                                    ? 'assets/selected_check.svg'
-                                                                    : 'assets/default_check.svg'),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 35,
-                                                            child: ListTile(
-                                                              title: Text(
-                                                                'Not Authentic',
-                                                                style:
-                                                                    kTextFieldInputStyle,
-                                                              ),
-                                                              leading:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  stateSetterObject(
-                                                                      () {
-                                                                    handleOptionSelection(
-                                                                        ReportReason
-                                                                            .notAuthentic);
-                                                                  });
-                                                                },
-                                                                child: SvgPicture.asset(selectedReasons
-                                                                        .contains(
-                                                                            ReportReason.notAuthentic)
-                                                                    ? 'assets/selected_check.svg'
-                                                                    : 'assets/default_check.svg'),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 35,
-                                                            child: ListTile(
-                                                              title: Text(
-                                                                'Inappropriate',
-                                                                style:
-                                                                    kTextFieldInputStyle,
-                                                              ),
-                                                              leading:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  stateSetterObject(
-                                                                      () {
-                                                                    handleOptionSelection(
-                                                                        ReportReason
-                                                                            .inappropriate);
-                                                                  });
-                                                                },
-                                                                child: SvgPicture.asset(selectedReasons
-                                                                        .contains(
-                                                                            ReportReason.inappropriate)
-                                                                    ? 'assets/selected_check.svg'
-                                                                    : 'assets/default_check.svg'),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 35,
-                                                            child: ListTile(
-                                                              title: Text(
-                                                                'Violent or prohibited content',
-                                                                style:
-                                                                    kTextFieldInputStyle,
-                                                              ),
-                                                              leading:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  stateSetterObject(
-                                                                      () {
-                                                                    handleOptionSelection(
-                                                                        ReportReason
-                                                                            .violent);
-                                                                  });
-                                                                },
-                                                                child: SvgPicture.asset(selectedReasons
-                                                                        .contains(
-                                                                            ReportReason.violent)
-                                                                    ? 'assets/selected_check.svg'
-                                                                    : 'assets/default_check.svg'),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 35,
-                                                            child: ListTile(
-                                                              title: Text(
-                                                                'Other',
-                                                                style:
-                                                                    kTextFieldInputStyle,
-                                                              ),
-                                                              leading:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  stateSetterObject(
-                                                                      () {
-                                                                    handleOptionSelection(
-                                                                        ReportReason
-                                                                            .other);
-                                                                  });
-                                                                },
-                                                                child: SvgPicture.asset(selectedReasons
-                                                                        .contains(
-                                                                            ReportReason.other)
-                                                                    ? 'assets/selected_check.svg'
-                                                                    : 'assets/default_check.svg'),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                        button: primaryButton(
-                                                            context: context,
-                                                            buttonText: 'Send',
-                                                            onTap: () =>
-                                                                Navigator.of(
+                                                              button: primaryButton(
+                                                                  context: context,
+                                                                  buttonText: setSendReportButtonStatus,
+                                                                  onTap: () async {
+                                                                    stateSetterObject((){
+                                                                      setSendReportButtonStatus = 'Please wait..';
+                                                                      setSendReportButtonLoader = true;
+                                                                    });
+                                                                    String apiResponse = await reportListing(
+                                                                        listingId: featuredHousings[index]['listings_housings_id'],
+                                                                        listingTypeId: featuredHousings[index]['listings_types_id'],
+                                                                        listingCategoriesId: featuredHousings[index]['listings_categories_id'],
+                                                                        listingReportReasonId: selectedReasonId
+                                                                    );
+
+                                                                    stateSetterObject((){
+
+                                                                      setSendReportButtonStatus = 'Send';
+                                                                      setSendReportButtonLoader = false;
+                                                                    });
+                                                                    if(apiResponse == 'success'){
+
+                                                                      ScaffoldMessenger.of(context).showSnackBar(SuccessSnackBar(message: 'Listing Reported'));
+
+                                                                    }else if(apiResponse.isNotEmpty && apiResponse != 'success'){
+
+                                                                      ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(message: apiResponse));
+
+                                                                    }
+                                                                    Navigator.of(
                                                                         context)
-                                                                    .pop(),
-                                                            showLoader: false));
-                                                  },
-                                                ),
-                                              );
+                                                                        .pop();
+                                                                  },
+                                                                  showLoader: setSendReportButtonLoader));
+                                                        },
+                                                      ),
+                                                );
+                                              }
+
                                             },
                                           );
                                         },

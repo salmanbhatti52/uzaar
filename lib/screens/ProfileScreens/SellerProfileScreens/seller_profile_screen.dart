@@ -201,7 +201,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen>
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 ErrorSnackBar(
-                                    message: 'You can only see your listing'));
+                                    message: 'You can only see your profile details'));
                           }
                         },
                         child: Row(

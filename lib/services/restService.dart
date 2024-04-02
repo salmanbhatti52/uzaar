@@ -11,7 +11,7 @@ const imgBaseUrl = 'https://b1gpraiseel.net/portal/public/';
 List<dynamic> featuredProductsGV = [];
 List<dynamic> featuredServicesGV = [];
 List<dynamic> featuredHousingGV = [];
-
+List<dynamic> listingsReportReasonsGV = [];
 // List<dynamic> userFeaturedProductsGV = [];
 // List<dynamic> userFeaturedServicesGV = [];
 // List<dynamic> userFeaturedHousingGV = [];

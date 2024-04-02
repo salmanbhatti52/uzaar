@@ -14,8 +14,8 @@ import '../../services/restService.dart';
 import '../../utils/Buttons.dart';
 import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/search_field.dart';
+import '../../widgets/snackbars.dart';
 
-enum ReportReason { notInterested, notAuthentic, inappropriate, violent, other }
 
 class ExploreProductsScreen extends StatefulWidget {
   const ExploreProductsScreen({super.key});
@@ -26,7 +26,10 @@ class ExploreProductsScreen extends StatefulWidget {
 
 class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
   final searchController = TextEditingController();
-  late Set<ReportReason> selectedReasons = {};
+  late String selectedReason = '';
+  late int selectedReasonId;
+  String setSendReportButtonStatus = 'Send';
+  bool setSendReportButtonLoader = false;
   String? selectedCategory;
   String? selectedSubCategory;
   String? selectedCondition;
@@ -42,15 +45,6 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     'New',
     'Used',
   ];
-
-  handleOptionSelection(ReportReason reason) {
-    if (selectedReasons.contains(reason)) {
-      selectedReasons.remove(reason);
-    } else {
-      selectedReasons.add(reason);
-    }
-    print(selectedReasons);
-  }
 
   getAllProducts() async {
     Response response = await sendGetRequest('get_all_listings_products');
@@ -344,6 +338,28 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
     print(subCategories);
   }
 
+  Future<String> reportListing({required int listingId, required int listingTypeId, required int listingCategoriesId, required int listingReportReasonId,}) async{
+    Response response = await sendPostRequest(action: 'add_listings_reports', data: {
+      "listings_id": listingId,
+      "listings_types_id": listingTypeId,
+      "listings_categories_id": listingCategoriesId,
+      "users_customers_id": userDataGV['userId'],
+      "listings_reports_reasons_id": listingReportReasonId
+    });
+    print(response.statusCode);
+    print(response.body);
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    if(status == 'success'){
+      return status;
+    }else if(status == 'error'){
+      return decodedResponse['message'];
+    }else{
+      return '';
+    }
+  }
+
+
   init() {
     getAllProducts();
     getProductsPriceRanges();
@@ -579,139 +595,95 @@ class _ExploreProductsScreenState extends State<ExploreProductsScreen> {
                             );
                           },
                           onOptionTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => StatefulBuilder(
-                                builder: (BuildContext context,
-                                    StateSetter stateSetterObject) {
-                                  return AlertDialogReusable(
+                            if(userDataGV['userId'] == allListingsProducts[index]['users_customers_id']){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  ErrorSnackBar(
+                                      message: 'You can only see your listings'));
+                            }else{
+                              showDialog(
+                                context: context,
+                                builder: (context) => StatefulBuilder(
+                                  builder: (BuildContext context,
+                                      StateSetter stateSetterObject) {
+                                    return AlertDialogReusable(
                                       description:
-                                          'Select any reason to report. We will show you less listings like this next time.',
+                                      'Select any reason to report. We will show you less listings like this next time.',
                                       title: 'Report Listing',
-                                      itemsList: [
-                                        SizedBox(
-                                          height: 35,
-                                          child: ListTile(
-                                            title: Text(
-                                              'Not Interested',
-                                              style: kTextFieldInputStyle,
+                                      itemsList:List.generate(
+                                        listingsReportReasonsGV
+                                            .length,
+                                            (index) =>
+                                            SizedBox(
+                                              height: 35,
+                                              child: ListTile(
+                                                title: Text(
+                                                  listingsReportReasonsGV[
+                                                  index]
+                                                  ['reason'],
+                                                  style:
+                                                  kTextFieldInputStyle,
+                                                ),
+                                                leading:
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    stateSetterObject(
+                                                            () {
+                                                          selectedReason =
+                                                          listingsReportReasonsGV[index]
+                                                          [
+                                                          'reason'];
+                                                          selectedReasonId = listingsReportReasonsGV[index]['listings_reports_reasons_id'];
+                                                        });
+                                                  },
+                                                  child: SvgPicture.asset(selectedReason ==
+                                                      listingsReportReasonsGV[index]
+                                                      [
+                                                      'reason']
+                                                      ? 'assets/selected_check.svg'
+                                                      : 'assets/default_check.svg'),
+                                                ),
+                                              ),
                                             ),
-                                            leading: GestureDetector(
-                                              onTap: () {
-                                                stateSetterObject(() {
-                                                  handleOptionSelection(
-                                                      ReportReason
-                                                          .notInterested);
-                                                });
-                                              },
-                                              child: SvgPicture.asset(selectedReasons
-                                                      .contains(ReportReason
-                                                          .notInterested)
-                                                  ? 'assets/selected_check.svg'
-                                                  : 'assets/default_check.svg'),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 35,
-                                          child: ListTile(
-                                            title: Text(
-                                              'Not Authentic',
-                                              style: kTextFieldInputStyle,
-                                            ),
-                                            leading: GestureDetector(
-                                              onTap: () {
-                                                stateSetterObject(() {
-                                                  handleOptionSelection(
-                                                      ReportReason
-                                                          .notAuthentic);
-                                                });
-                                              },
-                                              child: SvgPicture.asset(selectedReasons
-                                                      .contains(ReportReason
-                                                          .notAuthentic)
-                                                  ? 'assets/selected_check.svg'
-                                                  : 'assets/default_check.svg'),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 35,
-                                          child: ListTile(
-                                            title: Text(
-                                              'Inappropriate',
-                                              style: kTextFieldInputStyle,
-                                            ),
-                                            leading: GestureDetector(
-                                              onTap: () {
-                                                stateSetterObject(() {
-                                                  handleOptionSelection(
-                                                      ReportReason
-                                                          .inappropriate);
-                                                });
-                                              },
-                                              child: SvgPicture.asset(selectedReasons
-                                                      .contains(ReportReason
-                                                          .inappropriate)
-                                                  ? 'assets/selected_check.svg'
-                                                  : 'assets/default_check.svg'),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 35,
-                                          child: ListTile(
-                                            title: Text(
-                                              'Violent or prohibited content',
-                                              style: kTextFieldInputStyle,
-                                            ),
-                                            leading: GestureDetector(
-                                              onTap: () {
-                                                stateSetterObject(() {
-                                                  handleOptionSelection(
-                                                      ReportReason.violent);
-                                                });
-                                              },
-                                              child: SvgPicture.asset(selectedReasons
-                                                      .contains(
-                                                          ReportReason.violent)
-                                                  ? 'assets/selected_check.svg'
-                                                  : 'assets/default_check.svg'),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 35,
-                                          child: ListTile(
-                                            title: Text(
-                                              'Other',
-                                              style: kTextFieldInputStyle,
-                                            ),
-                                            leading: GestureDetector(
-                                              onTap: () {
-                                                stateSetterObject(() {
-                                                  handleOptionSelection(
-                                                      ReportReason.other);
-                                                });
-                                              },
-                                              child: SvgPicture.asset(selectedReasons
-                                                      .contains(
-                                                          ReportReason.other)
-                                                  ? 'assets/selected_check.svg'
-                                                  : 'assets/default_check.svg'),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                       button: primaryButton(
                                           context: context,
-                                          buttonText: 'Send',
-                                          onTap: () =>
-                                              Navigator.of(context).pop(),
-                                          showLoader: false));
-                                },
-                              ),
-                            );
+                                          buttonText: setSendReportButtonStatus,
+                                          onTap: () async {
+                                            stateSetterObject((){
+                                              setSendReportButtonStatus = 'Please wait..';
+                                              setSendReportButtonLoader = true;
+                                            });
+                                            String apiResponse = await reportListing(
+                                                listingId: allListingsProducts[index]['listings_products_id'],
+                                                listingTypeId: allListingsProducts[index]['listings_types_id'],
+                                                listingCategoriesId: allListingsProducts[index]['listings_categories_id'],
+                                                listingReportReasonId: selectedReasonId
+                                            );
+
+                                            stateSetterObject((){
+
+                                              setSendReportButtonStatus = 'Send';
+                                              setSendReportButtonLoader = false;
+                                            });
+                                            if(apiResponse == 'success'){
+
+                                              ScaffoldMessenger.of(context).showSnackBar(SuccessSnackBar(message: 'Listing Reported'));
+
+                                            }else if(apiResponse.isNotEmpty && apiResponse != 'success'){
+
+                                              ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(message: apiResponse));
+
+                                            }
+                                            Navigator.of(
+                                                context)
+                                                .pop();
+                                          },
+                                          showLoader: setSendReportButtonLoader),);
+                                  },
+                                ),
+                              );
+                            }
+
                           },
                         );
                       },

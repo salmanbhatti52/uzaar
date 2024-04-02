@@ -4,6 +4,7 @@ class AppData extends ChangeNotifier {
   List<dynamic> featuredProductsGV = [];
   List<dynamic> featuredServicesGV = [];
   List<dynamic> featuredHousingGV = [];
+  List<dynamic> listingsReportReasonsGV = [];
   List<dynamic> listingTypesGV = [];
   List<dynamic> allListingsProductsGV = [];
   List<dynamic> allListingsServicesGV = [];
