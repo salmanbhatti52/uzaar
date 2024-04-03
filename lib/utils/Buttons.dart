@@ -112,6 +112,7 @@ Widget outlinedButton(
     onTap: onTap,
     child: Container(
       // padding: EdgeInsets.symmetric(horizontal: 65.w),
+      margin: const EdgeInsets.only(bottom: 20),
       width: double.infinity,
       height: 54,
       decoration: BoxDecoration(

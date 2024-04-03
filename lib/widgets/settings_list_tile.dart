@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -58,11 +61,21 @@ class SettingsListTile extends StatelessWidget {
                     SizedBox(
                       height: 22,
                       width: 40,
-                      child: Switch(
+                      child: Platform.isAndroid ? Switch(
                         // trackColor: MaterialStatePropertyAll(primaryBlue),
                         thumbColor: const MaterialStatePropertyAll(white),
                         inactiveTrackColor: const Color(0xffD9D9D9),
                         activeTrackColor: primaryBlue,
+
+                        activeColor: primaryBlue,
+                        value: toggleValue,
+                        onChanged: onChanged,
+                      ): CupertinoSwitch(
+                        // trackColor: MaterialStatePropertyAll(primaryBlue),
+                        thumbColor: Colors.white,
+                        trackColor: const Color(0xffD9D9D9),
+                        // inactiveTrackColor: const Color(0xffD9D9D9),
+                        // activeTrackColor: primaryBlue,
 
                         activeColor: primaryBlue,
                         value: toggleValue,

@@ -6,12 +6,16 @@ class AlertDialogReusable extends StatelessWidget {
       {super.key,
       required this.description,
       required this.title,
-      required this.button,
-      this.itemsList});
+      this.button,
+      this.itemsList,
+      this.icon,
+      this.buttons});
   final String title;
   final String description;
-  final Widget button;
+  final Widget? button;
+  final List<Widget>? buttons;
   final List<Widget>? itemsList;
+  final Widget? icon;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -24,6 +28,7 @@ class AlertDialogReusable extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
+      icon: icon,
       title: Text(
         title,
         textAlign: TextAlign.center,
@@ -43,9 +48,14 @@ class AlertDialogReusable extends StatelessWidget {
             : Container(
                 height: 15,
               ),
-        Padding(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: buttons ?? [],
+        ),
+        button != null ? Padding(
             padding: const EdgeInsets.only(bottom: 14.0, left: 12, right: 12),
-            child: button)
+            child: button):SizedBox(),
       ],
     );
   }

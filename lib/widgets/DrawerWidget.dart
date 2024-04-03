@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:http/http.dart';
 import 'package:uzaar/models/app_data.dart';
 import 'package:uzaar/screens/SideMenuScreens/about_us_screen.dart';
 import 'package:uzaar/screens/SideMenuScreens/contact_us_screen.dart';
@@ -12,6 +15,7 @@ import 'package:uzaar/utils/colors.dart';
 import 'package:uzaar/screens/beforeLoginScreens/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uzaar/widgets/snackbars.dart';
 
 import '../screens/SideMenuScreens/my_orders_screen.dart';
 import '../screens/SideMenuScreens/sales_orders_screen.dart';
@@ -29,11 +33,31 @@ class DrawerWidget extends StatefulWidget {
 
 class _DrawerWidgetState extends State<DrawerWidget> {
   late SharedPreferences sharedPref;
-
+  bool setLoader = false;
   clearSharedPreferences() async {
     sharedPref = await SharedPreferences.getInstance();
     await sharedPref.clear();
     setState(() {});
+  }
+  
+   deleteAccount() async{
+
+    Response response = await sendPostRequest(action: 'delete_account', data: {
+      'users_customers_id': userDataGV['userId']
+    });
+
+    var decodedResponse = jsonDecode(response.body);
+    String status = decodedResponse['status'];
+    String message = decodedResponse['message'];
+    if(status == 'success'){
+      ScaffoldMessenger.of(context).showSnackBar(SuccessSnackBar(message: message));
+    }else if(status == 'error'){
+      ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(message: message));
+    }
+    // return {
+    //   'status': status,
+    //   'message': message,
+    // }
   }
 
   @override
@@ -213,34 +237,54 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
                     ListTile(
                       onTap: () {
-                        // showDialog(
-                        //   context: context,
-                        //   builder: (context) =>
-                        //       StatefulBuilder(
-                        //         builder: (BuildContext
-                        //         context,
-                        //             StateSetter
-                        //             stateSetterObject) {
-                        //           return AlertDialogReusable(
-                        //             title: 'Delete Account?',
-                        //             description:
-                        //             'Are you sure you want to delete your account? Your data will be deleted permanently after 15 days.',
-                        //             button: primaryButton(
-                        //               context: context,
-                        //               buttonText: 'Signup',
-                        //               // onTap: () =>
-                        //               //     Navigator.pushReplacement(context, MaterialPageRoute(
-                        //               //       builder: (context) {
-                        //               //         return const SignUpScreen();
-                        //               //       },
-                        //               //     )),
-                        //               showLoader: false,
-                        //             ),
-                        //           );
-                        //         },
-                        //       ),
-                        // );
-
+                        showDialog(
+                          context: context,
+                          builder: (context) => StatefulBuilder(
+                            builder: (BuildContext context,
+                                StateSetter stateSetterObject) {
+                              return AlertDialogReusable(
+                                icon: SvgPicture.asset(
+                                    'assets/delete_account.svg'),
+                                title: 'Delete Account?',
+                                description:
+                                    'Are you sure you want to delete your account? Your data will be deleted permanently after 15 days.',
+                                buttons: [
+                                  SizedBox(
+                                    width: 125,
+                                    height: 74,
+                                    child: outlinedButton(
+                                      context: context,
+                                      buttonText: 'No',
+                                      showLoader: false,
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 125,
+                                    height: 74,
+                                    child: primaryButton(
+                                      context: context,
+                                      buttonText: 'Yes',
+                                      onTap: () async{
+                                        stateSetterObject((){
+                                          setLoader = true;
+                                        });
+                                        await deleteAccount();
+                                        stateSetterObject((){
+                                          setLoader = false;
+                                        });
+                                        Navigator.of(context).pop();
+                                      },
+                                      showLoader: setLoader,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        );
                       },
                       leading: SvgPicture.asset('assets/dlt-icon.svg'),
                       title: Text(

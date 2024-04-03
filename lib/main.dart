@@ -42,6 +42,7 @@ class _MyAppState extends State<MyApp> {
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       builder: (context, child) => MaterialApp(
+
         // locale: DevicePreview.locale(context),
         // builder: DevicePreview.appBuilder,
         debugShowCheckedModeBanner: false,
