@@ -111,15 +111,17 @@ class _MessagesScreenState extends State<MessagesScreen> {
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () =>
-                              Navigator.of(context).push(MaterialPageRoute(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ChatScreen(
                               otherUserName:
                                   '${chatList[index]['users_customers']['first_name']} ${chatList[index]['users_customers']['last_name']}',
                               otherUserId: chatList[index]['users_customers']
                                   ['users_customers_id'],
                             ),
-                          )),
+                          )).then((value) => getChatList());
+
+                          },
                           child: CommonListTile(
                             imageName: chatList[index]['users_customers']
                                     ['profile_pic'] ??

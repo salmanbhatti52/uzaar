@@ -15,7 +15,6 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../utils/reusable_data.dart';
-import '../../widgets/BottomNaviBar.dart';
 import '../../widgets/icon_text_combo.dart';
 import '../../widgets/product_list_tile.dart';
 

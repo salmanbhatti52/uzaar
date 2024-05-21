@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:uzaar/widgets/sales_orders_products_list_tile.dart';
 import 'package:flutter/material.dart';
 
 import '../../../services/restService.dart';

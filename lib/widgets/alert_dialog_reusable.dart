@@ -55,7 +55,7 @@ class AlertDialogReusable extends StatelessWidget {
         ),
         button != null ? Padding(
             padding: const EdgeInsets.only(bottom: 14.0, left: 12, right: 12),
-            child: button):SizedBox(),
+            child: button):const SizedBox(),
       ],
     );
   }

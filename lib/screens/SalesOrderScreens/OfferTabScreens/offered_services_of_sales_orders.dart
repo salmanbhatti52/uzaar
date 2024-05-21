@@ -1,7 +1,6 @@
 import 'package:uzaar/widgets/sales_orders_services_list_tile.dart';
 import 'package:flutter/material.dart';
 
-import '../sales_order_detail.dart';
 
 class OfferedServicesOfSalesOrders extends StatefulWidget {
   const OfferedServicesOfSalesOrders({super.key});

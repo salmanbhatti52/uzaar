@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:uzaar/screens/BeforeLoginScreens/forgot_password_screen.dart';
 import 'package:uzaar/services/restService.dart';
 import 'package:uzaar/widgets/snackbars.dart';
@@ -16,7 +17,7 @@ import 'package:uzaar/widgets/suffix_svg_icon.dart';
 import 'package:uzaar/widgets/text.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter/foundation.dart' as foundation;
 import 'signup_screen.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -101,7 +102,34 @@ class _LogInScreenState extends State<LogInScreen> {
                           controller: emailController,
                           textInputType: TextInputType.emailAddress,
                           prefixIcon:
-                              const SvgIcon(imageName: 'assets/email-icon.svg'),
+                              GestureDetector(onTap: () {
+
+
+                                EmojiPicker(
+                                  // onEmojiSelected: (Category category, Emoji emoji) {
+                                  //   // Do something when emoji is tapped (optional)
+                                  // },
+                                  onBackspacePressed: () {
+                                    // Do something when the user taps the backspace button (optional)
+                                    // Set it to null to hide the Backspace-Button
+                                  },
+                                  textEditingController: emailController, // pass here the same [TextEditingController] that is connected to your input field, usually a [TextFormField]
+                                  config: Config(
+
+                                    height: 256,
+                                    // bgColor: const Color(0xFFF2F2F2),
+                                    checkPlatformCompatibility: true,
+                                    emojiViewConfig: EmojiViewConfig(
+                                      // Issue: https://github.com/flutter/flutter/issues/28894
+                                      emojiSizeMax: 28 *
+                                          (foundation.defaultTargetPlatform == TargetPlatform.iOS
+                                              ?  1.20
+                                              :  1.0),
+                                    ),
+
+                                  ),
+                                );
+                              },child: const SvgIcon(imageName: 'assets/email-icon.svg')),
                           hintText: 'username@gmail.com',
                           obscureText: null,
                         ),

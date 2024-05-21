@@ -85,7 +85,7 @@ class ServiceListTile extends StatelessWidget {
                   Row(
                     children: [
                       ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 140),
+                        constraints: const BoxConstraints(maxWidth: 140),
                         child: Text(
                           serviceName,
                           overflow: TextOverflow.ellipsis,
@@ -95,11 +95,11 @@ class ServiceListTile extends StatelessWidget {
                         ),
                       ),
                       featuredStatus == 'Yes'
-                          ? Icon(
+                          ? const Icon(
                               Icons.bolt,
                               color: Colors.orange,
                             )
-                          : SizedBox()
+                          : const SizedBox()
                     ],
                   ),
                   const SizedBox(

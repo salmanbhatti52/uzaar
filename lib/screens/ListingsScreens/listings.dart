@@ -15,8 +15,6 @@ import 'package:http/http.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../widgets/DrawerWidget.dart';
-import '../../widgets/icon_text_combo.dart';
-import '../../widgets/snackbars.dart';
 import '../chat_list_screen.dart';
 import '../notifications_screen.dart';
 

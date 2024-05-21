@@ -62,7 +62,7 @@ class _ApplyForVerificationScreenState
         ),
       ),
       body: SingleChildScrollView(
-        physics: PageScrollPhysics(),
+        physics: const PageScrollPhysics(),
         scrollDirection: Axis.vertical,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -115,7 +115,7 @@ class _ApplyForVerificationScreenState
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               images.isNotEmpty
@@ -136,7 +136,7 @@ class _ApplyForVerificationScreenState
               // const Spacer(),
 
               Container(
-                  padding: EdgeInsets.only(top: 25),
+                  padding: const EdgeInsets.only(top: 25),
                   // margin: const EdgeInsets.only(bottom: 25),
                   child: primaryButton(
                       context: context,

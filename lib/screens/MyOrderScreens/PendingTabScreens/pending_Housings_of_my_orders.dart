@@ -1,7 +1,6 @@
 import 'package:uzaar/widgets/my_orders_housings_list_tile.dart';
 import 'package:flutter/material.dart';
 
-import '../my_order_detail.dart';
 
 class PendingHousingsOfMyOrders extends StatefulWidget {
   const PendingHousingsOfMyOrders({super.key});

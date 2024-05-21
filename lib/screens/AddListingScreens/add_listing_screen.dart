@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 import 'package:uzaar/widgets/snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +36,7 @@ class _SellScreenState extends State<SellScreen> {
   int selectedListingType = 1;
   dynamic selectedListingMap;
   int noOfTabs = 3;
-  XFile? _selectedImage;
+  // XFile? _selectedImage;
   String? selectedImageInBase64 = '';
   late Map<String, dynamic> images;
   List<Map<String, dynamic>> imagesList = [];

@@ -13,11 +13,8 @@ import 'package:http/http.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../services/restService.dart';
-import '../../widgets/alert_dialog_reusable.dart';
 import '../../widgets/payment_button.dart';
 import '../../widgets/text.dart';
-import '../BeforeLoginScreens/signup_screen.dart';
-import 'order_placed_screen.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 
@@ -200,7 +197,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-          builder: (context) => BottomNavBar(requiredScreenIndex: 0)),
+          builder: (context) => const BottomNavBar(requiredScreenIndex: 0)),
     );
   }
 
@@ -242,7 +239,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => BottomNavBar(requiredScreenIndex: 0)),
+            builder: (context) => const BottomNavBar(requiredScreenIndex: 0)),
       );
 
   }
@@ -254,7 +251,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => BottomNavBar(requiredScreenIndex: 0)),
+              builder: (context) => const BottomNavBar(requiredScreenIndex: 0)),
         );
         return false;
       },
@@ -293,7 +290,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          BottomNavBar(requiredScreenIndex: 0)),
+                          const BottomNavBar(requiredScreenIndex: 0)),
                 );
               },
               child: SvgPicture.asset(

@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../services/restService.dart';
 import '../../utils/Colors.dart';
-import '../../widgets/carousel_builder.dart';
 
 class MyOrderDetailScreen extends StatefulWidget {
   MyOrderDetailScreen({super.key, required this.orderData});

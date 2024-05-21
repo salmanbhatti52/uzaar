@@ -34,6 +34,7 @@ class _PreviousHousingsOfMyOrdersState
                         noOfStars: 5, alignment: MainAxisAlignment.center),
                     title: Image.asset('assets/order_complete.png'),
                     textField: MessageTextField(
+                      isEmojiShowing: false,
                       msgTextFieldController: msgTextFieldController,
                       sendButtonTap: () {
                         Navigator.pop(context);

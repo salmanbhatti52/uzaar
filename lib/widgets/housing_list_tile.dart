@@ -103,7 +103,7 @@ class HousingListTile extends StatelessWidget {
                   Row(
                     children: [
                       ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 140),
+                        constraints: const BoxConstraints(maxWidth: 140),
                         child: Text(
                           houseName,
                           overflow: TextOverflow.ellipsis,
@@ -113,11 +113,11 @@ class HousingListTile extends StatelessWidget {
                         ),
                       ),
                       featuredStatus == 'Yes'
-                          ? Icon(
+                          ? const Icon(
                               Icons.bolt,
                               color: Colors.orange,
                             )
-                          : SizedBox()
+                          : const SizedBox()
                     ],
                   ),
                   const SizedBox(
