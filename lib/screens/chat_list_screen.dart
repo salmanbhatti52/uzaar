@@ -60,7 +60,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   String getMessageDetail(dynamic lastMessage) {
     if (lastMessage is Map<String, dynamic>) {
-      return lastMessage['message'] ?? 'No message available';
+      return lastMessage['message_type'] == 'attachment'
+          ? 'sent an image'
+          : lastMessage['message_type'] == 'other'
+              ? 'sent an image'
+              : lastMessage['message'] ?? 'No message available';
     } else if (lastMessage is String) {
       // If last_message is a string, use it directly
       return lastMessage;
@@ -112,15 +116,17 @@ class _MessagesScreenState extends State<MessagesScreen> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ChatScreen(
-                              otherUserName:
-                                  '${chatList[index]['users_customers']['first_name']} ${chatList[index]['users_customers']['last_name']}',
-                              otherUserId: chatList[index]['users_customers']
-                                  ['users_customers_id'],
-                            ),
-                          )).then((value) => getChatList());
-
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(
+                                  builder: (context) => ChatScreen(
+                                    otherUserName:
+                                        '${chatList[index]['users_customers']['first_name']} ${chatList[index]['users_customers']['last_name']}',
+                                    otherUserId: chatList[index]
+                                            ['users_customers']
+                                        ['users_customers_id'],
+                                  ),
+                                ))
+                                .then((value) => getChatList());
                           },
                           child: CommonListTile(
                             imageName: chatList[index]['users_customers']
@@ -144,7 +150,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                 child: Column(
                                   children: [
                                     Container(
-                                        margin: const EdgeInsets.only(bottom: 15),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 15),
                                         child: const CommonListTileDummy()),
                                   ],
                                 ));

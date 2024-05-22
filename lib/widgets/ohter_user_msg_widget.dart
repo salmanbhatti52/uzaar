@@ -64,12 +64,14 @@ class OtherUserMsgWidget extends StatelessWidget {
               const SizedBox(
                 height: 4,
               ),
-              image == null
-                  ? Text(
+              // image == null
+              //     ?
+              Text(
                 date,
                 style: kFontTwelveFourHG,
+                textAlign: TextAlign.left,
               )
-                  : const SizedBox()
+                  // : const SizedBox()
             ],
           ),
         )

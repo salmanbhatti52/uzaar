@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:uzaar/screens/BusinessDetailPages/payment_screen.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
   late Timer _timer;
   String errorMessage = '';
   String selectedImageInBase64 = '';
-  late Map<String, dynamic> images;
+  Map<String, dynamic> images = {};
 
 // ============= emoji code ========================
   final _utils = EmojiPickerUtils();
@@ -131,25 +133,41 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<String> sendMessage() async {
     String message = msgTextFieldController.text.toString();
+    String messageType = '';
+    String caption = '';
     msgTextFieldController.clear();
 
+    if (selectedImageInBase64.isEmpty) {
+      messageType = 'text';
+    } else if (selectedImageInBase64.isNotEmpty && message.isEmpty) {
+      messageType = 'attachment';
+      message = selectedImageInBase64;
+      selectedImageInBase64 = '';
+    } else if (selectedImageInBase64.isNotEmpty && message.isNotEmpty) {
+      messageType = 'other';
+      caption = message;
+      message = selectedImageInBase64;
+      selectedImageInBase64 = '';
+    } else {}
     setState(() {
-      messages.add({
-        'sender_id': userDataGV['userId'],
-        'date': 'Today',
-        'users_customers': {
-          'profile_pic': userDataGV['profilePathUrl'],
-        },
-        'message': message
-      });
+      images = {};
+      // messages.add({
+      //   'sender_id': userDataGV['userId'],
+      //   'date': 'Today',
+      //   'users_customers': {
+      //     'profile_pic': userDataGV['profilePathUrl'],
+      //   },
+      //   'message': message
+      // });
     });
 
     Response response = await sendPostRequest(action: 'user_chat', data: {
       'requestType': 'sendMessage',
       'users_customers_id': userDataGV['userId'],
       'other_users_customers_id': widget.otherUserId,
-      'message_type': 'text',
-      'message': message
+      'message_type': messageType,
+      'message': message,
+      "caption": caption
     });
 
     print(response.statusCode);
@@ -166,7 +184,7 @@ class _ChatScreenState extends State<ChatScreen> {
       'other_users_customers_id': widget.otherUserId,
     });
     // print(response.statusCode);
-    // print(response.body);
+    // print('messages: ${response.body}');
     var decodedData = jsonDecode(response.body);
     String status = decodedData['status'];
     chatHistoryStatus = status;
@@ -190,28 +208,25 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(onWillPop: () async {
-      if(_emojiShowing){
-        setState(() {
-          _emojiShowing = false;
+    return WillPopScope(
+      onWillPop: () async {
+        if (_emojiShowing) {
+          setState(() {
+            _emojiShowing = false;
+          });
+        } else {
+          Navigator.of(context).pop();
+          // print(_emojiShowing);
+          // print('called');
+        }
 
-        });
-      }else{
-        Navigator.of(context).pop();
-        // print(_emojiShowing);
-        // print('called');
-      }
-
-
-      return false;
-
-    },
+        return false;
+      },
       child: GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
           if (!currentFocus.hasPrimaryFocus) {
             currentFocus.unfocus();
-
           }
         },
         child: Scaffold(
@@ -323,7 +338,8 @@ class _ChatScreenState extends State<ChatScreen> {
           backgroundColor: Colors.white,
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
               child: RefreshIndicator(
                 onRefresh: () async {},
                 color: primaryBlue,
@@ -372,7 +388,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                 return messages[reverse]['sender_id'] ==
                                         userDataGV['userId']
                                     ? Container(
-                                        margin: const EdgeInsets.only(bottom: 15),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 15),
                                         child: UserMsgWidget(
                                             date: messages[reverse]['date'],
                                             networkImagePath: messages[reverse]
@@ -380,18 +397,86 @@ class _ChatScreenState extends State<ChatScreen> {
                                                     ['profile_pic'] ??
                                                 '',
                                             msgText: messages[reverse]
-                                                ['message']),
+                                                        ['message_type'] ==
+                                                    'text'
+                                                ? messages[reverse]['message']
+                                                : messages[reverse]
+                                                            ['message_type'] ==
+                                                        'attachment'
+                                                    ? ''
+                                                    : messages[reverse][
+                                                                'message_type'] ==
+                                                            'other'
+                                                        ? messages[reverse]
+                                                            ['caption']
+                                                        : '',
+                                            image: messages[reverse]
+                                                        ['message_type'] ==
+                                                    'attachment'
+                                                ? Image.network(
+                                                    imgBaseUrl +
+                                                        messages[reverse]
+                                                            ['message'],
+                                                    height: 184,
+                                                    width: 154,
+                                                  )
+                                                : messages[reverse]
+                                                            ['message_type'] ==
+                                                        'other'
+                                                    ? Image.network(
+                                                        imgBaseUrl +
+                                                            messages[reverse]
+                                                                ['message'],
+                                                        height: 184,
+                                                        width: 154,
+                                                      )
+                                                    : const SizedBox()),
                                       )
                                     : Container(
-                                        margin: const EdgeInsets.only(bottom: 15),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 15),
                                         child: OtherUserMsgWidget(
-                                            date: messages[reverse]['date'],
-                                            networkImagePath: messages[reverse]
-                                                        ['users_customers']
-                                                    ['profile_pic'] ??
-                                                '',
-                                            msgText: messages[reverse]
-                                                ['message']),
+                                          date: messages[reverse]['date'],
+                                          networkImagePath: messages[reverse]
+                                                      ['users_customers']
+                                                  ['profile_pic'] ??
+                                              '',
+                                          msgText: messages[reverse]
+                                                      ['message_type'] ==
+                                                  'text'
+                                              ? messages[reverse]['message']
+                                              : messages[reverse]
+                                                          ['message_type'] ==
+                                                      'attachment'
+                                                  ? ''
+                                                  : messages[reverse][
+                                                              'message_type'] ==
+                                                          'other'
+                                                      ? messages[reverse]
+                                                          ['caption']
+                                                      : '',
+                                          image: messages[reverse]
+                                                      ['message_type'] ==
+                                                  'attachment'
+                                              ? Image.network(
+                                                  imgBaseUrl +
+                                                      messages[reverse]
+                                                          ['message'],
+                                                  height: 184,
+                                                  width: 154,
+                                                )
+                                              : messages[reverse]
+                                                          ['message_type'] ==
+                                                      'other'
+                                                  ? Image.network(
+                                                      imgBaseUrl +
+                                                          messages[reverse]
+                                                              ['message'],
+                                                      height: 184,
+                                                      width: 154,
+                                                    )
+                                                  : const SizedBox(),
+                                        ),
                                       );
                               },
                               controller: _scrollController,
@@ -434,6 +519,54 @@ class _ChatScreenState extends State<ChatScreen> {
                     const SizedBox(
                       height: 20,
                     ),
+                    images.isNotEmpty
+                        ? Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              height: 94,
+                              width: 94,
+                              margin: EdgeInsets.only(bottom: 9, left: 6),
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(
+                                      width: 1,
+                                      color: primaryBlue,
+                                      style: BorderStyle.solid)),
+                              child: Stack(
+                                children: [
+                                  SizedBox(
+                                    height: 94,
+                                    width: 94,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: Image.file(
+                                          File(images['image']['imageInXFile']
+                                              .path),
+                                          fit: BoxFit.cover),
+                                    ),
+                                  ),
+                                  Positioned(
+                                      top: 6,
+                                      right: 6,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            images = {};
+                                            selectedImageInBase64 = '';
+                                          });
+                                        },
+                                        child: SvgPicture.asset(
+                                          'assets/remove.svg',
+                                          height: 20,
+                                          width: 20,
+                                        ),
+                                      ))
+                                ],
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
                     MessageTextField(
                       isEmojiShowing: _emojiShowing,
                       focusNode: _focusNode,
@@ -474,149 +607,128 @@ class _ChatScreenState extends State<ChatScreen> {
                         print(result);
                         if (result == 'camera') {
                           images = await getImage(from: 'camera');
-                          setState(() {
-                            selectedImageInBase64 =
-                            images['image']['imageInBase64'];
-                          });
+                          if (images.isNotEmpty) {
+                            setState(() {
+                              selectedImageInBase64 =
+                                  images['image']['imageInBase64'];
+                            });
+                          }
 
                           // if (selectedImageInBase64 != '') {
                           //   setState(() {
                           //     userProfile = '';
                           //   });
-                          //   Map<String, dynamic> result =
-                          //   await updateProfile();
-                          //   if (result['status'] == 'success') {
-                          //     ScaffoldMessenger.of(context)
-                          //         .showSnackBar(
-                          //         SuccessSnackBar(message: null));
-                          //   }
-                          //   if (result['status'] == 'error') {
-                          //     ScaffoldMessenger.of(context)
-                          //         .showSnackBar(ErrorSnackBar(
-                          //         message: result['message']));
-                          //   }
                           // }
                         }
                         if (result == 'gallery') {
                           images = await getImage(from: 'gallery');
-                          setState(() {
-                            selectedImageInBase64 =
-                            images['image']['imageInBase64'];
-                          });
+                          if (images.isNotEmpty) {
+                            setState(() {
+                              selectedImageInBase64 =
+                                  images['image']['imageInBase64'];
+                            });
+                          }
 
                           // if (selectedImageInBase64 != '') {
-                            // setState(() {
-                            //   userProfile = '';
-                            // });
-                            // Map<String, dynamic> result =
-                            // await updateProfile();
-                            // if (result['status'] == 'success') {
-                            //   ScaffoldMessenger.of(context)
-                            //       .showSnackBar(
-                            //       SuccessSnackBar(message: null));
-                            // }
-                            // if (result['status'] == 'error') {
-                            //   ScaffoldMessenger.of(context)
-                            //       .showSnackBar(ErrorSnackBar(
-                            //       message: result['message']));
-                            // }
+                          // setState(() {
+                          //   userProfile = '';
+                          // });
                           // }
                         }
                       },
                       msgTextFieldController: msgTextFieldController,
                       sendButtonTap: () {
-                        sendMessage();
+                        if (msgTextFieldController.text.isNotEmpty ||
+                            selectedImageInBase64.isNotEmpty) {
+                          sendMessage();
+                        }
                       },
                     ),
                     SizedBox(
                       height: 12,
                     ),
-
                     _emojiShowing != false
                         ? Container(
-                          // margin: EdgeInsets.all(8),
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.black,
-                                  style: BorderStyle.solid,
-                                  width: 1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: Offstage(
-                            offstage: !_emojiShowing,
-                            child: EmojiPicker(
-                              textEditingController: msgTextFieldController,
-                              scrollController: _scrollController,
-                              config: Config(
-                                height: 218,
-
-                                checkPlatformCompatibility: true,
-                                emojiTextStyle: _textStyle,
-                                emojiViewConfig: const EmojiViewConfig(
-                                  backgroundColor: Colors.white,
-                                ),
-
-                                swapCategoryAndBottomBar: true,
-                                skinToneConfig: const SkinToneConfig(),
-                                categoryViewConfig: CategoryViewConfig(
-                                  backgroundColor: Colors.white,
-                                  dividerColor: Colors.white,
-                                  indicatorColor: accentColor,
-                                  iconColorSelected: Colors.black,
-                                  iconColor: secondaryColor,
-                                  customCategoryView: (
-                                    config,
-                                    state,
-                                    tabController,
-                                    pageController,
-                                  ) {
-                                    return WhatsAppCategoryView(
+                            // margin: EdgeInsets.all(8),
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.black,
+                                    style: BorderStyle.solid,
+                                    width: 1),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: Offstage(
+                              offstage: !_emojiShowing,
+                              child: EmojiPicker(
+                                textEditingController: msgTextFieldController,
+                                scrollController: _scrollController,
+                                config: Config(
+                                  height: 218,
+                                  checkPlatformCompatibility: true,
+                                  emojiTextStyle: _textStyle,
+                                  emojiViewConfig: const EmojiViewConfig(
+                                    backgroundColor: Colors.white,
+                                  ),
+                                  swapCategoryAndBottomBar: true,
+                                  skinToneConfig: const SkinToneConfig(),
+                                  categoryViewConfig: CategoryViewConfig(
+                                    backgroundColor: Colors.white,
+                                    dividerColor: Colors.white,
+                                    indicatorColor: accentColor,
+                                    iconColorSelected: Colors.black,
+                                    iconColor: secondaryColor,
+                                    customCategoryView: (
                                       config,
                                       state,
                                       tabController,
                                       pageController,
-                                    );
-                                  },
-                                  categoryIcons: const CategoryIcons(
-                                    recentIcon: Icons.access_time_outlined,
-                                    smileyIcon: Icons.emoji_emotions_outlined,
-                                    animalIcon: Icons.cruelty_free_outlined,
-                                    foodIcon: Icons.coffee_outlined,
-                                    activityIcon:
-                                        Icons.sports_soccer_outlined,
-                                    travelIcon:
-                                        Icons.directions_car_filled_outlined,
-                                    objectIcon: Icons.lightbulb_outline,
-                                    symbolIcon: Icons.emoji_symbols_outlined,
-                                    flagIcon: Icons.flag_outlined,
+                                    ) {
+                                      return WhatsAppCategoryView(
+                                        config,
+                                        state,
+                                        tabController,
+                                        pageController,
+                                      );
+                                    },
+                                    categoryIcons: const CategoryIcons(
+                                      recentIcon: Icons.access_time_outlined,
+                                      smileyIcon: Icons.emoji_emotions_outlined,
+                                      animalIcon: Icons.cruelty_free_outlined,
+                                      foodIcon: Icons.coffee_outlined,
+                                      activityIcon:
+                                          Icons.sports_soccer_outlined,
+                                      travelIcon:
+                                          Icons.directions_car_filled_outlined,
+                                      objectIcon: Icons.lightbulb_outline,
+                                      symbolIcon: Icons.emoji_symbols_outlined,
+                                      flagIcon: Icons.flag_outlined,
+                                    ),
                                   ),
-
-                                ),
-                                bottomActionBarConfig:
-                                    const BottomActionBarConfig(
-                                  backgroundColor: Colors.white,
-                                  buttonColor: Colors.white,
-                                  buttonIconColor: secondaryColor,
-                                ),
-                                searchViewConfig: SearchViewConfig(
-                                  backgroundColor: Colors.white,
-                                  customSearchView: (
-                                    config,
-                                    state,
-                                    showEmojiView,
-                                  ) {
-                                    return WhatsAppSearchView(
+                                  bottomActionBarConfig:
+                                      const BottomActionBarConfig(
+                                    backgroundColor: Colors.white,
+                                    buttonColor: Colors.white,
+                                    buttonIconColor: secondaryColor,
+                                  ),
+                                  searchViewConfig: SearchViewConfig(
+                                    backgroundColor: Colors.white,
+                                    customSearchView: (
                                       config,
                                       state,
                                       showEmojiView,
-                                    );
-                                  },
+                                    ) {
+                                      return WhatsAppSearchView(
+                                        config,
+                                        state,
+                                        showEmojiView,
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
+                          )
                         : SizedBox(),
                   ],
                 ),

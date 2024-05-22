@@ -50,12 +50,13 @@ class UserMsgWidget extends StatelessWidget {
               const SizedBox(
                 height: 4,
               ),
-              image == null
-                  ? Text(
+              // image == null
+              //     ?
+              Text(
                 date,
                 style: kFontTwelveFourHW,
               )
-                  : const SizedBox()
+                  // : const SizedBox()
             ],
           ),
         ),
