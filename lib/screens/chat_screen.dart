@@ -150,15 +150,18 @@ class _ChatScreenState extends State<ChatScreen> {
       selectedImageInBase64 = '';
     } else {}
     setState(() {
+      messages.add({
+        'sender_id': userDataGV['userId'],
+        'date': 'Today',
+        'users_customers': {
+          'profile_pic': userDataGV['profilePathUrl'],
+        },
+        'message':
+            messageType != 'text' ? images['image']['imageInXFile'] : message,
+        'message_type': messageType != 'text' ? 'base64string' : messageType,
+        'caption': caption
+      });
       images = {};
-      // messages.add({
-      //   'sender_id': userDataGV['userId'],
-      //   'date': 'Today',
-      //   'users_customers': {
-      //     'profile_pic': userDataGV['profilePathUrl'],
-      //   },
-      //   'message': message
-      // });
     });
 
     Response response = await sendPostRequest(action: 'user_chat', data: {
@@ -404,33 +407,23 @@ class _ChatScreenState extends State<ChatScreen> {
                                                             ['message_type'] ==
                                                         'attachment'
                                                     ? ''
-                                                    : messages[reverse][
-                                                                'message_type'] ==
+                                                    : messages[reverse]['message_type'] ==
                                                             'other'
                                                         ? messages[reverse]
                                                             ['caption']
-                                                        : '',
+                                                        : messages[reverse]
+                                                            ['caption'],
                                             image: messages[reverse]
                                                         ['message_type'] ==
                                                     'attachment'
-                                                ? Image.network(
-                                                    imgBaseUrl +
-                                                        messages[reverse]
-                                                            ['message'],
-                                                    height: 184,
-                                                    width: 154,
-                                                  )
-                                                : messages[reverse]
-                                                            ['message_type'] ==
-                                                        'other'
-                                                    ? Image.network(
-                                                        imgBaseUrl +
-                                                            messages[reverse]
-                                                                ['message'],
-                                                        height: 184,
-                                                        width: 154,
-                                                      )
-                                                    : const SizedBox()),
+                                                ? ChatImage(
+                                                    imagePath: imgBaseUrl +
+                                                        messages[reverse]['message'])
+                                                : messages[reverse]['message_type'] == 'other'
+                                                    ? ChatImage(imagePath: imgBaseUrl + messages[reverse]['message'])
+                                                    : messages[reverse]['message_type'] == 'base64string'
+                                                        ? TempImage(imagePath: File(messages[reverse]['message'].path))
+                                                        : const SizedBox()),
                                       )
                                     : Container(
                                         margin:
@@ -458,23 +451,17 @@ class _ChatScreenState extends State<ChatScreen> {
                                           image: messages[reverse]
                                                       ['message_type'] ==
                                                   'attachment'
-                                              ? Image.network(
-                                                  imgBaseUrl +
+                                              ? ChatImage(
+                                                  imagePath: imgBaseUrl +
                                                       messages[reverse]
-                                                          ['message'],
-                                                  height: 184,
-                                                  width: 154,
-                                                )
+                                                          ['message'])
                                               : messages[reverse]
                                                           ['message_type'] ==
                                                       'other'
-                                                  ? Image.network(
-                                                      imgBaseUrl +
+                                                  ? ChatImage(
+                                                      imagePath: imgBaseUrl +
                                                           messages[reverse]
-                                                              ['message'],
-                                                      height: 184,
-                                                      width: 154,
-                                                    )
+                                                              ['message'])
                                                   : const SizedBox(),
                                         ),
                                       );
@@ -571,25 +558,25 @@ class _ChatScreenState extends State<ChatScreen> {
                       isEmojiShowing: _emojiShowing,
                       focusNode: _focusNode,
                       onEmojiButtonTap: () {
-                        setState(() {
-                          _emojiShowing = !_emojiShowing;
-
-                          if (!_emojiShowing) {
-                            WidgetsBinding.instance
-                                .addPostFrameCallback((timeStamp) {
-                              _focusNode.requestFocus();
-                            });
-                          } else {
-                            _focusNode.unfocus();
-                          }
-                        });
+                        // setState(() {
+                        //   _emojiShowing = !_emojiShowing;
+                        //
+                        //   if (!_emojiShowing) {
+                        //     WidgetsBinding.instance
+                        //         .addPostFrameCallback((timeStamp) {
+                        //       _focusNode.requestFocus();
+                        //     });
+                        //   } else {
+                        //     _focusNode.unfocus();
+                        //   }
+                        // });
                       },
                       onTap: () {
-                        if (_emojiShowing) {
-                          setState(() {
-                            _emojiShowing = false;
-                          });
-                        }
+                        // if (_emojiShowing) {
+                        //   // setState(() {
+                        //     _emojiShowing = false;
+                        //   // });
+                        // }
                       },
                       onAttachmentButtonTap: () async {
                         var result = await showModalBottomSheet(
@@ -737,6 +724,41 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ChatImage extends StatelessWidget {
+  const ChatImage({Key? key, required this.imagePath}) : super(key: key);
+  final String imagePath;
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        bottomRight: Radius.zero,
+        bottomLeft: Radius.circular(14),
+        topLeft: Radius.circular(14),
+        topRight: Radius.circular(14),
+      ),
+      child:
+          Image.network(imagePath, height: 184, width: 160, fit: BoxFit.cover),
+    );
+  }
+}
+
+class TempImage extends StatelessWidget {
+  const TempImage({Key? key, required this.imagePath}) : super(key: key);
+  final File imagePath;
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        bottomRight: Radius.zero,
+        bottomLeft: Radius.circular(14),
+        topLeft: Radius.circular(14),
+        topRight: Radius.circular(14),
+      ),
+      child: Image.file(imagePath, height: 184, width: 160, fit: BoxFit.cover),
     );
   }
 }

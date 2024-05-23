@@ -36,6 +36,7 @@ class OtherUserMsgWidget extends StatelessWidget {
           ),
         ),
         Container(
+          constraints: const BoxConstraints(maxWidth: 180),
           margin: const EdgeInsets.only(left: 4),
           padding: const EdgeInsets.all(10),
           decoration: const BoxDecoration(
@@ -52,24 +53,24 @@ class OtherUserMsgWidget extends StatelessWidget {
                 margin: image != null ? const EdgeInsets.only(bottom: 4) : null,
                 child: image,
               ),
-              Container(
-                constraints: const BoxConstraints(maxWidth: 215),
-                child: Text(
-                  msgText,
-                  overflow: TextOverflow.visible,
-                  softWrap: true,
-                  style: kTextFieldInputStyle,
-                ),
+              Text(
+                msgText,
+                overflow: TextOverflow.visible,
+                softWrap: true,
+                style: kTextFieldInputStyle,
               ),
               const SizedBox(
                 height: 4,
               ),
               // image == null
               //     ?
-              Text(
-                date,
-                style: kFontTwelveFourHG,
-                textAlign: TextAlign.left,
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  date,
+                  style: kFontTwelveFourHG,
+                  textAlign: TextAlign.left,
+                ),
               )
                   // : const SizedBox()
             ],

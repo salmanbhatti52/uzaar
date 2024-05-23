@@ -22,6 +22,7 @@ class UserMsgWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
+          constraints: const BoxConstraints(minWidth: 100,maxWidth: 180),
           margin: const EdgeInsets.only(right: 4),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -38,23 +39,23 @@ class UserMsgWidget extends StatelessWidget {
                 margin: image != null ? const EdgeInsets.only(bottom: 4) : null,
                 child: image,
               ),
-              Container(
-                constraints: const BoxConstraints(maxWidth: 214),
-                child: Text(
-                  msgText,
-                  overflow: TextOverflow.visible,
-                  softWrap: true,
-                  style: kFontFourteenFourHW,
-                ),
+              Text(
+                msgText,
+                overflow: TextOverflow.visible,
+                softWrap: true,
+                style: kFontFourteenFourHW,
               ),
               const SizedBox(
                 height: 4,
               ),
               // image == null
               //     ?
-              Text(
-                date,
-                style: kFontTwelveFourHW,
+              Align(
+                alignment: AlignmentDirectional.bottomEnd,
+                child: Text(
+                  date,
+                  style: kFontTwelveFourHW,
+                ),
               )
                   // : const SizedBox()
             ],
