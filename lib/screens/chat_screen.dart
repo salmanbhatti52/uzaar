@@ -203,7 +203,7 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-  closeKeyboard() {
+  closeEmojiKeyboard() {
     setState(() {
       if (isEmojiVisible == true) {
         isEmojiVisible = false;
@@ -544,7 +544,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       focusNode: _focusNode,
                       isEmojiShowing: isEmojiVisible,
                       onEmojiButtonTap: toggleEmojiPicker,
-                      onTap: closeKeyboard,
+                      onTap: closeEmojiKeyboard,
                       onAttachmentButtonTap: () async {
                         var result = await showModalBottomSheet(
                           context: context,
