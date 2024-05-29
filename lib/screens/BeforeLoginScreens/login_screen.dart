@@ -101,35 +101,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           focusedBorder: kRoundedActiveBorderStyle,
                           controller: emailController,
                           textInputType: TextInputType.emailAddress,
-                          prefixIcon:
-                              GestureDetector(onTap: () {
-
-
-                                EmojiPicker(
-                                  // onEmojiSelected: (Category category, Emoji emoji) {
-                                  //   // Do something when emoji is tapped (optional)
-                                  // },
-                                  onBackspacePressed: () {
-                                    // Do something when the user taps the backspace button (optional)
-                                    // Set it to null to hide the Backspace-Button
-                                  },
-                                  textEditingController: emailController, // pass here the same [TextEditingController] that is connected to your input field, usually a [TextFormField]
-                                  config: Config(
-
-                                    height: 256,
-                                    // bgColor: const Color(0xFFF2F2F2),
-                                    checkPlatformCompatibility: true,
-                                    emojiViewConfig: EmojiViewConfig(
-                                      // Issue: https://github.com/flutter/flutter/issues/28894
-                                      emojiSizeMax: 28 *
-                                          (foundation.defaultTargetPlatform == TargetPlatform.iOS
-                                              ?  1.20
-                                              :  1.0),
-                                    ),
-
-                                  ),
-                                );
-                              },child: const SvgIcon(imageName: 'assets/email-icon.svg')),
+                          prefixIcon: const SvgIcon(imageName: 'assets/email-icon.svg'),
                           hintText: 'username@gmail.com',
                           obscureText: null,
                         ),
