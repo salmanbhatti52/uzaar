@@ -68,7 +68,7 @@ class OtherUserMsgWidget extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 child: Text(
                   date,
-                  style: kFontTwelveFourHG,
+                  style: kFontTwelveThreeHG,
                   textAlign: TextAlign.left,
                 ),
               )

@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:uzaar/screens/BusinessDetailPages/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:photo_view/photo_view.dart';
 
 import 'package:uzaar/utils/colors.dart';
 import 'package:http/http.dart';
@@ -18,7 +18,6 @@ import '../widgets/message_text_field.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 
 import '../widgets/ohter_user_msg_widget.dart';
-import '../widgets/snackbars.dart';
 import '../widgets/user_msg_widget.dart';
 
 import 'package:flutter/services.dart';
@@ -53,7 +52,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final ScrollController _scrollController = ScrollController();
   List<dynamic> messages = [];
   String chatHistoryStatus = '';
-  late Timer _timer;
+  Timer? _timer;
   String errorMessage = '';
   String selectedImageInBase64 = '';
   Map<String, dynamic> images = {};
@@ -71,7 +70,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void dispose() {
     // TODO: implement dispose
     print('dispose called');
-    _timer.cancel();
+    _timer?.cancel();
     print('dispose called 2');
     super.dispose();
   }
@@ -211,30 +210,26 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-     onWillPop: () async{
-       if(!isEmojiVisible){
-         Navigator.of(context).pop();
-       }else{
-         setState(() {
-           isEmojiVisible = false;
-         });
-       }
-       return false;
-     },
+      onWillPop: () async {
+        if (!isEmojiVisible) {
+          Navigator.of(context).pop();
+        } else {
+          setState(() {
+            isEmojiVisible = false;
+          });
+        }
+        // _timer.cancel();
+        return false;
+      },
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
           if (isEmojiVisible == true) {
             setState(() {
-
-            isEmojiVisible = false;
+              isEmojiVisible = false;
             });
           }
         },
@@ -258,7 +253,7 @@ class _ChatScreenState extends State<ChatScreen> {
               widget.typeOfChat == 'shipping'
                   ? GestureDetector(
                       onTap: () {
-                        _timer.cancel();
+                        _timer?.cancel();
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) {
                             return PaymentScreen(
@@ -347,7 +342,8 @@ class _ChatScreenState extends State<ChatScreen> {
           backgroundColor: Colors.white,
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 22.0, vertical: 15),
               child: RefreshIndicator(
                 onRefresh: () async {},
                 color: primaryBlue,
@@ -379,7 +375,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                 return messages[reverse]['sender_id'] ==
                                         userDataGV['userId']
                                     ? Container(
-                                        margin: const EdgeInsets.only(bottom: 15),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 15),
                                         child: UserMsgWidget(
                                             date: messages[reverse]['date'],
                                             networkImagePath: messages[reverse]
@@ -413,7 +410,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                         : const SizedBox()),
                                       )
                                     : Container(
-                                        margin: const EdgeInsets.only(bottom: 15),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 15),
                                         child: OtherUserMsgWidget(
                                           date: messages[reverse]['date'],
                                           networkImagePath: messages[reverse]
@@ -428,8 +426,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                           ['message_type'] ==
                                                       'attachment'
                                                   ? ''
-                                                  : messages[reverse]
-                                                              ['message_type'] ==
+                                                  : messages[reverse][
+                                                              'message_type'] ==
                                                           'other'
                                                       ? messages[reverse]
                                                           ['caption']
@@ -552,8 +550,9 @@ class _ChatScreenState extends State<ChatScreen> {
                           builder: (context) => SingleChildScrollView(
                             child: Container(
                                 padding: EdgeInsets.only(
-                                    bottom:
-                                        MediaQuery.of(context).viewInsets.bottom),
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom),
                                 child: const AddImageScreen()),
                           ),
                         );
@@ -673,8 +672,16 @@ class ChatImage extends StatelessWidget {
         topLeft: Radius.circular(14),
         topRight: Radius.circular(14),
       ),
-      child:
-          Image.network(imagePath, height: 184, width: 160, fit: BoxFit.cover),
+      child: GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return PhotoImageView(imagePath: imagePath);
+              },
+            ));
+          },
+          child: Image.network(imagePath,
+              height: 184, width: 160, fit: BoxFit.cover)),
     );
   }
 }
@@ -691,7 +698,53 @@ class TempImage extends StatelessWidget {
         topLeft: Radius.circular(14),
         topRight: Radius.circular(14),
       ),
-      child: Image.file(imagePath, height: 184, width: 160, fit: BoxFit.cover),
+      child: GestureDetector(onTap: () {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) {
+            return PhotoImageView(fileImagePath: imagePath);
+          },
+        ));
+      }, child: Image.file(imagePath, height: 184, width: 160, fit: BoxFit.cover)),
+    );
+  }
+}
+
+class PhotoImageView extends StatefulWidget {
+  final String? imagePath;
+  final File? fileImagePath;
+  const PhotoImageView({Key? key, this.imagePath, this.fileImagePath})
+      : super(key: key);
+
+  @override
+  State<PhotoImageView> createState() => _PhotoImageViewState();
+}
+
+class _PhotoImageViewState extends State<PhotoImageView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width,
+            height: MediaQuery.sizeOf(context).height,
+            child: widget.fileImagePath == null? PhotoView(
+              imageProvider: NetworkImage(widget.imagePath!),
+            ):PhotoView(
+              imageProvider: FileImage(widget.fileImagePath!),
+            ),
+          ),
+          // SizedBox(
+          //   width: MediaQuery.sizeOf(context).width,
+          //   height: MediaQuery.sizeOf(context).height,
+          //   child: PhotoView(
+          //     imageProvider: FileImage(widget.fileImagePath!),
+          //   ),
+          // ),
+        ],
+      ),
     );
   }
 }

@@ -123,11 +123,23 @@ final kFontTenFiveHW = GoogleFonts.outfit(
 
 final kFontTwelveFourHG = GoogleFonts.outfit(
   fontSize: 12,
+  fontWeight: FontWeight.w400,
+  color: grey,
+);
+
+final kFontTwelveThreeHG = GoogleFonts.outfit(
+  fontSize: 12,
   fontWeight: FontWeight.w300,
   color: grey,
 );
 
 final kFontTwelveFourHW = GoogleFonts.outfit(
+  fontSize: 12,
+  fontWeight: FontWeight.w400,
+  color: white,
+);
+
+final kFontTwelveThreeHW = GoogleFonts.outfit(
   fontSize: 12,
   fontWeight: FontWeight.w300,
   color: white,

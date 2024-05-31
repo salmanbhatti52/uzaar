@@ -54,7 +54,7 @@ class UserMsgWidget extends StatelessWidget {
                 alignment: AlignmentDirectional.bottomEnd,
                 child: Text(
                   date,
-                  style: kFontTwelveFourHW,
+                  style: kFontTwelveThreeHW,
                 ),
               )
                   // : const SizedBox()
