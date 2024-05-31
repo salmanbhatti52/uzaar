@@ -7,6 +7,7 @@ import 'package:uzaar/screens/BusinessDetailPages/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:uzaar/screens/view_image_screen.dart';
 
 import 'package:uzaar/utils/colors.dart';
 import 'package:http/http.dart';
@@ -584,9 +585,6 @@ class _ChatScreenState extends State<ChatScreen> {
                         }
                       },
                     ),
-                    // SizedBox(
-                    //   height: 12,
-                    // ),
                     if (isEmojiVisible)
                       Container(
                         margin: EdgeInsets.only(top: 12),
@@ -709,42 +707,4 @@ class TempImage extends StatelessWidget {
   }
 }
 
-class PhotoImageView extends StatefulWidget {
-  final String? imagePath;
-  final File? fileImagePath;
-  const PhotoImageView({Key? key, this.imagePath, this.fileImagePath})
-      : super(key: key);
 
-  @override
-  State<PhotoImageView> createState() => _PhotoImageViewState();
-}
-
-class _PhotoImageViewState extends State<PhotoImageView> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: MediaQuery.sizeOf(context).width,
-            height: MediaQuery.sizeOf(context).height,
-            child: widget.fileImagePath == null? PhotoView(
-              imageProvider: NetworkImage(widget.imagePath!),
-            ):PhotoView(
-              imageProvider: FileImage(widget.fileImagePath!),
-            ),
-          ),
-          // SizedBox(
-          //   width: MediaQuery.sizeOf(context).width,
-          //   height: MediaQuery.sizeOf(context).height,
-          //   child: PhotoView(
-          //     imageProvider: FileImage(widget.fileImagePath!),
-          //   ),
-          // ),
-        ],
-      ),
-    );
-  }
-}
